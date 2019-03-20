@@ -22,6 +22,11 @@ public class SaleTransaction implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long saleTransactionId;
 
+    public SaleTransaction() {
+    }
+    
+    
+
     public Long getSaleTransactionId() {
         return saleTransactionId;
     }

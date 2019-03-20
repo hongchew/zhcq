@@ -22,6 +22,11 @@ public class ProductTag implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long productTagId;
 
+    public ProductTag() {
+    }
+    
+    
+
     public Long getProductTagId() {
         return productTagId;
     }

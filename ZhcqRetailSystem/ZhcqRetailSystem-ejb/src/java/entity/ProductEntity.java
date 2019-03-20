@@ -22,6 +22,11 @@ public class ProductEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long productId;
 
+    public ProductEntity() {
+    }
+    
+    
+
     public Long getProductId() {
         return productId;
     }

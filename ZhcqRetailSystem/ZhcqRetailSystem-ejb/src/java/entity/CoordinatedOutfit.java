@@ -6,6 +6,7 @@
 package entity;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -21,6 +22,10 @@ public class CoordinatedOutfit implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long coordinatedOutfitId;
+    private Date dateCreated;
+
+    public CoordinatedOutfit() {
+    }
 
     public Long getCoordinatedOutfitId() {
         return coordinatedOutfitId;
@@ -28,6 +33,14 @@ public class CoordinatedOutfit implements Serializable {
 
     public void setCoordinatedOutfitId(Long coordinatedOutfitId) {
         this.coordinatedOutfitId = coordinatedOutfitId;
+    }
+
+    public Date getDateCreated() {
+        return dateCreated;
+    }
+
+    public void setDateCreated(Date dateCreated) {
+        this.dateCreated = dateCreated;
     }
 
 

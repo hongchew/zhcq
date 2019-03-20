@@ -22,6 +22,10 @@ public class Member implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long memberId;
 
+    public Member() {
+    }
+    
+
     public Long getMemberId() {
         return memberId;
     }

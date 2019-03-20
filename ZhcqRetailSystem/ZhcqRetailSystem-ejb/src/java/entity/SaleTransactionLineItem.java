@@ -23,6 +23,9 @@ public class SaleTransactionLineItem implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long saleTransactionLineItemId;
 
+    public SaleTransactionLineItem() {
+    }
+   
     public Long getSaleTransactionLineItemId() {
         return saleTransactionLineItemId;
     }

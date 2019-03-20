@@ -22,6 +22,12 @@ public class WishList implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long wishListId;
 
+    public WishList() {
+    }
+    
+    
+    
+
     public Long getWishListId() {
         return wishListId;
     }

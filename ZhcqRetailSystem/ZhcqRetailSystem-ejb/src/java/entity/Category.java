@@ -14,8 +14,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+
 
 /**
  *
@@ -32,10 +35,10 @@ public class Category implements Serializable {
     @NotNull
     @Size(max = 32)
     private String categoryName;
-    
+
     @OneToMany(mappedBy ="categoryEntity")
     private List<ProductEntity> productEntities;
-    
+
     public Category() {
         productEntities = new ArrayList<>();
     }

@@ -6,11 +6,19 @@
 package entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+
 
 /**
  *
@@ -22,13 +30,26 @@ public class Category implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long categoryId;
+    
+    @Column(nullable = false, unique = true, length = 32)
+    @NotNull
+    @Size(max = 32)
     private String categoryName;
-    
-    @OneToMany()
-    private ProductEntity productEntity;
-    
+
+    @OneToMany(mappedBy ="categoryEntity")
+    private List<ProductEntity> productEntities;
+
     public Category() {
+        productEntities = new ArrayList<>();
     }
+
+    public Category(String categoryName) {
+        this();
+        
+        this.categoryName = categoryName;
+    }
+    
+    
 
     public Long getCategoryId() {
         return categoryId;
@@ -44,6 +65,16 @@ public class Category implements Serializable {
 
     public void setCategoryName(String categoryName) {
         this.categoryName = categoryName;
+    }
+
+    
+    public List<ProductEntity> getProductEntities() {
+        return productEntities;
+    }
+
+  
+    public void setProductEntities(List<ProductEntity> productEntities) {
+        this.productEntities = productEntities;
     }
     
 }

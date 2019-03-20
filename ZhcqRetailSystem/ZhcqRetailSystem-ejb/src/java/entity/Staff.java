@@ -34,6 +34,7 @@ public class Staff implements Serializable {
     @NotNull
     private String password;
 
+
     public Staff () {
     }
     
@@ -46,7 +47,6 @@ public class Staff implements Serializable {
         this.username = username;
         this.password = password;
     }
-    
     
     public Long getStaffId() {
         return staffId;

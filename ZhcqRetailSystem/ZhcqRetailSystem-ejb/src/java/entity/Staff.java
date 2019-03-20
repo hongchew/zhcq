@@ -21,6 +21,11 @@ public class Staff implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long staffId;
 
+    public Staff() {
+    }
+    
+    
+
     public Long getStaffId() {
         return staffId;
     }

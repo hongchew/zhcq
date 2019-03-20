@@ -26,10 +26,10 @@ public class WishList implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long wishListId;
     
-    @OneToOne
+    @OneToOne(mappedBy="wishList")
     private Member member;
     
-    @OneToMany
+    @OneToMany(mappedBy = "wishList")
     private List<ProductEntity> productEntities;
     
     public WishList() {

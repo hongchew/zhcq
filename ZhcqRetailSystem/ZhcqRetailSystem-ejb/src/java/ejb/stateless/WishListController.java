@@ -11,13 +11,15 @@ import javax.persistence.PersistenceContext;
 
 /**
  *
- * @author chengyang
+ * @author zhimingkoh
  */
 @Stateless
-public class CheckoutController implements CheckoutControllerLocal {
+public class WishListController implements WishListControllerLocal {
 
     @PersistenceContext(unitName = "ZhcqRetailSystem-ejbPU")
     private EntityManager em;
+
+   
 
     
 }

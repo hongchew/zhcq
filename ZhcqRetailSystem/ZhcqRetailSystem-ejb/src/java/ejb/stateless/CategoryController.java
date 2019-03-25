@@ -5,15 +5,41 @@
  */
 package ejb.stateless;
 
+import entity.Category;
+import javax.ejb.Local;
 import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import util.exception.CategoryNotFoundException;
 
-/**
- *
- * @author zhimingkoh
- */
+
 @Stateless
+@Local(CategoryControllerLocal.class)
+
 public class CategoryController implements CategoryControllerLocal {
 
-    // Add business logic below. (Right-click in editor and choose
-    // "Insert Code > Add Business Method")
+    @PersistenceContext(unitName = "ZhcqRetailSystem-ejbPU")
+    private EntityManager em;
+    
+    
+    @Override
+    public Category retrieveCategoryByCategoryId(Long categoryId) throws CategoryNotFoundException
+    {
+        if(categoryId == null)
+        {
+            throw new CategoryNotFoundException("Category ID not provided");
+        }
+        
+        Category categoryEntity = em.find(Category.class, categoryId);
+        
+        if(categoryEntity != null)
+        {
+            return categoryEntity;
+        }
+        else
+        {
+            throw new CategoryNotFoundException("Category ID " + categoryId + " does not exist!");
+        }               
+    }
+
 }

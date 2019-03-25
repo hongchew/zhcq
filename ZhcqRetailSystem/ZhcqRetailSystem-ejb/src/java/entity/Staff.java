@@ -8,6 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import util.security.CryptographicHelper;
 
 
 @Entity
@@ -33,9 +34,13 @@ public class Staff implements Serializable {
     @Column(nullable = false, length = 32)
     @NotNull
     private String password;
+    
+    @Column(columnDefinition = "CHAR(32) NOT NULL")
+    private String salt;
 
 
     public Staff () {
+        this.salt = CryptographicHelper.getInstance().generateRandomString(32);
     }
     
     public Staff(String firstName, String lastName, String username, String password) 
@@ -111,6 +116,20 @@ public class Staff implements Serializable {
      */
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    /**
+     * @return the salt
+     */
+    public String getSalt() {
+        return salt;
+    }
+
+    /**
+     * @param salt the salt to set
+     */
+    public void setSalt(String salt) {
+        this.salt = salt;
     }
 
 

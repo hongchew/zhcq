@@ -5,17 +5,13 @@
  */
 package ejb.stateless;
 
-import entity.ProductTag;
 import javax.ejb.Local;
-import util.exception.ProductTagNotFoundException;
 
 /**
  *
  * @author zhimingkoh
  */
 @Local
-public interface ProductTagControllerLocal {
-
-    public ProductTag retrieveTagByTagId(Long tagId) throws ProductTagNotFoundException;
+public interface WishListControllerLocal {
     
 }

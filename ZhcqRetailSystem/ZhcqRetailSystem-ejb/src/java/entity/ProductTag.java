@@ -2,6 +2,7 @@
 package entity;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -24,7 +25,7 @@ public class ProductTag implements Serializable {
     private String tagName;
 
     @ManyToMany 
-    private ProductEntity productEntity;
+    private List<ProductEntity> productEntities;
     
     public ProductTag() {
     }
@@ -51,5 +52,20 @@ public class ProductTag implements Serializable {
         this.tagName = tagName;
     }
 
+    /**
+     * @return the productEntities
+     */
+    public List<ProductEntity> getProductEntities() {
+        return productEntities;
+    }
+
+    /**
+     * @param productEntities the productEntities to set
+     */
+    public void setProductEntities(List<ProductEntity> productEntities) {
+        this.productEntities = productEntities;
+    }
+
+    
     
 }

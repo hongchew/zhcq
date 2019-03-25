@@ -5,7 +5,9 @@
  */
 package ejb.stateless;
 
+import entity.Category;
 import javax.ejb.Local;
+import util.exception.CategoryNotFoundException;
 
 /**
  *
@@ -13,5 +15,7 @@ import javax.ejb.Local;
  */
 @Local
 public interface CategoryControllerLocal {
+
+    public Category retrieveCategoryByCategoryId(Long categoryId) throws CategoryNotFoundException;
     
 }

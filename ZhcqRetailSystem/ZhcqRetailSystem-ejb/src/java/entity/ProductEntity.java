@@ -31,10 +31,6 @@ import javax.validation.constraints.Size;
 import javax.persistence.ManyToOne;
 
 
-/**
- *
- * @author chengyang
- */
 @Entity
 public class ProductEntity implements Serializable {
 
@@ -95,6 +91,22 @@ public class ProductEntity implements Serializable {
         this.unitPrice = unitPrice;
         this.dateAdded = dateAdded;
         this.quantityOnHand = quantityOnHand;
+    }
+    
+    public void addTag(ProductTag tagEntity)
+    {
+        if(tagEntity != null)
+        {
+            if(!this.productTags.contains(tagEntity))
+            {
+                this.productTags.add(tagEntity);
+                
+                if(!tagEntity.getProductEntities().contains(this))
+                {                    
+                    tagEntity.getProductEntities().add(this);
+                }
+            }
+        }
     }
     
     

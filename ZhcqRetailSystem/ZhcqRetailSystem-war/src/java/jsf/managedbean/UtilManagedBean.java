@@ -8,14 +8,11 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+import javax.enterprise.context.RequestScoped;
+import javax.inject.Named;
 
-/**
- *
- * @author chengyang
- */
-@ManagedBean
+
+@Named(value = "utilManagedBean")
 @RequestScoped
 public class UtilManagedBean {
 

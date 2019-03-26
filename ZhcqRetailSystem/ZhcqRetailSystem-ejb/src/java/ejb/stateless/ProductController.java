@@ -239,6 +239,9 @@ public class ProductController implements ProductControllerLocal {
                     productEntityToUpdate.setDescription(productEntity.getDescription());
                     productEntityToUpdate.setUnitPrice(productEntity.getUnitPrice());
                     productEntityToUpdate.setQuantityOnHand(productEntity.getQuantityOnHand());
+                    productEntityToUpdate.setSize(productEntity.getSize());
+                    productEntityToUpdate.setColour(productEntity.getColour());
+                    
                 
                 } else {
                     throw new UpdateProductException("Product ID does not match record in database!");

@@ -15,6 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -29,6 +31,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import javax.persistence.ManyToOne;
+import util.enumeration.SizeEnum;
 
 
 @Entity
@@ -64,7 +67,16 @@ public class ProductEntity implements Serializable {
     
     @ManyToOne(optional = false)
     @JoinColumn(nullable = false)
-    private Category productCategory; 
+    private Category productCategory;
+    
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    @NotNull
+    private SizeEnum size ;
+    
+    @Column(nullable = false)
+    @NotNull
+    private String Colour;
     
     @ManyToMany(mappedBy = "productEntities")
     private List<ProductTag> productTags; 
@@ -83,15 +95,16 @@ public class ProductEntity implements Serializable {
         unitPrice = new BigDecimal("0.00");
     }
 
-    public ProductEntity(String productName, String description, BigDecimal unitPrice, Date dateAdded, Integer quantityOnHand) {
-        this();
-        
+    public ProductEntity(String productName, String description, BigDecimal unitPrice, Date dateAdded, Integer quantityOnHand, SizeEnum size, String Colour) {
         this.productName = productName;
         this.description = description;
         this.unitPrice = unitPrice;
         this.dateAdded = dateAdded;
         this.quantityOnHand = quantityOnHand;
+        this.size = size;
+        this.Colour = Colour;
     }
+    
     
     public void addTag(ProductTag tagEntity)
     {
@@ -226,6 +239,34 @@ public class ProductEntity implements Serializable {
      */
     public void setWishLists(List<WishList> wishLists) {
         this.wishLists = wishLists;
+    }
+
+    /**
+     * @return the size
+     */
+    public SizeEnum getSize() {
+        return size;
+    }
+
+    /**
+     * @param size the size to set
+     */
+    public void setSize(SizeEnum size) {
+        this.size = size;
+    }
+
+    /**
+     * @return the Colour
+     */
+    public String getColour() {
+        return Colour;
+    }
+
+    /**
+     * @param Colour the Colour to set
+     */
+    public void setColour(String Colour) {
+        this.Colour = Colour;
     }
 
   

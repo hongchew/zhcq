@@ -27,8 +27,6 @@ public interface WishListControllerLocal {
 
     public WishList retrieveWishListByMemberId(Long memberId) throws WishListNotFoundException, MemberNotFoundException;
 
-    public WishList createNewWishList(WishList newWishList, Long memberId) throws InputDataValidationException, CreateNewWishListException;
-
     public void deleteWishList(Long memberId) throws WishListNotFoundException, MemberNotFoundException, DeleteWishListException;
 
     public void updateWishList(WishList wishlist, List<Long> productEntityIds) throws InputDataValidationException, WishListNotFoundException, UpdateWishListException, ProductNotFoundException;

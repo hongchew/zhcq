@@ -18,6 +18,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import util.security.CryptographicHelper;
 
 /**
  *
@@ -60,28 +61,30 @@ public class Member implements Serializable {
     private String salt;
     
     
-    @OneToOne(cascade = CascadeType.REMOVE)
+    @OneToOne(cascade = {CascadeType.REMOVE,})
     private WishList wishList;
     
     @OneToMany
     private List<SaleTransaction> saleTransactions;
     
-    @NotNull
     @OneToOne(cascade = CascadeType.REMOVE)
     private ShoppingCart shoppingCart;
 
     public Member() {
+        this.salt = CryptographicHelper.getInstance().generateRandomString(32);
+
         saleTransactions = new ArrayList<SaleTransaction>();
     }
 
     public Member(String firstName, String lastName, String username, String password, Integer loyaltyPoints) {
+        this();
+        
         this.firstName = firstName;
         this.lastName = lastName;
         this.username = username;
-        this.password = password;
+        setPassword(password);
         this.loyaltyPoints = loyaltyPoints;
     }
-    
     
     
 
@@ -173,8 +176,16 @@ public class Member implements Serializable {
     /**
      * @param password the password to set
      */
-    public void setPassword(String password) {
-        this.password = password;
+    public void setPassword(String password)
+    {
+        if(password != null)
+        {
+            this.password = CryptographicHelper.getInstance().byteArrayToHexString(CryptographicHelper.getInstance().doMD5Hashing(password + this.salt));
+        }
+        else
+        {
+            this.password = null;
+        }
     }
     
     public Integer getLoyaltyPoints() {

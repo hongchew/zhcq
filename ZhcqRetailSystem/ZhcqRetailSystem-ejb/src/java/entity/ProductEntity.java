@@ -31,6 +31,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import javax.persistence.ManyToOne;
+import util.enumeration.ColourEnum;
 import util.enumeration.SizeEnum;
 
 
@@ -49,12 +50,6 @@ public class ProductEntity implements Serializable {
     @Column(length = 128)
     @Size(max = 128)
     private String description;
-    
-    @Column
-    private SizeEnum sizeEnum;
-    
-    @Column
-    private String color;
     
     @Column(nullable = false, precision = 11, scale = 2)
     @NotNull
@@ -78,11 +73,12 @@ public class ProductEntity implements Serializable {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     @NotNull
-    private SizeEnum size ;
+    private SizeEnum sizeEnum ;
     
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     @NotNull
-    private String Colour;
+    private ColourEnum colourEnum;
     
     @ManyToMany(mappedBy = "productEntities")
     private List<ProductTag> productTags;
@@ -91,12 +87,12 @@ public class ProductEntity implements Serializable {
     @JoinColumn
     private List<WishList> wishLists;
 
-    @ManyToOne(optional = true)
+    @ManyToOne(optional = true, cascade = CascadeType.REMOVE)
     @JoinColumn
     private CoordinatedOutfit coordinatedOutfit;
     
     @ManyToMany
-    @JoinColumn(nullable = true)
+    @JoinColumn(nullable = false)
     private List<ShoppingCart> shoppingcarts;
     
     
@@ -105,14 +101,15 @@ public class ProductEntity implements Serializable {
         wishLists = new ArrayList<WishList>();
     }
 
-    public ProductEntity(String productName, String description, BigDecimal unitPrice, Date dateAdded, Integer quantityOnHand, SizeEnum size, String Colour) {
+    public ProductEntity(String productName, String description, BigDecimal unitPrice, Date dateAdded, Integer quantityOnHand, SizeEnum size, ColourEnum colour) {
+        this();
         this.productName = productName;
         this.description = description;
         this.unitPrice = unitPrice;
         this.dateAdded = dateAdded;
         this.quantityOnHand = quantityOnHand;
-        this.size = size;
-        this.Colour = Colour;
+        this.sizeEnum = size;
+        this.colourEnum = colour;
     }
     
     
@@ -252,49 +249,34 @@ public class ProductEntity implements Serializable {
     }
 
     /**
-     * @return the size
+     * @return the sizeEnum
      */
-    public SizeEnum getSize() {
-        return size;
+    public SizeEnum getSizeEnum() {
+        return sizeEnum;
     }
 
     /**
-     * @param size the size to set
+     * @param sizeEnum the sizeEnum to set
      */
-    public void setSize(SizeEnum size) {
-        this.size = size;
+    public void setSizeEnum(SizeEnum sizeEnum) {
+        this.sizeEnum = sizeEnum;
     }
 
-    /**
-     * @return the Colour
-     */
-    public String getColour() {
-        return Colour;
-    }
-
-    /**
-     * @param Colour the Colour to set
-     */
-    public void setColour(String Colour) {
-        this.Colour = Colour;
-    }
-
-    /**
-     * @return the shoppingcarts
-     */
     public List<ShoppingCart> getShoppingcarts() {
         return shoppingcarts;
     }
 
-    /**
-     * @param shoppingcarts the shoppingcarts to set
-     */
     public void setShoppingcarts(List<ShoppingCart> shoppingcarts) {
         this.shoppingcarts = shoppingcarts;
     }
 
-    
+    public ColourEnum getColourEnum() {
+        return colourEnum;
+    }
 
-  
+    public void setColourEnum(ColourEnum colourEnum) {
+        this.colourEnum = colourEnum;
+    }
+
     
 }

@@ -37,6 +37,12 @@ public class SaleTransactionLineItem implements Serializable {
 
     public SaleTransactionLineItem() {
     }
+    
+    public SaleTransactionLineItem(SaleTransaction saleTransaction, ProductEntity productEntity){
+        this();
+        this.saleTransaction = saleTransaction;
+        this.productEntity = productEntity;
+    }
    
     public Long getSaleTransactionLineItemId() {
         return saleTransactionLineItemId;

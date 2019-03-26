@@ -40,6 +40,7 @@ public class CoordinatedOutfit implements Serializable {
     }
 
     public CoordinatedOutfit(Date dateCreated) {
+        this();
         this.dateCreated = dateCreated;
     }
     

@@ -18,12 +18,13 @@ public class ProductTag implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long productTagId;
+    
     @Column(nullable = false, length = 32)
     @NotNull
     @Size(min = 4, max = 32)
     private String tagName;
 
-    @ManyToMany 
+    @ManyToMany
     private ProductEntity productEntity;
     
     public ProductTag() {

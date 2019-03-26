@@ -22,25 +22,17 @@ and open the template in the editor.
 
                 <p:menuitem icon="fa fa-home" url="/index.xhtml" style="text-decoration-line: none;" />
 
-                <p:menuitem value="Cashier Operation" rendered="#{cc.attrs.pageName == 'checkout' ||
-                                                                        cc.attrs.pageName == 'voidRefund' ||
-                                                                        cc.attrs.pageName == 'viewMySaleTransactions'}" />
-
-                <p:menuitem value="Checkout" url="/cashierOperation/checkout.xhtml" rendered="#{cc.attrs.pageName == 'checkout'}" />
-                <p:menuitem value="Void/Refund" url="/cashierOperation/voidRefund.xhtml" rendered="#{cc.attrs.pageName == 'voidRefund'}" />
-                <p:menuitem value="View My Sale Transactions" url="/cashierOperation/viewMySaleTransactions.xhtml" rendered="#{cc.attrs.pageName == 'viewMySaleTransactions'}" />
-
                 <p:menuitem value="System Administration" rendered="#{cc.attrs.pageName == 'productManagement' ||
-                                                                        cc.attrs.pageName == 'staffManagement' ||                                                                        
-                                                                        cc.attrs.pageName == 'searchProductsByName' ||
-                                                                        cc.attrs.pageName == 'filterProductsByCategory' ||
-                                                                        cc.attrs.pageName == 'filterProductsByTags'}" />
+                                                                        cc.attrs.pageName == 'categoryManagement' ||                                                                        
+                                                                        cc.attrs.pageName == 'tagManagement' ||
+                                                                        cc.attrs.pageName == 'outfitManagement' ||
+                                                                        cc.attrs.pageName == 'salesManagement'}" />
 
                 <p:menuitem value="Product Management" url="/systemAdministration/productManagement.xhtml" rendered="#{cc.attrs.pageName == 'productManagement'}" />
-                <p:menuitem value="Staff Management" url="/systemAdministration/staffManagement.xhtml" rendered="#{cc.attrs.pageName == 'staffManagement'}" />                        
-                <p:menuitem value="Search Products by Name" url="/systemAdministration/searchProductsByName.xhtml" rendered="#{cc.attrs.pageName == 'searchProductsByName'}" />
-                <p:menuitem value="Filter Products by Category" url="/systemAdministration/filterProductsByCategory.xhtml" rendered="#{cc.attrs.pageName == 'filterProductsByCategory'}" />
-                <p:menuitem value="Filter Products by Tags" url="/systemAdministration/filterProductsByTags.xhtml" rendered="#{cc.attrs.pageName == 'filterProductsByTags'}" />
+                <p:menuitem value="Staff Management" url="/systemAdministration/categoryManagement.xhtml" rendered="#{cc.attrs.pageName == 'categoryManagement'}" />                        
+                <p:menuitem value="Search Products by Name" url="/systemAdministration/tagManagement.xhtml" rendered="#{cc.attrs.pageName == 'tagManagement'}" />
+                <p:menuitem value="Filter Products by Category" url="/systemAdministration/outfitManagement.xhtml" rendered="#{cc.attrs.pageName == 'outfitManagement'}" />
+                <p:menuitem value="Filter Products by Tags" url="/systemAdministration/salesManagement.xhtml" rendered="#{cc.attrs.pageName == 'salesManagement'}" />
 
             </p:breadCrumb>
         

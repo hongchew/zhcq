@@ -51,7 +51,7 @@ public class Staff implements Serializable {
         this.firstName = firstName;
         this.lastName = lastName;
         this.username = username;
-        this.password = password;
+        setPassword(password);
     }
     
     public Long getStaffId() {

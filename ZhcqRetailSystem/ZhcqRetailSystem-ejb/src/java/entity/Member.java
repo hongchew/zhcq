@@ -67,7 +67,7 @@ public class Member implements Serializable {
     private List<SaleTransaction> saleTransactions;
     
     @NotNull
-    @OneToOne
+    @OneToOne(cascade = CascadeType.REMOVE)
     private ShoppingCart shoppingCart;
 
     public Member() {

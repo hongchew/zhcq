@@ -30,7 +30,7 @@ public class ShoppingCart implements Serializable {
     
     @NotNull
     @Column(nullable = false)
-    @OneToOne(cascade = CascadeType.REMOVE)
+    @OneToOne
     private Member cartOwner; 
     
     

@@ -17,14 +17,11 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.NonUniqueResultException;
 import javax.persistence.PersistenceContext;
-import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
-import util.exception.CreateNewProductException;
-import util.exception.CreateNewWishListException;
 import util.exception.DeleteWishListException;
 import util.exception.InputDataValidationException;
 import util.exception.MemberNotFoundException;
@@ -59,47 +56,6 @@ public class WishListController implements WishListControllerLocal {
     {
         validatorFactory = Validation.buildDefaultValidatorFactory();
         validator = validatorFactory.getValidator();
-    }
-    
-    @Override
-    public WishList createNewWishList(WishList newWishList, Long memberId) throws InputDataValidationException, CreateNewWishListException
-    {
-        Set<ConstraintViolation<WishList>>constraintViolations = validator.validate(newWishList);
-        
-        if(constraintViolations.isEmpty())
-        {
-           try{
-               if(memberId == null){
-                   throw new CreateNewWishListException("The new wishList must be associated with a memember!");
-               } else {
-                   Member newMember = memberControllerLocal.retrieveMemberById(memberId); 
-                   
-                    em.persist(newWishList);
-                    newWishList.setMember(newMember);
-                    em.flush();
-           
-                    return newWishList;
-               }
-                   
-           } catch (PersistenceException ex){
-               if(ex.getCause() != null && 
-                        ex.getCause().getCause() != null &&
-                        ex.getCause().getCause().getClass().getSimpleName().equals("SQLIntegrityConstraintViolationException"))
-                {
-                    throw new CreateNewWishListException("WishList already exist");
-                }
-                else
-                {
-                    throw new CreateNewWishListException("An unexpected error has occurred: " + ex.getMessage());
-                }  
-           } catch(Exception ex)
-            {
-                throw new CreateNewWishListException("An unexpected error has occurred: " + ex.getMessage());
-            }
-        } else { 
-             throw new InputDataValidationException(prepareInputDataValidationErrorsMessage(constraintViolations));
-        }
-        
     }
     
     @Override

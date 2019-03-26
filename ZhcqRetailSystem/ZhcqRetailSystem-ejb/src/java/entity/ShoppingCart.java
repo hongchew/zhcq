@@ -28,8 +28,8 @@ public class ShoppingCart implements Serializable {
     
     @NotNull
     @Column(nullable = false)
-    @OneToOne
-    private Member cartOwner; 
+    @OneToOne(mappedBy ="shoppingCart")
+    private Member member; 
     
     
     @ManyToMany(mappedBy = "shoppingCart")
@@ -39,9 +39,10 @@ public class ShoppingCart implements Serializable {
         products = new ArrayList<>();
     }
 
+
     public ShoppingCart(Member cartOwner) {
         this();
-        this.cartOwner = cartOwner;
+        this.member = cartOwner;
     }
     
     public Long getCartId() {
@@ -51,21 +52,21 @@ public class ShoppingCart implements Serializable {
     public void setCartId(Long cartId) {
         this.cartId = cartId;
     }
-
-    public Member getCartOwner() {
-        return cartOwner;
-    }
-
-    public void setCartOwner(Member cartOwner) {
-        this.cartOwner = cartOwner;
-    }
-
+    
     public List<ProductEntity> getProducts() {
         return products;
     }
 
     public void setProducts(List<ProductEntity> products) {
         this.products = products;
+    }
+
+    public Member getMember() {
+        return member;
+    }
+
+    public void setMember(Member member) {
+        this.member = member;
     }
     
 }

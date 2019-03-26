@@ -6,6 +6,7 @@
 package ejb.stateless;
 
 import entity.Member;
+import entity.ShoppingCart;
 import entity.WishList;
 import java.util.Set;
 import javax.ejb.Local;
@@ -26,7 +27,6 @@ import util.exception.MemberNotFoundException;
 import util.exception.UpdateMemberException;
 import util.security.CryptographicHelper;
 
-
 @Stateless
 @Local(MemberSessionBeanLocal.class)
 public class MemberController implements MemberSessionBeanLocal {
@@ -34,154 +34,119 @@ public class MemberController implements MemberSessionBeanLocal {
     @PersistenceContext(unitName = "ZhcqRetailSystem-ejbPU")
     private EntityManager em;
 
-   private final ValidatorFactory validatorFactory;
+    private final ValidatorFactory validatorFactory;
     private final Validator validator;
-    
-    
-    
-    public MemberController()
-    {
+
+    public MemberController() {
         validatorFactory = Validation.buildDefaultValidatorFactory();
         validator = validatorFactory.getValidator();
     }
-    
-    
+
     @Override
-    public Member createNewMember(Member newMember) throws InputDataValidationException
-    {        
+    public Member createNewMember(Member newMember) throws InputDataValidationException {
         Set<ConstraintViolation<Member>> constraintViolations = validator.validate(newMember);
-        
-        if(constraintViolations.isEmpty())
-        {
+
+        if (constraintViolations.isEmpty()) {
             em.persist(newMember);
+
+            WishList wishList = new WishList();
+            ShoppingCart shoppingCart = new ShoppingCart();
+            newMember.setShoppingCart(shoppingCart);
+            newMember.setWishList(wishList);
+            wishList.setMember(newMember);
+            shoppingCart.setMember(newMember);
             em.flush();
 
             return newMember;
-        }
-        else
-        {
+        } else {
             throw new InputDataValidationException(prepareInputDataValidationErrorsMessage(constraintViolations));
         }
     }
-    
-    
-    
+
     @Override
-    public Member retrieveMemberById(Long memberId) throws MemberNotFoundException
-    {
+    public Member retrieveMemberById(Long memberId) throws MemberNotFoundException {
         Member memberEntity = em.find(Member.class, memberId);
-        
-        if(memberEntity != null)
-        {
+
+        if (memberEntity != null) {
             memberEntity.getSaleTransactions().size();
-            
+
             return memberEntity;
-        }
-        else
-        {
+        } else {
             throw new MemberNotFoundException("Product ID " + memberId + " does not exist!");
-        }               
+        }
     }
-    
+
     @Override
-    public Member retrieveMemberByUsername(String username) throws MemberNotFoundException
-    {
+    public Member retrieveMemberByUsername(String username) throws MemberNotFoundException {
         Query query = em.createQuery("SELECT m FROM Member m WHERE m.username = :inUsername");
         query.setParameter("inUsername", username);
-        
-        try
-        {
-            return (Member)query.getSingleResult();
-        }
-        catch(NoResultException | NonUniqueResultException ex)
-        {
+
+        try {
+            return (Member) query.getSingleResult();
+        } catch (NoResultException | NonUniqueResultException ex) {
             throw new MemberNotFoundException("Member Username " + username + " does not exist!");
         }
     }
-    
+
     @Override
-     public Member memberLogin(String username, String password) throws InvalidLoginCredentialException
-    {
-        try
-        {
+    public Member memberLogin(String username, String password) throws InvalidLoginCredentialException {
+        try {
             Member member = retrieveMemberByUsername(username);
             String passwordHash = CryptographicHelper.getInstance().byteArrayToHexString(CryptographicHelper.getInstance().doMD5Hashing(password + member.getSalt()));
-            
-            if(member.getPassword().equals(passwordHash))
-            {
-                member.getSaleTransactions().size();                
+
+            if (member.getPassword().equals(passwordHash)) {
+                member.getSaleTransactions().size();
                 return member;
-            }
-            else
-            {
+            } else {
                 throw new InvalidLoginCredentialException("Username does not exist or invalid password!");
             }
-        }
-        catch(MemberNotFoundException ex)
-        {
+        } catch (MemberNotFoundException ex) {
             throw new InvalidLoginCredentialException("Username does not exist or invalid password!");
         }
     }
-    
-    
+
     @Override
-     public void updateMember(Member memberEntity) throws InputDataValidationException, MemberNotFoundException, UpdateMemberException
-    {
+    public void updateMember(Member memberEntity) throws InputDataValidationException, MemberNotFoundException, UpdateMemberException {
         // Updated in v4.1 to update selective attributes instead of merging the entire state passed in from the client
         // Also check for existing staff before proceeding with the update
-        
+
         // Updated in v4.2 with bean validation
-        
-        Set<ConstraintViolation<Member>>constraintViolations = validator.validate(memberEntity);
-        
-        if(constraintViolations.isEmpty())
-        {        
-            if(memberEntity.getMemberId() != null)
-            {
+        Set<ConstraintViolation<Member>> constraintViolations = validator.validate(memberEntity);
+
+        if (constraintViolations.isEmpty()) {
+            if (memberEntity.getMemberId() != null) {
                 Member memberEntityToUpdate = retrieveMemberById(memberEntity.getMemberId());
-                
-                if(memberEntityToUpdate.getUsername().equals(memberEntity.getUsername()))
-                {
+
+                if (memberEntityToUpdate.getUsername().equals(memberEntity.getUsername())) {
                     memberEntityToUpdate.setFirstName(memberEntity.getFirstName());
-                    memberEntityToUpdate.setLastName(memberEntity.getLastName());               
+                    memberEntityToUpdate.setLastName(memberEntity.getLastName());
                     // Username and password are deliberately NOT updated to demonstrate that client is not allowed to update account credential through this business method
-                }
-                else
-                {
+                } else {
                     throw new UpdateMemberException("Username of member record to be updated does not match the existing record");
                 }
-            }
-            else
-            {
+            } else {
                 throw new MemberNotFoundException("Member ID not provided for staff to be updated");
             }
-        }
-        else
-        {
+        } else {
             throw new InputDataValidationException(prepareInputDataValidationErrorsMessage(constraintViolations));
         }
     }
-     
-  
-    @Override
-    public void deleteMember(Long memberId) throws MemberNotFoundException
-    {
-           Member member = retrieveMemberById(memberId);
-           em.remove(member);
-           System.out.println("Member with member id " + memberId + " deleted");
-    }
-     
 
-    private String prepareInputDataValidationErrorsMessage(Set<ConstraintViolation<Member>>constraintViolations)
-    {
+    @Override
+    public void deleteMember(Long memberId) throws MemberNotFoundException {
+        Member member = retrieveMemberById(memberId);
+        em.remove(member);
+        System.out.println("Member with member id " + memberId + " deleted");
+    }
+
+    private String prepareInputDataValidationErrorsMessage(Set<ConstraintViolation<Member>> constraintViolations) {
         String msg = "Input data validation error!:";
-            
-        for(ConstraintViolation constraintViolation:constraintViolations)
-        {
+
+        for (ConstraintViolation constraintViolation : constraintViolations) {
             msg += "\n\t" + constraintViolation.getPropertyPath() + " - " + constraintViolation.getInvalidValue() + "; " + constraintViolation.getMessage();
         }
-        
+
         return msg;
     }
-   
+
 }

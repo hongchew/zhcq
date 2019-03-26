@@ -32,6 +32,9 @@ public class WishList implements Serializable {
     @ManyToMany(mappedBy = "wishList")
     private List<ProductEntity> productEntities;
     
+    @OneToOne
+    private ShoppingCart shoppingCart;
+    
     public WishList() {
         productEntities = new ArrayList<ProductEntity>();
     }

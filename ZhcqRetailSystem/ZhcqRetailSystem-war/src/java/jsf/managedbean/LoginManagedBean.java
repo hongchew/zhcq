@@ -22,24 +22,24 @@ public class LoginManagedBean {
 
     @EJB(name = "StaffControllerLocal")
     private StaffControllerLocal staffControllerLocal;
-    
+
     private String username;
     private String password;
-    
+
     public LoginManagedBean() {
     }
-    
+
     @PostConstruct
-    public void postConstruct(){
+    public void postConstruct() {
     }
-    
+
     public void login(ActionEvent event) throws IOException {
         try {
             Staff staff = staffControllerLocal.staffLogin(username, password);
             FacesContext.getCurrentInstance().getExternalContext().getSession(true);
             FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("currentStaff", staff);
             FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("isLogin", true);
-            FacesContext.getCurrentInstance().getExternalContext().redirect(FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath() + "/index.xhtml");           
+            FacesContext.getCurrentInstance().getExternalContext().redirect(FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath() + "/index.xhtml");
         } catch (InvalidLoginCredentialException ex) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Invalid login credential: " + ex.getMessage(), null));
         }
@@ -50,6 +50,7 @@ public class LoginManagedBean {
         ((HttpSession)FacesContext.getCurrentInstance().getExternalContext().getSession(true)).invalidate();
         FacesContext.getCurrentInstance().getExternalContext().redirect(FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath() + "/index.xhtml");
     }
+
 
     public String getUsername() {
         return username;
@@ -66,5 +67,5 @@ public class LoginManagedBean {
     public void setPassword(String password) {
         this.password = password;
     }
-    
+
 }

@@ -9,11 +9,39 @@
     
      <ui:define name="content">
          
-        <div>
-            
-            <h3></h3>
-            
-        </div>
+        <ez:Breadcrumb pageName="index" />
+        
+        <h:panelGroup>
+            <article>
+                <h3>zhcq Fashion Retail</h3>
+                <br/>
+                <h3>Promotion Of the Week</h3>                    
+                <p>                    
+                    <ui:repeat value="#{utilManagedBean.promotions}" var="promotion">
+                        
+                        <tr>
+                            <th>Discount Rate</th>
+                            <th>Start Date</th>
+                            <th>End Date</th>
+                        </tr>
+                        
+                        <tr>
+                            <td>#{promotion.discountRate}</td>
+                        </tr>
+                        
+                        <tr>
+                            <td>#{utilManagedBean.formatDate(promotion.startDate)}</td>
+                        </tr>
+                        
+                        <tr>
+                            <td>#{utilManagedBean.formatDate(promotion.endDate)}</td>
+                        </tr>
+
+                    </ui:repeat>                                                              
+                </p>
+            </article>
+        </h:panelGroup>
+        
          
     </ui:define>
 

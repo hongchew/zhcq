@@ -91,7 +91,7 @@ public class ProductEntity implements Serializable {
     @JoinColumn
     private List<WishList> wishLists;
 
-    @ManyToOne(optional = true)
+    @ManyToOne(optional = true, cascade = CascadeType.REMOVE)
     @JoinColumn
     private CoordinatedOutfit coordinatedOutfit;
     
@@ -106,6 +106,7 @@ public class ProductEntity implements Serializable {
     }
 
     public ProductEntity(String productName, String description, BigDecimal unitPrice, Date dateAdded, Integer quantityOnHand, SizeEnum size, String Colour) {
+        this();
         this.productName = productName;
         this.description = description;
         this.unitPrice = unitPrice;

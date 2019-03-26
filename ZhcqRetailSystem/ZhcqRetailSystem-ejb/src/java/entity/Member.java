@@ -61,13 +61,12 @@ public class Member implements Serializable {
     private String salt;
     
     
-    @OneToOne(cascade = CascadeType.REMOVE)
+    @OneToOne(cascade = {CascadeType.REMOVE,})
     private WishList wishList;
     
     @OneToMany
     private List<SaleTransaction> saleTransactions;
     
-    @NotNull
     @OneToOne(cascade = CascadeType.REMOVE)
     private ShoppingCart shoppingCart;
 
@@ -78,6 +77,8 @@ public class Member implements Serializable {
     }
 
     public Member(String firstName, String lastName, String username, String password, Integer loyaltyPoints) {
+        this();
+        
         this.firstName = firstName;
         this.lastName = lastName;
         this.username = username;

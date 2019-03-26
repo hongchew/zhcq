@@ -40,6 +40,7 @@ public class ShoppingCart implements Serializable {
     }
 
     public ShoppingCart(Member cartOwner) {
+        this();
         this.cartOwner = cartOwner;
     }
     

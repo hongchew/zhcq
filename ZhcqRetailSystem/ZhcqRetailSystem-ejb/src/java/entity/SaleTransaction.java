@@ -39,7 +39,10 @@ public class SaleTransaction implements Serializable {
         saleTransactionLineItems = new ArrayList<SaleTransactionLineItem>();
     }
     
-    
+    public SaleTransaction(Member member){
+        this();
+        this.member = member;
+    }
 
     public Long getSaleTransactionId() {
         return saleTransactionId;
@@ -47,6 +50,34 @@ public class SaleTransaction implements Serializable {
 
     public void setSaleTransactionId(Long saleTransactionId) {
         this.saleTransactionId = saleTransactionId;
+    }
+
+    /**
+     * @return the member
+     */
+    public Member getMember() {
+        return member;
+    }
+
+    /**
+     * @param member the member to set
+     */
+    public void setMember(Member member) {
+        this.member = member;
+    }
+
+    /**
+     * @return the saleTransactionLineItems
+     */
+    public List<SaleTransactionLineItem> getSaleTransactionLineItems() {
+        return saleTransactionLineItems;
+    }
+
+    /**
+     * @param saleTransactionLineItems the saleTransactionLineItems to set
+     */
+    public void setSaleTransactionLineItems(List<SaleTransactionLineItem> saleTransactionLineItems) {
+        this.saleTransactionLineItems = saleTransactionLineItems;
     }
     
 }

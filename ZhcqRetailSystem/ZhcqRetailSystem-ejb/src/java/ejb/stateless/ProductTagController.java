@@ -12,6 +12,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceException;
+import javax.persistence.Query;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
@@ -20,6 +21,7 @@ import util.exception.CreateNewTagException;
 import util.exception.DeleteTagException;
 import util.exception.InputDataValidationException;
 import util.exception.TagNotFoundException;
+import util.exception.UpdateTagException;
 
 
 @Stateless
@@ -93,6 +95,34 @@ public class ProductTagController implements ProductTagControllerLocal {
         else
         {
             throw new InputDataValidationException(prepareInputDataValidationErrorsMessage(constraintViolations));
+        }
+    }
+    
+    public void updateTag(ProductTag productTag) throws InputDataValidationException, TagNotFoundException, UpdateTagException
+    {
+        Set<ConstraintViolation<ProductTag>>constraintViolations = validator.validate(productTag);
+        
+        if(constraintViolations.isEmpty())
+        {
+            if(productTag.getProductTagId() != null)
+            {
+                ProductTag tagToUpdate = retrieveTagByTagId(productTag.getProductTagId());
+                Query query = em.createQuery("SELECT pt FROM ProductTag pt WHERE pt.tagName = :inName AND pt.productTagId <> :inTagId");
+                query.setParameter("inName", productTag.getTagName());
+                query.setParameter("inTagId", productTag.getProductTagId());
+                
+                if(!query.getResultList().isEmpty())
+                {
+                    throw new UpdateTagException("The name of the tag to be updated is duplicated");
+                }
+                
+                tagToUpdate.setTagName(productTag.getTagName());
+                
+            } else {
+                throw new TagNotFoundException("Tag ID not provided for tag to be updated");
+            }
+        } else {
+            throw new InputDataValidationException("Tag ID to be updated not provided");
         }
     }
     

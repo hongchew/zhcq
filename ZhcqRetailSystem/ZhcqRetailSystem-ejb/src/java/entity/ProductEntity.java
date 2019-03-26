@@ -95,9 +95,9 @@ public class ProductEntity implements Serializable {
     @JoinColumn
     private CoordinatedOutfit coordinatedOutfit;
     
-    @ManyToOne(optional = true)
+    @ManyToMany
     @JoinColumn(nullable = true)
-    private ShoppingCart shoppingcart;
+    private List<ShoppingCart> shoppingcarts;
     
     
     public ProductEntity() {
@@ -280,18 +280,20 @@ public class ProductEntity implements Serializable {
     }
 
     /**
-     * @return the shoppingcart
+     * @return the shoppingcarts
      */
-    public ShoppingCart getShoppingcart() {
-        return shoppingcart;
+    public List<ShoppingCart> getShoppingcarts() {
+        return shoppingcarts;
     }
 
     /**
-     * @param shoppingcart the shoppingcart to set
+     * @param shoppingcarts the shoppingcarts to set
      */
-    public void setShoppingcart(ShoppingCart shoppingcart) {
-        this.shoppingcart = shoppingcart;
+    public void setShoppingcarts(List<ShoppingCart> shoppingcarts) {
+        this.shoppingcarts = shoppingcarts;
     }
+
+    
 
   
     

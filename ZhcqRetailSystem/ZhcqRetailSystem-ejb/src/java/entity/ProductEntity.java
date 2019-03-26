@@ -13,7 +13,6 @@ import javax.persistence.Column;
 
 import java.util.ArrayList;
 import java.util.List;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -82,7 +81,7 @@ public class ProductEntity implements Serializable {
     
     @Column(nullable = false)
     @NotNull
-    private String Colour;
+    private String colour;
     
     @ManyToMany(mappedBy = "productEntities")
     private List<ProductTag> productTags;
@@ -96,7 +95,7 @@ public class ProductEntity implements Serializable {
     private CoordinatedOutfit coordinatedOutfit;
     
     @ManyToMany
-    @JoinColumn(nullable = true)
+    @JoinColumn(nullable = false)
     private List<ShoppingCart> shoppingcarts;
     
     
@@ -270,14 +269,14 @@ public class ProductEntity implements Serializable {
      * @return the Colour
      */
     public String getColour() {
-        return Colour;
+        return colour;
     }
 
     /**
      * @param Colour the Colour to set
      */
     public void setColour(String Colour) {
-        this.Colour = Colour;
+        this.colour = Colour;
     }
 
     /**

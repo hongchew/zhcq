@@ -12,7 +12,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 
 /**
@@ -29,7 +29,7 @@ public class WishList implements Serializable {
     @OneToOne(mappedBy="wishList")
     private Member member;
     
-    @OneToMany(mappedBy = "wishList")
+    @ManyToMany(mappedBy = "wishList")
     private List<ProductEntity> productEntities;
     
     public WishList() {

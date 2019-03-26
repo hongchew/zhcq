@@ -49,7 +49,7 @@ public class MemberController implements MemberSessionBeanLocal {
     @Override
     public Member createNewMember(Member newMember) throws InputDataValidationException
     {        
-        Set<ConstraintViolation<Member>>constraintViolations = validator.validate(newMember);
+        Set<ConstraintViolation<Member>> constraintViolations = validator.validate(newMember);
         
         if(constraintViolations.isEmpty())
         {
@@ -69,11 +69,6 @@ public class MemberController implements MemberSessionBeanLocal {
     @Override
     public Member retrieveMemberById(Long memberId) throws MemberNotFoundException
     {
-        if(memberId == null)
-        {
-            throw new MemberNotFoundException("Member ID not provided");
-        }
-        
         Member memberEntity = em.find(Member.class, memberId);
         
         if(memberEntity != null)
@@ -169,19 +164,11 @@ public class MemberController implements MemberSessionBeanLocal {
      
   
     @Override
-    public void deleteMember(Long memberId) throws MemberNotFoundException, DeleteMemberException
+    public void deleteMember(Long memberId) throws MemberNotFoundException
     {
-        Member memberEntityToRemove = retrieveMemberById(memberId);
-        
-        if(memberEntityToRemove.getSaleTransactions().isEmpty())
-        {
-            em.remove(memberEntityToRemove);
-        }
-        else
-        {
-            // New in v4.1 to prevent deleting staff with existing sale transaction(s)
-            throw new DeleteMemberException("Member ID " + memberId + " is associated with existing sale transaction(s) and cannot be deleted!");
-        }
+           Member member = retrieveMemberById(memberId);
+           em.remove(member);
+           System.out.println("Member with member id " + memberId + " deleted");
     }
      
 

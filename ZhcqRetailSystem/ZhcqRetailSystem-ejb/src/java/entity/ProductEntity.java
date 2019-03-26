@@ -30,6 +30,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import javax.persistence.ManyToOne;
+import util.enumeration.ColourEnum;
 import util.enumeration.SizeEnum;
 
 
@@ -49,11 +50,13 @@ public class ProductEntity implements Serializable {
     @Size(max = 128)
     private String description;
     
+    @Enumerated(EnumType.STRING)
     @Column
     private SizeEnum sizeEnum;
     
+    @Enumerated(EnumType.STRING)
     @Column
-    private String color;
+    private ColourEnum colorEnum;
     
     @Column(nullable = false, precision = 11, scale = 2)
     @NotNull
@@ -264,19 +267,6 @@ public class ProductEntity implements Serializable {
         this.size = size;
     }
 
-    /**
-     * @return the Colour
-     */
-    public String getColour() {
-        return colour;
-    }
-
-    /**
-     * @param Colour the Colour to set
-     */
-    public void setColour(String Colour) {
-        this.colour = Colour;
-    }
 
     /**
      * @return the shoppingcarts
@@ -290,6 +280,14 @@ public class ProductEntity implements Serializable {
      */
     public void setShoppingcarts(List<ShoppingCart> shoppingcarts) {
         this.shoppingcarts = shoppingcarts;
+    }
+
+    public ColourEnum getColorEnum() {
+        return colorEnum;
+    }
+
+    public void setColorEnum(ColourEnum colorEnum) {
+        this.colorEnum = colorEnum;
     }
 
     

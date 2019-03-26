@@ -9,7 +9,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -19,6 +18,7 @@ public class ProductTag implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long productTagId;
+    
     @Column(nullable = false, length = 32)
     @NotNull
     @Size(min = 4, max = 32)
@@ -52,16 +52,10 @@ public class ProductTag implements Serializable {
         this.tagName = tagName;
     }
 
-    /**
-     * @return the productEntities
-     */
     public List<ProductEntity> getProductEntities() {
         return productEntities;
     }
-
-    /**
-     * @param productEntities the productEntities to set
-     */
+    
     public void setProductEntities(List<ProductEntity> productEntities) {
         this.productEntities = productEntities;
     }

@@ -50,6 +50,12 @@ public class ProductEntity implements Serializable {
     @Size(max = 128)
     private String description;
     
+    @Column
+    private SizeEnum sizeEnum;
+    
+    @Column
+    private String color;
+    
     @Column(nullable = false, precision = 11, scale = 2)
     @NotNull
     @DecimalMin("0.00")
@@ -79,7 +85,7 @@ public class ProductEntity implements Serializable {
     private String Colour;
     
     @ManyToMany(mappedBy = "productEntities")
-    private List<ProductTag> productTags; 
+    private List<ProductTag> productTags;
     
     @ManyToMany(cascade = CascadeType.REMOVE)
     @JoinColumn

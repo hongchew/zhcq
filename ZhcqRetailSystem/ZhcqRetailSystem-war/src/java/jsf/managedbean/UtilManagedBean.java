@@ -8,9 +8,7 @@ package jsf.managedbean;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.enterprise.context.RequestScoped;
-import javax.faces.bean.ManagedBean;
 import javax.inject.Named;
-
 
 
 @Named(value = "utilManagedBean")

@@ -51,6 +51,11 @@ public class Member implements Serializable {
     //@Size(min = 8, max = 32)
     private String password;
     
+    @Column(nullable = false)
+    @NotNull
+    private Integer loyaltyPoints;
+
+    
     @Column(columnDefinition = "CHAR(32) NOT NULL")
     private String salt;
     
@@ -62,18 +67,19 @@ public class Member implements Serializable {
     private List<SaleTransaction> saleTransactions;
     
     @NotNull
-    @OneToOne
+    @OneToOne(cascade = CascadeType.REMOVE)
     private ShoppingCart shoppingCart;
 
     public Member() {
         saleTransactions = new ArrayList<SaleTransaction>();
     }
 
-    public Member(String firstName, String lastName, String username, String password) {
+    public Member(String firstName, String lastName, String username, String password, Integer loyaltyPoints) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.username = username;
         this.password = password;
+        this.loyaltyPoints = loyaltyPoints;
     }
     
     
@@ -169,6 +175,14 @@ public class Member implements Serializable {
      */
     public void setPassword(String password) {
         this.password = password;
+    }
+    
+    public Integer getLoyaltyPoints() {
+        return loyaltyPoints;
+    }
+
+    public void setLoyaltyPoints(Integer loyaltyPoints) {
+        this.loyaltyPoints = loyaltyPoints;
     }
 
     /**

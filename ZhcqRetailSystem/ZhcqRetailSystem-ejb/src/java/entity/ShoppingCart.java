@@ -14,7 +14,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 
@@ -28,11 +28,11 @@ public class ShoppingCart implements Serializable {
     
     @NotNull
     @Column(nullable = false)
-    @OneToOne(cascade = CascadeType.REMOVE)
+    @OneToOne
     private Member cartOwner; 
     
     
-    @OneToMany(mappedBy = "shoppingCart")
+    @ManyToMany(mappedBy = "shoppingCart")
     private List<ProductEntity> products; 
 
     public ShoppingCart() {

@@ -54,6 +54,13 @@ public class ProductController implements ProductControllerLocal {
     }
     
     @Override
+    public List<ProductEntity> retrieveAllProducts(){
+        Query q = em.createQuery("SELECT p FROM ProductEntity p");
+        
+        return q.getResultList();
+    }
+    
+    @Override
     public ProductEntity retrieveProductById(Long id) throws ProductNotFoundException{
         ProductEntity product = em.find(ProductEntity.class, id);
         if(product != null) {
@@ -203,7 +210,7 @@ public class ProductController implements ProductControllerLocal {
     }
     
     @Override
-     public void updateProduct(ProductEntity productEntity, Long categoryId, List<Long> tagIds) throws InputDataValidationException, ProductNotFoundException, CategoryNotFoundException, TagNotFoundException, UpdateProductException
+     public long updateProduct(ProductEntity productEntity, Long categoryId, List<Long> tagIds) throws InputDataValidationException, ProductNotFoundException, CategoryNotFoundException, TagNotFoundException, UpdateProductException
     {
         Set<ConstraintViolation<ProductEntity>>constraintViolations = validator.validate(productEntity);
         
@@ -235,13 +242,16 @@ public class ProductController implements ProductControllerLocal {
                             productEntityToUpdate.addTag(tagEntity);
                         }
                     }
+                    
                     productEntityToUpdate.setProductName(productEntity.getProductName());
                     productEntityToUpdate.setDescription(productEntity.getDescription());
                     productEntityToUpdate.setUnitPrice(productEntity.getUnitPrice());
                     productEntityToUpdate.setQuantityOnHand(productEntity.getQuantityOnHand());
                     productEntityToUpdate.setSizeEnum(productEntity.getSizeEnum());
                     productEntityToUpdate.setColourEnum(productEntity.getColourEnum());
+                    em.flush();
                     
+                    return productEntityToUpdate.getProductId();
                 
                 } else {
                     throw new UpdateProductException("Product ID does not match record in database!");

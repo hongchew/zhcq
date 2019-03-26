@@ -111,7 +111,7 @@ public class ProductEntity implements Serializable {
         this.dateAdded = dateAdded;
         this.quantityOnHand = quantityOnHand;
         this.size = size;
-        this.Colour = Colour;
+        this.colour = Colour;
     }
     
     

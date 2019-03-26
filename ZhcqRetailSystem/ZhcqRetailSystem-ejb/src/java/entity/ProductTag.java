@@ -2,13 +2,13 @@
 package entity;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -24,8 +24,8 @@ public class ProductTag implements Serializable {
     @Size(min = 4, max = 32)
     private String tagName;
 
-    @ManyToMany
-    private ProductEntity productEntity;
+    @ManyToMany 
+    private List<ProductEntity> productEntities;
     
     public ProductTag() {
     }
@@ -52,5 +52,14 @@ public class ProductTag implements Serializable {
         this.tagName = tagName;
     }
 
+    public List<ProductEntity> getProductEntities() {
+        return productEntities;
+    }
+    
+    public void setProductEntities(List<ProductEntity> productEntities) {
+        this.productEntities = productEntities;
+    }
+
+    
     
 }

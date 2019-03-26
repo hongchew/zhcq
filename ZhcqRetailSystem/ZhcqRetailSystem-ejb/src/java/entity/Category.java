@@ -35,6 +35,11 @@ public class Category implements Serializable {
     @NotNull
     @Size(max = 32)
     private String categoryName;
+    
+    @Column(nullable = false, length = 128)
+    @NotNull
+    @Size(max = 128)
+    private String description;
 
     @OneToMany(mappedBy ="categoryEntity")
     private List<ProductEntity> productEntities;
@@ -75,6 +80,20 @@ public class Category implements Serializable {
   
     public void setProductEntities(List<ProductEntity> productEntities) {
         this.productEntities = productEntities;
+    }
+
+    /**
+     * @return the description
+     */
+    public String getDescription() {
+        return description;
+    }
+
+    /**
+     * @param description the description to set
+     */
+    public void setDescription(String description) {
+        this.description = description;
     }
     
 }

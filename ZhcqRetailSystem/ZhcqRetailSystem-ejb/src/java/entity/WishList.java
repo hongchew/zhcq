@@ -43,5 +43,67 @@ public class WishList implements Serializable {
     public void setWishListId(Long wishListId) {
         this.wishListId = wishListId;
     } 
+
+    /**
+     * @return the member
+     */
+    public Member getMember() {
+        return member;
+    }
+
+    /**
+     * @param member the member to set
+     */
+    public void setMember(Member member) {
+        this.member = member;
+    }
+
+    /**
+     * @return the productEntities
+     */
+    public List<ProductEntity> getProductEntities() {
+        return productEntities;
+    }
+
+    /**
+     * @param productEntities the productEntities to set
+     */
+    public void setProductEntities(List<ProductEntity> productEntities) {
+        this.productEntities = productEntities;
+    }
+    
+    public void addProduct(ProductEntity productEntity)
+    {
+        if(productEntity != null)
+        {
+            if(!this.productEntities.contains(productEntity))
+            {
+                this.productEntities.add(productEntity);
+                
+                if(!productEntity.getWishLists().contains(this))
+                {
+                    productEntity.getWishLists().add(this);
+                }
+        
+            }
+        }
+    }
+    
+    public void removeProduct(ProductEntity productEntity)
+    {
+        if(productEntity != null)
+        {
+            if(!this.productEntities.contains(productEntity))
+            {
+                this.productEntities.remove(productEntity);
+                
+                if(!productEntity.getWishLists().contains(this))
+                {
+                    productEntity.getWishLists().remove(this);
+                }
+        
+            }
+        }
+    }
     
 }

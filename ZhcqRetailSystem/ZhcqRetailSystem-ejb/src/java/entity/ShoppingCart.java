@@ -22,8 +22,6 @@ import javax.validation.constraints.NotNull;
 @Entity
 public class ShoppingCart implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long cartId;
@@ -52,35 +50,19 @@ public class ShoppingCart implements Serializable {
     public void setCartId(Long cartId) {
         this.cartId = cartId;
     }
-    @Override
-    public String toString() {
-        return "entity.ShoppingCart[ id=" + cartId + " ]";
-    }
 
-    /**
-     * @return the cartOwner
-     */
     public Member getCartOwner() {
         return cartOwner;
     }
 
-    /**
-     * @param cartOwner the cartOwner to set
-     */
     public void setCartOwner(Member cartOwner) {
         this.cartOwner = cartOwner;
     }
 
-    /**
-     * @return the products
-     */
     public List<ProductEntity> getProducts() {
         return products;
     }
 
-    /**
-     * @param products the products to set
-     */
     public void setProducts(List<ProductEntity> products) {
         this.products = products;
     }

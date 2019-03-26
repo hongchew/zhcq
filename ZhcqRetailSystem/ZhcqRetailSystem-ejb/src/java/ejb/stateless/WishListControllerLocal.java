@@ -32,5 +32,9 @@ public interface WishListControllerLocal {
     public void updateWishList(WishList wishlist, List<Long> productEntityIds) throws InputDataValidationException, WishListNotFoundException, UpdateWishListException, ProductNotFoundException;
 
     public WishList retrieveWishListByWishListId(Long wishlistId) throws WishListNotFoundException;
+
+    public void addProductToWishlist(Long memberId, Long pdtId) throws MemberNotFoundException, ProductNotFoundException;
+
+    public void removeProductFromWishlist(Long memberId, Long pdtId) throws MemberNotFoundException, ProductNotFoundException;
     
 }

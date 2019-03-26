@@ -95,6 +95,11 @@ public class ProductEntity implements Serializable {
     @JoinColumn
     private CoordinatedOutfit coordinatedOutfit;
     
+    @ManyToOne(optional = true)
+    @JoinColumn(nullable = true)
+    private ShoppingCart shoppingcart;
+    
+    
     public ProductEntity() {
         productTags = new ArrayList<>();
         quantityOnHand = 0;
@@ -273,6 +278,20 @@ public class ProductEntity implements Serializable {
      */
     public void setColour(String Colour) {
         this.Colour = Colour;
+    }
+
+    /**
+     * @return the shoppingcart
+     */
+    public ShoppingCart getShoppingcart() {
+        return shoppingcart;
+    }
+
+    /**
+     * @param shoppingcart the shoppingcart to set
+     */
+    public void setShoppingcart(ShoppingCart shoppingcart) {
+        this.shoppingcart = shoppingcart;
     }
 
   

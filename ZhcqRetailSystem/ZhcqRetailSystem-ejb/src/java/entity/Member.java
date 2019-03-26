@@ -59,10 +59,23 @@ public class Member implements Serializable {
     
     @OneToMany
     private List<SaleTransaction> saleTransactions;
+    
+    @NotNull
+    @OneToOne
+    private ShoppingCart shoppingCart;
 
     public Member() {
         saleTransactions = new ArrayList<SaleTransaction>();
     }
+
+    public Member(String firstName, String lastName, String username, String password) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.username = username;
+        this.password = password;
+    }
+    
+    
     
 
     public Long getMemberId() {
@@ -169,6 +182,20 @@ public class Member implements Serializable {
      */
     public void setSalt(String salt) {
         this.salt = salt;
+    }
+
+    /**
+     * @return the shoppingCart
+     */
+    public ShoppingCart getShoppingCart() {
+        return shoppingCart;
+    }
+
+    /**
+     * @param shoppingCart the shoppingCart to set
+     */
+    public void setShoppingCart(ShoppingCart shoppingCart) {
+        this.shoppingCart = shoppingCart;
     }
 
     

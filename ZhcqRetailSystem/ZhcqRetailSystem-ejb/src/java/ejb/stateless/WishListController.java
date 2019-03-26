@@ -140,7 +140,8 @@ public class WishListController implements WishListControllerLocal {
         return msg;
     }
     
-    private void addProductToWishlist(Long memberId, Long pdtId) throws MemberNotFoundException, ProductNotFoundException{
+    @Override
+    public void addProductToWishlist(Long memberId, Long pdtId) throws MemberNotFoundException, ProductNotFoundException{
         Member member = memberControllerLocal.retrieveMemberById(memberId);
         ProductEntity pdt = productControllerLocal.retrieveProductById(pdtId);
         
@@ -148,7 +149,8 @@ public class WishListController implements WishListControllerLocal {
         
     }
     
-    private void removeProductFromWishlist(Long memberId, Long pdtId) throws MemberNotFoundException, ProductNotFoundException{
+    @Override
+    public void removeProductFromWishlist(Long memberId, Long pdtId) throws MemberNotFoundException, ProductNotFoundException{
         Member member = memberControllerLocal.retrieveMemberById(memberId);
         ProductEntity pdt = productControllerLocal.retrieveProductById(pdtId);
         

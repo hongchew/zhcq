@@ -11,11 +11,18 @@ import ejb.stateless.ProductTagControllerLocal;
 import entity.Category;
 import entity.ProductEntity;
 import entity.ProductTag;
+import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
+import util.exception.CreateNewProductException;
+import util.exception.InputDataValidationException;
+import util.exception.ProductNotFoundException;
 
 /**
  *
@@ -61,11 +68,275 @@ public class ProductManagementManagedBean {
     @PostConstruct
     public void postConstruct()
     {
-        productEntities = productController.retrieveAllProducts();
-        categoryEntities = categoryController.retrieveAllCategories();
-        tagEntities = productTagController.retrieveAllTags();
+        setProductEntities(productController.retrieveAllProducts());
+        setCategoryEntities(categoryController.retrieveAllCategories());
+        setTagEntities(productTagController.retrieveAllTags());
     }
     
+    public void createNewProduct(ActionEvent event)
+    {
+        List<Long> tagIdsNew = null;
+        
+        if(getCategoryIdNew() == 0)
+        {
+            setCategoryIdNew(null);
+        }
+        
+        if(getTagIdsStringNew() != null && (!tagIdsStringNew.isEmpty()))
+        {
+            tagIdsNew = new ArrayList<>();
+            
+            for(String tagIdString:getTagIdsStringNew())
+            {
+                tagIdsNew.add(Long.valueOf(tagIdString));
+            }
+        }
+        
+        try
+        {
+            ProductEntity pe = productController.createNewProduct(getNewProductEntity(), getCategoryIdNew(), tagIdsNew);
+            getProductEntities().add(pe);
+            
+            setNewProductEntity(new ProductEntity());
+            setCategoryIdNew(null);
+            setTagIdsStringNew(null);
+            
+
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "New product created successfully (Product ID: " + pe.getProductId() + ")", null));
+        }
+        catch(InputDataValidationException | CreateNewProductException ex)
+        {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "An error has occurred while creating the new product: " + ex.getMessage(), null));
+        }
+    }
     
+    public void updateProduct(ActionEvent event)
+    {
+        List<Long> tagIdsUpdate = null;
+        
+        if(getCategoryIdUpdate()  == 0)
+        {
+            setCategoryIdUpdate(null);
+        }
+        
+        if(getTagIdsStringUpdate() != null && (!tagIdsStringUpdate.isEmpty()))
+        {
+            tagIdsUpdate = new ArrayList<>();
+            
+            for(String tagIdString:getTagIdsStringUpdate())
+            {
+                tagIdsUpdate.add(Long.valueOf(tagIdString));
+            }
+        }
+        
+        try
+        {
+            productController.updateProduct(getSelectedProductEntityToUpdate(), getCategoryIdUpdate(), tagIdsUpdate);
+                        
+            for(Category c:getCategoryEntities())
+            {
+                if(c.getCategoryId().equals(getCategoryIdUpdate()))
+                {
+                    getSelectedProductEntityToUpdate().setProductCategory(c);
+                    break;
+                }                
+            }
+            
+            getSelectedProductEntityToUpdate().getProductTags().clear();
+            
+            for(ProductTag tag:getTagEntities())
+            {
+                if(tagIdsUpdate.contains(tag.getProductTagId()))
+                {
+                    getSelectedProductEntityToUpdate().getProductTags().add(tag);
+                }                
+            }
+
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Product updated successfully", null));
+        }
+        catch(ProductNotFoundException ex)
+        {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "An error has occurred while updating product: " + ex.getMessage(), null));
+        }
+        catch(Exception ex)
+        {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "An unexpected error has occurred: " + ex.getMessage(), null));
+        }
+    }
+    
+    public void deleteProduct(ActionEvent event)
+    {
+        try
+        {
+            ProductEntity productEntityToDelete = (ProductEntity)event.getComponent().getAttributes().get("productEntityToDelete");
+            productController.deleteProduct(productEntityToDelete.getProductId());
+            
+            getProductEntities().remove(productEntityToDelete);
+
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Product deleted successfully", null));
+        }
+        catch(ProductNotFoundException ex)
+        {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "An error has occurred while deleting product: " + ex.getMessage(), null));
+        }
+        catch(Exception ex)
+        {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "An unexpected error has occurred: " + ex.getMessage(), null));
+        }
+    }
+
+    /**
+     * @return the productEntities
+     */
+    public List<ProductEntity> getProductEntities() {
+        return productEntities;
+    }
+
+    /**
+     * @param productEntities the productEntities to set
+     */
+    public void setProductEntities(List<ProductEntity> productEntities) {
+        this.productEntities = productEntities;
+    }
+
+    /**
+     * @return the filteredProductEntities
+     */
+    public List<ProductEntity> getFilteredProductEntities() {
+        return filteredProductEntities;
+    }
+
+    /**
+     * @param filteredProductEntities the filteredProductEntities to set
+     */
+    public void setFilteredProductEntities(List<ProductEntity> filteredProductEntities) {
+        this.filteredProductEntities = filteredProductEntities;
+    }
+
+    /**
+     * @return the newProductEntity
+     */
+    public ProductEntity getNewProductEntity() {
+        return newProductEntity;
+    }
+
+    /**
+     * @param newProductEntity the newProductEntity to set
+     */
+    public void setNewProductEntity(ProductEntity newProductEntity) {
+        this.newProductEntity = newProductEntity;
+    }
+
+    /**
+     * @return the categoryIdNew
+     */
+    public Long getCategoryIdNew() {
+        return categoryIdNew;
+    }
+
+    /**
+     * @param categoryIdNew the categoryIdNew to set
+     */
+    public void setCategoryIdNew(Long categoryIdNew) {
+        this.categoryIdNew = categoryIdNew;
+    }
+
+    /**
+     * @return the tagIdsStringNew
+     */
+    public List<String> getTagIdsStringNew() {
+        return tagIdsStringNew;
+    }
+
+    /**
+     * @param tagIdsStringNew the tagIdsStringNew to set
+     */
+    public void setTagIdsStringNew(List<String> tagIdsStringNew) {
+        this.tagIdsStringNew = tagIdsStringNew;
+    }
+
+    /**
+     * @return the categoryEntities
+     */
+    public List<Category> getCategoryEntities() {
+        return categoryEntities;
+    }
+
+    /**
+     * @param categoryEntities the categoryEntities to set
+     */
+    public void setCategoryEntities(List<Category> categoryEntities) {
+        this.categoryEntities = categoryEntities;
+    }
+
+    /**
+     * @return the tagEntities
+     */
+    public List<ProductTag> getTagEntities() {
+        return tagEntities;
+    }
+
+    /**
+     * @param tagEntities the tagEntities to set
+     */
+    public void setTagEntities(List<ProductTag> tagEntities) {
+        this.tagEntities = tagEntities;
+    }
+
+    /**
+     * @return the selectedProductEntityToView
+     */
+    public ProductEntity getSelectedProductEntityToView() {
+        return selectedProductEntityToView;
+    }
+
+    /**
+     * @param selectedProductEntityToView the selectedProductEntityToView to set
+     */
+    public void setSelectedProductEntityToView(ProductEntity selectedProductEntityToView) {
+        this.selectedProductEntityToView = selectedProductEntityToView;
+    }
+
+    /**
+     * @return the selectedProductEntityToUpdate
+     */
+    public ProductEntity getSelectedProductEntityToUpdate() {
+        return selectedProductEntityToUpdate;
+    }
+
+    /**
+     * @param selectedProductEntityToUpdate the selectedProductEntityToUpdate to set
+     */
+    public void setSelectedProductEntityToUpdate(ProductEntity selectedProductEntityToUpdate) {
+        this.selectedProductEntityToUpdate = selectedProductEntityToUpdate;
+    }
+
+    /**
+     * @return the categoryIdUpdate
+     */
+    public Long getCategoryIdUpdate() {
+        return categoryIdUpdate;
+    }
+
+    /**
+     * @param categoryIdUpdate the categoryIdUpdate to set
+     */
+    public void setCategoryIdUpdate(Long categoryIdUpdate) {
+        this.categoryIdUpdate = categoryIdUpdate;
+    }
+
+    /**
+     * @return the tagIdsStringUpdate
+     */
+    public List<String> getTagIdsStringUpdate() {
+        return tagIdsStringUpdate;
+    }
+
+    /**
+     * @param tagIdsStringUpdate the tagIdsStringUpdate to set
+     */
+    public void setTagIdsStringUpdate(List<String> tagIdsStringUpdate) {
+        this.tagIdsStringUpdate = tagIdsStringUpdate;
+    }
     
 }

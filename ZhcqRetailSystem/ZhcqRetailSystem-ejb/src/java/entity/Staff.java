@@ -27,11 +27,12 @@ public class Staff implements Serializable {
     @NotNull
     @Size(max = 32)
     private String lastName;
+    
     @Column(nullable = false, unique = true, length = 32)
     @NotNull
     @Size(min = 4, max = 32)
     private String username;
-    @Column(nullable = false, length = 32)
+    
     @NotNull
     private String password;
     
@@ -69,65 +70,45 @@ public class Staff implements Serializable {
         return firstName;
     }
 
-    /**
-     * @param firstName the firstName to set
-     */
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
 
-    /**
-     * @return the lastName
-     */
+
     public String getLastName() {
         return lastName;
     }
 
-    /**
-     * @param lastName the lastName to set
-     */
+
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
-
-    /**
-     * @return the username
-     */
+    
     public String getUsername() {
         return username;
     }
 
-    /**
-     * @param username the username to set
-     */
+
     public void setUsername(String username) {
         this.username = username;
     }
 
-    /**
-     * @return the password
-     */
     public String getPassword() {
         return password;
     }
-
-    /**
-     * @param password the password to set
-     */
+    
     public void setPassword(String password) {
-        this.password = password;
+       if(password != null) {
+           this.password = CryptographicHelper.getInstance().byteArrayToHexString(CryptographicHelper.getInstance().doMD5Hashing(password + this.salt));
+       } else {
+           this.password = null;
+       }
     }
-
-    /**
-     * @return the salt
-     */
+    
     public String getSalt() {
         return salt;
     }
 
-    /**
-     * @param salt the salt to set
-     */
     public void setSalt(String salt) {
         this.salt = salt;
     }

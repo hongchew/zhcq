@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <cc:interface>
+        <cc:attribute name="pageName" required="true" />
+    </cc:interface>
+
+    <cc:implementation>
+        
+        <h:form id="formMain">
+        
+            <p:breadCrumb homeDisplay="false">
+
+                <p:menuitem icon="fa fa-home" url="/index.xhtml" style="text-decoration-line: none;" />
+
+                <p:menuitem value="System Administration" rendered="#{cc.attrs.pageName == 'productManagement' ||
+                                                                        cc.attrs.pageName == 'categoryManagement' ||                                                                        
+                                                                        cc.attrs.pageName == 'tagManagement' ||
+                                                                        cc.attrs.pageName == 'outfitManagement'}" />
+
+                <p:menuitem value="Product Management" url="/systemAdministration/productManagement.xhtml" rendered="#{cc.attrs.pageName == 'productManagement'}" />
+                <p:menuitem value="Staff Management" url="/systemAdministration/categoryManagement.xhtml" rendered="#{cc.attrs.pageName == 'categoryManagement'}" />                        
+                <p:menuitem value="Search Products by Name" url="/systemAdministration/tagManagement.xhtml" rendered="#{cc.attrs.pageName == 'tagManagement'}" />
+                <p:menuitem value="Filter Products by Category" url="/systemAdministration/outfitManagement.xhtml" rendered="#{cc.attrs.pageName == 'outfitManagement'}" />
+                
+
+            </p:breadCrumb>
+        
+        </h:form>
+        
+    </cc:implementation>
+</html>

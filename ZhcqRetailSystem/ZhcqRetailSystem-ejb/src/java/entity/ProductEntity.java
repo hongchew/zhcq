@@ -73,12 +73,12 @@ public class ProductEntity implements Serializable {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     @NotNull
-    private SizeEnum productSize ;
+    private SizeEnum sizeEnum ;
     
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     @NotNull
-    private ColourEnum colour;
+    private ColourEnum colourEnum;
     
     @ManyToMany(mappedBy = "productEntities")
     private List<ProductTag> productTags;
@@ -108,8 +108,8 @@ public class ProductEntity implements Serializable {
         this.unitPrice = unitPrice;
         this.dateAdded = dateAdded;
         this.quantityOnHand = quantityOnHand;
-        this.productSize = size;
-        this.colour = colour;
+        this.sizeEnum = size;
+        this.colourEnum = colour;
     }
     
     
@@ -249,50 +249,34 @@ public class ProductEntity implements Serializable {
     }
 
     /**
-     * @return the productSize
+     * @return the sizeEnum
      */
-    public SizeEnum getProductSize() {
-        return productSize;
+    public SizeEnum getSizeEnum() {
+        return sizeEnum;
     }
 
     /**
-     * @param productSize the productSize to set
+     * @param sizeEnum the sizeEnum to set
      */
-    public void setProductSize(SizeEnum productSize) {
-        this.productSize = productSize;
+    public void setSizeEnum(SizeEnum sizeEnum) {
+        this.sizeEnum = sizeEnum;
     }
 
-
-    /**
-     * @return the shoppingcarts
-     */
     public List<ShoppingCart> getShoppingcarts() {
         return shoppingcarts;
     }
 
-    /**
-     * @param shoppingcarts the shoppingcarts to set
-     */
     public void setShoppingcarts(List<ShoppingCart> shoppingcarts) {
         this.shoppingcarts = shoppingcarts;
     }
 
-    /**
-     * @return the colour
-     */
-    public ColourEnum getColour() {
-        return colour;
+    public ColourEnum getColourEnum() {
+        return colourEnum;
     }
 
-    /**
-     * @param colour the colour to set
-     */
-    public void setColour(ColourEnum colour) {
-        this.colour = colour;
+    public void setColourEnum(ColourEnum colourEnum) {
+        this.colourEnum = colourEnum;
     }
 
-    
-
-  
     
 }

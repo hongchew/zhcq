@@ -139,5 +139,22 @@ public class WishListController implements WishListControllerLocal {
 
         return msg;
     }
+    
+    @Override
+    public void addProductToWishlist(Long memberId, Long pdtId) throws MemberNotFoundException, ProductNotFoundException{
+        Member member = memberControllerLocal.retrieveMemberById(memberId);
+        ProductEntity pdt = productControllerLocal.retrieveProductById(pdtId);
+        
+        member.getWishList().getProductEntities().add(pdt);
+        
+    }
+    
+    @Override
+    public void removeProductFromWishlist(Long memberId, Long pdtId) throws MemberNotFoundException, ProductNotFoundException{
+        Member member = memberControllerLocal.retrieveMemberById(memberId);
+        ProductEntity pdt = productControllerLocal.retrieveProductById(pdtId);
+        
+        member.getWishList().getProductEntities().remove(pdt);
+    }
 
 }

@@ -39,8 +39,10 @@ public class ShoppingCart implements Serializable {
         products = new ArrayList<>();
     }
 
-    public ShoppingCart(Member member) {
-        this.member = member;
+
+    public ShoppingCart(Member cartOwner) {
+        this();
+        this.member = cartOwner;
     }
     
     public Long getCartId() {

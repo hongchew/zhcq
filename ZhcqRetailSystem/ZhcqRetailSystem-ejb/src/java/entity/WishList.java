@@ -38,6 +38,13 @@ public class WishList implements Serializable {
     public WishList() {
         productEntities = new ArrayList<ProductEntity>();
     }
+    
+    public WishList(Member member){
+        
+        this();
+        
+        this.member = member;
+    }
 
     public Long getWishListId() {
         return wishListId;

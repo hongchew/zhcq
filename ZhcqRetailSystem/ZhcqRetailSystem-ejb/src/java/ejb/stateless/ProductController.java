@@ -239,8 +239,8 @@ public class ProductController implements ProductControllerLocal {
                     productEntityToUpdate.setDescription(productEntity.getDescription());
                     productEntityToUpdate.setUnitPrice(productEntity.getUnitPrice());
                     productEntityToUpdate.setQuantityOnHand(productEntity.getQuantityOnHand());
-                    productEntityToUpdate.setSize(productEntity.getSize());
-                    productEntityToUpdate.setColour(productEntity.getColour());
+                    productEntityToUpdate.setSizeEnum(productEntity.getSizeEnum());
+                    productEntityToUpdate.setColourEnum(productEntity.getColourEnum());
                     
                 
                 } else {

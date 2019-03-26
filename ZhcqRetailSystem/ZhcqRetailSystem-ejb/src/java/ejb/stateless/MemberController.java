@@ -49,12 +49,11 @@ public class MemberController implements MemberSessionBeanLocal {
         if (constraintViolations.isEmpty()) {
             em.persist(newMember);
 
-            WishList wishList = new WishList();
-            ShoppingCart shoppingCart = new ShoppingCart();
+            WishList wishList = new WishList(newMember);
+            ShoppingCart shoppingCart = new ShoppingCart(newMember);
             newMember.setShoppingCart(shoppingCart);
             newMember.setWishList(wishList);
-            wishList.setMember(newMember);
-            shoppingCart.setMember(newMember);
+
             em.flush();
 
             return newMember;

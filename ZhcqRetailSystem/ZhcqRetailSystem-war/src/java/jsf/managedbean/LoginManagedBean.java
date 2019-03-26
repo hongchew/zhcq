@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package jsf.managedbean;
 
 import ejb.stateless.StaffControllerLocal;
@@ -11,19 +7,17 @@ import java.io.IOException;
 import javafx.event.ActionEvent;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
+import javax.inject.Named;
 import javax.servlet.http.HttpSession;
 import util.exception.InvalidLoginCredentialException;
 
-/**
- *
- * @author chengyang
- */
-@ManagedBean
+
+@Named(value = "loginManagedBean")
 @RequestScoped
+
 public class LoginManagedBean {
 
     @EJB(name = "StaffControllerLocal")
@@ -50,11 +44,13 @@ public class LoginManagedBean {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Invalid login credential: " + ex.getMessage(), null));
         }
     }
-
-    public void logout(javax.faces.event.ActionEvent event) throws IOException {
-        ((HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true)).invalidate();
+    
+    public void logout(javax.faces.event.ActionEvent event) throws IOException
+    {
+        ((HttpSession)FacesContext.getCurrentInstance().getExternalContext().getSession(true)).invalidate();
         FacesContext.getCurrentInstance().getExternalContext().redirect(FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath() + "/index.xhtml");
     }
+
 
     public String getUsername() {
         return username;

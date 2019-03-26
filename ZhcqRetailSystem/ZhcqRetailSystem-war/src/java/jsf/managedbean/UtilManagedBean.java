@@ -1,13 +1,11 @@
+
 package jsf.managedbean;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
 import ejb.stateless.PromotionControllerLocal;
 import entity.Promotion;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -25,7 +23,7 @@ public class UtilManagedBean {
     private PromotionControllerLocal promotionControllerLocal;
     
     private List<Promotion> promotions;
-   
+
     
     public UtilManagedBean() {
     }
@@ -42,5 +40,9 @@ public class UtilManagedBean {
         this.promotions = promotions;
     }
     
-    
+    public String formatDate(Date date)
+    {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("EEE, MMM d, ''yy");
+        return simpleDateFormat.format(date);
+    }
 }

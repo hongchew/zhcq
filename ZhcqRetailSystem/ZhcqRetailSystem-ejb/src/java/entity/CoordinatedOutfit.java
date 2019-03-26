@@ -6,7 +6,9 @@
 package entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -31,9 +33,10 @@ public class CoordinatedOutfit implements Serializable {
     private Date dateCreated;
     
     @OneToMany(mappedBy = "coordinatedOutfit")
-    private CoordinatedOutfit coordinatedOutfit;
+    private List<ProductEntity> productEntities;
 
     public CoordinatedOutfit() {
+        productEntities = new ArrayList<ProductEntity>();
     }
 
     public CoordinatedOutfit(Date dateCreated) {

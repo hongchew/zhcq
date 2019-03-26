@@ -6,16 +6,26 @@
 package ejb.stateless;
 
 import entity.Category;
+import java.util.List;
 import javax.ejb.Local;
 import util.exception.CategoryNotFoundException;
+import util.exception.CreateNewCategoryException;
+import util.exception.DeleteCategoryException;
+import util.exception.InputDataValidationException;
+import util.exception.UpdateCategoryException;
 
-/**
- *
- * @author zhimingkoh
- */
+
 @Local
 public interface CategoryControllerLocal {
 
     public Category retrieveCategoryByCategoryId(Long categoryId) throws CategoryNotFoundException;
+
+    public void deleteCategory(Long categoryId) throws CategoryNotFoundException, DeleteCategoryException;
+
+    public Category createNewCategoryEntity(Category newCategoryEntity) throws InputDataValidationException, CreateNewCategoryException;
+
+    public void updateCategory(Category categoryEntity) throws InputDataValidationException, CategoryNotFoundException, UpdateCategoryException;
+
+    public List<Category> retrieveAllCategories();
     
 }

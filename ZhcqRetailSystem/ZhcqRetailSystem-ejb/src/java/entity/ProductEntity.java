@@ -87,7 +87,7 @@ public class ProductEntity implements Serializable {
     @ManyToMany(mappedBy = "productEntities")
     private List<ProductTag> productTags;
     
-    @ManyToMany(cascade = CascadeType.REMOVE)
+    @ManyToMany
     @JoinColumn
     private List<WishList> wishLists;
 
@@ -97,8 +97,7 @@ public class ProductEntity implements Serializable {
     
     public ProductEntity() {
         productTags = new ArrayList<>();
-        quantityOnHand = 0;
-        unitPrice = new BigDecimal("0.00");
+        wishLists = new ArrayList<WishList>();
     }
 
     public ProductEntity(String productName, String description, BigDecimal unitPrice, Date dateAdded, Integer quantityOnHand, SizeEnum size, String Colour) {

@@ -57,6 +57,14 @@ public class CoordinatedOutfit implements Serializable {
         return dateCreated;
     }
 
+    public List<ProductEntity> getProductEntities() {
+        return productEntities;
+    }
+
+    public void setProductEntities(List<ProductEntity> productEntities) {
+        this.productEntities = productEntities;
+    }
+
     public void setDateCreated(Date dateCreated) {
         this.dateCreated = dateCreated;
     }

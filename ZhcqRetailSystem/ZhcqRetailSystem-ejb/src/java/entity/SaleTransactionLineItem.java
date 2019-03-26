@@ -32,6 +32,8 @@ public class SaleTransactionLineItem implements Serializable {
     
     @OneToOne
     private ProductEntity productEntity;
+    
+    private Integer quantity;
 
     public SaleTransactionLineItem() {
     }
@@ -42,6 +44,14 @@ public class SaleTransactionLineItem implements Serializable {
 
     public void setSaleTransactionLineItemId(Long saleTransactionLineItemId) {
         this.saleTransactionLineItemId = saleTransactionLineItemId;
+    }
+
+    public Integer getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
     }
 
     

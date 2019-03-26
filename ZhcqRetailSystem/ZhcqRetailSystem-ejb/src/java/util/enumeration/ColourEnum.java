@@ -5,12 +5,17 @@
  */
 package util.enumeration;
 
-public enum SizeEnum {
-    XXS,
-    XS,
-    S,
-    M,
-    L,
-    XL,
-    XXL
+/**
+ *
+ * @author qianyi
+ */
+public enum ColourEnum {
+    BLACK,
+    BLUE,
+    CREAM,
+    PINK,
+    RED,
+    YELLOW,
+    GREEN,
+    WHITE
 }

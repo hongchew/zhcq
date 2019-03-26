@@ -31,6 +31,8 @@ public interface ProductControllerLocal {
 
     public void deleteProduct(Long productId) throws ProductNotFoundException;
 
-    public void updateProduct(ProductEntity productEntity, Long categoryId, List<Long> tagIds) throws InputDataValidationException, ProductNotFoundException, CategoryNotFoundException, TagNotFoundException, UpdateProductException;
+    public long updateProduct(ProductEntity productEntity, Long categoryId, List<Long> tagIds) throws InputDataValidationException, ProductNotFoundException, CategoryNotFoundException, TagNotFoundException, UpdateProductException;
+
+    public List<ProductEntity> retrieveAllProducts();
     
 }

@@ -27,6 +27,8 @@ import util.exception.CategoryNotFoundException;
 import util.exception.CreateNewProductException;
 import util.exception.InputDataValidationException;
 import util.exception.ProductNotFoundException;
+import util.exception.TagNotFoundException;
+import util.exception.UpdateProductException;
 
 
 @Stateless
@@ -176,7 +178,8 @@ public class ProductController implements ProductControllerLocal {
                     productEntity.getProductCategory();
                     productEntity.getProductTags().size();
                 }
-            } else // AND
+            } 
+            else // AND
             {
                 //Halp, i dunno how to edit weekek's code for this one
                 
@@ -198,6 +201,57 @@ public class ProductController implements ProductControllerLocal {
             return productEntities;
         }
     }
+    
+    @Override
+     public void updateProduct(ProductEntity productEntity, Long categoryId, List<Long> tagIds) throws InputDataValidationException, ProductNotFoundException, CategoryNotFoundException, TagNotFoundException, UpdateProductException
+    {
+        Set<ConstraintViolation<ProductEntity>>constraintViolations = validator.validate(productEntity);
+        
+        if(constraintViolations.isEmpty())
+        {
+            if(productEntity.getProductId()!= null)
+            {
+                ProductEntity productEntityToUpdate = retrieveProductById(productEntity.getProductId());
+                if(productEntityToUpdate.getProductName().equals(productEntity.getProductName()))
+                {
+                    if(categoryId != null && (!productEntityToUpdate.getProductCategory().getCategoryId().equals(categoryId)))
+                    {
+                        Category categoryEntityToUpdate = categoryControllerLocal.retrieveCategoryByCategoryId(categoryId);
+                        productEntityToUpdate.setProductCategory(categoryEntityToUpdate);
+                    }
+                    
+                    if(tagIds != null)
+                    {
+                        for(ProductTag tagEntity:productEntityToUpdate.getProductTags())
+                        {
+                            tagEntity.getProductEntities().remove(productEntityToUpdate);
+                        }
+                        
+                        productEntityToUpdate.getProductTags().clear();
+                        
+                        for(Long tagId:tagIds)
+                        {
+                            ProductTag tagEntity = productTagControllerLocal.retrieveTagByTagId(tagId);
+                            productEntityToUpdate.addTag(tagEntity);
+                        }
+                    }
+                    productEntityToUpdate.setProductName(productEntity.getProductName());
+                    productEntityToUpdate.setDescription(productEntity.getDescription());
+                    productEntityToUpdate.setUnitPrice(productEntity.getUnitPrice());
+                    productEntityToUpdate.setQuantityOnHand(productEntity.getQuantityOnHand());
+                
+                } else {
+                    throw new UpdateProductException("Product ID does not match record in database!");
+                }    
+            } else {
+                throw new ProductNotFoundException("Product ID not provided!");
+            }      
+        } else {
+            throw new InputDataValidationException(prepareInputDataValidationErrorsMessage(constraintViolations));
+        }
+    }
+    
+    
     
     @Override
     public void deleteProduct(Long productId) throws ProductNotFoundException

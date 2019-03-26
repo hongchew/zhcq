@@ -72,4 +72,38 @@ public class WishList implements Serializable {
         this.productEntities = productEntities;
     }
     
+    public void addProduct(ProductEntity productEntity)
+    {
+        if(productEntity != null)
+        {
+            if(!this.productEntities.contains(productEntity))
+            {
+                this.productEntities.add(productEntity);
+                
+                if(!productEntity.getWishLists().contains(this))
+                {
+                    productEntity.getWishLists().add(this);
+                }
+        
+            }
+        }
+    }
+    
+    public void removeProduct(ProductEntity productEntity)
+    {
+        if(productEntity != null)
+        {
+            if(!this.productEntities.contains(productEntity))
+            {
+                this.productEntities.remove(productEntity);
+                
+                if(!productEntity.getWishLists().contains(this))
+                {
+                    productEntity.getWishLists().remove(this);
+                }
+        
+            }
+        }
+    }
+    
 }

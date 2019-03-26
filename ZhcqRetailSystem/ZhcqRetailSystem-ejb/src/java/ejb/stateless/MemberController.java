@@ -11,15 +11,20 @@ import java.util.Set;
 import javax.ejb.Local;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import javax.persistence.NonUniqueResultException;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
 import util.exception.DeleteMemberException;
 import util.exception.InputDataValidationException;
+import util.exception.InvalidLoginCredentialException;
 import util.exception.MemberNotFoundException;
 import util.exception.UpdateMemberException;
+import util.security.CryptographicHelper;
 
 
 @Stateless
@@ -83,6 +88,46 @@ public class MemberController implements MemberSessionBeanLocal {
         }               
     }
     
+    @Override
+    public Member retrieveMemberByUsername(String username) throws MemberNotFoundException
+    {
+        Query query = em.createQuery("SELECT m FROM Member m WHERE m.username = :inUsername");
+        query.setParameter("inUsername", username);
+        
+        try
+        {
+            return (Member)query.getSingleResult();
+        }
+        catch(NoResultException | NonUniqueResultException ex)
+        {
+            throw new MemberNotFoundException("Member Username " + username + " does not exist!");
+        }
+    }
+    
+    @Override
+     public Member memberLogin(String username, String password) throws InvalidLoginCredentialException
+    {
+        try
+        {
+            Member member = retrieveMemberByUsername(username);
+            String passwordHash = CryptographicHelper.getInstance().byteArrayToHexString(CryptographicHelper.getInstance().doMD5Hashing(password + member.getSalt()));
+            
+            if(member.getPassword().equals(passwordHash))
+            {
+                member.getSaleTransactions().size();                
+                return member;
+            }
+            else
+            {
+                throw new InvalidLoginCredentialException("Username does not exist or invalid password!");
+            }
+        }
+        catch(MemberNotFoundException ex)
+        {
+            throw new InvalidLoginCredentialException("Username does not exist or invalid password!");
+        }
+    }
+    
     
     @Override
      public void updateMember(Member memberEntity) throws InputDataValidationException, MemberNotFoundException, UpdateMemberException
@@ -123,6 +168,7 @@ public class MemberController implements MemberSessionBeanLocal {
     }
      
   
+    @Override
     public void deleteMember(Long memberId) throws MemberNotFoundException, DeleteMemberException
     {
         Member memberEntityToRemove = retrieveMemberById(memberId);

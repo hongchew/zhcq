@@ -69,9 +69,9 @@ public class ProductEntity implements Serializable {
     @ManyToMany(mappedBy = "productEntities")
     private List<ProductTag> productTags; 
     
-    @ManyToOne(cascade = CascadeType.REMOVE)
+    @ManyToMany(cascade = CascadeType.REMOVE)
     @JoinColumn
-    private WishList wishList;
+    private List<WishList> wishLists;
 
     @ManyToOne(optional = true)
     @JoinColumn
@@ -104,6 +104,22 @@ public class ProductEntity implements Serializable {
                 if(!tagEntity.getProductEntities().contains(this))
                 {                    
                     tagEntity.getProductEntities().add(this);
+                }
+            }
+        }
+    }
+    
+    public void removeTag(ProductTag tagEntity)
+    {
+        if(tagEntity != null)
+        {
+            if(!this.productTags.contains(tagEntity))
+            {
+                this.productTags.remove(tagEntity);
+                
+                if(!tagEntity.getProductEntities().contains(this))
+                {                    
+                    tagEntity.getProductEntities().remove(this);
                 }
             }
         }
@@ -197,5 +213,21 @@ public class ProductEntity implements Serializable {
     public void setCoordinatedOutfit(CoordinatedOutfit coordinatedOutfit) {
         this.coordinatedOutfit = coordinatedOutfit;
     }
+
+    /**
+     * @return the wishLists
+     */
+    public List<WishList> getWishLists() {
+        return wishLists;
+    }
+
+    /**
+     * @param wishLists the wishLists to set
+     */
+    public void setWishLists(List<WishList> wishLists) {
+        this.wishLists = wishLists;
+    }
+
+  
     
 }

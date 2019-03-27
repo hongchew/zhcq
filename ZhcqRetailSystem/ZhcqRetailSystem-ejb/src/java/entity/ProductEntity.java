@@ -8,6 +8,7 @@ package entity;
 import java.io.Serializable;
 
 import java.math.BigDecimal;
+import java.time.Instant;
 import java.util.Date;
 import javax.persistence.Column;
 
@@ -98,15 +99,15 @@ public class ProductEntity implements Serializable {
     
     public ProductEntity() {
         productTags = new ArrayList<>();
-        wishLists = new ArrayList<WishList>();
+        wishLists = new ArrayList<>();
+        dateAdded = new Date();
     }
 
-    public ProductEntity(String productName, String description, BigDecimal unitPrice, Date dateAdded, Integer quantityOnHand, SizeEnum size, ColourEnum colour) {
+    public ProductEntity(String productName, String description, BigDecimal unitPrice, Integer quantityOnHand, SizeEnum size, ColourEnum colour) {
         this();
         this.productName = productName;
         this.description = description;
         this.unitPrice = unitPrice;
-        this.dateAdded = dateAdded;
         this.quantityOnHand = quantityOnHand;
         this.sizeEnum = size;
         this.colourEnum = colour;

@@ -13,6 +13,7 @@ import entity.ProductEntity;
 import entity.ProductTag;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
@@ -20,6 +21,8 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
+import util.enumeration.ColourEnum;
+import util.enumeration.SizeEnum;
 import util.exception.CreateNewProductException;
 import util.exception.InputDataValidationException;
 import util.exception.ProductNotFoundException;
@@ -46,12 +49,17 @@ public class ProductManagementManagedBean {
     
     private List<ProductEntity> productEntities;
     private List<ProductEntity> filteredProductEntities;
+    private ColourEnum[] colours;
+    private SizeEnum[] sizes;
+    
     
     private ProductEntity newProductEntity;
     private Long categoryIdNew;
     private List<String> tagIdsStringNew;
     private List<Category> categoryEntities;
     private List<ProductTag> tagEntities;
+
+    private List<String> tagIdsStringFilter;
     
     private ProductEntity selectedProductEntityToView;    
     
@@ -71,7 +79,11 @@ public class ProductManagementManagedBean {
         setProductEntities(productController.retrieveAllProducts());
         setCategoryEntities(categoryController.retrieveAllCategories());
         setTagEntities(productTagController.retrieveAllTags());
+        setColours(ColourEnum.values());
+        setSizes(SizeEnum.values());
     }
+    
+    
     
     public void createNewProduct(ActionEvent event)
     {
@@ -337,6 +349,35 @@ public class ProductManagementManagedBean {
      */
     public void setTagIdsStringUpdate(List<String> tagIdsStringUpdate) {
         this.tagIdsStringUpdate = tagIdsStringUpdate;
+    }
+
+    /**
+     * @return the colours
+     */
+    public ColourEnum[] getColours() {
+        return colours;
+    }
+
+
+    /**
+     * @param colours the colours to set
+     */
+    public void setColours(ColourEnum[] colours) {
+        this.colours = colours;
+    }
+
+    /**
+     * @return the sizes
+     */
+    public SizeEnum[] getSizes() {
+        return sizes;
+    }
+
+    /**
+     * @param sizes the sizes to set
+     */
+    public void setSizes(SizeEnum[] sizes) {
+        this.sizes = sizes;
     }
     
 }

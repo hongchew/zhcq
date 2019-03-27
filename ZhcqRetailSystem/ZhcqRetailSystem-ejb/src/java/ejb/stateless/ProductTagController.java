@@ -6,6 +6,7 @@
 package ejb.stateless;
 
 import entity.ProductTag;
+import java.util.List;
 import java.util.Set;
 import javax.ejb.Local;
 import javax.ejb.Stateless;
@@ -38,6 +39,12 @@ public class ProductTagController implements ProductTagControllerLocal {
     {
         validatorFactory = Validation.buildDefaultValidatorFactory();
         validator = validatorFactory.getValidator();
+    }
+    
+    @Override
+    public List<ProductTag> retrieveAllTags(){
+        Query q = em.createQuery("SELECT pt FROM ProductTag pt");
+        return q.getResultList();
     }
     
     @Override

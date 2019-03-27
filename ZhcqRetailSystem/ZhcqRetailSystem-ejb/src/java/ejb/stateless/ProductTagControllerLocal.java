@@ -6,6 +6,7 @@
 package ejb.stateless;
 
 import entity.ProductTag;
+import java.util.List;
 import javax.ejb.Local;
 import util.exception.CreateNewTagException;
 import util.exception.DeleteTagException;
@@ -22,5 +23,7 @@ public interface ProductTagControllerLocal {
     public ProductTag createNewTagEntity(ProductTag newTag) throws InputDataValidationException, CreateNewTagException;
 
     public void deleteTag(Long tagId) throws TagNotFoundException, DeleteTagException;
+
+    public List<ProductTag> retrieveAllTags();
     
 }

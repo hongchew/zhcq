@@ -71,7 +71,7 @@ public class MemberController implements MemberSessionBeanLocal {
 
             return memberEntity;
         } else {
-            throw new MemberNotFoundException("Product ID " + memberId + " does not exist!");
+            throw new MemberNotFoundException("Member ID " + memberId + " does not exist!");
         }
     }
 

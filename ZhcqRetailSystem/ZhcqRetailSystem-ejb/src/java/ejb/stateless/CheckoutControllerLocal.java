@@ -5,7 +5,12 @@
  */
 package ejb.stateless;
 
+import entity.SaleTransaction;
+import entity.ShoppingCart;
 import javax.ejb.Local;
+import util.exception.InputDataValidationException;
+import util.exception.SaleTransactionNotFoundException;
+import util.exception.ShoppingCartNotFoundException;
 
 /**
  *
@@ -13,5 +18,12 @@ import javax.ejb.Local;
  */
 @Local
 public interface CheckoutControllerLocal {
+    
+    public ShoppingCart retrieveShoppingCartById(Long cartId) throws ShoppingCartNotFoundException;
+    public SaleTransaction retrieveSaleTransactionById(Long transactionId) throws SaleTransactionNotFoundException;
+    public SaleTransaction checkOut (Long cartId) throws ShoppingCartNotFoundException;
+    public void updateCart (Long cartId, Long productId, boolean addition);
+
+
     
 }

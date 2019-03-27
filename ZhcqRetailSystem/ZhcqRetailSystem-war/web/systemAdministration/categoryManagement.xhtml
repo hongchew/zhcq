@@ -16,17 +16,174 @@ and open the template in the editor.
         
         <ez:Breadcrumb pageName="categoryManagement" />
         
-        <div>
+         <div>
+            <h3>Category Management</h3>
             
-            <h3></h3>
+            <h:form>
             
-        </div>
-                       
-                       
-                       
+                <p:menubar>
+
+                    <p:submenu label="File" icon="ui-icon-document">
+                        <p:menuitem value="Create New Category" onclick="PF('dialogCreateNewCategory').show()" icon="fa fa-plus" />
+                    </p:submenu>                                        
+
+                </p:menubar>
+                <br/>
+
+            </h:form>
+            <h:form id="formAllCategories">
+                
+                <p:messages id="messages" redisplay="false" closable="true"/>
+                
+                <p:dataTable id="dataTableAllCategories" widgetVar="dataTableAllCategories" value="#{categoryManagementManagedBean.categories}" var="category" rowKey="#{category.categoryId}" rowIndexVar="row"
+                             filteredValue="#{categoryManagementManagedBean.filteredCategories}"
+                             rows="10" paginator="true" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowsPerPageTemplate="10,20,50"> 
+                    
+                    <f:facet name="header">
+                        <p:outputPanel style="text-align: right">
+                            <h:outputText value="Search All Fields"/>
+                            <p:inputText id="globalFilter" onkeyup="PF('dataTableAllCategories').filter()" style="width:300px" placeholder="Enter keyword"/>     
+                        </p:outputPanel>
+                    </f:facet>
+                    
+                    <p:column headerText="Category ID" sortBy="#{category.categoryId}" filterBy="#{category.categoryId}" filterMatchMode="contains">
+                        <h:outputText value="#{category.categoryId}" />
+                    </p:column>
+                    
+                    <p:column headerText="Name" sortBy="#{category.categoryName}" filterBy="#{category.categoryName}" filterMatchMode="contains">
+                        <h:outputText value="#{category.categoryName}" />
+                    </p:column>
+                    
+                    <p:column headerText="Description" sortBy="#{category.description}" filterBy="#{category.description}" filterMatchMode="contains">
+                        <h:outputText value="#{category.description}" />
+                    </p:column>
+                    
+                    <p:column headerText="Action">
+                        <p:commandButton update="formViewCategory" oncomplete="PF('dialogueViewCategory').show()" icon="ui-icon-document" title="View">
+                            <f:setPropertyActionListener value="#{category}" target="#{categoryManagementManagedBean.selectedCategoryToView}"/>
+                        </p:commandButton>
+                        <p:commandButton actionListener="#{categoryManagementManagedBean.doUpdateCategory}" update="formUpdateCategory" oncomplete="PF('dialogUpdateCategory').show()" icon="ui-icon-pencil" title="Update">
+                            <f:attribute name="categoryToUpdate" value="#{category}"/>
+                        </p:commandButton>
+                        <p:commandButton update="formAllCategories:dataTableAllCategories formAllCategories:messages" icon="ui-icon-trash" actionListener="#{categoryManagementManagedBean.deleteCategory}">
+                            <f:attribute name="categoryToDelete" value="#{category}"/>
+                            <p:confirm header="Confirmation" message="Are you sure you want to delete #{category.categoryName} ?" icon="ui-icon-alert"/>
+                        </p:commandButton>
+                    </p:column>
+                    
+                </p:dataTable>
+                
+                <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                    <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                    <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                </p:confirmDialog>
+                
+            </h:form>
+            
+            <h:form id="formCreateNewCategory">
+            
+                <p:dialog id="dialogCreateNewProduct" widgetVar="dialogCreateNewCategory" header="Create New Category" closable="true">
+                    
+                    <p:messages id="dialogueCreateNewCategory" redisplay="false"/>
+                    <p:panelGrid>
+                        <p:row>
+                            <p:column>
+                                <p:outputLabel for="name" value="Name: " style="font-weight: bold;" />
+                            </p:column>
+                            <p:column>
+                                <p:inputText id="name" value="#{categoryManagementManagedBean.newCategory.categoryName}" required="true" requiredMessage="Category Name is required" />
+                            </p:column>
+                            <p:column>
+                                <p:message for="name" />
+                            </p:column>
+                        </p:row>
+                        <p:row>
+                            <p:column>
+                                <p:outputLabel for="description" value="Description: " style="font-weight: bold;" />
+                            </p:column>
+                            <p:column>
+                                <p:inputText id="description" value="#{categoryManagementManagedBean.newCategory.description}" required="true" requiredMessage="Category Description is required" />
+                            </p:column>
+                            <p:column>
+                                <p:message for="description" />
+                            </p:column>
+                        </p:row>
+                        
+                    </p:panelGrid>
+                
+            </h:form>
+            
+            <h:form id="formViewCategory">
+            
+                <p:dialog id="dialogViewProduct" widgetVar="dialogViewCategory" header="View Category" closable="true">
+                    
+<!--                    <p:messages id="dialogueViewCategory" redisplay="false"/>-->
+                    
+                    <p:panelGrid>
+                        <p:row>
+                            <p:column>
+                                <p:outputLabel for="name" value="Name: " style="font-weight: bold;" />
+                            </p:column>
+                            <p:column>
+                                <h:outputText value="#{categoryManagementManagedBean.selectedCategoryToView.categoryName}" />
+                            </p:column>
+                        </p:row>
+                        
+                        <p:row>
+                            <p:column>
+                                <p:outputLabel for="description" value="Description: " style="font-weight: bold;" />
+                            </p:column>
+                            <p:column>
+                                <h:outputText value="#{categoryManagementManagedBean.selectedCategoryToView.description}" />
+                            </p:column>
+                        </p:row>
+                        
+                    </p:panelGrid>
+            </h:form>
+            
+            <h:form id="formUpdateCategory">
+            
+                <p:dialog id="dialogUpdateProduct" widgetVar="dialogUpdateCategory" header="Update Category" closable="true">
+                    
+                    <p:messages id="dialogueUpdateCategory" redisplay="false"/>
+                    
+                    <p:panelGrid>
+                        
+                        <p:row>
+                            <p:column>
+                                <p:outputLabel value="Name: " />
+                            </p:column>
+                            <p:column>
+                                <h:outputText value="#{categoryManagementManagedBean.selectedCategoryToUpdate.categoryName}"/>
+                            </p:column>
+                            <p:column>
+                                &nbsp;
+                            </p:column>
+                        </p:row>
+                        
+                        <p:row>
+                            <p:column>
+                                <p:outputLabel value="Description: " />
+                            </p:column>
+                            <p:column>
+                                <h:outputText value="#{categoryManagementManagedBean.selectedCategoryToUpdate.description}"/>
+                            </p:column>
+                            <p:column>
+                                &nbsp;
+                            </p:column>
+                        </p:row>
+                        
+                        <p:row>
+                            <p:column colspan="3">
+                                <p:commandButton value="Update Category" update="@form formAllCategories:dataTableAllCategories" actionListener="#{categoryManagementManagedBean.updateCateory}" oncomplete="PF('dialogUpdateCategOry').show();" />
+                            </p:column>
+                        </p:row>
+                        
+                    </p:panelGrid>
+                
+            </h:form>
+            
+         </div>     
     </ui:define>
-    
-    
-    
-    
+   
 </ui:composition>

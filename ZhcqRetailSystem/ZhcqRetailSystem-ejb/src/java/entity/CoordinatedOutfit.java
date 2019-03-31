@@ -18,6 +18,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 
 @Entity
@@ -27,6 +28,11 @@ public class CoordinatedOutfit implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long coordinatedOutfitId;
     
+    @Column(nullable = false, length = 64)
+    @NotNull
+    @Size(max = 64)
+    private String outfitName;
+    
     @Temporal(TemporalType.TIMESTAMP)
     @Column(nullable = false)
     @NotNull
@@ -34,14 +40,42 @@ public class CoordinatedOutfit implements Serializable {
     
     @OneToMany(mappedBy = "coordinatedOutfit")
     private List<ProductEntity> productEntities;
+   
 
     public CoordinatedOutfit() {
         productEntities = new ArrayList<ProductEntity>();
     }
 
-    public CoordinatedOutfit(Date dateCreated) {
+    public CoordinatedOutfit(Date dateCreated, String outfitName) {
         this();
         this.dateCreated = dateCreated;
+        this.outfitName = outfitName;
+    }
+    
+    public void addProduct(ProductEntity product){
+        if(product != null)
+        {
+            if(!this.productEntities.contains(product))
+            {
+                this.productEntities.add(product);
+                product.setCoordinatedOutfit(this);
+                
+            }
+            
+        }
+    }
+    
+    public void removeProduct(ProductEntity product){
+        if(product != null)
+        {
+            if(!this.productEntities.contains(product))
+            {
+                this.productEntities.remove(product);
+                product.setCoordinatedOutfit(null);
+                
+            }
+            
+        }
     }
     
     
@@ -68,6 +102,20 @@ public class CoordinatedOutfit implements Serializable {
 
     public void setDateCreated(Date dateCreated) {
         this.dateCreated = dateCreated;
+    }
+
+    /**
+     * @return the outfitName
+     */
+    public String getOutfitName() {
+        return outfitName;
+    }
+
+    /**
+     * @param outfitName the outfitName to set
+     */
+    public void setOutfitName(String outfitName) {
+        this.outfitName = outfitName;
     }
 
 

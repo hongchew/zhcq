@@ -22,7 +22,7 @@ import util.exception.ProductNotFoundException;
 import util.exception.UpdateOutfitException;
 
 
-@Named(value = "outfitManagementManagedBean")
+@Named
 @ViewScoped
 public class OutfitManagementManagedBean {
 
@@ -33,7 +33,7 @@ public class OutfitManagementManagedBean {
     private CoordinatedOutfitControllerLocal coordinatedOutfitControllerLocal;
 
     private List<CoordinatedOutfit> outfits; 
-    //private List<CoordinatedOutfit> filiteredOutfits; 
+    private List<CoordinatedOutfit> filiteredOutfits; 
     
     
     private CoordinatedOutfit newCoordinatedOutfit; 
@@ -273,6 +273,20 @@ public class OutfitManagementManagedBean {
      */
     public void setUpdatedProductIds(List<String> updatedProductIds) {
         this.updatedProductIds = updatedProductIds;
+    }
+
+    /**
+     * @return the filiteredOutfits
+     */
+    public List<CoordinatedOutfit> getFiliteredOutfits() {
+        return filiteredOutfits;
+    }
+
+    /**
+     * @param filiteredOutfits the filiteredOutfits to set
+     */
+    public void setFiliteredOutfits(List<CoordinatedOutfit> filiteredOutfits) {
+        this.filiteredOutfits = filiteredOutfits;
     }
     
     

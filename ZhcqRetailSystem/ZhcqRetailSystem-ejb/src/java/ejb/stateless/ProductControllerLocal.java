@@ -12,6 +12,7 @@ import util.exception.CategoryNotFoundException;
 import util.exception.CreateNewProductException;
 import util.exception.InputDataValidationException;
 import util.exception.ProductNotFoundException;
+import util.exception.ProductTagNotFoundException;
 import util.exception.TagNotFoundException;
 import util.exception.UpdateProductException;
 
@@ -31,7 +32,7 @@ public interface ProductControllerLocal {
 
     public void deleteProduct(Long productId) throws ProductNotFoundException;
 
-    public long updateProduct(ProductEntity productEntity, Long categoryId, List<Long> tagIds) throws InputDataValidationException, ProductNotFoundException, CategoryNotFoundException, TagNotFoundException, UpdateProductException;
+    public long updateProduct(ProductEntity productEntity, Long categoryId, List<Long> tagIds) throws InputDataValidationException, ProductNotFoundException, CategoryNotFoundException, ProductTagNotFoundException, UpdateProductException;
 
     public List<ProductEntity> retrieveAllProducts();
     

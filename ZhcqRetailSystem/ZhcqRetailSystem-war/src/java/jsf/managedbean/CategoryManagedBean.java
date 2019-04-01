@@ -22,11 +22,8 @@ import util.exception.DeleteCategoryException;
 import util.exception.InputDataValidationException;
 import util.exception.UpdateCategoryException;
 
-/**
- *
- * @author chengyang
- */
-@Named(value = "categoryManagedBean")
+
+@Named
 @ViewScoped
 public class CategoryManagedBean implements Serializable {
 

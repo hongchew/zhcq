@@ -39,7 +39,7 @@ public class FilterProductsByTagsManagedBean implements Serializable{
     
     
     private String condition;
-    private List<String> selectedTagIds;
+    private List<String> selectedProductTagIds;
     private List<SelectItem> selectItems;
     private List<ProductEntity> productEntities;
     private ProductEntity selectedProductEntityToView;
@@ -56,12 +56,12 @@ public class FilterProductsByTagsManagedBean implements Serializable{
     @PostConstruct
     public void postConstruct()
     {
-        List<ProductTag> tagEntities = productTagController.retrieveAllTags();
+        List<ProductTag> productTags = productTagController.retrieveAllProductTags();
         selectItems = new ArrayList<>();
         
-        for(ProductTag tagEntity:tagEntities)
+        for(ProductTag productTag:productTags)
         {
-            selectItems.add(new SelectItem(tagEntity.getProductTagId(), tagEntity.getTagName(), tagEntity.getTagName()));
+            selectItems.add(new SelectItem(productTag.getProductTagId(), productTag.getProductTagName(), productTag.getProductTagName()));
         }
         
         
@@ -69,7 +69,7 @@ public class FilterProductsByTagsManagedBean implements Serializable{
         // FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("TagEntityConverter_tagEntities", tagEntities);
         
         condition = (String)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("productFilterCondition");
-        selectedTagIds = (List<String>)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("productFilterTags");
+        selectedProductTagIds = (List<String>)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("productFilterTags");
         
         filterProduct();
     }
@@ -89,9 +89,9 @@ public class FilterProductsByTagsManagedBean implements Serializable{
     {
         List<Long> tagIds = new ArrayList<>();
         
-        if(selectedTagIds != null && selectedTagIds.size() > 0)
+        if(selectedProductTagIds != null && selectedProductTagIds.size() > 0)
         {
-            for(String tagId:selectedTagIds)
+            for(String tagId:selectedProductTagIds)
             {
                 tagIds.add(Long.valueOf(tagId));
             }
@@ -127,15 +127,15 @@ public class FilterProductsByTagsManagedBean implements Serializable{
         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("productFilterCondition", condition);
     }
     
-    public List<String> getSelectedTagIds() {
-        return selectedTagIds;
+    public List<String> getProductSelectedTagIds() {
+        return selectedProductTagIds;
     }
 
-    public void setSelectedTagIds(List<String> selectedTagIds) 
+    public void setSelectedProductTagIds(List<String> selectedProductTagIds) 
     {
-        this.selectedTagIds = selectedTagIds;
+        this.selectedProductTagIds = selectedProductTagIds;
         
-        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("productFilterTags", selectedTagIds);
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("productFilterTags", selectedProductTagIds);
     }
 
     public List<SelectItem> getSelectItems() {

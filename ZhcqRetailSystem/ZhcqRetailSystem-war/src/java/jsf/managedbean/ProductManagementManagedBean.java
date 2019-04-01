@@ -79,7 +79,7 @@ public class ProductManagementManagedBean implements Serializable {
     {
         setProductEntities(productController.retrieveAllProducts());
         setCategoryEntities(categoryController.retrieveAllCategories());
-        setTagEntities(productTagController.retrieveAllTags());
+        setTagEntities(productTagController.retrieveAllProductTags());
         setColours(ColourEnum.values());
         setSizes(SizeEnum.values());
     }

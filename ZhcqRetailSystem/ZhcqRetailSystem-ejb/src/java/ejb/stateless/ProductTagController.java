@@ -105,6 +105,7 @@ public class ProductTagController implements ProductTagControllerLocal {
         }
     }
     
+    @Override
     public void updateTag(ProductTag productTag) throws InputDataValidationException, TagNotFoundException, UpdateTagException
     {
         Set<ConstraintViolation<ProductTag>>constraintViolations = validator.validate(productTag);

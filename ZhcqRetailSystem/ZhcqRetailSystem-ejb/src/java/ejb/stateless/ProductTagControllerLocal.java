@@ -13,6 +13,7 @@ import util.exception.DeleteTagException;
 import util.exception.InputDataValidationException;
 
 import util.exception.TagNotFoundException;
+import util.exception.UpdateTagException;
 
 
 @Local
@@ -25,5 +26,8 @@ public interface ProductTagControllerLocal {
     public void deleteTag(Long tagId) throws TagNotFoundException, DeleteTagException;
 
     public List<ProductTag> retrieveAllTags();
+    
+    public void updateTag(ProductTag productTag) throws InputDataValidationException, TagNotFoundException, UpdateTagException;
+
     
 }

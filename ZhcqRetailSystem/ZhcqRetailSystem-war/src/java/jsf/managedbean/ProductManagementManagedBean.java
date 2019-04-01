@@ -78,7 +78,7 @@ public class ProductManagementManagedBean {
     {
         setProductEntities(productController.retrieveAllProducts());
         setCategoryEntities(categoryController.retrieveAllCategories());
-        setTagEntities(productTagController.retrieveAllTags());
+        setTagEntities(productTagController.retrieveAllProductTags());
         setColours(ColourEnum.values());
         setSizes(SizeEnum.values());
     }

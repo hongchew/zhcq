@@ -11,7 +11,7 @@
         <ez:Breadcrumb pageName="filterProductsByTags" />
         
         <div>
-            <h3>Filter Products by Tags</h3>
+            <h3>Filter Products by Product Tags</h3>
             <h:form id="formMain">
                 
                 <p:layout>
@@ -30,8 +30,8 @@
                         
                         <br /><br />
 
-                        <p:outputLabel for="selTags" value="Tags: " style="font-weight: bold;" />
-                        <p:selectManyMenu id="selTags" value="#{filterProductsByTagsManagedBean.selectedTagIds}" showCheckbox="true">
+                        <p:outputLabel for="selTags" value="Product Tags: " style="font-weight: bold;" />
+                        <p:selectManyMenu id="selTags" value="#{filterProductsByTagsManagedBean.selectedProductTagIds}" showCheckbox="true">
                             <f:selectItems value="#{filterProductsByTagsManagedBean.selectItems}" />
 
                             <p:ajax process="@form" update="formMain:dataTableMain" listener="#{filterProductsByTagsManagedBean.filterProduct}" />
@@ -124,7 +124,7 @@
                         
                         <h:outputLabel value="Tags"/>
                         <p:dataList value="#{productManagementManagedBean.selectedProductEntityToView.productTags}" var="tag" type="unordered">
-                            #{tag.tagName}
+                            #{productTag.productTagName}
                         </p:dataList>                       
                     </p:panelGrid>
                     

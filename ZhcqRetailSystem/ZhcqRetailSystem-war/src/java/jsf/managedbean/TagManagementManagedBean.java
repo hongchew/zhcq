@@ -12,11 +12,11 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
-import util.exception.TagNotFoundException;
-import util.exception.CreateNewTagException;
+import util.exception.ProductTagNotFoundException;
+import util.exception.CreateNewProductTagException;
 import util.exception.DeleteTagException;
 import util.exception.InputDataValidationException;
-import util.exception.UpdateTagException;
+import util.exception.UpdateProductTagException;
 
 @Named(value = "tagManagementManagedBean")
 @ViewScoped
@@ -38,16 +38,16 @@ public class TagManagementManagedBean {
     
     @PostConstruct
     public void postConstruct() {
-        productTags = productTagControllerLocal.retrieveAllTags();
+        productTags = productTagControllerLocal.retrieveAllProductTags();
         newProductTag = new ProductTag();
     }
 
     public void createNewProductTag(ActionEvent event) {
         try {
-            productTagControllerLocal.createNewTagEntity(newProductTag);
+            productTagControllerLocal.createNewProductTag(newProductTag);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "ProductTag created successfully", null));
             newProductTag = new ProductTag();
-        } catch (CreateNewTagException | InputDataValidationException ex) {
+        } catch (CreateNewProductTagException | InputDataValidationException ex) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Failed to create ProductTag" + ex.getMessage(), null));
         }
     }
@@ -55,10 +55,10 @@ public class TagManagementManagedBean {
     public void deleteProductTag(ActionEvent event) {
         try {
             productTagToDelete = (ProductTag) event.getComponent().getAttributes().get("productTagToDelete");
-            productTagControllerLocal.deleteTag(productTagToDelete.getProductTagId());
+            productTagControllerLocal.deleteProductTag(productTagToDelete.getProductTagId());
             productTags.remove(productTagToDelete);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Successfully deleted ProductTag", null));    
-        } catch (TagNotFoundException | DeleteTagException ex) {
+        } catch (ProductTagNotFoundException | DeleteTagException ex) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Failed to delete ProductTag " + ex.getMessage(), null));
         }
     }
@@ -69,9 +69,9 @@ public class TagManagementManagedBean {
 
     public void updateCProductTag(ActionEvent event) {
         try {
-            productTagControllerLocal.updateTag(productTagToUpdate);
+            productTagControllerLocal.updateProductTag(productTagToUpdate);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Successfully updated ProductTag", null));
-        } catch (TagNotFoundException | InputDataValidationException | UpdateTagException ex) {
+        } catch (ProductTagNotFoundException | InputDataValidationException | UpdateProductTagException ex) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Failed to update ProductTag" + ex.getMessage(), null));
         }
     }

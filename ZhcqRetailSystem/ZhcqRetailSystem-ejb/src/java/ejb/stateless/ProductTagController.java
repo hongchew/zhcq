@@ -18,11 +18,11 @@ import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
-import util.exception.CreateNewTagException;
+import util.exception.CreateNewProductTagException;
 import util.exception.DeleteTagException;
 import util.exception.InputDataValidationException;
-import util.exception.TagNotFoundException;
-import util.exception.UpdateTagException;
+import util.exception.ProductTagNotFoundException;
+import util.exception.UpdateProductTagException;
 
 
 @Stateless
@@ -42,20 +42,20 @@ public class ProductTagController implements ProductTagControllerLocal {
     }
     
     @Override
-    public List<ProductTag> retrieveAllTags(){
+    public List<ProductTag> retrieveAllProductTags(){
         Query q = em.createQuery("SELECT pt FROM ProductTag pt");
         return q.getResultList();
     }
     
     @Override
-     public ProductTag retrieveTagByTagId(Long tagId) throws TagNotFoundException
+     public ProductTag retrieveProductTagByTagId(Long productTagId) throws ProductTagNotFoundException
     {
-        if(tagId == null)
+        if(productTagId == null)
         {
-            throw new TagNotFoundException("Tag ID not provided");
+            throw new ProductTagNotFoundException("Product Tag ID not provided");
         }
         
-        ProductTag tagEntity = em.find(ProductTag.class, tagId);
+        ProductTag tagEntity = em.find(ProductTag.class, productTagId);
         
         if(tagEntity != null)
         {
@@ -63,12 +63,12 @@ public class ProductTagController implements ProductTagControllerLocal {
         }
         else
         {
-            throw new TagNotFoundException("Tag ID " + tagId + " does not exist!");
+            throw new ProductTagNotFoundException("Tag ID " + productTagId + " does not exist!");
         }               
     }
      
     @Override
-    public ProductTag createNewTagEntity(ProductTag newTag) throws InputDataValidationException, CreateNewTagException
+    public ProductTag createNewProductTag(ProductTag newTag) throws InputDataValidationException, CreateNewProductTagException
     {
         Set<ConstraintViolation<ProductTag>>constraintViolations = validator.validate(newTag);
         
@@ -87,16 +87,16 @@ public class ProductTagController implements ProductTagControllerLocal {
                         ex.getCause().getCause() != null &&
                         ex.getCause().getCause().getClass().getSimpleName().equals("SQLIntegrityConstraintViolationException"))
                 {
-                    throw new CreateNewTagException("Tag with same name already exist");
+                    throw new CreateNewProductTagException("Tag with same name already exist");
                 }
                 else
                 {
-                    throw new CreateNewTagException("An unexpected error has occurred: " + ex.getMessage());
+                    throw new CreateNewProductTagException("An unexpected error has occurred: " + ex.getMessage());
                 }
             }
             catch(Exception ex)
             {                
-                throw new CreateNewTagException("An unexpected error has occurred: " + ex.getMessage());
+                throw new CreateNewProductTagException("An unexpected error has occurred: " + ex.getMessage());
             }
         }
         else
@@ -106,7 +106,7 @@ public class ProductTagController implements ProductTagControllerLocal {
     }
     
     @Override
-    public void updateTag(ProductTag productTag) throws InputDataValidationException, TagNotFoundException, UpdateTagException
+    public void updateProductTag(ProductTag productTag) throws InputDataValidationException, ProductTagNotFoundException, UpdateProductTagException
     {
         Set<ConstraintViolation<ProductTag>>constraintViolations = validator.validate(productTag);
         
@@ -114,20 +114,20 @@ public class ProductTagController implements ProductTagControllerLocal {
         {
             if(productTag.getProductTagId() != null)
             {
-                ProductTag tagToUpdate = retrieveTagByTagId(productTag.getProductTagId());
-                Query query = em.createQuery("SELECT pt FROM ProductTag pt WHERE pt.tagName = :inName AND pt.productTagId <> :inTagId");
-                query.setParameter("inName", productTag.getTagName());
+                ProductTag tagToUpdate = retrieveProductTagByTagId(productTag.getProductTagId());
+                Query query = em.createQuery("SELECT pt FROM ProductTag pt WHERE pt.productTagName = :inName AND pt.productTagId <> :inTagId");
+                query.setParameter("inName", productTag.getProductTagName());
                 query.setParameter("inTagId", productTag.getProductTagId());
                 
                 if(!query.getResultList().isEmpty())
                 {
-                    throw new UpdateTagException("The name of the tag to be updated is duplicated");
+                    throw new UpdateProductTagException("The name of the tag to be updated is duplicated");
                 }
                 
-                tagToUpdate.setTagName(productTag.getTagName());
+                tagToUpdate.setProductTagName(productTag.getProductTagName());
                 
             } else {
-                throw new TagNotFoundException("Tag ID not provided for tag to be updated");
+                throw new ProductTagNotFoundException("Tag ID not provided for tag to be updated");
             }
         } else {
             throw new InputDataValidationException("Tag ID to be updated not provided");
@@ -135,9 +135,9 @@ public class ProductTagController implements ProductTagControllerLocal {
     }
     
     @Override
-    public void deleteTag(Long tagId) throws TagNotFoundException, DeleteTagException
+    public void deleteProductTag(Long tagId) throws ProductTagNotFoundException, DeleteTagException
     {
-        ProductTag tagEntityToRemove = retrieveTagByTagId(tagId);
+        ProductTag tagEntityToRemove = retrieveProductTagByTagId(tagId);
         
         if(!tagEntityToRemove.getProductEntities().isEmpty())
         {

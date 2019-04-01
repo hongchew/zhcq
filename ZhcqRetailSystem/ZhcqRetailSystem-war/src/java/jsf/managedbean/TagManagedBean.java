@@ -18,9 +18,9 @@ import util.exception.DeleteTagException;
 import util.exception.InputDataValidationException;
 import util.exception.UpdateProductTagException;
 
-@Named(value = "tagManagementManagedBean")
+@Named(value = "tagManagedBean")
 @ViewScoped
-public class TagManagementManagedBean {
+public class TagManagedBean {
 
     @EJB(name = "ProductTagControllerLocal")
     private ProductTagControllerLocal productTagControllerLocal;
@@ -33,7 +33,7 @@ public class TagManagementManagedBean {
     private ProductTag productTagToUpdate;
     private ProductTag productTagToDelete;
     
-    public TagManagementManagedBean() {
+    public TagManagedBean() {
     }
     
     @PostConstruct

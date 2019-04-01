@@ -6,6 +6,7 @@ import ejb.stateless.ProductControllerLocal;
 import entity.CoordinatedOutfit;
 import entity.ProductEntity;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -24,7 +25,7 @@ import util.exception.UpdateOutfitException;
 
 @Named(value = "outfitManagementManagedBean")
 @ViewScoped
-public class OutfitManagementManagedBean {
+public class OutfitManagementManagedBean implements Serializable {
 
     @EJB(name = "ProductControllerLocal")
     private ProductControllerLocal productControllerLocal;

@@ -4,6 +4,7 @@ package jsf.managedbean;
 import ejb.stateless.StaffControllerLocal;
 import entity.Staff;
 import java.io.IOException;
+import java.io.Serializable;
 import javafx.event.ActionEvent;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -18,7 +19,7 @@ import util.exception.InvalidLoginCredentialException;
 @Named(value = "loginManagedBean")
 @RequestScoped
 
-public class LoginManagedBean {
+public class LoginManagedBean implements Serializable{
 
     @EJB(name = "StaffControllerLocal")
     private StaffControllerLocal staffControllerLocal;

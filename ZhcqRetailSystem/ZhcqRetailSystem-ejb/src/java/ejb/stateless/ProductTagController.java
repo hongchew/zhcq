@@ -26,7 +26,7 @@ import util.exception.UpdateTagException;
 
 
 @Stateless
-@Local(ProductControllerLocal.class)
+@Local(ProductTagControllerLocal.class)
 public class ProductTagController implements ProductTagControllerLocal {
 
     @PersistenceContext(unitName = "ZhcqRetailSystem-ejbPU")

@@ -4,6 +4,7 @@ package jsf.managedbean;
 
 import ejb.stateless.PromotionControllerLocal;
 import entity.Promotion;
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -14,7 +15,7 @@ import javax.inject.Named;
 
 @Named(value = "utilManagedBean")
 @RequestScoped
-public class UtilManagedBean {
+public class UtilManagedBean implements Serializable {
 
     @EJB(name = "PromotionControllerLocal")
     private PromotionControllerLocal promotionControllerLocal;

@@ -10,6 +10,7 @@ import ejb.stateless.ProductTagControllerLocal;
 import entity.ProductEntity;
 import entity.ProductTag;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -27,7 +28,7 @@ import javax.faces.view.ViewScoped;
  */
 @Named(value = "filterProductsByTagsManagedBean")
 @ViewScoped
-public class FilterProductsByTagsManagedBean {
+public class FilterProductsByTagsManagedBean implements Serializable{
 
     @EJB
     private ProductControllerLocal productController;

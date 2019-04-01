@@ -11,6 +11,7 @@ import ejb.stateless.ProductTagControllerLocal;
 import entity.Category;
 import entity.ProductEntity;
 import entity.ProductTag;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -33,7 +34,7 @@ import util.exception.ProductNotFoundException;
  */
 @Named(value = "productManagementManagedBean")
 @ViewScoped
-public class ProductManagementManagedBean {
+public class ProductManagementManagedBean implements Serializable {
 
     @EJB
     private ProductTagControllerLocal productTagController;

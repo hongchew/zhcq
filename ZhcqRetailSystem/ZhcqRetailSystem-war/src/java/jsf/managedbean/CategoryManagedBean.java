@@ -7,6 +7,7 @@ package jsf.managedbean;
 
 import ejb.stateless.CategoryControllerLocal;
 import entity.Category;
+import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -27,7 +28,7 @@ import util.exception.UpdateCategoryException;
  */
 @Named(value = "categoryManagedBean")
 @ViewScoped
-public class CategoryManagedBean {
+public class CategoryManagedBean implements Serializable {
 
     @EJB(name = "CategoryControllerLocal")
     private CategoryControllerLocal categoryControllerLocal;

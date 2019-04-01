@@ -11,9 +11,18 @@
          
         <ez:Breadcrumb pageName="index" />
         
-        <h:panelGroup>
+        <h:panelGroup rendered="#{sessionScope.isLogin != true}">
             <article>
-                <h3>zhcq Fashion Retail</h3>
+                <h3>Welcome</h3>
+                <p>
+                    Please Log in to Perform operations as a ZHCQ Staff                    
+                </p>
+            </article>
+        </h:panelGroup>
+        
+        <h:panelGroup rendered="#{sessionScope.isLogin == true}">
+            <article>
+                <h3> zhcq Fashion Retail</h3>
                 <br/>
                 <h3>Promotion Of the Week</h3>                    
                 <p>                    

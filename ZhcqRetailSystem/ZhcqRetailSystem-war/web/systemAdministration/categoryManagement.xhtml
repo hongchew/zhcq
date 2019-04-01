@@ -51,10 +51,10 @@
                         <p:commandButton icon="ui-icon-document" title="View" oncomplete="PF('dialogViewCategory').show()" update="formViewCategory">
                             <f:setPropertyActionListener value="#{category}" target="#{categoryManagedBean.categoryToView}" />
                         </p:commandButton>
-                        <p:commandButton icon="ui-icon-pencil" title="Update" oncomplete="PF('dialogUpdateCategory').show()" update="formUpdateCateogory" actionListener="#{categoryManagedBean.doUpdateProduct}">
+                        <p:commandButton actionListener="#{categoryManagedBean.doUpdateCategory}" update="formUpdateCategory" oncomplete="PF('dialogUpdateCategory').show()" icon="ui-icon-pencil" title="Update">
                             <f:attribute value="#{category}" name="categoryToUpdate" />
                         </p:commandButton>
-                        <p:commandButton icon="ui-icon-trash" title="Delete" actionListener="#{categoryManagedBean.deleteProduct}" update="formAllCategories:dataTableAllCategories formAllCategories:messages">
+                        <p:commandButton icon="ui-icon-trash" title="Delete" actionListener="#{categoryManagedBean.deleteCategory}" update="formAllCategories:dataTableAllCategories formAllCategories:messages">
                             <f:attribute value="#{category}" name="categoryToDelete" />
                             <p:confirm header="Confirmation" message="Are you sure you want to delete Category #{category.categoryName}?" icon="ui-icon-alert" />
                         </p:commandButton>
@@ -142,7 +142,7 @@
 
             <h:form id="formUpdateCategory">
                 <p:dialog id="dialogUpdateCategory" widgetVar="dialogUpdateCategory" header="Update Category" closable="true">
-                    <p:messages id="messagesUpdateCategory" />
+                    <p:messages id="messagesUpdateCategory" redisplay="false" />
 
                     <p:panelGrid>
 
@@ -184,7 +184,7 @@
                         
                         <p:row>
                             <p:column colspan="3">
-                                <p:commandButton actionListener="#{categoryManagedBean.updateCategory}" value="Update Category" update="@form formAllCategories:dataTableAllCategories" oncomplete="PF('dialogCreateNewCategory').show();"/> 
+                                <p:commandButton  value="Update Category" update="@form formAllCategories:dataTableAllCategories" actionListener="#{categoryManagedBean.updateCategory}" oncomplete="PF('dialogUpdateCategory').show();"/> 
                             </p:column>
                         </p:row>
                     </p:panelGrid>

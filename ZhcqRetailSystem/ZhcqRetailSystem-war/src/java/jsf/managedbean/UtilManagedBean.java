@@ -15,7 +15,7 @@ import javax.inject.Named;
 
 @Named(value = "utilManagedBean")
 @RequestScoped
-public class UtilManagedBean implements Serializable {
+public class UtilManagedBean{
 
     @EJB(name = "PromotionControllerLocal")
     private PromotionControllerLocal promotionControllerLocal;

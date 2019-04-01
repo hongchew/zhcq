@@ -69,7 +69,7 @@ public class CategoryManagedBean implements Serializable {
     }
     
     public void doUpdateCategory(ActionEvent event) {
-        categoryToUpdate = (Category) event.getComponent().getAttributes().get("categoryToUpdate");
+        categoryToUpdate = (Category)event.getComponent().getAttributes().get("categoryToUpdate");
     }
 
     public void updateCategory(ActionEvent event) {

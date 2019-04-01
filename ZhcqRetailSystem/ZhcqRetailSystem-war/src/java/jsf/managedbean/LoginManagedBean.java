@@ -19,7 +19,7 @@ import util.exception.InvalidLoginCredentialException;
 @Named(value = "loginManagedBean")
 @RequestScoped
 
-public class LoginManagedBean implements Serializable{
+public class LoginManagedBean{
 
     @EJB(name = "StaffControllerLocal")
     private StaffControllerLocal staffControllerLocal;
@@ -36,9 +36,9 @@ public class LoginManagedBean implements Serializable{
 
     public void login(ActionEvent event) throws IOException {
         try {
-            Staff staff = staffControllerLocal.staffLogin(username, password);
+            Staff currentStaff = staffControllerLocal.staffLogin(username, password);
             FacesContext.getCurrentInstance().getExternalContext().getSession(true);
-            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("currentStaff", staff);
+            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("currentStaff", currentStaff);
             FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("isLogin", true);
             FacesContext.getCurrentInstance().getExternalContext().redirect(FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath() + "/index.xhtml");
         } catch (InvalidLoginCredentialException ex) {

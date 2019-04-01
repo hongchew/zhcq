@@ -4,6 +4,7 @@ package jsf.managedbean;
 import ejb.stateless.ProductTagControllerLocal;
 import entity.ProductTag;
 import entity.ProductTag;
+import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -20,7 +21,7 @@ import util.exception.UpdateProductTagException;
 
 @Named(value = "tagManagedBean")
 @ViewScoped
-public class TagManagedBean {
+public class TagManagedBean implements Serializable{
 
     @EJB(name = "ProductTagControllerLocal")
     private ProductTagControllerLocal productTagControllerLocal;

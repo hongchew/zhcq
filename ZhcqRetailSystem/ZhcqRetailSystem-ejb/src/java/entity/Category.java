@@ -41,7 +41,7 @@ public class Category implements Serializable {
     @Size(max = 128)
     private String description;
 
-    @OneToMany(mappedBy ="categoryEntity")
+    @OneToMany(mappedBy ="productCategory")
     private List<ProductEntity> productEntities;
 
     public Category() {

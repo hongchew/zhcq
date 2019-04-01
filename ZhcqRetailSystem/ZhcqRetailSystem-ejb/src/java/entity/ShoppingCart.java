@@ -27,12 +27,11 @@ public class ShoppingCart implements Serializable {
     private Long cartId;
     
     @NotNull
-    @Column(nullable = false)
     @OneToOne(mappedBy ="shoppingCart")
     private Member member; 
     
     
-    @ManyToMany(mappedBy = "shoppingCart")
+    @ManyToMany(mappedBy = "shoppingcarts")
     private List<ProductEntity> products; 
 
     public ShoppingCart() {

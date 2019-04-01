@@ -8,22 +8,26 @@ package ejb.stateless;
 import entity.ProductTag;
 import java.util.List;
 import javax.ejb.Local;
-import util.exception.CreateNewTagException;
+import util.exception.CreateNewProductTagException;
 import util.exception.DeleteTagException;
 import util.exception.InputDataValidationException;
 
-import util.exception.TagNotFoundException;
+import util.exception.ProductTagNotFoundException;
+import util.exception.UpdateProductTagException;
 
 
 @Local
 public interface ProductTagControllerLocal {
 
-    public ProductTag retrieveTagByTagId(Long tagId) throws TagNotFoundException;
+    public ProductTag retrieveProductTagByTagId(Long tagId) throws ProductTagNotFoundException;
 
-    public ProductTag createNewTagEntity(ProductTag newTag) throws InputDataValidationException, CreateNewTagException;
+    public void deleteProductTag(Long tagId) throws ProductTagNotFoundException, DeleteTagException;
 
-    public void deleteTag(Long tagId) throws TagNotFoundException, DeleteTagException;
+    public List<ProductTag> retrieveAllProductTags();
+       
+    public ProductTag createNewProductTag(ProductTag newTag) throws InputDataValidationException, CreateNewProductTagException;
 
-    public List<ProductTag> retrieveAllTags();
+    public void updateProductTag(ProductTag productTag) throws InputDataValidationException, ProductTagNotFoundException, UpdateProductTagException;
+
     
 }

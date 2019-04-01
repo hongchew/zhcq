@@ -22,7 +22,7 @@ public class ProductTag implements Serializable {
     @Column(nullable = false, length = 32)
     @NotNull
     @Size(min = 4, max = 32)
-    private String tagName;
+    private String productTagName;
 
     @ManyToMany 
     private List<ProductEntity> productEntities;
@@ -30,9 +30,9 @@ public class ProductTag implements Serializable {
     public ProductTag() {
     }
     
-    public ProductTag(String tagName) {
+    public ProductTag(String productTagName) {
         this();
-        this.tagName = tagName; 
+        this.productTagName = productTagName; 
     }
     
 
@@ -44,12 +44,12 @@ public class ProductTag implements Serializable {
         this.productTagId = productTagId;
     }
 
-    public String getTagName() {
-        return tagName;
+    public String getProductTagName() {
+        return productTagName;
     }
 
-    public void setTagName(String tagName) {
-        this.tagName = tagName;
+    public void setProductTagName(String productTagName) {
+        this.productTagName = productTagName;
     }
 
     public List<ProductEntity> getProductEntities() {

@@ -27,7 +27,7 @@ import util.exception.CategoryNotFoundException;
 import util.exception.CreateNewProductException;
 import util.exception.InputDataValidationException;
 import util.exception.ProductNotFoundException;
-import util.exception.TagNotFoundException;
+import util.exception.ProductTagNotFoundException;
 import util.exception.UpdateProductException;
 
 
@@ -99,7 +99,7 @@ public class ProductController implements ProductControllerLocal {
                 {
                     for(Long tagId:productTags)
                     {
-                        ProductTag tagEntity = productTagControllerLocal.retrieveTagByTagId(tagId);
+                        ProductTag tagEntity = productTagControllerLocal.retrieveProductTagByTagId(tagId);
                         newProductEntity.addTag(tagEntity);
                     }
                 }
@@ -210,7 +210,7 @@ public class ProductController implements ProductControllerLocal {
     }
     
     @Override
-     public long updateProduct(ProductEntity productEntity, Long categoryId, List<Long> tagIds) throws InputDataValidationException, ProductNotFoundException, CategoryNotFoundException, TagNotFoundException, UpdateProductException
+     public long updateProduct(ProductEntity productEntity, Long categoryId, List<Long> tagIds) throws InputDataValidationException, ProductNotFoundException, CategoryNotFoundException, ProductTagNotFoundException, UpdateProductException
     {
         Set<ConstraintViolation<ProductEntity>>constraintViolations = validator.validate(productEntity);
         
@@ -236,9 +236,9 @@ public class ProductController implements ProductControllerLocal {
                         
                         productEntityToUpdate.getProductTags().clear();
                         
-                        for(Long tagId:tagIds)
+                        for(Long productTagId:tagIds)
                         {
-                            ProductTag tagEntity = productTagControllerLocal.retrieveTagByTagId(tagId);
+                            ProductTag tagEntity = productTagControllerLocal.retrieveProductTagByTagId(productTagId);
                             productEntityToUpdate.addTag(tagEntity);
                         }
                     }

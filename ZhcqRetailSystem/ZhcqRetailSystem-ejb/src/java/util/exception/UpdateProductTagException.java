@@ -9,13 +9,13 @@ package util.exception;
  *
  * @author zhimingkoh
  */
-public class UpdateTagException extends Exception {
+public class UpdateProductTagException extends Exception {
 
     /**
      * Creates a new instance of <code>UpdateTagException</code> without detail
      * message.
      */
-    public UpdateTagException() {
+    public UpdateProductTagException() {
     }
 
     /**
@@ -24,7 +24,7 @@ public class UpdateTagException extends Exception {
      *
      * @param msg the detail message.
      */
-    public UpdateTagException(String msg) {
+    public UpdateProductTagException(String msg) {
         super(msg);
     }
 }

@@ -29,7 +29,7 @@ public class WishList implements Serializable {
     @OneToOne(mappedBy="wishList")
     private Member member;
     
-    @ManyToMany(mappedBy = "wishList")
+    @ManyToMany(mappedBy = "wishLists")
     private List<ProductEntity> productEntities;
     
     @OneToOne

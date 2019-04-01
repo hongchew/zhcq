@@ -6,6 +6,7 @@ import ejb.stateless.ProductControllerLocal;
 import entity.CoordinatedOutfit;
 import entity.ProductEntity;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -22,9 +23,9 @@ import util.exception.ProductNotFoundException;
 import util.exception.UpdateOutfitException;
 
 
-@Named(value = "outfitManagementManagedBean")
+@Named
 @ViewScoped
-public class OutfitManagementManagedBean {
+public class OutfitManagementManagedBean implements Serializable {
 
     @EJB(name = "ProductControllerLocal")
     private ProductControllerLocal productControllerLocal;
@@ -33,7 +34,7 @@ public class OutfitManagementManagedBean {
     private CoordinatedOutfitControllerLocal coordinatedOutfitControllerLocal;
 
     private List<CoordinatedOutfit> outfits; 
-    //private List<CoordinatedOutfit> filiteredOutfits; 
+    private List<CoordinatedOutfit> filiteredOutfits; 
     
     
     private CoordinatedOutfit newCoordinatedOutfit; 
@@ -273,6 +274,20 @@ public class OutfitManagementManagedBean {
      */
     public void setUpdatedProductIds(List<String> updatedProductIds) {
         this.updatedProductIds = updatedProductIds;
+    }
+
+    /**
+     * @return the filiteredOutfits
+     */
+    public List<CoordinatedOutfit> getFiliteredOutfits() {
+        return filiteredOutfits;
+    }
+
+    /**
+     * @param filiteredOutfits the filiteredOutfits to set
+     */
+    public void setFiliteredOutfits(List<CoordinatedOutfit> filiteredOutfits) {
+        this.filiteredOutfits = filiteredOutfits;
     }
     
     

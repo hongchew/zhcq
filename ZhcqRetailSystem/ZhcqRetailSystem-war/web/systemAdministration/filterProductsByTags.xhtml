@@ -80,8 +80,8 @@
                                 <h:outputText value="#{productEntity.sizeEnum}" />
                             </p:column>
                             
-                            <p:column headerText="Action" >
-                                <p:commandButton update="formViewProduct" oncomplete="PF('dialogViewProduct').show()" icon="ui-icon-document" title="View">
+                            <p:column headerText="Action" style="align-content: center">
+                                <p:commandButton update="formViewProduct" oncomplete="PF('dialogViewProduct').show()" icon="ui-icon-document" title="View" >
                                     <f:setPropertyActionListener value="#{productEntity}" target="#{filterProductsByTagsManagedBean.selectedProductEntityToView}" />
                                 </p:commandButton>                        
                             </p:column>

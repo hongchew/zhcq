@@ -21,10 +21,11 @@ and open the template in the editor.
                     </p:submenu>
                     
                     <p:submenu label="Admin" rendered="#{sessionScope.isLogin == true}">
-                        <p:menuitem value="Category Management" outcome="/categoryManagement.xhtml" />
-                        <p:menuitem value="Filter Product By Tags" outcome="filterProductsByTags.xhtml"/>
-                        <p:menuitem value="Outfit Management" outcome="outfitManagement.xhtml"/>
-                        <p:menuitem value="Tag Management" outcome="tagManagement.xhtml"/>
+                        <p:menuitem value="Category Management" outcome="/systemAdministration/categoryManagement.xhtml" />
+                        <p:menuitem value="Filter Product By Tags" outcome="/systemAdministration/filterProductsByTags.xhtml"/>
+                        <p:menuitem value="Outfit Management" outcome="/systemAdministration/outfitManagement.xhtml"/>
+                        <p:menuitem value="Tag Management" outcome="/systemAdministration/tagManagement.xhtml"/>
+                        
                     </p:submenu>
                 </p:menu> 
             </h:form>

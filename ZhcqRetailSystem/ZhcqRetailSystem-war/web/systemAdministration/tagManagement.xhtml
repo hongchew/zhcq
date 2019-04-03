@@ -28,7 +28,7 @@
             <h:form id="formAllProductTags">
                 <p:messages id="messages" redisplay="false" closable="true" />
 
-                <p:dataTable id="dataTableAllProductTags" widgetVar="dataTableAllProductTags" value="#{tagManagedBean.productTags}" var="tag" filteredValue="#{tagManagedBean.filteredProductTags}" rowKey="#{productTag.productTagId}" 
+                <p:dataTable id="dataTableAllProductTags" widgetVar="dataTableAllProductTags" value="#{tagManagedBean.productTags}" var="productTag" filteredValue="#{tagManagedBean.filteredProductTags}" rowKey="#{productTag.productTagId}" 
                              rowIndexVar="row" rows="10" paginator="true" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
                 <f:facet name="header">
                     <p:outputPanel style="text-align: right;">

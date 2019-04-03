@@ -115,9 +115,7 @@ public class InitSessionBean {
             productControllerLocal.createNewProduct(new ProductEntity("PROD23", "100% Cotton", BigDecimal.valueOf(10.00), 20, SizeEnum.S, ColourEnum.BLUE), accessories.getCategoryId() ,tagIdsEmpty);
             productControllerLocal.createNewProduct(new ProductEntity("PROD24", "100% Cotton", BigDecimal.valueOf(10.00), 20, SizeEnum.S, ColourEnum.BLUE), accessories.getCategoryId() ,tagIdsEmpty);
             
-            
-            
-            
+           
         } catch (InputDataValidationException | CreateNewCategoryException | CreateNewProductException | CreateNewProductTagException ex) {
             System.err.println("********** DataInitializationSessionBean.initializeData(): " + ex.getMessage());
     

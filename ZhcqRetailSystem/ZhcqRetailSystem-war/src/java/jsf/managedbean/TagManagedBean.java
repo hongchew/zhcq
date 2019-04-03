@@ -3,7 +3,6 @@ package jsf.managedbean;
 
 import ejb.stateless.ProductTagControllerLocal;
 import entity.ProductTag;
-import entity.ProductTag;
 import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -65,10 +64,10 @@ public class TagManagedBean implements Serializable{
     }
     
     public void doUpdateProductTag(ActionEvent event) {
-        productTagToUpdate = (ProductTag) event.getComponent().getAttributes().get("productTagToUpdate");
+        productTagToUpdate = (ProductTag)event.getComponent().getAttributes().get("productTagToUpdate");
     }
 
-    public void updateCProductTag(ActionEvent event) {
+    public void updateProductTag(ActionEvent event) {
         try {
             productTagControllerLocal.updateProductTag(productTagToUpdate);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Successfully updated ProductTag", null));

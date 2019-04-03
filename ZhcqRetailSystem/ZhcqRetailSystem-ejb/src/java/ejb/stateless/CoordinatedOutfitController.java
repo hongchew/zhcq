@@ -8,6 +8,8 @@ package ejb.stateless;
 import entity.Category;
 import entity.CoordinatedOutfit;
 import entity.ProductEntity;
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 import javax.ejb.EJB;
@@ -52,14 +54,14 @@ public class CoordinatedOutfitController implements CoordinatedOutfitControllerL
     }
     
     @Override
-    public CoordinatedOutfit createNewOutfit(CoordinatedOutfit newCoordinatedOutfit, List<Long> productIds ) throws InputDataValidationException, CreateNewOutfitException, ProductNotFoundException
+    public CoordinatedOutfit createNewOutfit(CoordinatedOutfit newCoordinatedOutfit, List<Long> productIds, Date date) throws InputDataValidationException, CreateNewOutfitException, ProductNotFoundException
     {
          Set<ConstraintViolation<CoordinatedOutfit>>constraintViolations = validator.validate(newCoordinatedOutfit);
         
         if(constraintViolations.isEmpty())
         {
             try{   
-                if(productIds.size() < 1){
+                if(productIds.size() <= 1){
                    throw new CreateNewOutfitException("Coordinated Outfit must be associated with more than one products!");
                 } 
 
@@ -68,6 +70,10 @@ public class CoordinatedOutfitController implements CoordinatedOutfitControllerL
                         throw new CreateNewOutfitException("Product ID Is invalid!");
                     }
                 }
+                
+                System.out.println(date);
+                newCoordinatedOutfit.setDateCreated(date);
+                
                 em.persist(newCoordinatedOutfit);
 
                 for(Long productId: productIds){
@@ -82,6 +88,7 @@ public class CoordinatedOutfitController implements CoordinatedOutfitControllerL
                         throw new CreateNewOutfitException("Product already has an Outfit!");
                     }
                 }
+                
                 em.flush();
                 
                 return newCoordinatedOutfit;
@@ -190,7 +197,7 @@ public class CoordinatedOutfitController implements CoordinatedOutfitControllerL
            product.setCoordinatedOutfit(null);
        }
        outfitToDelete.getProductEntities().clear();
-       em.remove(outfitToDelete);       
+       em.remove(outfitToDelete);        
     }    
     
    

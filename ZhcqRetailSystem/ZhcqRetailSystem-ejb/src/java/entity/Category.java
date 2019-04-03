@@ -48,9 +48,10 @@ public class Category implements Serializable {
         productEntities = new ArrayList<>();
     }
 
-    public Category(String categoryName) {
+    public Category(String categoryName, String description) {
         this();
         this.categoryName = categoryName;
+        this.description = description;
     }
     
     

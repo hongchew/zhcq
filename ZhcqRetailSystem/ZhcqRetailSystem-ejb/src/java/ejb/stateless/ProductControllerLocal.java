@@ -35,5 +35,7 @@ public interface ProductControllerLocal {
     public long updateProduct(ProductEntity productEntity, Long categoryId, List<Long> tagIds) throws InputDataValidationException, ProductNotFoundException, CategoryNotFoundException, ProductTagNotFoundException, UpdateProductException;
 
     public List<ProductEntity> retrieveAllProducts();
+
+    public List<ProductEntity> productsAvailableForOutfit();
     
 }

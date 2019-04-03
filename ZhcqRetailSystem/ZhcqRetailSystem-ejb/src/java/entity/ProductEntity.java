@@ -101,6 +101,7 @@ public class ProductEntity implements Serializable {
         productTags = new ArrayList<>();
         wishLists = new ArrayList<>();
         dateAdded = new Date();
+        shoppingcarts = new ArrayList<>();
     }
 
     public ProductEntity(String productName, String description, BigDecimal unitPrice, Integer quantityOnHand, SizeEnum size, ColourEnum colour) {

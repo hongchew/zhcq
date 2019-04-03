@@ -75,7 +75,7 @@ public class ProductController implements ProductControllerLocal {
     }
     
     @Override
-    public ProductEntity createNewProduct(ProductEntity newProductEntity,Long categoryId,List<Long> productTags) throws InputDataValidationException, CreateNewProductException
+    public ProductEntity createNewProduct(ProductEntity newProductEntity,Long categoryId,List<Long> productTagIds) throws InputDataValidationException, CreateNewProductException
     {
         
      Set<ConstraintViolation<ProductEntity>>constraintViolations = validator.validate(newProductEntity);
@@ -95,9 +95,9 @@ public class ProductController implements ProductControllerLocal {
                 em.persist(newProductEntity);
                 newProductEntity.setProductCategory(categoryEntity);
                 
-                if(productTags != null && (!productTags.isEmpty()))
+                if(productTagIds != null && (!productTagIds.isEmpty()))
                 {
-                    for(Long tagId:productTags)
+                    for(Long tagId:productTagIds)
                     {
                         ProductTag tagEntity = productTagControllerLocal.retrieveProductTagByTagId(tagId);
                         newProductEntity.addTag(tagEntity);
@@ -290,6 +290,21 @@ public class ProductController implements ProductControllerLocal {
         {
             throw new DeleteProductException("Product ID " + productId + " is associated with existing sale transaction line item(s) and cannot be deleted!");
         }*/
+    }
+    
+    @Override
+    public List<ProductEntity> productsAvailableForOutfit(){
+        Query query = em.createQuery("SELECT pe FROM ProductEntity pe WHERE pe.coordinatedOutfit IS NULL");
+    
+        List<ProductEntity> productEntities = query.getResultList();
+        
+        for(ProductEntity productEntity:productEntities)
+        {
+            productEntity.getProductCategory();
+            productEntity.getProductTags().size();
+        }
+        
+        return productEntities;
     }
     
     

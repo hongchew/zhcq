@@ -22,7 +22,7 @@ and open the template in the editor.
             
             <h:form>
                 <p:menubar>
-                    <p:submenu>
+                    <p:submenu label="File" icon="ui-icon-document">
                         <p:menuitem value="Create New Outfit" onclick="PF('dialogCreateNewOutfit').show()" 
                                     icon="fa fa-plus" />
                     </p:submenu>
@@ -34,7 +34,7 @@ and open the template in the editor.
                 <p:messages id="messages" redisplay="false" closable="true" />
                 
                 <p:dataTable id="dataTableAllOutfits" widgetVar="dataTableAllOutfits" value="#{outfitManagementManagedBean.outfits}"
-                             var="outfitEntity" rowKey="#{outfitEntity.coordinatedOutfitId}" rowIndexVar="row" filteredValue="#{outfitManagementManagedBean.filiteredOutfits}"
+                             var="outfitEntity" rowKey="#{outfitEntity.coordinatedOutfitId}" rowIndexVar="row" filteredValue="#{outfitManagementManagedBean.filteredOutfits}"
                              rows="10" paginator="true" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowsPerPageTemplate="10,20,50">
                     <f:facet name="header">
                         <p:outputPanel style="text-align: right;">
@@ -52,15 +52,14 @@ and open the template in the editor.
                     </p:column>
                     
                     <p:column headerText="Action">
-                        <p:commandButton update="fromViewOutfit" oncomplete="PF('dialogViewOutfit').show()" icon="ui-icon-document" title="View">
+                        <p:commandButton update="formViewOutfit" oncomplete="PF('dialogViewOutfit').show()" icon="ui-icon-document" title="View">
                             <f:setPropertyActionListener value="#{outfitEntity}" target="#{outfitManagementManagedBean.selectedOutfitToView}"/>
                         </p:commandButton>
-                        <p:commandButton actionListener="#{outfitManagementManagedBean.doUpdateOutfit}" update="formUpdateOutfit" oncomplete="PF('dialogUpdateProduct').show()" icon="ui-icon-pencil"
-                                         title="Update">
-                            <f:attribute name="outfitEntityToUpdate" value="#{outfitEntity}" />
+                        <p:commandButton actionListener="#{outfitManagementManagedBean.doUpdateOutfit}" update="formUpdateOutfit" oncomplete="PF('dialogUpdateOutfit').show()" icon="ui-icon-pencil" title="Update">
+                            <f:attribute name="outfitToUpdate" value="#{outfitEntity}" />
                         </p:commandButton>
-                        <p:commandButton>
-                            <f:attribute name="outfitEntityToDelete" value="#{outfitEntity}"/>
+                        <p:commandButton icon="ui-icon-trash" actionListener="#{outfitManagementManagedBean.deleteOutfit}" update="formAllOutfits:dataTableAllOutfits formAllOutfits:messages">
+                            <f:attribute name="outfitToDelete" value="#{outfitEntity}"/>
                             <p:confirm header="Confirmation" message="Are yous ure you want to delete #{outfitEntity.outfitName} ?" icon="ui-icon-alert" />
                         </p:commandButton>
                     </p:column>
@@ -75,7 +74,7 @@ and open the template in the editor.
                 
                 <p:dialog id="dialogCreateNewOutfit" widgetVar="dialogCreateNewOutfit" header="Create New Outfit" closable="true">
                     
-                    <p:messages id="messagesCreateNewProduct" redisplay="false" />
+                    <p:messages id="messagesCreateNewOutfit" redisplay="false" />
                 
                     <p:panelGrid>
                         
@@ -97,7 +96,7 @@ and open the template in the editor.
                             </p:column>
                             <p:column>
                                 <p:selectManyMenu id="productEntities" value="#{outfitManagementManagedBean.newProductIds}" showCheckbox="true">
-                                    <f:selectItems value="#{outfitManagementManagedBean.productEntities}" var="productEntity" itemValue="#{productEntity.productId}" itemLabel="#{productEntity.productName}" />
+                                    <f:selectItems value="#{outfitManagementManagedBean.availableProducts}" var="productEntity" itemValue="#{productEntity.productId}" itemLabel="#{productEntity.productName}" />
                                 </p:selectManyMenu>
                             </p:column>
                             <p:column>
@@ -117,7 +116,7 @@ and open the template in the editor.
             </h:form>
             
             <h:form id="formViewOutfit">
-                <p:dialog id="dialogViewOutfit" widgetVar="dialogViewOutfit" header="View Outfits" closable="true">
+                <p:dialog id="dialogViewOutfit" widgetVar="dialogViewOutfit" header="View Outfit" closable="true">
                     <p:panelGrid>
                         
                         <p:row>
@@ -159,7 +158,7 @@ and open the template in the editor.
             </h:form>
             
             <h:form id="formUpdateOutfit">
-                <p:dialog id="dialogUpdateProduct" widgetVar="dialogUpdateProduct" header="Update Product" closable="true">
+                <p:dialog id="dialogUpdateOutfit" widgetVar="dialogUpdateOutfit" header="Update Outfit" closable="true">
                     
                     <p:messages id="messagesUpdateOutfit" redisplay="false" />
                     
@@ -193,8 +192,7 @@ and open the template in the editor.
                             </p:column>
                             <p:column>
                                 <p:selectManyMenu id="products" value="#{outfitManagementManagedBean.updatedProductIds}" showCheckbox="true">
-                                    <f:selectItems value="##{outfitManagementManagedBean.productEntities}" var="product" itemValue="#{product.productId}" 
-                                                   itemLabel="#{product.productName}"/>
+                                    <f:selectItems value="#{outfitManagementManagedBean.allProducts}" var="product" itemValue="#{product.productId}" itemLabel="#{product.productName}"/>
                                 </p:selectManyMenu>
                                                   
                             </p:column>
@@ -202,8 +200,6 @@ and open the template in the editor.
                                 <p:message for="products" />
                             </p:column>
                         </p:row>
-                        
-                        
                         <p:row>
                             <p:column colspan="3">
                                 <p:commandButton value="Update Outfit" update="@form formAllOutfits:dataTableAllOutfits" actionListener="#{outfitManagementManagedBean.UpdateOutfit}" oncomplete="PF('dialogUpdateOutfit').show();" />

@@ -35,7 +35,7 @@ public class CoordinatedOutfit implements Serializable {
     
     @Temporal(TemporalType.TIMESTAMP)
     @Column(nullable = false)
-    @NotNull
+   
     private Date dateCreated;
     
     @OneToMany(mappedBy = "coordinatedOutfit")

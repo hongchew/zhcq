@@ -6,6 +6,8 @@
 package ejb.stateless;
 
 import entity.CoordinatedOutfit;
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.Local;
 import util.exception.CreateNewOutfitException;
@@ -20,13 +22,13 @@ public interface CoordinatedOutfitControllerLocal {
 
     public List<CoordinatedOutfit> retrieveAllOutfits();
 
-    public CoordinatedOutfit createNewOutfit(CoordinatedOutfit newCoordinatedOutfit, List<Long> productIds) throws InputDataValidationException, CreateNewOutfitException, ProductNotFoundException;
-
     public void deleteOutfit(Long outfitId) throws OutfitNotFoundException;
 
     public void updateOutfit(CoordinatedOutfit outfit, List<Long> productIds) throws InputDataValidationException, OutfitNotFoundException, ProductNotFoundException, UpdateOutfitException;
 
     public CoordinatedOutfit retrieveOutfitById(Long outfitId) throws OutfitNotFoundException;
+
+    public CoordinatedOutfit createNewOutfit(CoordinatedOutfit newCoordinatedOutfit, List<Long> productIds, Date date) throws InputDataValidationException, CreateNewOutfitException, ProductNotFoundException;
 
     
     

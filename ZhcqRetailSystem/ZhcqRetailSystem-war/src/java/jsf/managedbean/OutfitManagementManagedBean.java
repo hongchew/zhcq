@@ -7,7 +7,9 @@ import entity.CoordinatedOutfit;
 import entity.ProductEntity;
 import java.io.IOException;
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -34,7 +36,9 @@ public class OutfitManagementManagedBean implements Serializable {
     private CoordinatedOutfitControllerLocal coordinatedOutfitControllerLocal;
 
     private List<CoordinatedOutfit> outfits; 
-    private List<CoordinatedOutfit> filiteredOutfits; 
+    private List<CoordinatedOutfit> filteredOutfits; 
+    private List<ProductEntity> availableProducts; 
+    private List<ProductEntity> allProducts; 
     
     
     private CoordinatedOutfit newCoordinatedOutfit; 
@@ -42,7 +46,7 @@ public class OutfitManagementManagedBean implements Serializable {
     
     private CoordinatedOutfit selectedOutfitToView; 
     private CoordinatedOutfit selectedOutfitToUpdate; 
-    private List<ProductEntity> productEntities;
+    
     
     private List<String> updatedProductIds;
     
@@ -56,6 +60,8 @@ public class OutfitManagementManagedBean implements Serializable {
     public void postConstruct()
     {
         outfits = coordinatedOutfitControllerLocal.retrieveAllOutfits();
+        availableProducts = productControllerLocal.productsAvailableForOutfit();
+        allProducts = productControllerLocal.retrieveAllProducts();
     }
     
     public void viewOutfitDetails(ActionEvent event) throws IOException
@@ -79,10 +85,14 @@ public class OutfitManagementManagedBean implements Serializable {
         }
         
         try{
-            CoordinatedOutfit outfit = coordinatedOutfitControllerLocal.createNewOutfit(newCoordinatedOutfit, productIdsNew);
+            
+            
+            CoordinatedOutfit outfit = coordinatedOutfitControllerLocal.createNewOutfit(newCoordinatedOutfit, productIdsNew, new Date());
             outfits.add(outfit);
             newCoordinatedOutfit = new CoordinatedOutfit();
             newProductIds = null;
+            
+            availableProducts = productControllerLocal.productsAvailableForOutfit();
             
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "New Outfit created successfully (Cordinated Outfit ID: " + outfit.getCoordinatedOutfitId() + ")", null));
         } catch(InputDataValidationException | CreateNewOutfitException | ProductNotFoundException ex)
@@ -95,15 +105,22 @@ public class OutfitManagementManagedBean implements Serializable {
     public void doUpdateOutfit(ActionEvent event)
     {
         selectedOutfitToUpdate = (CoordinatedOutfit)event.getComponent().getAttributes().get("outfitToUpdate");
+        
+       // System.out.println("NAME OF SELECTED OUTFIT IS : " + selectedOutfitToUpdate.getOutfitName());
+        
+        updatedProductIds = new ArrayList<>();
+        
         for(ProductEntity product: selectedOutfitToUpdate.getProductEntities())
         {
             updatedProductIds.add(product.getProductId().toString());
+            //System.out.println("PRODUCT IS ADDED");
         }
+        availableProducts = productControllerLocal.productsAvailableForOutfit();
     }
     
     public void UpdateOutfit(ActionEvent event)
     {
-        List<Long>productIdsUpdate = null; 
+        List<Long> productIdsUpdate = null; 
         
         if( updatedProductIds!= null && (!updatedProductIds.isEmpty()))
         {
@@ -119,13 +136,14 @@ public class OutfitManagementManagedBean implements Serializable {
             
             selectedOutfitToUpdate.getProductEntities().clear();
             
-            for(ProductEntity pe : productEntities)
+            for(ProductEntity pe : allProducts)
             {
                 if(productIdsUpdate.contains(pe.getProductId()))
                 {
                     selectedOutfitToUpdate.getProductEntities().add(pe);
                 }
             }
+            availableProducts = productControllerLocal.productsAvailableForOutfit();
             
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Outfit Updated Successfully", null));
             
@@ -135,12 +153,14 @@ public class OutfitManagementManagedBean implements Serializable {
          
     }
     
-    public void deleteProduct(ActionEvent event)
+    public void deleteOutfit(ActionEvent event)
     {
         try
         {    
             CoordinatedOutfit outfitToDelete = (CoordinatedOutfit)event.getComponent().getAttributes().get("outfitToDelete");
             coordinatedOutfitControllerLocal.deleteOutfit(outfitToDelete.getCoordinatedOutfitId());
+            outfits.remove(outfitToDelete);
+            availableProducts = productControllerLocal.productsAvailableForOutfit();
             
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Sucessfully deleted outfit!", null));
         } 
@@ -248,19 +268,7 @@ public class OutfitManagementManagedBean implements Serializable {
         this.selectedOutfitToUpdate = selectedOutfitToUpdate;
     }
 
-    /**
-     * @return the productEntities
-     */
-    public List<ProductEntity> getProductEntities() {
-        return productEntities;
-    }
-
-    /**
-     * @param productEntities the productEntities to set
-     */
-    public void setProductEntities(List<ProductEntity> productEntities) {
-        this.productEntities = productEntities;
-    }
+    
 
     /**
      * @return the updatedProductIds
@@ -277,17 +285,45 @@ public class OutfitManagementManagedBean implements Serializable {
     }
 
     /**
-     * @return the filiteredOutfits
+     * @return the filteredOutfits
      */
-    public List<CoordinatedOutfit> getFiliteredOutfits() {
-        return filiteredOutfits;
+    public List<CoordinatedOutfit> getFilteredOutfits() {
+        return filteredOutfits;
     }
 
     /**
-     * @param filiteredOutfits the filiteredOutfits to set
+     * @param filteredOutfits the filteredOutfits to set
      */
-    public void setFiliteredOutfits(List<CoordinatedOutfit> filiteredOutfits) {
-        this.filiteredOutfits = filiteredOutfits;
+    public void setFilteredOutfits(List<CoordinatedOutfit> filteredOutfits) {
+        this.filteredOutfits = filteredOutfits;
+    }
+
+    /**
+     * @return the availableProducts
+     */
+    public List<ProductEntity> getAvailableProducts() {
+        return availableProducts;
+    }
+
+    /**
+     * @param availableProducts the availableProducts to set
+     */
+    public void setAvailableProducts(List<ProductEntity> availableProducts) {
+        this.availableProducts = availableProducts;
+    }
+
+    /**
+     * @return the allProducts
+     */
+    public List<ProductEntity> getAllProducts() {
+        return allProducts;
+    }
+
+    /**
+     * @param allProducts the allProducts to set
+     */
+    public void setAllProducts(List<ProductEntity> allProducts) {
+        this.allProducts = allProducts;
     }
     
     

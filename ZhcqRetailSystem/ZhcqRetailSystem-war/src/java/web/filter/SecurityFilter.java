@@ -45,6 +45,7 @@ public class SecurityFilter implements Filter
             if(isLogin == true)
             {
                 Staff currentStaffEntity = (Staff)httpSession.getAttribute("currentStaffEntity");
+                chain.doFilter(request, response);
             } else {
                 httpServletResponse.sendRedirect(CONTEXT_ROOT + "/accessRightError.xhtml");
             }

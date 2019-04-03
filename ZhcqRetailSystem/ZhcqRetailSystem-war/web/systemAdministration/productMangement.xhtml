@@ -14,13 +14,13 @@ and open the template in the editor.
     
     <ui:define name="content">
         
+        <ez:Breadcrumb pageName="productManagement" />
         <div>
-            
             <h3>Product Management</h3>
             <p:menubar>
                 <p:menuitem value="Create New Product" onclick="PF('createProductBox').show()" icon="fa fa-plus" />                                     
             </p:menubar>
-            </br>
+            <br/>
             <h:form id="createProductForm">
                 <p:dialog id="createProductBox" widgetVar="createProductBox" header="Create New Product" closable="true">
                     <p:messages id="messagesCreateNewProduct" redisplay="false" />

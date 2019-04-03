@@ -10,13 +10,25 @@ and open the template in the editor.
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
                 xmlns:p="http://primefaces.org/ui">
     
-     <ui:define name="content">
-         
-        <div>
-            
-            <h3></h3>
-        </div>
-         
-    </ui:define>
+    <section id="mainmenu" class="mainmenu" >
+        <h3>Main Menu</h3>
+        <nav>
+            <h:form>
+                <p:menu style="width:200px;" >
+                    <p:submenu label="System">
+                        <p:menuitem value="Home" outcome="/index.xhtml" icon="fa fa-home"/>
+                        <p:menuitem value="Logout" icon="fa fa-home" actionListener="#{loginManagedBean.logout}" rendered="#{sessionScope.isLogin == true}"/>
+                    </p:submenu>
+                    
+                    <p:submenu label="Admin" rendered="#{sessionScope.isLogin == true}">
+                        <p:menuitem value="Category Management" outcome="/categoryManagement.xhtml" />
+                        <p:menuitem value="Filter Product By Tags" outcome="filterProductsByTags.xhtml"/>
+                        <p:menuitem value="Outfit Management" outcome="outfitManagement.xhtml"/>
+                        <p:menuitem value="Tag Management" outcome="tagManagement.xhtml"/>
+                    </p:submenu>
+                </p:menu> 
+            </h:form>
+        </nav>
+    </section>
 
 </ui:composition>

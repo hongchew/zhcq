@@ -147,10 +147,16 @@ public class PromotionController implements PromotionControllerLocal {
     }
     
     
-    public void deletePromotion(Long promotionId) throws PromotionNotFoundException, DeletePromotionException
+    public void deletePromotion(Long promotionId) throws PromotionNotFoundException
     {
         Promotion promotionToRemove = retrievePromotionByPromotionId(promotionId);
-        
+            
+        for(ProductEntity product:promotionToRemove.getPromotionalProducts())
+        {
+            product.setPromotion(null);
+        }
+
+        em.remove(promotionToRemove);
                       
     }
     

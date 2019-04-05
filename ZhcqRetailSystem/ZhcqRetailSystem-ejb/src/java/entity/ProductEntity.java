@@ -21,6 +21,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 
 import javax.persistence.ManyToMany;
 import javax.persistence.Temporal;
@@ -99,6 +100,9 @@ public class ProductEntity implements Serializable {
     @JoinColumn(name = "promotionId")
     private Promotion promotion; 
     
+    @Column(nullable = false)
+    private String picturePath;
+    
     
     public ProductEntity() {
         productTags = new ArrayList<>();
@@ -107,7 +111,7 @@ public class ProductEntity implements Serializable {
         shoppingcarts = new ArrayList<>();
     }
 
-    public ProductEntity(String productName, String description, BigDecimal unitPrice, Integer quantityOnHand, SizeEnum size, ColourEnum colour) {
+    public ProductEntity(String productName, String description, BigDecimal unitPrice, Integer quantityOnHand, SizeEnum size, ColourEnum colour , String picturePath) {
         this();
         this.productName = productName;
         this.description = description;
@@ -115,7 +119,8 @@ public class ProductEntity implements Serializable {
         this.quantityOnHand = quantityOnHand;
         this.sizeEnum = size;
         this.colourEnum = colour;
-    }
+        this.picturePath = picturePath;
+    }  
     
     
     public void addTag(ProductTag tagEntity)
@@ -290,11 +295,19 @@ public class ProductEntity implements Serializable {
         return promotion;
     }
 
-    /**
-     * @param promotion the promotion to set
-     */
+    
     public void setPromotion(Promotion promotion) {
         this.promotion = promotion;
+    }
+
+    
+    public String getPicturePath() {
+        return picturePath;
+    }
+
+   
+    public void setPicture(String picturePath) {
+        this.picturePath = picturePath;
     }
 
     

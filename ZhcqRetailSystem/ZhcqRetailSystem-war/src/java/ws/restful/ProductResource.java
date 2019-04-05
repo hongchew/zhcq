@@ -23,7 +23,7 @@ import util.exception.CategoryNotFoundException;
 import util.exception.ProductNotFoundException;
 import ws.datamodel.ErrorRsp;
 import ws.datamodel.RetrieveAllProductsRsp;
-import ws.datamodel.RetrieveProductByCatRsp;
+import ws.datamodel.RetrieveProductsByCatRsp;
 import ws.datamodel.RetrieveProductByIdRsp;
 
 
@@ -42,7 +42,7 @@ public class ProductResource {
     @Path("retrieveAllProducts")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response retrieveAllBooks()
+    public Response retrieveAllProducts()
     {
         try
         { 
@@ -64,11 +64,14 @@ public class ProductResource {
     @Path("retrieveProductById/{id}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response retrieveBookById(@PathParam("id") Long id)
+    public Response retrieveProductById(@PathParam("id") Long id)
     {
         try{
             ProductEntity product = productControllerLocal.retrieveProductById(id);
-            RetrieveProductByIdRsp retrieveProductByIdRsp = new RetrieveProductByIdRsp(); 
+            List<ProductEntity> sameProducts = productControllerLocal.retrieveSameProducts(id);
+            List<ProductEntity> suggestedProducts = productControllerLocal.retrieveProductSuggestions(id);
+            
+            RetrieveProductByIdRsp retrieveProductByIdRsp = new RetrieveProductByIdRsp(product, sameProducts, suggestedProducts); 
             
             return Response.status(Response.Status.OK).entity(retrieveProductByIdRsp).build();
             
@@ -81,12 +84,12 @@ public class ProductResource {
     @Path("retrieveProductByCat/{id}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response retrieveBookByCat(@PathParam("id") Long id)
+    public Response retrieveProductByCat(@PathParam("id") Long id)
     {
         try{
            
             List<ProductEntity> products = productControllerLocal.filterProductsByCategory(id);
-            RetrieveProductByCatRsp retrieveProductByCatRsp = new RetrieveProductByCatRsp(products);
+            RetrieveProductsByCatRsp retrieveProductByCatRsp = new RetrieveProductsByCatRsp(products);
             
             return Response.status(Response.Status.OK).entity(retrieveProductByCatRsp).build();
             
@@ -95,6 +98,8 @@ public class ProductResource {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(errorRsp).build();
         }
     }
+    
+    
     
     
     

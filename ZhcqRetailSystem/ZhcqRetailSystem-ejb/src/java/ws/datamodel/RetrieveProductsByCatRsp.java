@@ -8,13 +8,13 @@ import java.util.List;
  *
  * @author zhimingkoh
  */
-public class RetrieveProductByCatRsp {
+public class RetrieveProductsByCatRsp {
     private List<ProductEntity> products ; 
 
-    public RetrieveProductByCatRsp() {
+    public RetrieveProductsByCatRsp() {
     }
 
-    public RetrieveProductByCatRsp(List<ProductEntity> products) {
+    public RetrieveProductsByCatRsp(List<ProductEntity> products) {
         this.products = products;
     }
 

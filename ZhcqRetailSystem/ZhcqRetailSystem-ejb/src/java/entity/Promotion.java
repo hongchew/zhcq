@@ -18,6 +18,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import util.exception.PromotionExistException;
 
 
 @Entity
@@ -48,6 +49,44 @@ public class Promotion implements Serializable {
         this.startDate = startDate;
         this.endDate = endDAte;
     }
+    
+    public void addProduct(ProductEntity product) throws PromotionExistException{
+        if(product != null)
+        {
+            if(!this.promotionalProducts.contains(product))
+            {
+                this.promotionalProducts.add(product);
+                
+                if(product.getPromotion() == null)
+                {
+                    product.setPromotion(this);
+                }
+                else 
+                {
+                    throw new PromotionExistException("There is already a promotion attached to this product!!");
+                }
+            } 
+        }
+    }
+    public void removeProduct(ProductEntity product) throws PromotionExistException{
+        if(product != null)
+        {
+            if(this.promotionalProducts.contains(product))
+            {
+                this.promotionalProducts.remove(product);
+                
+                if(product.getPromotion() == this)
+                {
+                    product.setPromotion(null);
+                }
+                else 
+                {
+                    throw new PromotionExistException("There is already a promotion attached to this product!!");
+                }
+            } 
+        }
+    }
+    
 
     
     public Long getPromotionId() {

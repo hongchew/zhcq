@@ -138,7 +138,7 @@ public class ProductEntity implements Serializable {
     {
         if(tagEntity != null)
         {
-            if(!this.productTags.contains(tagEntity))
+            if(this.productTags.contains(tagEntity))
             {
                 this.productTags.remove(tagEntity);
                 

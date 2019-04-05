@@ -9,10 +9,7 @@ import entity.Promotion;
 import java.util.List;
 import javax.ejb.Local;
 
-/**
- *
- * @author chengyang
- */
+
 @Local
 public interface PromotionControllerLocal {
 

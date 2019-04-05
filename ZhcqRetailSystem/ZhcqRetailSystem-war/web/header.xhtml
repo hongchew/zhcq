@@ -5,7 +5,7 @@
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
                 xmlns:p="http://primefaces.org/ui">
 
-    <header style="text-align: right;">
+    <header style="text-align: right; background-color: seashell">
         <h:panelGroup rendered="#{sessionScope.isLogin == false}">
             <h:form id="loginForm">
 
@@ -29,7 +29,7 @@
 
         <h:panelGroup rendered="#{sessionScope.isLogin == true}">
             <h:form id="logoutForm">
-                <h:outputText value="You are login as #{sessionScope.currentStaff.firstName} #{sessionScope.currentStaff.lastName}" />&nbsp;
+                <h:outputText value="You are logged in as #{sessionScope.currentStaff.firstName} #{sessionScope.currentStaff.lastName}" />&nbsp;
                 <p:commandButton value="Logout" actionListener="#{loginManagedBean.logout}" icon="fa fa-sign-out" />
             </h:form>
         </h:panelGroup>

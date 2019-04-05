@@ -17,9 +17,11 @@ and open the template in the editor.
         <ez:Breadcrumb pageName="productManagement" />
         <div>
             <h3>Product Management</h3>
-            <p:menubar>
-                <p:menuitem value="Create New Product" onclick="PF('createProductBox').show()" icon="fa fa-plus" />                                     
-            </p:menubar>
+            <h:form>
+                <p:menubar>
+                    <p:menuitem value="Create New Product" onclick="PF('createProductBox').show()" icon="fa fa-plus" />                                     
+                </p:menubar>
+            </h:form>
             <br/>
             <h:form id="createProductForm">
                 <p:dialog id="createProductBox" widgetVar="createProductBox" header="Create New Product" closable="true">
@@ -55,7 +57,7 @@ and open the template in the editor.
                         
                         <p:outputLabel value="Tags" style="font-weight: bold;"/>
                         <p:selectManyCheckbox value="#{productManagementManagedBean.tagIdsStringNew}"  layout="grid" columns="5">
-                             <f:selectItems value="#{productManagementManagedBean.tagEntities}" var="tag" itemValue="#{tag.productTagId}" itemLabel="#{tag.tagName}"  />
+                            <f:selectItems value="#{productManagementManagedBean.tagEntities}" var="tag" itemValue="#{tag.productTagId}" itemLabel="#{tag.productTagName}"  />
                         </p:selectManyCheckbox>
                          
                         <p:commandButton type="reset" value="Clear" />&nbsp;
@@ -138,9 +140,9 @@ and open the template in the editor.
                             <f:attribute name="productEntityToUpdate" value="#{productEntity}" />
                         </p:commandButton>
                         
-                        <p:commandButton icon="ui-icon-trash" actionListener="#{productManagementManagedBean.deleteProduct}" update="viewAllProductForm:dataTableAllProducts viewAllProductForm:messages">
+                        <p:commandButton icon="ui-icon-trash" actionListener="#{productManagementManagedBean.deleteProduct}" update="viewAllProductsForm:dataTableAllProducts viewAllProductsForm:messages">
                             <f:attribute name="productEntityToDelete" value="#{productEntity}" />
-                            <p:confirm header="Confirmation" message="Are you sure you want to delete #{productEntity.name} (Product ID: #{productEntity.productId})?" icon="ui-icon-alert" />
+                            <p:confirm header="Confirmation" message="Are you sure you want to delete #{productEntity.productName} (Product ID: #{productEntity.productId})?" icon="ui-icon-alert" />
                         </p:commandButton>            
                     </p:column>                
                 </p:dataTable>
@@ -176,7 +178,7 @@ and open the template in the editor.
                         
                         <h:outputLabel value="Tags"/>
                         <p:dataList value="#{productManagementManagedBean.selectedProductEntityToView.productTags}" var="tag" type="unordered">
-                            #{tag.tagName}
+                            #{tag.productTagName}
                         </p:dataList>                       
                     </p:panelGrid>
                 </p:dialog>   
@@ -195,27 +197,27 @@ and open the template in the editor.
                     </p:row>
                     
                     <p:row>
-                        <p:column><p:outputLabel for="name" value="Product Name" /></p:column>
-                        <p:column><p:inputText value="#{productManagementManagedBean.selectedProductEntityToUpdate.productName}" required="true" requiredMessage="Name is required" /></p:column>
-                        <p:column><p:message for="name" /></p:column>
+                        <p:column><p:outputLabel for="pdtNameUpdate" value="Product Name" /></p:column>
+                        <p:column><p:inputText id="pdtNameUpdate" value="#{productManagementManagedBean.selectedProductEntityToUpdate.productName}" required="true" requiredMessage="Name is required" /></p:column>
+                        <p:column><p:message for="pdtNameUpdate" /></p:column>
                     </p:row>
                     
                     <p:row>
-                        <p:column><p:outputLabel for="desc" value="Description" /></p:column>
-                        <p:column><p:inputText value="#{productManagementManagedBean.selectedProductEntityToUpdate.description}" required="true" requiredMessage="Description is required" /></p:column>
-                        <p:column><p:message for="desc" /></p:column>
+                        <p:column><p:outputLabel for="pdtDescUpdate" value="Description" /></p:column>
+                        <p:column><p:inputText id="pdtDescUpdate" value="#{productManagementManagedBean.selectedProductEntityToUpdate.description}" required="true" requiredMessage="Description is required" /></p:column>
+                        <p:column><p:message for="pdtDescUpdate" /></p:column>
                     </p:row>
                     
                     <p:row>
-                        <p:column><p:outputLabel for="price" value="Description" /></p:column>
-                        <p:column><p:inputText value="#{productManagementManagedBean.selectedProductEntityToUpdate.unitPrice}" required="true" requiredMessage="Unit price is required" /></p:column>
-                        <p:column><p:message for="price" /></p:column>
+                        <p:column><p:outputLabel for="pdtPriceUpdate" value="Description" /></p:column>
+                        <p:column><p:inputText id="pdtPriceUpdate" value="#{productManagementManagedBean.selectedProductEntityToUpdate.unitPrice}" required="true" requiredMessage="Unit price is required" /></p:column>
+                        <p:column><p:message for="pdtPriceUpdate" /></p:column>
                     </p:row>
                     
                     <p:row>
-                        <p:column><p:outputLabel for="quantity" value="Quantity on Hand" /></p:column>
-                        <p:column><p:inputText value="#{productManagementManagedBean.selectedProductEntityToUpdate.quantityOnHand}" required="true" requiredMessage="Quantity on hand is required" /></p:column>
-                        <p:column><p:message for="quantity" /></p:column>
+                        <p:column><p:outputLabel for="pdtQtyUpdate" value="Quantity on Hand" /></p:column>
+                        <p:column><p:inputText id="pdtQtyUpdate" value="#{productManagementManagedBean.selectedProductEntityToUpdate.quantityOnHand}" required="true" requiredMessage="Quantity on hand is required" /></p:column>
+                        <p:column><p:message for="pdtQtyUpdate" /></p:column>
                     </p:row>
                     
                     <p:row>
@@ -254,7 +256,7 @@ and open the template in the editor.
                         </p:column>
                         <p:column>
                             <p:selectManyMenu id="selTags" value="#{productManagementManagedBean.tagIdsStringUpdate}" showCheckbox="true">
-                                <f:selectItems value="#{productManagementManagedBean.tagEntities}" var="tagEntity" itemValue="#{tagEntity.productTagId}" itemLabel="#{tagEntity.tagName}" />
+                                <f:selectItems value="#{productManagementManagedBean.tagEntities}" var="tagEntity" itemValue="#{tagEntity.productTagId}" itemLabel="#{tagEntity.productTagName}" />
                             </p:selectManyMenu>
                         </p:column>
                         <p:column>

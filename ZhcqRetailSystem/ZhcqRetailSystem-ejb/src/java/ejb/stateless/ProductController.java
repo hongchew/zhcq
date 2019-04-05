@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -305,6 +306,27 @@ public class ProductController implements ProductControllerLocal {
         }
         
         return productEntities;
+    }
+    
+    public List<ProductEntity> retrieveProductSuggestions(Long productId) throws ProductNotFoundException 
+    {
+        ProductEntity selectedProduct = retrieveProductById(productId);
+        
+        if(selectedProduct != null)
+        {
+            List<ProductTag> tags = selectedProduct.getProductTags();
+            
+            //Randomly select a Tag that the product has.
+            Random rand = new Random();
+            ProductTag selectedTag = tags.get(rand.nextInt(tags.size()));
+            
+            List<ProductEntity> suggestedProducts = selectedTag.getProductEntities();
+            
+            return suggestedProducts;
+            
+        } else {
+            throw new ProductNotFoundException("Error Occured! Product does not exist in the database");
+        }
     }
     
     

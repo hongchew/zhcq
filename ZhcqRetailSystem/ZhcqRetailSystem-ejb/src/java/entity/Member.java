@@ -20,10 +20,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import util.security.CryptographicHelper;
 
-/**
- *
- * @author chengyang
- */
+
 @Entity
 public class Member implements Serializable {
 
@@ -73,7 +70,7 @@ public class Member implements Serializable {
     public Member() {
         this.salt = CryptographicHelper.getInstance().generateRandomString(32);
 
-        saleTransactions = new ArrayList<SaleTransaction>();
+        saleTransactions = new ArrayList<>();
     }
 
     public Member(String firstName, String lastName, String username, String password, Integer loyaltyPoints) {

@@ -29,7 +29,7 @@ import util.exception.ShoppingCartNotFoundException;
 public class CheckoutController implements CheckoutControllerLocal {
 
     @EJB
-    private ProductControllerLocal productController;
+    private ProductControllerLocal productControllerLocal;
 
     @PersistenceContext(unitName = "ZhcqRetailSystem-ejbPU")
     private EntityManager em;
@@ -71,7 +71,7 @@ public class CheckoutController implements CheckoutControllerLocal {
     public void updateCart (Long cartId, Long productId, boolean addition) { //true if adding, false if deleting
         try {
             ShoppingCart shoppingCart = retrieveShoppingCartById(cartId);
-            ProductEntity prod = productController.retrieveProductById(productId);
+            ProductEntity prod = productControllerLocal.retrieveProductById(productId);
             
             if (prod.getQuantityOnHand()<=0) {
                 System.out.println("Oops! Product out of stock!");
@@ -80,6 +80,7 @@ public class CheckoutController implements CheckoutControllerLocal {
             if (addition) {
                 shoppingCart.getProducts().add(prod);
                 prod.setQuantityOnHand(prod.getQuantityOnHand()-1);
+                
             } else {
                 shoppingCart.getProducts().remove(prod);
                 prod.setQuantityOnHand(prod.getQuantityOnHand()+1);

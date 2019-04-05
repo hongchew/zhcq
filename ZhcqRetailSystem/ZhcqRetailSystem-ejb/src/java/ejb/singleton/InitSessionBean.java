@@ -29,7 +29,6 @@ import util.exception.StaffNotFoundException;
 @Singleton
 @LocalBean
 @Startup
-
 public class InitSessionBean {
 
     @EJB(name = "ProductTagControllerLocal")

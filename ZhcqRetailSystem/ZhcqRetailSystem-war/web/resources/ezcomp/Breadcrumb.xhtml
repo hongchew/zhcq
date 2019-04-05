@@ -23,7 +23,7 @@ and open the template in the editor.
                 <p:menuitem icon="fa fa-home" url="/index.xhtml" style="text-decoration-line: none;" />
 
                 <p:menuitem value="System Administration" rendered="#{cc.attrs.pageName == 'productManagement' ||
-                                                                        cc.attrs.pageName == 'categoryManagement' ||                                                                        
+                                                                        cc.attrs.pageName == 'categoryManagement' ||                                                                                     cc.attrs.pageName == 'promotionManagement' ||
                                                                         cc.attrs.pageName == 'tagManagement' ||
                                                                         cc.attrs.pageName == 'outfitManagement'}" />
 
@@ -31,6 +31,7 @@ and open the template in the editor.
                 <p:menuitem value="Category Management" url="/systemAdministration/categoryManagement.xhtml" rendered="#{cc.attrs.pageName == 'categoryManagement'}" />                        
                 <p:menuitem value="Tag Management" url="/systemAdministration/tagManagement.xhtml" rendered="#{cc.attrs.pageName == 'tagManagement'}" />
                 <p:menuitem value="OutfitManagement" url="/systemAdministration/outfitManagement.xhtml" rendered="#{cc.attrs.pageName == 'outfitManagement'}" />
+                 <p:menuitem value="PromotionManagement" url="/systemAdministration/promotionManagement.xhtml" rendered="#{cc.attrs.pageName == 'promotionManagement'}" />
                 
 
             </p:breadCrumb>

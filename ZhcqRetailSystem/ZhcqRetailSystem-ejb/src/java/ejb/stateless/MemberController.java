@@ -28,8 +28,8 @@ import util.exception.UpdateMemberException;
 import util.security.CryptographicHelper;
 
 @Stateless
-@Local(MemberSessionBeanLocal.class)
-public class MemberController implements MemberSessionBeanLocal {
+@Local(MemberControllerLocal.class)
+public class MemberController implements MemberControllerLocal {
 
     @PersistenceContext(unitName = "ZhcqRetailSystem-ejbPU")
     private EntityManager em;

@@ -83,40 +83,40 @@ public class InitSessionBean {
             
             
             List<Long> tagIdsEmpty = new ArrayList<>();
-            productControllerLocal.createNewProduct(new ProductEntity("PROD1", "100% Cotton", BigDecimal.valueOf(10.00), 20, SizeEnum.S, ColourEnum.BLUE), newProd.getCategoryId() ,tagIdsEmpty);
-            productControllerLocal.createNewProduct(new ProductEntity("PROD2", "100% Cotton", BigDecimal.valueOf(10.00), 20, SizeEnum.S, ColourEnum.BLUE), newProd.getCategoryId() ,tagIdsEmpty);
-            productControllerLocal.createNewProduct(new ProductEntity("PROD3", "100% Cotton", BigDecimal.valueOf(10.00), 20, SizeEnum.S, ColourEnum.BLUE), newProd.getCategoryId() ,tagIdsEmpty);
+            productControllerLocal.createNewProduct(new ProductEntity("PROD1", "100% Cotton", BigDecimal.valueOf(10.00), 20, SizeEnum.S, ColourEnum.BLUE, ""), newProd.getCategoryId() ,tagIdsEmpty);
+//            productControllerLocal.createNewProduct(new ProductEntity("PROD2", "100% Cotton", BigDecimal.valueOf(10.00), 20, SizeEnum.S, ColourEnum.BLUE), newProd.getCategoryId() ,tagIdsEmpty);
+//            productControllerLocal.createNewProduct(new ProductEntity("PROD3", "100% Cotton", BigDecimal.valueOf(10.00), 20, SizeEnum.S, ColourEnum.BLUE), newProd.getCategoryId() ,tagIdsEmpty);
+//            
+//            productControllerLocal.createNewProduct(new ProductEntity("PROD4", "100% Cotton", BigDecimal.valueOf(10.00), 20, SizeEnum.S, ColourEnum.BLUE), classicProd.getCategoryId() ,tagIdsEmpty);
+//            productControllerLocal.createNewProduct(new ProductEntity("PROD5", "100% Cotton", BigDecimal.valueOf(10.00), 20, SizeEnum.S, ColourEnum.BLUE), classicProd.getCategoryId() ,tagIdsEmpty);
+//            productControllerLocal.createNewProduct(new ProductEntity("PROD6", "100% Cotton", BigDecimal.valueOf(10.00), 20, SizeEnum.S, ColourEnum.BLUE), classicProd.getCategoryId() ,tagIdsEmpty);
+//            
+//            productControllerLocal.createNewProduct(new ProductEntity("PROD7", "100% Cotton", BigDecimal.valueOf(10.00), 20, SizeEnum.S, ColourEnum.BLUE), dresses.getCategoryId() ,tagIdsEmpty);
+//            productControllerLocal.createNewProduct(new ProductEntity("PROD8", "100% Cotton", BigDecimal.valueOf(10.00), 20, SizeEnum.S, ColourEnum.BLUE), dresses.getCategoryId() ,tagIdsEmpty);
+//            productControllerLocal.createNewProduct(new ProductEntity("PROD9", "100% Cotton", BigDecimal.valueOf(10.00), 20, SizeEnum.S, ColourEnum.BLUE), dresses.getCategoryId() ,tagIdsEmpty);
+//            
+//            productControllerLocal.createNewProduct(new ProductEntity("PROD10", "100% Cotton", BigDecimal.valueOf(10.00), 20, SizeEnum.S, ColourEnum.BLUE), tops.getCategoryId() ,tagIdsEmpty);
+//            productControllerLocal.createNewProduct(new ProductEntity("PROD11", "100% Cotton", BigDecimal.valueOf(10.00), 20, SizeEnum.S, ColourEnum.BLUE), tops.getCategoryId() ,tagIdsEmpty);
+//            productControllerLocal.createNewProduct(new ProductEntity("PROD12", "100% Cotton", BigDecimal.valueOf(10.00), 20, SizeEnum.S, ColourEnum.BLUE), tops.getCategoryId() ,tagIdsEmpty);
+//            
+//            productControllerLocal.createNewProduct(new ProductEntity("PROD13", "100% Cotton", BigDecimal.valueOf(10.00), 20, SizeEnum.S, ColourEnum.BLUE), skirts.getCategoryId() ,tagIdsEmpty);
+//            productControllerLocal.createNewProduct(new ProductEntity("PROD14", "100% Cotton", BigDecimal.valueOf(10.00), 20, SizeEnum.S, ColourEnum.BLUE), skirts.getCategoryId() ,tagIdsEmpty);
+//            productControllerLocal.createNewProduct(new ProductEntity("PROD15", "100% Cotton", BigDecimal.valueOf(10.00), 20, SizeEnum.S, ColourEnum.BLUE), skirts.getCategoryId() ,tagIdsEmpty);
+//            
+//            productControllerLocal.createNewProduct(new ProductEntity("PROD16", "100% Cotton", BigDecimal.valueOf(10.00), 20, SizeEnum.S, ColourEnum.BLUE), jeans.getCategoryId() ,tagIdsEmpty);
+//            productControllerLocal.createNewProduct(new ProductEntity("PROD17", "100% Cotton", BigDecimal.valueOf(10.00), 20, SizeEnum.S, ColourEnum.BLUE), jeans.getCategoryId() ,tagIdsEmpty);
+//            productControllerLocal.createNewProduct(new ProductEntity("PROD18", "100% Cotton", BigDecimal.valueOf(10.00), 20, SizeEnum.S, ColourEnum.BLUE), jeans.getCategoryId() ,tagIdsEmpty);
+//            
+//            productControllerLocal.createNewProduct(new ProductEntity("PROD19", "100% Cotton", BigDecimal.valueOf(10.00), 20, SizeEnum.S, ColourEnum.BLUE), rompers.getCategoryId() ,tagIdsEmpty);
+//            productControllerLocal.createNewProduct(new ProductEntity("PROD20", "100% Cotton", BigDecimal.valueOf(10.00), 20, SizeEnum.S, ColourEnum.BLUE), rompers.getCategoryId() ,tagIdsEmpty);
+//            productControllerLocal.createNewProduct(new ProductEntity("PROD21", "100% Cotton", BigDecimal.valueOf(10.00), 20, SizeEnum.S, ColourEnum.BLUE), rompers.getCategoryId() ,tagIdsEmpty);
+//           
+//            productControllerLocal.createNewProduct(new ProductEntity("PROD22", "100% Cotton", BigDecimal.valueOf(10.00), 20, SizeEnum.S, ColourEnum.BLUE), accessories.getCategoryId() ,tagIdsEmpty);
+//            productControllerLocal.createNewProduct(new ProductEntity("PROD23", "100% Cotton", BigDecimal.valueOf(10.00), 20, SizeEnum.S, ColourEnum.BLUE), accessories.getCategoryId() ,tagIdsEmpty);
+//            productControllerLocal.createNewProduct(new ProductEntity("PROD24", "100% Cotton", BigDecimal.valueOf(10.00), 20, SizeEnum.S, ColourEnum.BLUE), accessories.getCategoryId() ,tagIdsEmpty);
             
-            productControllerLocal.createNewProduct(new ProductEntity("PROD4", "100% Cotton", BigDecimal.valueOf(10.00), 20, SizeEnum.S, ColourEnum.BLUE), classicProd.getCategoryId() ,tagIdsEmpty);
-            productControllerLocal.createNewProduct(new ProductEntity("PROD5", "100% Cotton", BigDecimal.valueOf(10.00), 20, SizeEnum.S, ColourEnum.BLUE), classicProd.getCategoryId() ,tagIdsEmpty);
-            productControllerLocal.createNewProduct(new ProductEntity("PROD6", "100% Cotton", BigDecimal.valueOf(10.00), 20, SizeEnum.S, ColourEnum.BLUE), classicProd.getCategoryId() ,tagIdsEmpty);
-            
-            productControllerLocal.createNewProduct(new ProductEntity("PROD7", "100% Cotton", BigDecimal.valueOf(10.00), 20, SizeEnum.S, ColourEnum.BLUE), dresses.getCategoryId() ,tagIdsEmpty);
-            productControllerLocal.createNewProduct(new ProductEntity("PROD8", "100% Cotton", BigDecimal.valueOf(10.00), 20, SizeEnum.S, ColourEnum.BLUE), dresses.getCategoryId() ,tagIdsEmpty);
-            productControllerLocal.createNewProduct(new ProductEntity("PROD9", "100% Cotton", BigDecimal.valueOf(10.00), 20, SizeEnum.S, ColourEnum.BLUE), dresses.getCategoryId() ,tagIdsEmpty);
-            
-            productControllerLocal.createNewProduct(new ProductEntity("PROD10", "100% Cotton", BigDecimal.valueOf(10.00), 20, SizeEnum.S, ColourEnum.BLUE), tops.getCategoryId() ,tagIdsEmpty);
-            productControllerLocal.createNewProduct(new ProductEntity("PROD11", "100% Cotton", BigDecimal.valueOf(10.00), 20, SizeEnum.S, ColourEnum.BLUE), tops.getCategoryId() ,tagIdsEmpty);
-            productControllerLocal.createNewProduct(new ProductEntity("PROD12", "100% Cotton", BigDecimal.valueOf(10.00), 20, SizeEnum.S, ColourEnum.BLUE), tops.getCategoryId() ,tagIdsEmpty);
-            
-            productControllerLocal.createNewProduct(new ProductEntity("PROD13", "100% Cotton", BigDecimal.valueOf(10.00), 20, SizeEnum.S, ColourEnum.BLUE), skirts.getCategoryId() ,tagIdsEmpty);
-            productControllerLocal.createNewProduct(new ProductEntity("PROD14", "100% Cotton", BigDecimal.valueOf(10.00), 20, SizeEnum.S, ColourEnum.BLUE), skirts.getCategoryId() ,tagIdsEmpty);
-            productControllerLocal.createNewProduct(new ProductEntity("PROD15", "100% Cotton", BigDecimal.valueOf(10.00), 20, SizeEnum.S, ColourEnum.BLUE), skirts.getCategoryId() ,tagIdsEmpty);
-            
-            productControllerLocal.createNewProduct(new ProductEntity("PROD16", "100% Cotton", BigDecimal.valueOf(10.00), 20, SizeEnum.S, ColourEnum.BLUE), jeans.getCategoryId() ,tagIdsEmpty);
-            productControllerLocal.createNewProduct(new ProductEntity("PROD17", "100% Cotton", BigDecimal.valueOf(10.00), 20, SizeEnum.S, ColourEnum.BLUE), jeans.getCategoryId() ,tagIdsEmpty);
-            productControllerLocal.createNewProduct(new ProductEntity("PROD18", "100% Cotton", BigDecimal.valueOf(10.00), 20, SizeEnum.S, ColourEnum.BLUE), jeans.getCategoryId() ,tagIdsEmpty);
-            
-            productControllerLocal.createNewProduct(new ProductEntity("PROD19", "100% Cotton", BigDecimal.valueOf(10.00), 20, SizeEnum.S, ColourEnum.BLUE), rompers.getCategoryId() ,tagIdsEmpty);
-            productControllerLocal.createNewProduct(new ProductEntity("PROD20", "100% Cotton", BigDecimal.valueOf(10.00), 20, SizeEnum.S, ColourEnum.BLUE), rompers.getCategoryId() ,tagIdsEmpty);
-            productControllerLocal.createNewProduct(new ProductEntity("PROD21", "100% Cotton", BigDecimal.valueOf(10.00), 20, SizeEnum.S, ColourEnum.BLUE), rompers.getCategoryId() ,tagIdsEmpty);
-           
-            productControllerLocal.createNewProduct(new ProductEntity("PROD22", "100% Cotton", BigDecimal.valueOf(10.00), 20, SizeEnum.S, ColourEnum.BLUE), accessories.getCategoryId() ,tagIdsEmpty);
-            productControllerLocal.createNewProduct(new ProductEntity("PROD23", "100% Cotton", BigDecimal.valueOf(10.00), 20, SizeEnum.S, ColourEnum.BLUE), accessories.getCategoryId() ,tagIdsEmpty);
-            productControllerLocal.createNewProduct(new ProductEntity("PROD24", "100% Cotton", BigDecimal.valueOf(10.00), 20, SizeEnum.S, ColourEnum.BLUE), accessories.getCategoryId() ,tagIdsEmpty);
-            
-           
-        } catch (InputDataValidationException | CreateNewCategoryException | CreateNewProductException | CreateNewProductTagException ex) {
+           // 
+        } catch (InputDataValidationException | CreateNewCategoryException | CreateNewProductTagException | CreateNewProductException ex) {
             System.err.println("********** DataInitializationSessionBean.initializeData(): " + ex.getMessage());
     
         }

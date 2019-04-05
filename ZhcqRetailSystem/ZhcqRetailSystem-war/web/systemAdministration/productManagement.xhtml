@@ -97,6 +97,10 @@ and open the template in the editor.
                         <h:outputText value="#{productEntity.quantityOnHand}" />
                     </p:column>
                     
+                    <p:column headerText="Picture" sortBy="#{productEntity.picture}" filterBy="#{productEntity.picture}" filterMatchMode="equals">
+                        <h:graphicImage value="#{productEntity.picturePath}" />
+                    </p:column>
+                    
                     <p:column headerText="Unit Price" sortBy="#{productEntity.unitPrice}" filterBy="#{productEntity.unitPrice}" filterMatchMode="lte">
                         <h:outputText value="#{productEntity.unitPrice}">
                             <f:convertNumber minFractionDigits="2" maxFractionDigits="2" type="currency" currencyCode="SGD" />

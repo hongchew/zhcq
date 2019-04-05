@@ -308,6 +308,7 @@ public class ProductController implements ProductControllerLocal {
         return productEntities;
     }
     
+    @Override
     public List<ProductEntity> retrieveProductSuggestions(Long productId) throws ProductNotFoundException 
     {
         ProductEntity selectedProduct = retrieveProductById(productId);
@@ -326,6 +327,22 @@ public class ProductController implements ProductControllerLocal {
             
         } else {
             throw new ProductNotFoundException("Error Occured! Product does not exist in the database");
+        }
+    }
+    
+    @Override
+    public List<ProductEntity> retrieveSameProducts(Long productId) throws ProductNotFoundException
+    {
+        
+        ProductEntity selectedProduct = retrieveProductById(productId);
+        if(selectedProduct!= null){
+            Query query = em.createQuery("SELECT pe FROM ProductEntity pe WHERE pe.productName = :name AND pe.colourEnum <> :colour ");
+            query.setParameter("name", selectedProduct.getProductName());
+            query.setParameter("colour", selectedProduct.getColourEnum());
+            List<ProductEntity> sameProducts = query.getResultList();
+            return sameProducts;
+        } else {
+            throw new ProductNotFoundException("Product of ID "+ productId + " Not Found!");
         }
     }
     

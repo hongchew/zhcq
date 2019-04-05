@@ -6,25 +6,13 @@
  */
 package util.exception;
 
-/**
- *
- * @author zhimingkoh
- */
 public class PromotionNotFoundException extends Exception {
 
-    /**
-     * Creates a new instance of <code>PromotionNotException</code> without
-     * detail message.
-     */
+   
     public PromotionNotFoundException() {
     }
 
-    /**
-     * Constructs an instance of <code>PromotionNotException</code> with the
-     * specified detail message.
-     *
-     * @param msg the detail message.
-     */
+   
     public PromotionNotFoundException(String msg) {
         super(msg);
     }

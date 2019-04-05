@@ -20,6 +20,7 @@ import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
+import util.exception.DeletePromotionException;
 import util.exception.InputDataValidationException;
 import util.exception.ProductNotFoundException;
 import util.exception.PromotionExistException;
@@ -42,10 +43,30 @@ public class PromotionController implements PromotionControllerLocal {
 
     @Override
     public List<Promotion> retrieveAllPromotions() {
-        Query query = em.createQuery("SELECT p FROM Promotions p");
+        Query query = em.createQuery("SELECT p FROM Promotion p");
         return query.getResultList();
     }
-
+    
+    @Override
+    public Promotion retrievePromotionByPromotionId(Long promotionId) throws PromotionNotFoundException
+    {
+        if(promotionId == null)
+        {
+            throw new PromotionNotFoundException("Promotion ID not provided");
+        }
+        
+        Promotion promotion = em.find(Promotion.class, promotionId);
+        
+        if(promotion != null)
+        {
+            return promotion;
+        }
+        else
+        {
+            throw new PromotionNotFoundException("Promotion ID " + promotionId + " does not exist!");
+        }               
+    }
+     
     public PromotionController() {
         validatorFactory = Validation.buildDefaultValidatorFactory();
         validator = validatorFactory.getValidator();
@@ -106,6 +127,14 @@ public class PromotionController implements PromotionControllerLocal {
         }
         
         return msg;
+    }
+    
+    
+    public void deletePromotion(Long promotionId) throws PromotionNotFoundException, DeletePromotionException
+    {
+        Promotion promotionToRemove = retrievePromotionByPromotionId(promotionId);
+        
+                      
     }
     
     

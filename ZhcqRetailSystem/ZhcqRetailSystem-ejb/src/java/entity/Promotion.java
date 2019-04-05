@@ -18,6 +18,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import util.exception.PromotionExistException;
 
 
@@ -27,6 +29,11 @@ public class Promotion implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long promotionId;
+    
+    @Column(nullable = false, length = 64)
+    @NotNull
+    @Size(max = 64)
+    private String promotionName;
     
     @Column(scale = 2)
     private BigDecimal discountRate;
@@ -121,18 +128,28 @@ public class Promotion implements Serializable {
         this.endDate = endDate;
     }
 
-    /**
-     * @return the promotionalProducts
-     */
+    
     public List<ProductEntity> getPromotionalProducts() {
         return promotionalProducts;
     }
 
-    /**
-     * @param promotionalProducts the promotionalProducts to set
-     */
+    
     public void setPromotionalProducts(List<ProductEntity> promotionalProducts) {
         this.promotionalProducts = promotionalProducts;
+    }
+
+    /**
+     * @return the promotionName
+     */
+    public String getPromotionName() {
+        return promotionName;
+    }
+
+    /**
+     * @param promotionName the promotionName to set
+     */
+    public void setPromotionName(String promotionName) {
+        this.promotionName = promotionName;
     }
 
     

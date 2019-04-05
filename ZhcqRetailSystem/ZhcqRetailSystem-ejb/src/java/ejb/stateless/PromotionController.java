@@ -25,6 +25,7 @@ import util.exception.InputDataValidationException;
 import util.exception.ProductNotFoundException;
 import util.exception.PromotionExistException;
 import util.exception.PromotionNotFoundException;
+import util.exception.UpdatePromotionException;
 
 
 @Stateless
@@ -96,18 +97,34 @@ public class PromotionController implements PromotionControllerLocal {
         }
     }
     
-    public void updatePromotion(Promotion promotion, List<Long> productIds) throws InputDataValidationException, PromotionNotFoundException
+    public void updatePromotion(Promotion promotion, List<Long> productIds) throws InputDataValidationException, PromotionNotFoundException,UpdatePromotionException,ProductNotFoundException,PromotionExistException 
     {
         Set<ConstraintViolation<Promotion>>constraintViolations = validator.validate(promotion);
         
         if(constraintViolations.isEmpty()){
             if(promotion.getPromotionId() != null)
             {
+                Promotion promotionToUpdate = retrievePromotionByPromotionId(promotion.getPromotionId());
                 
-                
-                
-                
-                
+                if(promotionToUpdate.getPromotionName() == promotion.getPromotionName()){
+                    if(productIds != null)
+                    {
+                        for(ProductEntity product: promotionToUpdate.getPromotionalProducts())
+                        {
+                            product.setPromotion(null);
+                        }
+                        promotionToUpdate.getPromotionalProducts().clear();
+                        
+                        for(Long id : productIds)
+                        {
+                            ProductEntity productEntity = productControllerLocal.retrieveProductById(id);
+                            promotionToUpdate.addProduct(productEntity);
+                        }
+                    } 
+                    
+                } else {
+                    throw new UpdatePromotionException("Promotion ID does not match the record in the Database!");
+                }
             } else {
                 throw new PromotionNotFoundException("No records of this promotion in the database!");
             }

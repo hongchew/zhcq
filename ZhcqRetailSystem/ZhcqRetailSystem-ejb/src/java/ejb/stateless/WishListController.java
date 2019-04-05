@@ -37,7 +37,7 @@ public class WishListController implements WishListControllerLocal {
     private ProductControllerLocal productControllerLocal;
 
     @EJB(name = "MemberControllerLocal")
-    private MemberSessionBeanLocal memberControllerLocal;
+    private MemberControllerLocal memberControllerLocal;
 
     @PersistenceContext(unitName = "ZhcqRetailSystem-ejbPU")
     private EntityManager em;

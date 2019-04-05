@@ -98,7 +98,7 @@ and open the template in the editor.
                     </p:column>
                     
                     <p:column headerText="Picture" sortBy="#{productEntity.picture}" filterBy="#{productEntity.picture}" filterMatchMode="equals">
-                        <h:graphicImage value="#{productEntity.picturePath}" />
+                        <h:graphicImage value="#{productEntity.picturePath}" width="100" height="85"/>
                     </p:column>
                     
                     <p:column headerText="Unit Price" sortBy="#{productEntity.unitPrice}" filterBy="#{productEntity.unitPrice}" filterMatchMode="lte">

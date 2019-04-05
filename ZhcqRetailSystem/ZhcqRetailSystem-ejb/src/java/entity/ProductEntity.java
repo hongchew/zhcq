@@ -120,7 +120,7 @@ public class ProductEntity implements Serializable {
         this.sizeEnum = size;
         this.colourEnum = colour;
         this.picturePath = picturePath;
-    }
+    }  
     
     
     public void addTag(ProductTag tagEntity)

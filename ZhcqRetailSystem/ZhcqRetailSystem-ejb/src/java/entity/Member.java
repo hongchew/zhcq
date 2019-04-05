@@ -71,6 +71,7 @@ public class Member implements Serializable {
         this.salt = CryptographicHelper.getInstance().generateRandomString(32);
 
         saleTransactions = new ArrayList<>();
+        shoppingCart = new ShoppingCart();
     }
 
     public Member(String firstName, String lastName, String username, String password, Integer loyaltyPoints) {
@@ -82,6 +83,8 @@ public class Member implements Serializable {
         setPassword(password);
         this.loyaltyPoints = loyaltyPoints;
     }
+    
+    
     
     
 

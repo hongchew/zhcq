@@ -7,19 +7,19 @@ package entity;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-/**
- *
- * @author chengyang
- */
+
 @Entity
 public class Promotion implements Serializable {
 
@@ -34,12 +34,17 @@ public class Promotion implements Serializable {
     private Date startDate;
     @Temporal(TemporalType.DATE)
     private Date endDate;
+    
+    @OneToMany(mappedBy = "promotion")
+    private List<ProductEntity> promotionalProducts;
 
     public Promotion() {
+        promotionalProducts = new ArrayList<>();
     }
 
     public Promotion(BigDecimal discountRate, Date startDate, Date endDAte) {
-        this.discountRate = discountRate;
+        this()
+;       this.discountRate = discountRate;
         this.startDate = startDate;
         this.endDate = endDAte;
     }
@@ -75,6 +80,20 @@ public class Promotion implements Serializable {
 
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
+    }
+
+    /**
+     * @return the promotionalProducts
+     */
+    public List<ProductEntity> getPromotionalProducts() {
+        return promotionalProducts;
+    }
+
+    /**
+     * @param promotionalProducts the promotionalProducts to set
+     */
+    public void setPromotionalProducts(List<ProductEntity> promotionalProducts) {
+        this.promotionalProducts = promotionalProducts;
     }
 
     

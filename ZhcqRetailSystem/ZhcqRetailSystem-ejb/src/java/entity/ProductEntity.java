@@ -95,6 +95,10 @@ public class ProductEntity implements Serializable {
     @JoinColumn(nullable = false)
     private List<ShoppingCart> shoppingcarts;
     
+    @ManyToOne(optional = true, cascade = CascadeType.REMOVE)
+    @JoinColumn(name = "promotionId")
+    private Promotion promotion; 
+    
     
     public ProductEntity() {
         productTags = new ArrayList<>();
@@ -277,6 +281,20 @@ public class ProductEntity implements Serializable {
 
     public void setColourEnum(ColourEnum colourEnum) {
         this.colourEnum = colourEnum;
+    }
+
+    /**
+     * @return the promotion
+     */
+    public Promotion getPromotion() {
+        return promotion;
+    }
+
+    /**
+     * @param promotion the promotion to set
+     */
+    public void setPromotion(Promotion promotion) {
+        this.promotion = promotion;
     }
 
     

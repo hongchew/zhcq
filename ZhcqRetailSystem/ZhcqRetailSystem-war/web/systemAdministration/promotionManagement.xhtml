@@ -121,6 +121,17 @@
                             <p:message for="startDate" />
                         </p:column>
                     </p:row>
+                    
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel for="products" value="Promoted Products" />
+                        </p:column>
+                        <p:column>
+                            <p:selectManyMenu id="products" value="#{promotionManagedBean.createProductIds}" showCheckbox="true" >
+                                <f:selectItems value="#{promotionManagedBean.productEntities}" var="productEntity" itemValue="#{productEntity.productId}" itemLabel="#{productEntity.productName}" />
+                            </p:selectManyMenu>
+                        </p:column>
+                    </p:row>
 
                     <p:row>
                         <p:column>
@@ -198,6 +209,17 @@
                                 </h:outputText>
                             </p:column>
                         </p:row>
+                        
+                        <p:row>
+                            <p:column>
+                                <h:outputText value="Promotional Products" />
+                            </p:column>
+                            <p:column>
+                                <p:dataList value="#{promotionManagedBean.promotionToView.promotionalProducts}" var="product" type="unordered">
+                                    #{product.productName}
+                                </p:dataList>
+                            </p:column>
+                        </p:row>
                     </p:panelGrid>
                 </p:dialog>
             </h:form>
@@ -266,6 +288,20 @@
                             </p:column>
                             <p:column>
                                 <p:message for="endDate" />
+                            </p:column>
+                        </p:row>
+                        
+                        <p:row>
+                            <p:column>
+                                <p:outputLabel for="products" value ="Promotional Products: "/>
+                            </p:column>
+                            <p:column>
+                                <p:selectManyMenu var="#{promotionManagedBean.updateProductIds}" showCheckbox="true">
+                                    <f:selectItems value="#{promotionManagedBean.productEntities}" var="product" itemValue="#{product.productId}" itemLabel="#{product.productName}" />
+                                </p:selectManyMenu>
+                            </p:column>
+                            <p:column>
+                                <p:message for="products" />
                             </p:column>
                         </p:row>
                         

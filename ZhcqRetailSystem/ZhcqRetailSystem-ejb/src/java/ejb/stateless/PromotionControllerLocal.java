@@ -27,5 +27,12 @@ public interface PromotionControllerLocal {
 
     public Promotion retrievePromotionByPromotionId(Long promotionId) throws PromotionNotFoundException;
 
+    public void deletePromotion(Long promotionId) throws PromotionNotFoundException;
+
+    public void createNewPromotion(Promotion newPromotion) throws InputDataValidationException;
+
+    public void updatePromotion(Promotion updatePromotion) throws InputDataValidationException;
+
+    
 
 }

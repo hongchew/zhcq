@@ -96,8 +96,8 @@ public class ProductEntity implements Serializable {
     @JoinColumn(nullable = false)
     private List<ShoppingCart> shoppingcarts;
     
-    @ManyToOne(optional = true, cascade = CascadeType.REMOVE)
-    @JoinColumn(name = "promotionId")
+    @ManyToOne(optional = true)
+    @JoinColumn
     private Promotion promotion; 
     
     @Column(nullable = false)

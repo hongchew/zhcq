@@ -30,7 +30,6 @@ public class ShoppingCart implements Serializable {
     @OneToOne(mappedBy ="shoppingCart")
     private Member member; 
     
-    
     @ManyToMany(mappedBy = "shoppingcarts")
     private List<ProductEntity> products; 
 

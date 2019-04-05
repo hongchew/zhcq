@@ -23,6 +23,7 @@ import javax.validation.ValidatorFactory;
 import util.exception.InputDataValidationException;
 import util.exception.ProductNotFoundException;
 import util.exception.PromotionExistException;
+import util.exception.PromotionNotFoundException;
 
 
 @Stateless
@@ -50,6 +51,7 @@ public class PromotionController implements PromotionControllerLocal {
         validator = validatorFactory.getValidator();
     }
     
+    @Override
     public Promotion createNewPromotion(Promotion newPromotion, List<Long> productIds) throws ProductNotFoundException, PromotionExistException, InputDataValidationException{
         Set<ConstraintViolation<Promotion>> constraintViolations = validator.validate(newPromotion);
         
@@ -69,6 +71,26 @@ public class PromotionController implements PromotionControllerLocal {
             return newPromotion;
         } else
         {
+            throw new InputDataValidationException(prepareInputDataValidationErrorsMessage(constraintViolations));
+        }
+    }
+    
+    public void updatePromotion(Promotion promotion, List<Long> productIds) throws InputDataValidationException, PromotionNotFoundException
+    {
+        Set<ConstraintViolation<Promotion>>constraintViolations = validator.validate(promotion);
+        
+        if(constraintViolations.isEmpty()){
+            if(promotion.getPromotionId() != null)
+            {
+                
+                
+                
+                
+                
+            } else {
+                throw new PromotionNotFoundException("No records of this promotion in the database!");
+            }
+        } else {
             throw new InputDataValidationException(prepareInputDataValidationErrorsMessage(constraintViolations));
         }
     }

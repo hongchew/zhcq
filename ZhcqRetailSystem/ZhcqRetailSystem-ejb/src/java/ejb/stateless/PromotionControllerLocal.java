@@ -8,11 +8,16 @@ package ejb.stateless;
 import entity.Promotion;
 import java.util.List;
 import javax.ejb.Local;
+import util.exception.InputDataValidationException;
+import util.exception.ProductNotFoundException;
+import util.exception.PromotionExistException;
 
 
 @Local
 public interface PromotionControllerLocal {
 
     public List<Promotion> retrieveAllPromotions();
+
+    public Promotion createNewPromotion(Promotion newPromotion, List<Long> productIds) throws ProductNotFoundException, PromotionExistException, InputDataValidationException;
     
 }

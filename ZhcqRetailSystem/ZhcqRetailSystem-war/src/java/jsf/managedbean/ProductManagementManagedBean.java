@@ -15,6 +15,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
@@ -24,9 +26,12 @@ import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import util.enumeration.ColourEnum;
 import util.enumeration.SizeEnum;
+import util.exception.CategoryNotFoundException;
 import util.exception.CreateNewProductException;
 import util.exception.InputDataValidationException;
 import util.exception.ProductNotFoundException;
+import util.exception.ProductTagNotFoundException;
+import util.exception.UpdateProductException;
 
 /**
  *
@@ -45,9 +50,7 @@ public class ProductManagementManagedBean implements Serializable {
     @EJB
     private ProductControllerLocal productController;
 
-    
-    
-    
+            
     private List<ProductEntity> productEntities;
     private List<ProductEntity> filteredProductEntities;
     private ColourEnum[] colours;
@@ -62,9 +65,10 @@ public class ProductManagementManagedBean implements Serializable {
 
     private List<String> tagIdsStringFilter;
     
-    private ProductEntity selectedProductEntityToView;    
-    
+    private ProductEntity selectedProductEntityToView;        
     private ProductEntity selectedProductEntityToUpdate;
+    private ProductEntity selectedProductEntityToDelete;
+    
     private Long categoryIdUpdate;
     private List<String> tagIdsStringUpdate;
     /**
@@ -120,6 +124,32 @@ public class ProductManagementManagedBean implements Serializable {
         catch(InputDataValidationException | CreateNewProductException ex)
         {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "An error has occurred while creating the new product: " + ex.getMessage(), null));
+        }
+    }
+    
+//    public void updateProduct(ActionEvent event){
+//        try {
+//            ProductEntity productToUpdate = productController.retrieveProductById(selectedProductEntityToUpdate.getProductId());
+//            List<Long> tagIds = new ArrayList<>();
+//            for(ProductTag tag : selectedProductEntityToUpdate.getProductTags()){
+//                tagIds.add(tag.getProductTagId());
+//            }
+//            productController.updateProduct(productToUpdate, selectedProductEntityToUpdate.getProductCategory().getCategoryId(), tagIds);
+//            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Product updated successfully", null));
+//        } catch (ProductNotFoundException | InputDataValidationException | CategoryNotFoundException | ProductTagNotFoundException | UpdateProductException ex) {
+//            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "An unexpected error has occurred: " + ex.getMessage(), null));
+//        }
+//    }
+    
+    public void doUpdateProduct(ActionEvent event)
+    {
+        selectedProductEntityToUpdate = (ProductEntity)event.getComponent().getAttributes().get("productEntityToUpdate");
+        
+        categoryIdUpdate = selectedProductEntityToUpdate.getProductCategory().getCategoryId();
+        tagIdsStringUpdate = new ArrayList<>();
+        for(ProductTag tagEntity:selectedProductEntityToUpdate.getProductTags())
+        {
+            tagIdsStringUpdate.add(tagEntity.getProductTagId().toString());
         }
     }
     
@@ -184,13 +214,9 @@ public class ProductManagementManagedBean implements Serializable {
             ProductEntity productEntityToDelete = (ProductEntity)event.getComponent().getAttributes().get("productEntityToDelete");
             productController.deleteProduct(productEntityToDelete.getProductId());
             
-            getProductEntities().remove(productEntityToDelete);
+            getProductEntities().remove(getSelectedProductEntityToDelete());
 
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Product deleted successfully", null));
-        }
-        catch(ProductNotFoundException ex)
-        {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "An error has occurred while deleting product: " + ex.getMessage(), null));
         }
         catch(Exception ex)
         {
@@ -379,6 +405,20 @@ public class ProductManagementManagedBean implements Serializable {
      */
     public void setSizes(SizeEnum[] sizes) {
         this.sizes = sizes;
+    }
+
+    /**
+     * @return the selectedProductEntityToDelete
+     */
+    public ProductEntity getSelectedProductEntityToDelete() {
+        return selectedProductEntityToDelete;
+    }
+
+    /**
+     * @param selectedProductEntityToDelete the selectedProductEntityToDelete to set
+     */
+    public void setSelectedProductEntityToDelete(ProductEntity selectedProductEntityToDelete) {
+        this.selectedProductEntityToDelete = selectedProductEntityToDelete;
     }
     
 }

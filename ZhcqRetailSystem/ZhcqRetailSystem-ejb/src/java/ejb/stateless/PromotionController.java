@@ -38,31 +38,36 @@ public class PromotionController implements PromotionControllerLocal {
     private final ValidatorFactory validatorFactory;
     private final Validator validator;
 
+    public PromotionController() {
+        validatorFactory = Validation.buildDefaultValidatorFactory();
+        validator = validatorFactory.getValidator();
+    }
+
     @Override
     public List<Promotion> retrieveAllPromotions() {
         Query query = em.createQuery("SELECT p FROM Promotion p");
         return query.getResultList();
     }
-
-    @Override
-    public void createNewPromotion(Promotion newPromotion) throws InputDataValidationException{
-        Set<ConstraintViolation<Promotion>> constraintViolations = validator.validate(newPromotion);
-        if (constraintViolations.isEmpty()) {
-            em.persist(newPromotion);
-        } else {
-            throw new InputDataValidationException(prepareInputDataValidationErrorsMessage(constraintViolations));
-        }
-    }
-    
-    @Override
-    public void updatePromotion(Promotion updatePromotion) throws InputDataValidationException {
-        Set<ConstraintViolation<Promotion>> constraintViolations = validator.validate(updatePromotion);
-        if(constraintViolations.isEmpty()) {
-            em.merge(updatePromotion);
-        } else {
-            throw new InputDataValidationException("Invalid input for updating promotion!");
-        }
-    }
+//
+//    @Override
+//    public void createNewPromotion(Promotion newPromotion) throws InputDataValidationException {
+//        Set<ConstraintViolation<Promotion>> constraintViolations = validator.validate(newPromotion);
+//        if (constraintViolations.isEmpty()) {
+//            em.persist(newPromotion);
+//        } else {
+//            throw new InputDataValidationException(prepareInputDataValidationErrorsMessage(constraintViolations));
+//        }
+//    }
+//
+//    @Override
+//    public void updatePromotion(Promotion updatePromotion) throws InputDataValidationException {
+//        Set<ConstraintViolation<Promotion>> constraintViolations = validator.validate(updatePromotion);
+//        if (constraintViolations.isEmpty()) {
+//            em.merge(updatePromotion);
+//        } else {
+//            throw new InputDataValidationException("Invalid input for updating promotion!");
+//        }
+//    }
 
     @Override
     public Promotion retrievePromotionByPromotionId(Long promotionId) throws PromotionNotFoundException {
@@ -79,11 +84,6 @@ public class PromotionController implements PromotionControllerLocal {
         }
     }
 
-    public PromotionController() {
-        validatorFactory = Validation.buildDefaultValidatorFactory();
-        validator = validatorFactory.getValidator();
-    }
-
     @Override
     public Promotion createNewPromotion(Promotion newPromotion, List<Long> productIds) throws ProductNotFoundException, PromotionExistException, InputDataValidationException {
         Set<ConstraintViolation<Promotion>> constraintViolations = validator.validate(newPromotion);
@@ -95,6 +95,7 @@ public class PromotionController implements PromotionControllerLocal {
                 for (Long productId : productIds) {
                     ProductEntity product = productControllerLocal.retrieveProductById(productId);
                     newPromotion.addProduct(product);
+                    product.setPromotion(newPromotion);
                 }
             }
             em.flush();
@@ -104,35 +105,34 @@ public class PromotionController implements PromotionControllerLocal {
             throw new InputDataValidationException(prepareInputDataValidationErrorsMessage(constraintViolations));
         }
     }
-
-    public void updatePromotion(Promotion promotion, List<Long> productIds) throws InputDataValidationException, PromotionNotFoundException, UpdatePromotionException, ProductNotFoundException, PromotionExistException {
+    
+    @Override
+    public void updatePromotion(Promotion promotion, List<Long> productIds) throws ProductNotFoundException, PromotionExistException, PromotionNotFoundException, UpdatePromotionException {
         Set<ConstraintViolation<Promotion>> constraintViolations = validator.validate(promotion);
 
         if (constraintViolations.isEmpty()) {
             if (promotion.getPromotionId() != null) {
                 Promotion promotionToUpdate = retrievePromotionByPromotionId(promotion.getPromotionId());
 
-                if (promotionToUpdate.getPromotionName() == promotion.getPromotionName()) {
-                    if (productIds != null) {
-                        for (ProductEntity product : promotionToUpdate.getPromotionalProducts()) {
-                            product.setPromotion(null);
-                        }
-                        promotionToUpdate.getPromotionalProducts().clear();
-
-                        for (Long id : productIds) {
-                            ProductEntity productEntity = productControllerLocal.retrieveProductById(id);
-                            promotionToUpdate.addProduct(productEntity);
-                        }
+                promotionToUpdate.setPromotionName(promotion.getPromotionName());
+                promotionToUpdate.setStartDate(promotion.getStartDate());
+                promotionToUpdate.setEndDate(promotion.getEndDate());
+                promotionToUpdate.getPromotionalProducts().clear();
+                if (productIds != null) {
+                    for (ProductEntity product : promotionToUpdate.getPromotionalProducts()) {
+                        product.setPromotion(null);
                     }
-
-                } else {
-                    throw new UpdatePromotionException("Promotion ID does not match the record in the Database!");
+                    for (Long id : productIds) {
+                        ProductEntity productEntity = productControllerLocal.retrieveProductById(id);
+                        promotionToUpdate.addProduct(productEntity);
+                        productEntity.setPromotion(promotionToUpdate);
+                    }
                 }
-            } else {
-                throw new PromotionNotFoundException("No records of this promotion in the database!");
+
             }
         } else {
-            throw new InputDataValidationException(prepareInputDataValidationErrorsMessage(constraintViolations));
+            throw new UpdatePromotionException("Input data for update of promotion is invalid!");
+
         }
     }
 

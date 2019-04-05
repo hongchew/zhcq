@@ -14,6 +14,7 @@ import util.exception.ProductNotFoundException;
 import util.exception.PromotionExistException;
 
 import util.exception.PromotionNotFoundException;
+import util.exception.UpdatePromotionException;
 
 
 
@@ -29,10 +30,7 @@ public interface PromotionControllerLocal {
 
     public void deletePromotion(Long promotionId) throws PromotionNotFoundException;
 
-    public void createNewPromotion(Promotion newPromotion) throws InputDataValidationException;
-
-    public void updatePromotion(Promotion updatePromotion) throws InputDataValidationException;
-
+    public void updatePromotion(Promotion promotion, List<Long> productIds) throws ProductNotFoundException, PromotionExistException, PromotionNotFoundException, UpdatePromotionException;
     
 
 }

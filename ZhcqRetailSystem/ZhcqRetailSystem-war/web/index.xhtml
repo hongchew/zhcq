@@ -11,20 +11,20 @@
          
         <ez:Breadcrumb pageName="index" />
         
-        <h:panelGroup rendered="#{sessionScope.isLogin == false}">
+        <h:panelGroup rendered="#{sessionScope.isLogin == false}" >
             <article>
-                <h3>Welcome</h3>
-                <p>
-                    Please Log in to Perform operations as a ZHCQ Staff                    
+                <h2 style="text-align: center">Welcome <i class="fa fa-fw fa-smile-o"></i></h2>
+                <p style="text-align: center">
+                    Please Log In to perform staff operations.                    
                 </p>
             </article>
         </h:panelGroup>
         
         <h:panelGroup rendered="#{sessionScope.isLogin == true}">
             <article>
-                <h3> zhcq Fashion Retail</h3>
+                <h2 style="text-align: center"> zhcq &amp; co. <i class="fa fa-fw fa-fire"></i></h2>
                 <br/>
-                <h3>Promotion Of the Week</h3>                    
+                <h3 style="text-align: center">Promotion Of the Week</h3>                    
                 <p>                    
                     <ui:repeat value="#{utilManagedBean.promotions}" var="promotion">
                         

@@ -14,6 +14,9 @@ a:hover {
 .ui-widget {
     font-size: small;
 }
+.ui-menu {
+    background-color: seashell;
+}
 
 .ui-column-header {
     font-size: small;
@@ -29,6 +32,7 @@ a:hover {
 
 .ui-datatable-header {
     font-size: small;
+    background: paleturquoise;
 }
 
 .ui-datatable-footer {
@@ -54,3 +58,5 @@ a:hover {
 div.ui-growl {
    left: 10;
 }
+.ui-top, .ui-top .ui-layout, .ui-top .ui-layout-bd, .ui-top .ui-layout-unit {
+  color: seashell; }

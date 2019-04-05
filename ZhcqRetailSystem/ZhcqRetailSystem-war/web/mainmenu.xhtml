@@ -10,20 +10,20 @@ and open the template in the editor.
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
                 xmlns:p="http://primefaces.org/ui">
     
-    <section id="mainmenu" class="mainmenu" >
-        <h3>Main Menu</h3>
+    <section id="mainmenu" class="mainmenu">
+        <h3>&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-fw fa-navicon"></i>&nbsp;&nbsp;M A I N&nbsp;&nbsp; M E N U</h3>
         <nav>
             <h:form>
                 <p:menu style="width:200px;" >
-                    <p:submenu label="System">
+                    <p:submenu label="SYSTEM" style= "text-align: center;">
                         <p:menuitem value="Home" outcome="/index.xhtml" icon="fa fa-home"/>
                         <p:menuitem value="Logout" icon="fa fa-home" actionListener="#{loginManagedBean.logout}" rendered="#{sessionScope.isLogin == true}"/>
                     </p:submenu>
                     
-                    <p:submenu label="Admin" rendered="#{sessionScope.isLogin == true}">
+                    <p:submenu label="ADMINISTRATION" style= "text-align: center;" rendered="#{sessionScope.isLogin == true}">
                         <p:menuitem value="Product Management" outcome="/systemAdministration/productManagement.xhtml" />
                         <p:menuitem value="Category Management" outcome="/systemAdministration/categoryManagement.xhtml" />
-                        <p:menuitem value="Filter Product By Tags" outcome="/systemAdministration/filterProductsByTags.xhtml"/>
+                        <p:menuitem value="Filter Products By Tags" outcome="/systemAdministration/filterProductsByTags.xhtml"/>
                         <p:menuitem value="Outfit Management" outcome="/systemAdministration/outfitManagement.xhtml"/>
                         <p:menuitem value="Tag Management" outcome="/systemAdministration/tagManagement.xhtml"/>
                         

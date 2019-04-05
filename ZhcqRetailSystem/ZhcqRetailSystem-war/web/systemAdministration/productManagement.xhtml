@@ -107,19 +107,18 @@ and open the template in the editor.
                         </h:outputText>
                     </p:column>
                     
-                    <p:column headerText="Categories" sortBy="#{productEntity.productCategory}" filterBy="#{productEntity.productCategory}" filterMatchMode="in">
+                    <p:column headerText="Categories" sortBy="#{productEntity.productCategory.categoryName}" filterBy="#{productEntity.productCategory}" filterMatchMode="in">
                         <f:facet name="filter">
-                            <p:selectCheckboxMenu onchange="PF('dataTableAllProducts').filter()" scrollHeight="150" styleClass="custom-filter">
-                                <f:selectItem itemLabel="Select One" itemValue="#{null}" noSelectionOption="true" />
-                                <f:selectItems value="#{productManagementManagedBean.categoryEntities}" />
+                            <p:selectCheckboxMenu onchange="PF('dataTableAllProducts').filter()" scrollHeight="150" styleClass="custom-filter" label="Select Some">
+                                <f:selectItems value="#{productManagementManagedBean.categoryEntities}" var="category" itemLabel="#{category.categoryName}" />
                             </p:selectCheckboxMenu>
                         </f:facet>
-                        <h:outputText value="#{productEntity.productCategory}" />
+                        <h:outputText value="#{productEntity.productCategory.categoryName}" />
                     </p:column>
                     
                     <p:column headerText="Colour" sortBy="#{productEntity.colourEnum}" filterBy="#{productEntity.colourEnum}" filterMatchMode="in">
                         <f:facet name="filter">
-                            <p:selectCheckboxMenu onchange="PF('dataTableAllProducts').filter()" scrollHeight="150" styleClass="custom-filter">
+                            <p:selectCheckboxMenu onchange="PF('dataTableAllProducts').filter()" scrollHeight="150" styleClass="custom-filter" label="Select Some">
                                 <f:selectItems value="#{productManagementManagedBean.colours}" />
                             </p:selectCheckboxMenu>
                         </f:facet>
@@ -128,7 +127,7 @@ and open the template in the editor.
 
                     <p:column headerText="Size" sortBy="#{productEntity.sizeEnum}" filterBy="#{productEntity.sizeEnum}" filterMatchMode="in">
                         <f:facet name="filter">
-                            <p:selectCheckboxMenu onchange="PF('dataTableAllProducts').filter()" scrollHeight="150" styleClass="custom-filter">
+                            <p:selectCheckboxMenu onchange="PF('dataTableAllProducts').filter()" scrollHeight="150" styleClass="custom-filter" label="Select Some">
                                 <f:selectItems value="#{productManagementManagedBean.sizes}" />
                             </p:selectCheckboxMenu>
                         </f:facet>
@@ -141,10 +140,12 @@ and open the template in the editor.
                         </p:commandButton>
                         
                         <p:commandButton actionListener="#{productManagementManagedBean.doUpdateProduct}" update="updateProductForm" oncomplete="PF('dialogUpdateProduct').show()" icon="ui-icon-pencil" title="Update">
+                            <!--<f:setPropertyActionListener value="#{productEntity}" target="#{productManagementManagedBean.selectedProductEntityToUpdate}" />-->
                             <f:attribute name="productEntityToUpdate" value="#{productEntity}" />
                         </p:commandButton>
                         
-                        <p:commandButton icon="ui-icon-trash" actionListener="#{productManagementManagedBean.deleteProduct}" update="viewAllProductsForm:dataTableAllProducts viewAllProductsForm:messages">
+                        <p:commandButton icon="ui-icon-trash"  actionListener="#{productManagementManagedBean.deleteProduct}" update="viewAllProductsForm:dataTableAllProducts viewAllProductsForm:messages">
+                            <!--<f:setPropertyActionListener value="#{productEntity}" target="#{productManagementManagedBean.selectedProductEntityToDelete}" />-->
                             <f:attribute name="productEntityToDelete" value="#{productEntity}" />
                             <p:confirm header="Confirmation" message="Are you sure you want to delete #{productEntity.productName} (Product ID: #{productEntity.productId})?" icon="ui-icon-alert" />
                         </p:commandButton>            
@@ -172,7 +173,7 @@ and open the template in the editor.
                         <h:outputText value="#{productManagementManagedBean.selectedProductEntityToView.quantityOnHand}"/>
                         
                         <h:outputLabel value="Category"/>
-                        <h:outputText value="#{productManagementManagedBean.selectedProductEntityToView.productCategory}"/>
+                        <h:outputText value="#{productManagementManagedBean.selectedProductEntityToView.productCategory.categoryName}"/>
                         
                         <h:outputLabel value="Colour"/>
                         <h:outputText value="#{productManagementManagedBean.selectedProductEntityToView.colourEnum}"/>
@@ -213,7 +214,7 @@ and open the template in the editor.
                     </p:row>
                     
                     <p:row>
-                        <p:column><p:outputLabel for="pdtPriceUpdate" value="Description" /></p:column>
+                        <p:column><p:outputLabel for="pdtPriceUpdate" value="Price $" /></p:column>
                         <p:column><p:inputText id="pdtPriceUpdate" value="#{productManagementManagedBean.selectedProductEntityToUpdate.unitPrice}" required="true" requiredMessage="Unit price is required" /></p:column>
                         <p:column><p:message for="pdtPriceUpdate" /></p:column>
                     </p:row>

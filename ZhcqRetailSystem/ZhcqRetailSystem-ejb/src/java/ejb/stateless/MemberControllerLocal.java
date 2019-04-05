@@ -15,7 +15,7 @@ import util.exception.UpdateMemberException;
 
 
 @Local
-public interface MemberSessionBeanLocal {
+public interface MemberControllerLocal {
 
     public Member retrieveMemberById(Long memberId) throws MemberNotFoundException;
 

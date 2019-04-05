@@ -37,5 +37,9 @@ public interface ProductControllerLocal {
     public List<ProductEntity> retrieveAllProducts();
 
     public List<ProductEntity> productsAvailableForOutfit();
+
+    public List<ProductEntity> retrieveSameProducts(Long productId) throws ProductNotFoundException;
+
+    public List<ProductEntity> retrieveProductSuggestions(Long productId) throws ProductNotFoundException;
     
 }

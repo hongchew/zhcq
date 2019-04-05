@@ -89,9 +89,9 @@ public class FilterProductsByTagsManagedBean implements Serializable{
     {
         List<Long> tagIds = new ArrayList<>();
         
-        if(selectedProductTagIds != null && selectedProductTagIds.size() > 0)
+        if(getSelectedProductTagIds() != null && getSelectedProductTagIds().size() > 0)
         {
-            for(String tagId:selectedProductTagIds)
+            for(String tagId:getSelectedProductTagIds())
             {
                 tagIds.add(Long.valueOf(tagId));
             }
@@ -128,7 +128,7 @@ public class FilterProductsByTagsManagedBean implements Serializable{
     }
     
     public List<String> getProductSelectedTagIds() {
-        return selectedProductTagIds;
+        return getSelectedProductTagIds();
     }
 
     public void setSelectedProductTagIds(List<String> selectedProductTagIds) 
@@ -160,6 +160,13 @@ public class FilterProductsByTagsManagedBean implements Serializable{
 
     public void setSelectedProductEntityToView(ProductEntity selectedProductEntityToView) {
         this.selectedProductEntityToView = selectedProductEntityToView;
+    }
+
+    /**
+     * @return the selectedProductTagIds
+     */
+    public List<String> getSelectedProductTagIds() {
+        return selectedProductTagIds;
     }
     
 }

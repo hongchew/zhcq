@@ -50,13 +50,13 @@
 
                 <p:column headerText="Start Date" filterBy="#{promotion.startDate}" sortBy="#{promotion.startDate}" filterMatchMode="contains">
                     <h:outputText value="#{promotion.startDate}">
-                        <f:convertDateTime pattern="dd.MM.yyyy HH:mm" />
+                        <f:convertDateTime pattern="dd.MM.yyyy" />
                     </h:outputText> 
                 </p:column>
 
                 <p:column headerText="End Date" filterBy="#{promotion.endDate}" sortBy="#{promotion.endDate}" filterMatchMode="contains">
                     <h:outputText value="#{promotion.endDate}">
-                        <f:convertDateTime pattern="dd.MM.yyyy HH:mm" />
+                        <f:convertDateTime pattern="dd.MM.yyyy" />
                     </h:outputText> 
                 </p:column>
 
@@ -103,7 +103,7 @@
                             <p:outputLabel for="discountRate" value="Discount Rate" />
                         </p:column>
                         <p:column>
-                            <p:inputNumber id="discountRate" value="#{promotionManagedBean.newPromotion.discountRate}" required="true" requiredMessage="Promotion Name is required!" minValue="0" maxValue="0"/>
+                            <p:inputNumber id="discountRate" value="#{promotionManagedBean.newPromotion.discountRate}" required="true" requiredMessage="Discount Rate is required!" minValue="0" maxValue="1" decimalPlaces="2"/>
                         </p:column>
                         <p:column>
                             <p:message for="discountRate" />
@@ -148,7 +148,7 @@
                     <p:row>
                         <p:column colspan="3">
                             <p:commandButton type="reset" value="Clear" />
-                            <p:commandButton type="submit" value="Create New Category" update="@form formAllPromotions" actionListener="#{promotionManagedBean.createPromotion}" oncomplete="PF('dialogCreateNewCategory').show();"/>
+                            <p:commandButton type="submit" value="Create New Promotion" update="@form formAllPromotions" actionListener="#{promotionManagedBean.createPromotion}" oncomplete="PF('dialogCreateNewCategory').show();"/>
                         </p:column>
                     </p:row>
                 </p:panelGrid>
@@ -194,7 +194,7 @@
                             </p:column>
                             <p:column>
                                 <h:outputText value="#{promotionManagedBean.promotionToView.startDate}">
-                                    <f:convertDateTime pattern="dd.MM.yyyy"/>
+                                    <f:convertDateTime pattern="dd/MM/yyyy"/>
                                 </h:outputText>
                             </p:column>
                         </p:row>
@@ -205,7 +205,7 @@
                             </p:column>
                             <p:column>
                                 <h:outputText value="#{promotionManagedBean.promotionToView.endDate}">
-                                    <f:convertNumber pattern="dd.MM.yyyy" />
+                                    <f:convertDateTime pattern="dd/MM/yyyy" />
                                 </h:outputText>
                             </p:column>
                         </p:row>
@@ -260,7 +260,7 @@
                                 <p:outputLabel for="discountRate" value ="Discount Rate: "/>
                             </p:column>
                             <p:column>
-                                <p:inputNumber id="discountRate" value="#{promotionManagedBean.promotionToUpdate.discountRate}" required="true" requiredMessage="Promotion Name is required!" minValue="0" maxValue="0"/>
+                                <p:inputNumber id="discountRate" value="#{promotionManagedBean.promotionToUpdate.discountRate}" required="true" requiredMessage="Promotion Name is required!" minValue="0" maxValue="1"/>
                             </p:column>
                             <p:column>
                                 <p:message for="discountRate" />
@@ -296,7 +296,7 @@
                                 <p:outputLabel for="products" value ="Promotional Products: "/>
                             </p:column>
                             <p:column>
-                                <p:selectManyMenu var="#{promotionManagedBean.updateProductIds}" showCheckbox="true">
+                                <p:selectManyMenu id="products" var="#{promotionManagedBean.updateProductIds}" showCheckbox="true">
                                     <f:selectItems value="#{promotionManagedBean.productEntities}" var="product" itemValue="#{product.productId}" itemLabel="#{product.productName}" />
                                 </p:selectManyMenu>
                             </p:column>

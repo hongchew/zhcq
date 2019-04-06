@@ -10,6 +10,7 @@ import ejb.stateless.PromotionControllerLocal;
 import entity.ProductEntity;
 import entity.Promotion;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -19,9 +20,8 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
+import util.exception.CreatePromotionException;
 import util.exception.InputDataValidationException;
-import util.exception.ProductNotFoundException;
-import util.exception.PromotionExistException;
 import util.exception.PromotionNotFoundException;
 import util.exception.UpdatePromotionException;
 
@@ -58,6 +58,8 @@ public class PromotionManagedBean implements Serializable {
         promotions = promotionControllerLocal.retrieveAllPromotions();
         productEntities = productControllerLocal.retrieveAllProducts();
         newPromotion = new Promotion();
+        createProductIds = new ArrayList<Long>();
+        updateProductIds = new ArrayList<Long>();
     }
 
     public void createPromotion(ActionEvent event) {
@@ -66,7 +68,7 @@ public class PromotionManagedBean implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Successfully created promotion!", null));
             newPromotion = new Promotion();
             createProductIds.clear();
-        } catch (InputDataValidationException | ProductNotFoundException | PromotionExistException ex) {
+        } catch (CreatePromotionException| InputDataValidationException ex) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error creating promotion: " + ex.getMessage(), null));
         }
     }
@@ -75,7 +77,7 @@ public class PromotionManagedBean implements Serializable {
         try {
             promotionControllerLocal.updatePromotion(promotionToUpdate, updateProductIds);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Successfully updated promotion: ", null));
-        } catch (ProductNotFoundException | PromotionExistException | PromotionNotFoundException | UpdatePromotionException ex) {
+        } catch (UpdatePromotionException ex) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Failed to update promotion: " + ex.getMessage(), null));
         }
     }

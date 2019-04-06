@@ -8,7 +8,6 @@ package ejb.stateless;
 import entity.SaleTransaction;
 import entity.ShoppingCart;
 import javax.ejb.Local;
-import util.exception.InputDataValidationException;
 import util.exception.SaleTransactionNotFoundException;
 import util.exception.ShoppingCartNotFoundException;
 

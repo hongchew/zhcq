@@ -19,9 +19,9 @@ import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
+import util.exception.CreatePromotionException;
 import util.exception.InputDataValidationException;
 import util.exception.ProductNotFoundException;
-import util.exception.PromotionExistException;
 import util.exception.PromotionNotFoundException;
 import util.exception.UpdatePromotionException;
 
@@ -48,26 +48,6 @@ public class PromotionController implements PromotionControllerLocal {
         Query query = em.createQuery("SELECT p FROM Promotion p");
         return query.getResultList();
     }
-//
-//    @Override
-//    public void createNewPromotion(Promotion newPromotion) throws InputDataValidationException {
-//        Set<ConstraintViolation<Promotion>> constraintViolations = validator.validate(newPromotion);
-//        if (constraintViolations.isEmpty()) {
-//            em.persist(newPromotion);
-//        } else {
-//            throw new InputDataValidationException(prepareInputDataValidationErrorsMessage(constraintViolations));
-//        }
-//    }
-//
-//    @Override
-//    public void updatePromotion(Promotion updatePromotion) throws InputDataValidationException {
-//        Set<ConstraintViolation<Promotion>> constraintViolations = validator.validate(updatePromotion);
-//        if (constraintViolations.isEmpty()) {
-//            em.merge(updatePromotion);
-//        } else {
-//            throw new InputDataValidationException("Invalid input for updating promotion!");
-//        }
-//    }
 
     @Override
     public Promotion retrievePromotionByPromotionId(Long promotionId) throws PromotionNotFoundException {
@@ -85,50 +65,51 @@ public class PromotionController implements PromotionControllerLocal {
     }
 
     @Override
-    public Promotion createNewPromotion(Promotion newPromotion, List<Long> productIds) throws ProductNotFoundException, PromotionExistException, InputDataValidationException {
+    public Promotion createNewPromotion(Promotion newPromotion, List<Long> productIds) throws CreatePromotionException, InputDataValidationException {
         Set<ConstraintViolation<Promotion>> constraintViolations = validator.validate(newPromotion);
 
         if (constraintViolations.isEmpty()) {
-            em.persist(newPromotion);
-
-            if (productIds != null && (!productIds.isEmpty())) {
-                for (Long productId : productIds) {
-                    ProductEntity product = productControllerLocal.retrieveProductById(productId);
-                    newPromotion.addProduct(product);
-                    product.setPromotion(newPromotion);
+            try {
+                em.persist(newPromotion);
+                if (productIds != null && (!productIds.isEmpty())) {
+                    for (Long productId : productIds) {
+                        ProductEntity product = productControllerLocal.retrieveProductById(productId);
+                        newPromotion.addProduct(product);
+                    }
                 }
-            }
-            em.flush();
+                em.flush();
 
-            return newPromotion;
+                return newPromotion;
+            } catch (ProductNotFoundException ex) {
+                throw new CreatePromotionException("An unexpected error has occurred: " + ex.getMessage());
+            }
         } else {
             throw new InputDataValidationException(prepareInputDataValidationErrorsMessage(constraintViolations));
         }
     }
-    
+
     @Override
-    public void updatePromotion(Promotion promotion, List<Long> productIds) throws ProductNotFoundException, PromotionExistException, PromotionNotFoundException, UpdatePromotionException {
+    public void updatePromotion(Promotion promotion, List<Long> productIds) throws UpdatePromotionException {
         Set<ConstraintViolation<Promotion>> constraintViolations = validator.validate(promotion);
 
         if (constraintViolations.isEmpty()) {
-            if (promotion.getPromotionId() != null) {
+            try {
                 Promotion promotionToUpdate = retrievePromotionByPromotionId(promotion.getPromotionId());
 
                 promotionToUpdate.setPromotionName(promotion.getPromotionName());
                 promotionToUpdate.setStartDate(promotion.getStartDate());
                 promotionToUpdate.setEndDate(promotion.getEndDate());
-                promotionToUpdate.getPromotionalProducts().clear();
-                if (productIds != null) {
-                    for (ProductEntity product : promotionToUpdate.getPromotionalProducts()) {
-                        product.setPromotion(null);
-                    }
+                for (ProductEntity product : promotionToUpdate.getPromotionalProducts()) {
+                    promotionToUpdate.removeProduct(product);
+                }
+                if (productIds != null || (!productIds.isEmpty())) {
                     for (Long id : productIds) {
-                        ProductEntity productEntity = productControllerLocal.retrieveProductById(id);
-                        promotionToUpdate.addProduct(productEntity);
-                        productEntity.setPromotion(promotionToUpdate);
+                        ProductEntity product = productControllerLocal.retrieveProductById(id);
+                        promotionToUpdate.addProduct(product);
                     }
                 }
-
+            } catch (ProductNotFoundException | PromotionNotFoundException ex) {
+                throw new UpdatePromotionException(ex.getMessage());
             }
         } else {
             throw new UpdatePromotionException("Input data for update of promotion is invalid!");

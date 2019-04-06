@@ -58,7 +58,12 @@ public class ProductController implements ProductControllerLocal {
     public List<ProductEntity> retrieveAllProducts(){
         Query q = em.createQuery("SELECT p FROM ProductEntity p");
         
-        return q.getResultList();
+        List<ProductEntity> allProducts = q.getResultList();
+        
+        
+        
+        return allProducts;
+        
     }
     
     @Override

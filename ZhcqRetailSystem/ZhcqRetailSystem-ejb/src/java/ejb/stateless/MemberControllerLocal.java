@@ -6,6 +6,7 @@
 package ejb.stateless;
 
 import entity.Member;
+import java.util.List;
 import javax.ejb.Local;
 import util.exception.DeleteMemberException;
 import util.exception.InputDataValidationException;
@@ -28,5 +29,7 @@ public interface MemberControllerLocal {
     public Member memberLogin(String username, String password) throws InvalidLoginCredentialException;
 
     public void deleteMember(Long memberId) throws MemberNotFoundException, DeleteMemberException;
+
+    public List<Member> retrieveAllMembers();
     
 }

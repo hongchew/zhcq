@@ -9,8 +9,8 @@
         <param-value>true</param-value>
     </context-param>
     <context-param>
-	<param-name>primefaces.THEME</param-name>
-	<param-value>flick</param-value>
+        <param-name>primefaces.THEME</param-name>
+        <param-value>flick</param-value>
     </context-param>
     <listener>
         <description>ServletContextListener, HttpSessionListener</description>
@@ -33,4 +33,11 @@
     <welcome-file-list>
         <welcome-file>index.xhtml</welcome-file>
     </welcome-file-list>
+    <ejb-local-ref>
+        <ejb-ref-name>MemberControllerLocal</ejb-ref-name>
+        <ejb-ref-type>Session</ejb-ref-type>
+        <local-home>ejb.stateless.memberControllerLocal</local-home>
+        <local>ejb.stateless.memberControllerLocal</local>
+        <ejb-link>ZhcqRetailSystem-ejb.jar#MemberController</ejb-link>
+    </ejb-local-ref>
 </web-app>

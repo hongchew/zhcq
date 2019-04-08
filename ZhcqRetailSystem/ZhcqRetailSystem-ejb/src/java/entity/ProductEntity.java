@@ -100,7 +100,7 @@ public class ProductEntity implements Serializable {
     @JoinColumn
     private Promotion promotion; 
     
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String picturePath;
     
     

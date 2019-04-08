@@ -11,12 +11,13 @@ import ejb.stateless.ProductTagControllerLocal;
 import entity.Category;
 import entity.ProductEntity;
 import entity.ProductTag;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.Serializable;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
@@ -24,14 +25,12 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
+import org.primefaces.model.UploadedFile;
 import util.enumeration.ColourEnum;
 import util.enumeration.SizeEnum;
-import util.exception.CategoryNotFoundException;
 import util.exception.CreateNewProductException;
 import util.exception.InputDataValidationException;
 import util.exception.ProductNotFoundException;
-import util.exception.ProductTagNotFoundException;
-import util.exception.UpdateProductException;
 
 /**
  *
@@ -60,6 +59,7 @@ public class ProductManagementManagedBean implements Serializable {
     private ProductEntity newProductEntity;
     private Long categoryIdNew;
     private List<String> tagIdsStringNew;
+    private UploadedFile productPhotoNew;
     private List<Category> categoryEntities;
     private List<ProductTag> tagEntities;
 
@@ -94,6 +94,18 @@ public class ProductManagementManagedBean implements Serializable {
     
     public void createNewProduct(ActionEvent event)
     {
+        try{
+            if(productPhotoNew == null){
+            System.err.println("NULLNULLNULL");
+            }
+            InputStream input = productPhotoNew.getInputstream();
+            Files.copy(input, new File("images", productPhotoNew.getFileName()).toPath());
+        }
+        catch (IOException e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "File Upload Error: " + e.getMessage(), null));
+
+        }
+        
         List<Long> tagIdsNew = null;
         
         if(getCategoryIdNew() == 0)
@@ -458,5 +470,20 @@ public class ProductManagementManagedBean implements Serializable {
     public void setSizeEnumUpdate(SizeEnum sizeEnumUpdate) {
         this.sizeEnumUpdate = sizeEnumUpdate;
     }
-    
+
+    /**
+     * @return the productPhotoNew
+     */
+    public UploadedFile getProductPhotoNew() {
+        return productPhotoNew;
+    }
+
+    /**
+     * @param productPhotoNew the productPhotoNew to set
+     */
+    public void setProductPhotoNew(UploadedFile productPhotoNew) {
+        this.productPhotoNew = productPhotoNew;
+    }
+
+  
 }

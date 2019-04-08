@@ -120,7 +120,7 @@ public class ProductController implements ProductControllerLocal {
                         ex.getCause().getCause() != null &&
                         ex.getCause().getCause().getClass().getSimpleName().equals("SQLIntegrityConstraintViolationException"))
                 {
-                    throw new CreateNewProductException("Product with same SKU code already exist");
+                    throw new CreateNewProductException("Product with same SKU code already exist: " + ex.getMessage() );
                 }
                 else
                 {

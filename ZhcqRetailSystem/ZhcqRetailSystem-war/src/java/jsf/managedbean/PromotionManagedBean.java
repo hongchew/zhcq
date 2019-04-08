@@ -5,9 +5,12 @@
  */
 package jsf.managedbean;
 
+import ejb.stateless.ProductControllerLocal;
 import ejb.stateless.PromotionControllerLocal;
+import entity.ProductEntity;
 import entity.Promotion;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -17,17 +20,26 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
+import util.exception.CreatePromotionException;
 import util.exception.InputDataValidationException;
 import util.exception.PromotionNotFoundException;
+import util.exception.UpdatePromotionException;
 
 @Named
 @ViewScoped
 public class PromotionManagedBean implements Serializable {
 
+    @EJB(name = "ProductControllerLocal")
+    private ProductControllerLocal productControllerLocal;
+
     @EJB(name = "PromotionControllerLocal")
     private PromotionControllerLocal promotionControllerLocal;
 
     private Date currentDate;
+    
+    private List<ProductEntity> productEntities;
+    private List<Long> createProductIds;
+    private List<Long> updateProductIds;
 
     private List<Promotion> promotions;
     private List<Promotion> filteredPromotions;
@@ -44,24 +56,28 @@ public class PromotionManagedBean implements Serializable {
     public void postConstruct() {
         currentDate = new Date();
         promotions = promotionControllerLocal.retrieveAllPromotions();
+        productEntities = productControllerLocal.retrieveAllProducts();
         newPromotion = new Promotion();
+        createProductIds = new ArrayList<Long>();
+        updateProductIds = new ArrayList<Long>();
     }
 
     public void createPromotion(ActionEvent event) {
         try {
-            promotionControllerLocal.createNewPromotion(newPromotion);
+            promotionControllerLocal.createNewPromotion(newPromotion, createProductIds);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Successfully created promotion!", null));
             newPromotion = new Promotion();
-        } catch (InputDataValidationException ex) {
+            createProductIds.clear();
+        } catch (CreatePromotionException| InputDataValidationException ex) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error creating promotion: " + ex.getMessage(), null));
         }
     }
 
     public void updatePromotion(ActionEvent event) {
         try {
-            promotionControllerLocal.updatePromotion(newPromotion);
+            promotionControllerLocal.updatePromotion(promotionToUpdate, updateProductIds);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Successfully updated promotion: ", null));
-        } catch (InputDataValidationException ex) {
+        } catch (UpdatePromotionException ex) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Failed to update promotion: " + ex.getMessage(), null));
         }
     }
@@ -70,6 +86,7 @@ public class PromotionManagedBean implements Serializable {
         try {
             promotionToDelete = (Promotion) event.getComponent().getAttributes().get("promotionToDelete");
             promotionControllerLocal.deletePromotion(promotionToDelete.getPromotionId());
+            promotions.remove(promotionToDelete);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Promotion deleted successfully!", null));
         } catch (PromotionNotFoundException ex) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Failed to delete promotion" + ex.getMessage(), null));
@@ -114,6 +131,10 @@ public class PromotionManagedBean implements Serializable {
 
     public void setPromotionToUpdate(Promotion promotionToUpdate) {
         this.promotionToUpdate = promotionToUpdate;
+        updateProductIds.clear();
+        for(ProductEntity p : promotionToUpdate.getPromotionalProducts()) {
+            updateProductIds.add(p.getProductId());
+        }
     }
 
     public Promotion getPromotionToDelete() {
@@ -130,6 +151,31 @@ public class PromotionManagedBean implements Serializable {
 
     public void setCurrentDate(Date currentDate) {
         this.currentDate = currentDate;
+    }
+
+    public List<ProductEntity> getProductEntities() {
+        return productEntities;
+    }
+
+    public void setProductEntities(List<ProductEntity> productEntities) {
+        this.productEntities = productEntities;
+    }
+
+
+    public List<Long> getUpdateProductIds() {
+        return updateProductIds;
+    }
+
+    public List<Long> getCreateProductIds() {
+        return createProductIds;
+    }
+
+    public void setCreateProductIds(List<Long> createProductIds) {
+        this.createProductIds = createProductIds;
+    }
+
+    public void setUpdateProductIds(List<Long> updateProductIds) {
+        this.updateProductIds = updateProductIds;
     }
 
 }

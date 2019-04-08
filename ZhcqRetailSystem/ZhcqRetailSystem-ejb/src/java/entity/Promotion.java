@@ -20,8 +20,6 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import util.exception.PromotionExistException;
-
 
 @Entity
 public class Promotion implements Serializable {
@@ -29,20 +27,20 @@ public class Promotion implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long promotionId;
-    
+
     @Column(nullable = false, length = 64)
     @NotNull
     @Size(max = 64)
     private String promotionName;
-    
+
     @Column(scale = 2)
     private BigDecimal discountRate;
-    
+
     @Temporal(TemporalType.DATE)
     private Date startDate;
     @Temporal(TemporalType.DATE)
     private Date endDate;
-    
+
     @OneToMany(mappedBy = "promotion")
     private List<ProductEntity> promotionalProducts;
 
@@ -50,52 +48,32 @@ public class Promotion implements Serializable {
         promotionalProducts = new ArrayList<>();
     }
 
-    public Promotion(BigDecimal discountRate, Date startDate, Date endDAte) {
-        this()
-;       this.discountRate = discountRate;
+    public Promotion(String promotionName, BigDecimal discountRate, Date startDate, Date endDate) {
+        this();
+        this.promotionName = promotionName;
+        this.discountRate = discountRate;
         this.startDate = startDate;
-        this.endDate = endDAte;
+        this.endDate = endDate;
     }
-    
-    public void addProduct(ProductEntity product) throws PromotionExistException{
-        if(product != null)
-        {
-            if(!this.promotionalProducts.contains(product))
-            {
-                this.promotionalProducts.add(product);
-                
-                if(product.getPromotion() == null)
-                {
-                    product.setPromotion(this);
-                }
-                else 
-                {
-                    throw new PromotionExistException("There is already a promotion attached to this product!!");
-                }
-            } 
-        }
-    }
-    public void removeProduct(ProductEntity product) throws PromotionExistException{
-        if(product != null)
-        {
-            if(this.promotionalProducts.contains(product))
-            {
-                this.promotionalProducts.remove(product);
-                
-                if(product.getPromotion() == this)
-                {
-                    product.setPromotion(null);
-                }
-                else 
-                {
-                    throw new PromotionExistException("There is already a promotion attached to this product!!");
-                }
-            } 
-        }
-    }
-    
 
-    
+    public void addProduct(ProductEntity product) {
+        if (product != null) {
+            if (!this.promotionalProducts.contains(product)) {
+                this.promotionalProducts.add(product);
+                product.setPromotion(this);
+            }
+        }
+    }
+
+    public void removeProduct(ProductEntity product) {
+        if (product != null) {
+            if (this.promotionalProducts.contains(product)) {
+                this.promotionalProducts.remove(product);
+                product.setPromotion(null);
+            }
+        }
+    }
+
     public Long getPromotionId() {
         return promotionId;
     }
@@ -128,12 +106,10 @@ public class Promotion implements Serializable {
         this.endDate = endDate;
     }
 
-    
     public List<ProductEntity> getPromotionalProducts() {
         return promotionalProducts;
     }
 
-    
     public void setPromotionalProducts(List<ProductEntity> promotionalProducts) {
         this.promotionalProducts = promotionalProducts;
     }
@@ -152,5 +128,4 @@ public class Promotion implements Serializable {
         this.promotionName = promotionName;
     }
 
-    
 }

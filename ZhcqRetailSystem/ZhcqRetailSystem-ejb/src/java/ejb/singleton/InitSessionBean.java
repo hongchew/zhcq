@@ -4,13 +4,16 @@ package ejb.singleton;
 import ejb.stateless.CategoryControllerLocal;
 import ejb.stateless.ProductControllerLocal;
 import ejb.stateless.ProductTagControllerLocal;
+import ejb.stateless.PromotionControllerLocal;
 import ejb.stateless.StaffControllerLocal;
 import entity.Category;
 import entity.ProductEntity;
 import entity.ProductTag;
+import entity.Promotion;
 import entity.Staff;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -19,10 +22,6 @@ import javax.ejb.LocalBean;
 import javax.ejb.Startup;
 import util.enumeration.ColourEnum;
 import util.enumeration.SizeEnum;
-import util.exception.CreateNewCategoryException;
-import util.exception.CreateNewProductException;
-import util.exception.CreateNewProductTagException;
-import util.exception.InputDataValidationException;
 import util.exception.StaffNotFoundException;
 
 
@@ -30,6 +29,9 @@ import util.exception.StaffNotFoundException;
 @LocalBean
 @Startup
 public class InitSessionBean {
+
+    @EJB(name = "PromotionControllerLocal")
+    private PromotionControllerLocal promotionControllerLocal;
 
     @EJB(name = "ProductTagControllerLocal")
     private ProductTagControllerLocal productTagControllerLocal;
@@ -42,6 +44,8 @@ public class InitSessionBean {
 
     @EJB(name = "StaffControllerLocal")
     private StaffControllerLocal staffControllerLocal;
+    
+    
     
     
 
@@ -79,8 +83,8 @@ public class InitSessionBean {
 
             
             List<Long> tagIdsEmpty = new ArrayList<>();
-            productControllerLocal.createNewProduct(new ProductEntity("Bardot Top", "100% Cotton", BigDecimal.valueOf(28.00), 20, SizeEnum.S, ColourEnum.BLACK,"images/bardot_top_black.jpg"), tops.getCategoryId() ,tagIdsEmpty);
-            productControllerLocal.createNewProduct(new ProductEntity("Bardot Top", "100% Cotton", BigDecimal.valueOf(28.00), 20, SizeEnum.S, ColourEnum.CREAM,"images/bardot_top_cream.jpg"), tops.getCategoryId() ,tagIdsEmpty);
+            ProductEntity product1 = productControllerLocal.createNewProduct(new ProductEntity("Bardot Top", "100% Cotton", BigDecimal.valueOf(28.00), 20, SizeEnum.S, ColourEnum.BLACK,"images/bardot_top_black.jpg"), tops.getCategoryId() ,tagIdsEmpty);
+            ProductEntity product2 = productControllerLocal.createNewProduct(new ProductEntity("Bardot Top", "100% Cotton", BigDecimal.valueOf(28.00), 20, SizeEnum.S, ColourEnum.CREAM,"images/bardot_top_cream.jpg"), tops.getCategoryId() ,tagIdsEmpty);
             productControllerLocal.createNewProduct(new ProductEntity("Bardot Top", "100% Cotton", BigDecimal.valueOf(28.00), 20, SizeEnum.S, ColourEnum.PINK,"images/bardot_top_pink.jpg"), tops.getCategoryId() ,tagIdsEmpty);
             
             productControllerLocal.createNewProduct(new ProductEntity("Calista Dress", "100% Cotton", BigDecimal.valueOf(80.00), 20, SizeEnum.S, ColourEnum.BLUE,"images/calista_dress_blue.jpg"), dresses.getCategoryId() ,tagIdsEmpty);
@@ -125,9 +129,15 @@ public class InitSessionBean {
             productControllerLocal.createNewProduct(new ProductEntity("Emily Top", "100% Cotton", BigDecimal.valueOf(50.00), 20, SizeEnum.S, ColourEnum.BLACK,"images/emily_top_black.jpg"), tops.getCategoryId() ,tagIdsEmpty);
             productControllerLocal.createNewProduct(new ProductEntity("Emily Top", "100% Cotton", BigDecimal.valueOf(50.00), 20, SizeEnum.S, ColourEnum.CREAM,"images/emily_top_cream.jpg"), tops.getCategoryId() ,tagIdsEmpty);
             
-        } catch (InputDataValidationException | CreateNewCategoryException | CreateNewProductTagException | CreateNewProductException ex) {
+            Promotion promotion = new Promotion("Promotion1", new BigDecimal(0.25), new Date(), new Date(119,11, 5));
+            List<Long> productIds = new ArrayList<Long>();
+            productIds.add(product1.getProductId());
+            productIds.add(product2.getProductId());
+            promotionControllerLocal.createNewPromotion(promotion, productIds);
+            
+        } catch (Exception ex) {
             System.err.println("********** DataInitializationSessionBean.initializeData(): " + ex.getMessage());
-    
+   
         }
    }
    

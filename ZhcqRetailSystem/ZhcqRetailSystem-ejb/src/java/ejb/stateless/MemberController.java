@@ -8,6 +8,7 @@ package ejb.stateless;
 import entity.Member;
 import entity.ShoppingCart;
 import entity.WishList;
+import java.util.List;
 import java.util.Set;
 import javax.ejb.Local;
 import javax.ejb.Stateless;
@@ -20,7 +21,6 @@ import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
-import util.exception.DeleteMemberException;
 import util.exception.InputDataValidationException;
 import util.exception.InvalidLoginCredentialException;
 import util.exception.MemberNotFoundException;
@@ -40,6 +40,12 @@ public class MemberController implements MemberControllerLocal {
     public MemberController() {
         validatorFactory = Validation.buildDefaultValidatorFactory();
         validator = validatorFactory.getValidator();
+    }
+    
+    @Override
+    public List<Member> retrieveAllMembers() {
+        Query query = em.createQuery("SELECT m FROM Member m");
+        return query.getResultList();
     }
 
     @Override

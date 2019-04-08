@@ -144,13 +144,18 @@ and open the template in the editor.
                             <f:attribute name="productEntityToUpdate" value="#{productEntity}" />
                         </p:commandButton>
                         
-                        <p:commandButton icon="ui-icon-trash"  actionListener="#{productManagementManagedBean.deleteProduct}" update="viewAllProductsForm:dataTableAllProducts viewAllProductsForm:messages">
+                        <p:commandButton icon="ui-icon-trash"  actionListener="#{productManagementManagedBean.deleteProduct}" update="viewAllProductsForm">
                             <!--<f:setPropertyActionListener value="#{productEntity}" target="#{productManagementManagedBean.selectedProductEntityToDelete}" />-->
                             <f:attribute name="productEntityToDelete" value="#{productEntity}" />
                             <p:confirm header="Confirmation" message="Are you sure you want to delete #{productEntity.productName} (Product ID: #{productEntity.productId})?" icon="ui-icon-alert" />
                         </p:commandButton>            
                     </p:column>                
                 </p:dataTable>
+                
+                <p:confirmDialog global="true">
+                    <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                    <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                </p:confirmDialog>
             </h:form>
         
             <h:form id="viewProductForm">
@@ -238,7 +243,7 @@ and open the template in the editor.
                     <p:row>
                         <p:column><p:outputLabel for="size" value="Size" style="font-weight: bold;"/></p:column>
                         <p:column>
-                            <p:selectOneMenu id="size" value="#{productManagementManagedBean.sizes}">
+                            <p:selectOneMenu id="size" value="#{productManagementManagedBean.sizeEnumUpdate}">
                                 <f:selectItems value="#{productManagementManagedBean.sizes}" var="size" itemValue="#{size}" itemLabel="#{size}" />
                             </p:selectOneMenu>
                         </p:column>
@@ -248,8 +253,8 @@ and open the template in the editor.
                     <p:row>
                         <p:column><p:outputLabel for="colour" value="Colour" style="font-weight: bold;"/></p:column>
                         <p:column>
-                            <p:selectOneMenu id="colour" value="#{productManagementManagedBean.colours}">
-                                <f:selectItems value="#{productManagementManagedBean.colours}" var="colour" itemValue="#{colour}" itemLabel="#{colour}" />
+                            <p:selectOneMenu id="colour" value="#{productManagementManagedBean.colourEnumUpdate}">
+                                <f:selectItems value="#{productManagementManagedBean.colours}" />
                             </p:selectOneMenu>
                         </p:column>
                         <p:column><p:message for="colour" /></p:column>

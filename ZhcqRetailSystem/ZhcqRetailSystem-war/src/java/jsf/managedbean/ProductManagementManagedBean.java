@@ -71,6 +71,8 @@ public class ProductManagementManagedBean implements Serializable {
     
     private Long categoryIdUpdate;
     private List<String> tagIdsStringUpdate;
+    private ColourEnum colourEnumUpdate;
+    private SizeEnum sizeEnumUpdate;
     /**
      * Creates a new instance of ProductManagementManagedBean
      */
@@ -147,6 +149,9 @@ public class ProductManagementManagedBean implements Serializable {
         
         categoryIdUpdate = selectedProductEntityToUpdate.getProductCategory().getCategoryId();
         tagIdsStringUpdate = new ArrayList<>();
+        colourEnumUpdate = selectedProductEntityToUpdate.getColourEnum();
+        sizeEnumUpdate = selectedProductEntityToUpdate.getSizeEnum();
+        
         for(ProductTag tagEntity:selectedProductEntityToUpdate.getProductTags())
         {
             tagIdsStringUpdate.add(tagEntity.getProductTagId().toString());
@@ -173,7 +178,10 @@ public class ProductManagementManagedBean implements Serializable {
         }
         
         try
-        {
+        {   
+            selectedProductEntityToUpdate.setColourEnum(colourEnumUpdate);
+            selectedProductEntityToUpdate.setSizeEnum(sizeEnumUpdate);
+            
             productController.updateProduct(getSelectedProductEntityToUpdate(), getCategoryIdUpdate(), tagIdsUpdate);
                         
             for(Category c:getCategoryEntities())
@@ -187,14 +195,15 @@ public class ProductManagementManagedBean implements Serializable {
             
             getSelectedProductEntityToUpdate().getProductTags().clear();
             
-            for(ProductTag tag:getTagEntities())
-            {
-                if(tagIdsUpdate.contains(tag.getProductTagId()))
+            if(tagIdsUpdate != null){
+                for(ProductTag tag:getTagEntities())
                 {
-                    getSelectedProductEntityToUpdate().getProductTags().add(tag);
-                }                
+                    if(tagIdsUpdate.contains(tag.getProductTagId()))
+                    {
+                        getSelectedProductEntityToUpdate().getProductTags().add(tag);
+                    }                
+                }
             }
-
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Product updated successfully", null));
         }
         catch(ProductNotFoundException ex)
@@ -215,8 +224,9 @@ public class ProductManagementManagedBean implements Serializable {
             productController.deleteProduct(productEntityToDelete.getProductId());
             
             getProductEntities().remove(getSelectedProductEntityToDelete());
+            setProductEntities(productController.retrieveAllProducts());
 
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Product deleted successfully", null));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Product deleted successfully (Product ID: " + productEntityToDelete.getProductId() + ")" , null));
         }
         catch(Exception ex)
         {
@@ -419,6 +429,34 @@ public class ProductManagementManagedBean implements Serializable {
      */
     public void setSelectedProductEntityToDelete(ProductEntity selectedProductEntityToDelete) {
         this.selectedProductEntityToDelete = selectedProductEntityToDelete;
+    }
+
+    /**
+     * @return the colourEnumUpdate
+     */
+    public ColourEnum getColourEnumUpdate() {
+        return colourEnumUpdate;
+    }
+
+    /**
+     * @param colourEnumUpdate the colourEnumUpdate to set
+     */
+    public void setColourEnumUpdate(ColourEnum colourEnumUpdate) {
+        this.colourEnumUpdate = colourEnumUpdate;
+    }
+
+    /**
+     * @return the sizeEnumUpdate
+     */
+    public SizeEnum getSizeEnumUpdate() {
+        return sizeEnumUpdate;
+    }
+
+    /**
+     * @param sizeEnumUpdate the sizeEnumUpdate to set
+     */
+    public void setSizeEnumUpdate(SizeEnum sizeEnumUpdate) {
+        this.sizeEnumUpdate = sizeEnumUpdate;
     }
     
 }

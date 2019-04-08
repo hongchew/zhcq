@@ -61,7 +61,7 @@ and open the template in the editor.
                         </p:selectManyCheckbox>
                         
                         <p:outputLabel value="Picture" style="font-weight: bold;"/>
-                        <p:fileUpload value="#{productManagementManagedBean.productPhotoNew}"  mode="simple" skinSimple="true" allowTypes="/(\.|\/)(jpe?g|png)$/" fileLimit="1"/>
+                        <p:fileUpload value="#{productManagementManagedBean.productPhotoNew}" fileUploadListener="#{productManagementManagedBean.fileUploadListener}" mode="advanced" auto="true" skinSimple="true" allowTypes="/(\.|\/)(jpe?g|png)$/" fileLimit="1"/>
                             
                         
                         <p:commandButton type="reset" value="Clear" />&nbsp;

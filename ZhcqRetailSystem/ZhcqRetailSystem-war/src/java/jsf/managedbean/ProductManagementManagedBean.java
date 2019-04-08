@@ -12,10 +12,12 @@ import entity.Category;
 import entity.ProductEntity;
 import entity.ProductTag;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.Serializable;
-import java.nio.file.Files;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -25,6 +27,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
+import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;
 import util.enumeration.ColourEnum;
 import util.enumeration.SizeEnum;
@@ -94,14 +97,33 @@ public class ProductManagementManagedBean implements Serializable {
     
     public void createNewProduct(ActionEvent event)
     {
+        String picturePath = "" ;
+        
+        if(productPhotoNew == null){
+                System.err.println("NULLNULLNULL");
+            }else{
+                System.err.println("File Name: " + productPhotoNew.getFileName());
+        }
+        
         try{
-            if(productPhotoNew == null){
-            System.err.println("NULLNULLNULL");
-            }
-            InputStream input = productPhotoNew.getInputstream();
-            Files.copy(input, new File("images", productPhotoNew.getFileName()).toPath());
+            InputStream initialStream = productPhotoNew.getInputstream();
+                
+            byte[] buffer = new byte[initialStream.available()];
+            initialStream.read(buffer);
+            
+            picturePath = "images/" + productPhotoNew.getFileName();
+            System.err.println("images/" + productPhotoNew.getFileName() );
+            File targetFile = new File(picturePath);
+            System.err.println(targetFile.getAbsolutePath());
+            OutputStream outStream = new FileOutputStream(targetFile);
+            outStream.write(buffer);
+//            InputStream input = productPhotoNew.getInputstream();
+//            //System.err.println(new File("images/", productPhotoNew.getFileName()).toPath());
+//            Path path = Paths.get("images", productPhotoNew.getFileName());
+//            Files.copy(input, path, StandardCopyOption.REPLACE_EXISTING);
         }
         catch (IOException e) {
+            System.err.println(e.getMessage());
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "File Upload Error: " + e.getMessage(), null));
 
         }
@@ -125,6 +147,7 @@ public class ProductManagementManagedBean implements Serializable {
         
         try
         {
+            newProductEntity.setPicture(picturePath);
             ProductEntity pe = productController.createNewProduct(getNewProductEntity(), getCategoryIdNew(), tagIdsNew);
             getProductEntities().add(pe);
             
@@ -141,6 +164,11 @@ public class ProductManagementManagedBean implements Serializable {
         }
     }
     
+    public void fileUploadListener(FileUploadEvent event){
+        productPhotoNew = event.getFile();
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Photo Uploaded", null));
+
+    }
 //    public void updateProduct(ActionEvent event){
 //        try {
 //            ProductEntity productToUpdate = productController.retrieveProductById(selectedProductEntityToUpdate.getProductId());

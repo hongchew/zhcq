@@ -54,6 +54,49 @@ public class Category implements Serializable {
         this.description = description;
     }
     
+    public void addProduct(ProductEntity product)
+    {
+        if(product != null)
+        {
+            if(!this.productEntities.contains(product))
+            {
+                this.productEntities.add(product);
+                
+                if(product.getProductCategory() != this)
+                {                    
+                    product.setProductCategory(this);
+                }
+            }
+        }
+    }
+    public void deleteProduct(ProductEntity product)
+    {
+        if(product != null)
+        {
+            if(this.productEntities.contains(product))
+            {
+                this.productEntities.remove(product);
+                
+                if(product.getProductCategory() == this)
+                {                    
+                    product.setProductCategory(null);
+                }
+            }
+        }
+    }
+    public void removeProduct(ProductEntity product)
+    {
+        if(product != null)
+        {
+            if(this.productEntities.contains(product))
+            {
+                System.out.println("Entered HEREERERERERE");
+                this.productEntities.remove(product);
+                
+            }
+        }
+    }
+    
     
 
     public Long getCategoryId() {

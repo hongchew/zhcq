@@ -322,13 +322,21 @@ public class ProductController implements ProductControllerLocal {
         {
             List<ProductTag> tags = selectedProduct.getProductTags();
             
-            //Randomly select a Tag that the product has.
-            Random rand = new Random();
-            ProductTag selectedTag = tags.get(rand.nextInt(tags.size()));
+            if(!tags.isEmpty())
+            {
+                 //Randomly select a Tag that the product has.
+                Random rand = new Random();
+                ProductTag selectedTag = tags.get(rand.nextInt(tags.size()));
             
-            List<ProductEntity> suggestedProducts = selectedTag.getProductEntities();
+                List<ProductEntity> suggestedProducts = selectedTag.getProductEntities();
             
             return suggestedProducts;
+            }
+            else 
+            {
+                System.out.println("Entered NULL AREA");
+                return null;
+            }
             
         } else {
             throw new ProductNotFoundException("Error Occured! Product does not exist in the database");

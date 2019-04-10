@@ -15,6 +15,7 @@ public class RetrieveProductsByCatRsp {
     }
 
     public RetrieveProductsByCatRsp(List<ProductEntity> products) {
+        System.out.println("ENTERED CONSTRUCTOR !!!!!!");
         this.products = products;
     }
 

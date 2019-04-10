@@ -8,6 +8,7 @@ import entity.ProductTag;
 import entity.Promotion;
 import entity.ShoppingCart;
 import entity.WishList;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -112,16 +113,35 @@ public class ProductResource {
     {
         try{
             ProductEntity product = productControllerLocal.retrieveProductById(id);
-            List<ProductEntity> sameProducts = productControllerLocal.retrieveSameProducts(id);
-            List<ProductEntity> suggestedProducts = productControllerLocal.retrieveProductSuggestions(id);
+            System.out.println(product.getProductName() + " retrieved");
             
-            RetrieveProductByIdRsp retrieveProductByIdRsp = new RetrieveProductByIdRsp(product, sameProducts, suggestedProducts); 
+            Category category = product.getProductCategory();
+            category.getProductEntities().clear();
             
-            return Response.status(Response.Status.OK).entity(retrieveProductByIdRsp).build();
+            for(ProductTag tag: product.getProductTags())
+            {
+                tag.getProductEntities().clear();
+            }
+            for(WishList wishlist: product.getWishLists())
+            {
+                wishlist.getProductEntities().clear();
+            }     
+                    
+            for(ShoppingCart cart: product.getShoppingcarts())
+            {
+                cart.getProducts().clear();
+            }
+            
+            
+            
+            RetrieveProductByIdRsp retrieveProductByIdRsp = new RetrieveProductByIdRsp(product); 
+            System.out.println("New Object created!");
+            
+            return Response.status(Status.OK).entity(retrieveProductByIdRsp).build();
             
         } catch (ProductNotFoundException ex){
             ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(errorRsp).build();
+            return Response.status(Status.BAD_REQUEST).entity(errorRsp).build();
         }
     }
     
@@ -133,13 +153,62 @@ public class ProductResource {
         try{
            
             List<ProductEntity> products = productControllerLocal.filterProductsByCategory(id);
-            RetrieveProductsByCatRsp retrieveProductByCatRsp = new RetrieveProductsByCatRsp(products);
             
-            return Response.status(Response.Status.OK).entity(retrieveProductByCatRsp).build();
+            List<ProductEntity> catProducts = new ArrayList<>();
+            
+            //to prevent ConcurrentModificationException !!! 
+            if(products != null){
+                for(ProductEntity product:products)
+                {
+                    catProducts.add(product);
+                }
+            }
+            
+            if(catProducts != null){
+                for(ProductEntity product:catProducts)
+                {
+                    Category category = product.getProductCategory();
+                    category.removeProduct(product);
+                   
+                    for(ProductTag tag: product.getProductTags())
+                    {
+                        tag.getProductEntities().clear();
+                    }           
+                    
+                    for(WishList wishlist: product.getWishLists())
+                    {
+                        wishlist.getProductEntities().clear();
+                    }     
+                    
+                    for(ShoppingCart cart: product.getShoppingcarts())
+                    {
+                        cart.getProducts().clear();
+                    }
+                    
+                    
+                    CoordinatedOutfit outfit = product.getCoordinatedOutfit();
+                    if(outfit !=null){
+                        outfit.getProductEntities().clear();
+                    }
+                 
+                    
+                    Promotion promotion = product.getPromotion();
+                    
+                    if(promotion !=null){
+                        promotion.getPromotionalProducts().clear();  
+                    }
+                    
+                }
+            }
+            
+            RetrieveProductsByCatRsp retrieveProductByCatRsp = new RetrieveProductsByCatRsp(catProducts);
+            
+            return Response.status(Status.OK).entity(retrieveProductByCatRsp).build();
             
         } catch (CategoryNotFoundException ex){
+            System.out.println("ERROR CAUGHT !!!!!!");
             ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(errorRsp).build();
+            return Response.status(Status.INTERNAL_SERVER_ERROR).entity(errorRsp).build();
         }
     }
     

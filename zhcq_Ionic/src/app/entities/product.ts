@@ -10,7 +10,7 @@ export class ProductEntity
     productId: number;
     productName: string;
     description: string; 
-    unitPrice: bigint;
+    unitPrice: number;
     dateAdded: Date;
     quantityOnHand: number;
     colourEnum: ColourEnum;
@@ -22,7 +22,7 @@ export class ProductEntity
     shoppingCarts: ShoppingCart[];
     promotion: Promotion;
 
-    constructor(productId?: number, productName?: string, description?: string, unitPrice?: bigint, dateAdded?: Date, quantityOnHand?: number, colourEnum?: ColourEnum, picturePath?: string)
+    constructor(productId?: number, productName?: string, description?: string, unitPrice?: number, dateAdded?: Date, quantityOnHand?: number, colourEnum?: ColourEnum, picturePath?: string)
     {
         this.productId = productId;
         this.productName = productName;

@@ -10,5 +10,10 @@ const httpOptions = {
     providedIn: 'root'
 })
 
+export class ProductService
+{
+    baseUrl: string = "http://localhost:8000/Is3106Lecture10-war/Resources/Book"
+}
+
 
 

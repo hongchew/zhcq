@@ -195,6 +195,8 @@ public class ShoppingCartResource {
                     lineItem.getProductEntity().getPromotion().getPromotionalProducts().clear();  
                 }
             }
+            txn.getMember().setWishList(null);
+            txn.getMember().setShoppingCart(null);
             
             CheckoutRsp checkoutRsp = new CheckoutRsp(txn);
             return Response.status(Response.Status.OK).entity(checkoutRsp).build();

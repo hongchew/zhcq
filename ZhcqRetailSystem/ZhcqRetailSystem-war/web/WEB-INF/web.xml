@@ -26,7 +26,6 @@
         <filter-name>PrimeFaces FileUpload Filter</filter-name>
         <servlet-name>Faces Servlet</servlet-name>
     </filter-mapping>
-
     <listener>
         <description>ServletContextListener, HttpSessionListener</description>
         <listener-class>web.listerner.WebApplicationListener</listener-class>
@@ -54,5 +53,11 @@
         <local-home>ejb.stateless.memberControllerLocal</local-home>
         <local>ejb.stateless.memberControllerLocal</local>
         <ejb-link>ZhcqRetailSystem-ejb.jar#MemberController</ejb-link>
+    </ejb-local-ref>
+    <ejb-local-ref>
+        <ejb-ref-name>CheckoutController</ejb-ref-name>
+        <ejb-ref-type>Session</ejb-ref-type>
+        <local>ejb.stateless.CheckoutControllerLocal</local>
+        <ejb-link>ZhcqRetailSystem-ejb.jar#CheckoutController</ejb-link>
     </ejb-local-ref>
 </web-app>

@@ -19,9 +19,11 @@ public class ApplicationConfig extends Application
 
     
     
-    private void addRestResourceClasses(Set<Class<?>> resources)
-    {
+    
+
+    private void addRestResourceClasses(Set<Class<?>> resources) {
         resources.add(ws.restful.MemberResource.class);
         resources.add(ws.restful.ProductResource.class);
-    }    
+        resources.add(ws.restful.ShoppingCartResource.class);
+    }
 }

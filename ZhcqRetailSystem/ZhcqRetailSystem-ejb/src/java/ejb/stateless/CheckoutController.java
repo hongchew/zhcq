@@ -1,24 +1,21 @@
 
 package ejb.stateless;
 
-import entity.Member;
 import entity.ProductEntity;
 import entity.SaleTransaction;
 import entity.SaleTransactionLineItem;
 import entity.ShoppingCart;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 import javax.ejb.EJB;
 import javax.ejb.Local;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
-import util.exception.InputDataValidationException;
+import util.exception.OutOfStockException;
 import util.exception.ProductNotFoundException;
 import util.exception.SaleTransactionNotFoundException;
 import util.exception.ShoppingCartNotFoundException;
@@ -67,26 +64,25 @@ public class CheckoutController implements CheckoutControllerLocal {
         }
     }
     
+
     @Override
-    public void updateCart (Long cartId, Long productId, boolean addition) { //true if adding, false if deleting
-        try {
-            ShoppingCart shoppingCart = retrieveShoppingCartById(cartId);
-            ProductEntity prod = productControllerLocal.retrieveProductById(productId);
-            
+    public void updateCart (Long cartId, Long productId, boolean addition) throws OutOfStockException, ShoppingCartNotFoundException, ProductNotFoundException { //true if adding, false if deleting
+
+        ShoppingCart shoppingCart = retrieveShoppingCartById(cartId);
+        ProductEntity prod = productControllerLocal.retrieveProductById(productId);
+
+
+        if (addition) {
             if (prod.getQuantityOnHand()<=0) {
                 System.out.println("Oops! Product out of stock!");
+                throw new OutOfStockException("Oops! Product out of stock!");
             }
-            
-            if (addition) {
-                shoppingCart.getProducts().add(prod);
-                prod.setQuantityOnHand(prod.getQuantityOnHand()-1);
-                
-            } else {
-                shoppingCart.getProducts().remove(prod);
-                prod.setQuantityOnHand(prod.getQuantityOnHand()+1);
-            }
-        } catch (ShoppingCartNotFoundException | ProductNotFoundException ex) {
-            
+            shoppingCart.getProducts().add(prod);
+            prod.setQuantityOnHand(prod.getQuantityOnHand()-1);
+
+        } else {
+            shoppingCart.getProducts().remove(prod);
+            prod.setQuantityOnHand(prod.getQuantityOnHand()+1);
         }
       
     }

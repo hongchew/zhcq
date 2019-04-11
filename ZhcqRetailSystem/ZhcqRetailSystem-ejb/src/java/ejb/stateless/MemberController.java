@@ -56,7 +56,9 @@ public class MemberController implements MemberControllerLocal {
             em.persist(newMember);
 
             WishList wishList = new WishList(newMember);
+            em.persist(wishList);
             ShoppingCart shoppingCart = new ShoppingCart(newMember);
+            em.persist(shoppingCart);
             newMember.setShoppingCart(shoppingCart);
             newMember.setWishList(wishList);
 

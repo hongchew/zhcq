@@ -39,6 +39,8 @@ import util.enumeration.SizeEnum;
 @Entity
 public class ProductEntity implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long productId;

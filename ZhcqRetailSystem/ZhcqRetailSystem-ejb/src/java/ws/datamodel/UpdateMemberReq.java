@@ -11,14 +11,14 @@ import entity.Member;
  *
  * @author chengyang
  */
-public class CreateMemberRsp {
+public class UpdateMemberReq {
     
     private Member member;
 
-    public CreateMemberRsp() {
+    public UpdateMemberReq() {
     }
 
-    public CreateMemberRsp(Member member) {
+    public UpdateMemberReq(Member member) {
         this.member = member;
     }
 
@@ -29,7 +29,6 @@ public class CreateMemberRsp {
     public void setMember(Member member) {
         this.member = member;
     }
-
-   
+    
     
 }

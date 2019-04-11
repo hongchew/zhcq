@@ -69,7 +69,13 @@ public class ShoppingCartResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response retrieveShoppingCart(@QueryParam("userId") Long id){
         try {
-            ShoppingCart cart = checkoutController.retrieveShoppingCartById(id);
+            ShoppingCart cart = checkoutController.retrieveShoppingCartByUserId(id);
+            
+            cart.getMember().setShoppingCart(null);
+            cart.getMember().setSaleTransactions(null);
+            cart.getMember().setWishList(null);
+            cart.getMember().setPassword(null);
+            cart.getMember().setSalt(null);
             
             for(ProductEntity product : cart.getProducts()){
                 
@@ -108,8 +114,13 @@ public class ShoppingCartResource {
             return Response.status(Response.Status.OK).entity(cartRsp).build();
             
         } catch (ShoppingCartNotFoundException ex) {
+            System.err.println(ex.getMessage());
             ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
             return Response.status(Response.Status.BAD_REQUEST).entity(errorRsp).build();
+        } catch (Exception ex) {
+            System.err.println(ex.getMessage());
+            ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(errorRsp).build();
         }
     }
     
@@ -122,14 +133,19 @@ public class ShoppingCartResource {
             return Response.status(Response.Status.OK).build();
             
         } catch (OutOfStockException | ShoppingCartNotFoundException | ProductNotFoundException ex) {
+            System.err.println("***Error: " + ex.getMessage() );
             ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
             return Response.status(Response.Status.BAD_REQUEST).entity(errorRsp).build();
+        } catch (Exception ex){
+            System.err.println("***Error: " + ex.getMessage() );
+            ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(errorRsp).build();
         }
         
     }
     
     @DELETE
-    public Response removeFromCart(@QueryParam("cartId") Long cartId, @QueryParam("pdtId") Long pdtId){
+    public Response removeFromCart(@QueryParam("cartId") Long cartId, @QueryParam("productId") Long pdtId){
         
         try {
             checkoutController.updateCart(cartId, pdtId, false);
@@ -138,13 +154,17 @@ public class ShoppingCartResource {
         } catch (OutOfStockException | ShoppingCartNotFoundException | ProductNotFoundException ex) {
             ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
             return Response.status(Response.Status.BAD_REQUEST).entity(errorRsp).build();
+        } catch (Exception ex){
+            System.err.println("***Error: " + ex.getMessage() );
+            ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(errorRsp).build();
         }
     }
     
     @Path("checkout")
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public Response checkout(@QueryParam("cartid") Long cartId){
+    public Response checkout(@QueryParam("cartId") Long cartId){
         try {
             SaleTransaction txn = checkoutController.checkOut(cartId);
             for(SaleTransactionLineItem lineItem : txn.getSaleTransactionLineItems()){
@@ -175,6 +195,8 @@ public class ShoppingCartResource {
                     lineItem.getProductEntity().getPromotion().getPromotionalProducts().clear();  
                 }
             }
+            txn.getMember().setWishList(null);
+            txn.getMember().setShoppingCart(null);
             
             CheckoutRsp checkoutRsp = new CheckoutRsp(txn);
             return Response.status(Response.Status.OK).entity(checkoutRsp).build();
@@ -183,6 +205,10 @@ public class ShoppingCartResource {
         } catch (ShoppingCartNotFoundException ex) {
             ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
             return Response.status(Response.Status.BAD_REQUEST).entity(errorRsp).build();
+        } catch (Exception ex){
+            System.err.println("***Error: " + ex.getMessage() );
+            ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(errorRsp).build();
         }
         
         

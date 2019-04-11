@@ -16,6 +16,7 @@ import javax.naming.NamingException;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -28,11 +29,13 @@ import javax.ws.rs.core.UriInfo;
 import util.exception.DeleteMemberException;
 import util.exception.InputDataValidationException;
 import util.exception.MemberNotFoundException;
+import util.exception.UpdateMemberException;
 import ws.datamodel.CreateMemberReq;
 import ws.datamodel.CreateMemberRsp;
 import ws.datamodel.ErrorRsp;
 import ws.datamodel.RetrieveAllMembersRsp;
 import ws.datamodel.RetrieveMemberRsp;
+import ws.datamodel.UpdateMemberReq;
 
 @Path("Member")
 public class MemberResource {
@@ -64,16 +67,17 @@ public class MemberResource {
             List<Member> list = memberControllerLocal.retrieveAllMembers();
             for (Member member : list) {
                 member.getWishList().setMember(null);
+                member.getShoppingCart().setMember(null);
                 List<SaleTransaction> listST = member.getSaleTransactions();
                 for (SaleTransaction saleTransaction : listST) {
                     saleTransaction.setMember(null);
                 }
             }
             RetrieveAllMembersRsp retrieveAllMembersRsp = new RetrieveAllMembersRsp(list);
-            return Response.status(Status.OK).entity(retrieveAllMembersRsp).build();
+            return Response.status(Response.Status.OK).entity(retrieveAllMembersRsp).build();
         } catch (Exception ex) {
             ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
-            return Response.status(Status.INTERNAL_SERVER_ERROR).entity(errorRsp).build();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(errorRsp).build();
         }
     }
 
@@ -83,14 +87,19 @@ public class MemberResource {
     public Response createMember(CreateMemberReq createMemberReq) {
         if (createMemberReq != null) {
             try {
-                Member member = createMemberReq.getMember();
-                Member newMember = memberControllerLocal.createNewMember(member);
+
+                String firstName = createMemberReq.getFirstName();
+                String lastName = createMemberReq.getLastName();
+                String username = createMemberReq.getUsername();
+                String password = createMemberReq.getPassword();
+                Member newMember = memberControllerLocal.createNewMember(new Member(firstName, lastName, username, password, 0));
                 newMember.getWishList().setMember(null);
-                List<SaleTransaction> listST = member.getSaleTransactions();
+                newMember.getShoppingCart().setMember(null);
+                List<SaleTransaction> listST = newMember.getSaleTransactions();
                 for (SaleTransaction saleTransaction : listST) {
                     saleTransaction.setMember(null);
                 }
-                CreateMemberRsp createMemberRsp = new CreateMemberRsp(newMember.getMemberId());
+                CreateMemberRsp createMemberRsp = new CreateMemberRsp(newMember);
                 return Response.status(Response.Status.OK).entity(createMemberRsp).build();
             } catch (InputDataValidationException ex) {
                 ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
@@ -105,13 +114,14 @@ public class MemberResource {
         }
     }
 
-    @Path("retrieveMember")
+    @Path("retrieveMember/{id}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response retrieveMember(@PathParam("id") Long id) {
         try {
             Member member = memberControllerLocal.retrieveMemberById(id);
             member.getWishList().setMember(null);
+            member.getShoppingCart().setMember(null);
             List<SaleTransaction> listST = member.getSaleTransactions();
             for (SaleTransaction saleTransaction : listST) {
                 saleTransaction.setMember(null);
@@ -132,6 +142,25 @@ public class MemberResource {
             return Response.status(Response.Status.OK).build();
         } catch (DeleteMemberException | MemberNotFoundException ex) {
             ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
+            return Response.status(Response.Status.BAD_REQUEST).entity(errorRsp).build();
+        }
+    }
+
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response updateMember(UpdateMemberReq updateMemberReq) {
+        Member member = updateMemberReq.getMember();
+        if (member != null) {
+            try {
+                memberControllerLocal.updateMember(member);
+                return Response.status(Response.Status.OK).build();
+            } catch (InputDataValidationException | MemberNotFoundException | UpdateMemberException ex) {
+                ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
+                return Response.status(Response.Status.BAD_REQUEST).entity(errorRsp).build();
+            }
+        } else {
+            ErrorRsp errorRsp = new ErrorRsp("Invalid update member request");
             return Response.status(Response.Status.BAD_REQUEST).entity(errorRsp).build();
         }
     }

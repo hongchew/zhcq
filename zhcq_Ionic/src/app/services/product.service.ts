@@ -10,7 +10,7 @@ const httpOptions = {
 
 @Injectable({
     providedIn: 'root'
-})
+});
 
 export class ProductService
 {

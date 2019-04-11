@@ -127,7 +127,6 @@ public class MemberController implements MemberControllerLocal {
                 if (memberEntityToUpdate.getUsername().equals(memberEntity.getUsername())) {
                     memberEntityToUpdate.setFirstName(memberEntity.getFirstName());
                     memberEntityToUpdate.setLastName(memberEntity.getLastName());
-                    // Username and password are deliberately NOT updated to demonstrate that client is not allowed to update account credential through this business method
                 } else {
                     throw new UpdateMemberException("Username of member record to be updated does not match the existing record");
                 }

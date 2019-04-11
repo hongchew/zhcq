@@ -60,4 +60,16 @@
         <local>ejb.stateless.CheckoutControllerLocal</local>
         <ejb-link>ZhcqRetailSystem-ejb.jar#CheckoutController</ejb-link>
     </ejb-local-ref>
+    <ejb-local-ref>
+        <ejb-ref-name>WishListController</ejb-ref-name>
+        <ejb-ref-type>Session</ejb-ref-type>
+        <local>ejb.stateless.WishListControllerLocal</local>
+        <ejb-link>ZhcqRetailSystem-ejb.jar#WishListController</ejb-link>
+    </ejb-local-ref>
+    <ejb-local-ref>
+        <ejb-ref-name>WishListController1</ejb-ref-name>
+        <ejb-ref-type>Session</ejb-ref-type>
+        <local>ejb.stateless.WishListControllerLocal</local>
+        <ejb-link>ZhcqRetailSystem-ejb.jar#WishListController</ejb-link>
+    </ejb-local-ref>
 </web-app>

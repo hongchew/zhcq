@@ -344,22 +344,37 @@ public class ProductController implements ProductControllerLocal {
     }
     
     @Override
-    public List<ProductEntity> retrieveSameProducts(Long productId) throws ProductNotFoundException
+    public List<ProductEntity> retrieveDiffColours(Long productId) throws ProductNotFoundException
     {
         
         ProductEntity selectedProduct = retrieveProductById(productId);
         if(selectedProduct!= null){
-            Query query = em.createQuery("SELECT pe FROM ProductEntity pe WHERE pe.productName = :name AND pe.colourEnum <> :colour ");
+            Query query = em.createQuery("SELECT DISTINCT pe FROM ProductEntity pe WHERE pe.productName = :name AND pe.colourEnum <> :colour ");
             query.setParameter("name", selectedProduct.getProductName());
             query.setParameter("colour", selectedProduct.getColourEnum());
-            List<ProductEntity> sameProducts = query.getResultList();
-            return sameProducts;
+            List<ProductEntity> diffColours = query.getResultList();
+            return diffColours;
         } else {
             throw new ProductNotFoundException("Product of ID "+ productId + " Not Found!");
         }
     }
     
-    
+    @Override
+    public List<ProductEntity> retrieveDiffSizes(Long productId) throws ProductNotFoundException
+    {
+        
+        ProductEntity selectedProduct = retrieveProductById(productId);
+        if(selectedProduct!= null){
+            Query query = em.createQuery("SELECT pe FROM ProductEntity pe WHERE pe.productName = :name AND pe.colourEnum = :colour AND pe.sizeEnum <> :size");
+            query.setParameter("name", selectedProduct.getProductName());
+            query.setParameter("colour", selectedProduct.getColourEnum());
+            query.setParameter("size", selectedProduct.getSizeEnum());
+            List<ProductEntity> diffSizes = query.getResultList();
+            return diffSizes;
+        } else {
+            throw new ProductNotFoundException("Product of ID "+ productId + " Not Found!");
+        }
+    }
     
     
     

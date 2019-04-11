@@ -13,6 +13,8 @@ public class RetrieveProductByIdRsp {
     
     private ProductEntity selectedProduct; 
     private List<ProductEntity> sameProducts; 
+    private List<ProductEntity> diffColours; 
+    private List<ProductEntity> diffSizes; 
     private List<ProductEntity> suggestedProducts; 
     
     
@@ -21,12 +23,12 @@ public class RetrieveProductByIdRsp {
         
     }
 
-    public RetrieveProductByIdRsp(ProductEntity selectedProduct, List<ProductEntity> sameProducts, List<ProductEntity> suggestedProducts) {
+    public RetrieveProductByIdRsp(ProductEntity selectedProduct, List<ProductEntity> diffColours, List<ProductEntity> diffSizes, List<ProductEntity> suggestedProducts) {
         this.selectedProduct = selectedProduct;
-        this.sameProducts = sameProducts;
+        this.diffColours = diffColours;
+        this.diffSizes = diffSizes;
         this.suggestedProducts = suggestedProducts;
     }
-
     
 
     
@@ -57,6 +59,22 @@ public class RetrieveProductByIdRsp {
    
     public void setSuggestedProducts(List<ProductEntity> suggestedProducts) {
         this.suggestedProducts = suggestedProducts;
+    }
+
+    public List<ProductEntity> getDiffColours() {
+        return diffColours;
+    }
+
+    public void setDiffColours(List<ProductEntity> diffColours) {
+        this.diffColours = diffColours;
+    }
+
+    public List<ProductEntity> getDiffSizes() {
+        return diffSizes;
+    }
+
+    public void setDiffSizes(List<ProductEntity> diffSizes) {
+        this.diffSizes = diffSizes;
     }
     
     

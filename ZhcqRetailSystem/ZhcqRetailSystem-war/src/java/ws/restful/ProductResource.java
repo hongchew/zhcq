@@ -142,9 +142,9 @@ public class ProductResource {
                 promotion.getPromotionalProducts().clear();  
             }
             
-            List<ProductEntity> sameProducts = productControllerLocal.retrieveSameProducts(id);
+            List<ProductEntity> diffColours = productControllerLocal.retrieveDiffColours(id);
             
-            for(ProductEntity pdt : sameProducts)
+            for(ProductEntity pdt : diffColours)
             {
                 category = pdt.getProductCategory();
                 category.getProductEntities().clear();
@@ -174,9 +174,41 @@ public class ProductResource {
                 }
             }
             
+            List<ProductEntity> diffSizes = productControllerLocal.retrieveDiffSizes(id);
+            
+            for(ProductEntity suggestion : diffSizes)
+            {
+                category = suggestion.getProductCategory();
+                category.getProductEntities().clear();
+            
+                for(ProductTag tag: suggestion.getProductTags())
+                {
+                    tag.getProductEntities().clear();
+                }
+                for(WishList wishlist: suggestion.getWishLists())
+                {
+                    wishlist.getProductEntities().clear();
+                }     
+
+                for(ShoppingCart cart: suggestion.getShoppingcarts())
+                {
+                    cart.getProducts().clear();
+                }
+                outfit = suggestion.getCoordinatedOutfit();
+                if(outfit !=null){
+                outfit.getProductEntities().clear();
+                }
+            
+                promotion = suggestion.getPromotion();
+                
+                if(promotion !=null){
+                    promotion.getPromotionalProducts().clear();  
+                }
+            }
+            
             List<ProductEntity> productSuggestions = productControllerLocal.retrieveProductSuggestions(id);
             
-            for(ProductEntity suggestion : sameProducts)
+            for(ProductEntity suggestion : productSuggestions)
             {
                 category = suggestion.getProductCategory();
                 category.getProductEntities().clear();
@@ -207,7 +239,7 @@ public class ProductResource {
             }
             
             
-            RetrieveProductByIdRsp retrieveProductByIdRsp = new RetrieveProductByIdRsp(product,sameProducts,productSuggestions); 
+            RetrieveProductByIdRsp retrieveProductByIdRsp = new RetrieveProductByIdRsp(product, diffColours, diffSizes, productSuggestions); 
             System.out.println("New Object created!");
             
             return Response.status(Status.OK).entity(retrieveProductByIdRsp).build();

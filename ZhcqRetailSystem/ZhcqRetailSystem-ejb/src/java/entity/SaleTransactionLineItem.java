@@ -60,5 +60,33 @@ public class SaleTransactionLineItem implements Serializable {
         this.quantity = quantity;
     }
 
+    /**
+     * @return the saleTransaction
+     */
+    public SaleTransaction getSaleTransaction() {
+        return saleTransaction;
+    }
+
+    /**
+     * @param saleTransaction the saleTransaction to set
+     */
+    public void setSaleTransaction(SaleTransaction saleTransaction) {
+        this.saleTransaction = saleTransaction;
+    }
+
+    /**
+     * @return the productEntity
+     */
+    public ProductEntity getProductEntity() {
+        return productEntity;
+    }
+
+    /**
+     * @param productEntity the productEntity to set
+     */
+    public void setProductEntity(ProductEntity productEntity) {
+        this.productEntity = productEntity;
+    }
+
     
 }

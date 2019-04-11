@@ -2,11 +2,13 @@
 package ejb.singleton;
 
 import ejb.stateless.CategoryControllerLocal;
+import ejb.stateless.MemberControllerLocal;
 import ejb.stateless.ProductControllerLocal;
 import ejb.stateless.ProductTagControllerLocal;
 import ejb.stateless.PromotionControllerLocal;
 import ejb.stateless.StaffControllerLocal;
 import entity.Category;
+import entity.Member;
 import entity.ProductEntity;
 import entity.ProductTag;
 import entity.Promotion;
@@ -29,6 +31,9 @@ import util.exception.StaffNotFoundException;
 @LocalBean
 @Startup
 public class InitSessionBean {
+
+    @EJB
+    private MemberControllerLocal memberController;
 
     @EJB(name = "PromotionControllerLocal")
     private PromotionControllerLocal promotionControllerLocal;
@@ -66,7 +71,8 @@ public class InitSessionBean {
    {
         try {
             staffControllerLocal.createNewStaff(new Staff("Admin", "Staff", "staff", "password"));
-           
+            memberController.createNewMember(new Member("Member", "Default", "member", "password", 0));
+            
             Category dresses = categoryControllerLocal.createNewCategoryEntity(new Category("DRESSES","DRESSES"));
             Category tops = categoryControllerLocal.createNewCategoryEntity(new Category("TOPS","TOPS"));
             Category skirts = categoryControllerLocal.createNewCategoryEntity(new Category("SKIRTS","SKIRTS"));

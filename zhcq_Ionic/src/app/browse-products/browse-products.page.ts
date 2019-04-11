@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController, NavParams } from '@ionic/angular';
+import { ProductEntity } from '../entities/product';
+import { ProductService } from '../services/product.service';
 
 
 @Component({
@@ -8,15 +10,25 @@ import { NavController, NavParams } from '@ionic/angular';
   styleUrls: ['./browse-products.page.scss'],
 })
 export class BrowseProductsPage implements OnInit {
-
+  errorMessage: string;
+  products: ProductEntity[];
   // images: Array<string>;  
   // grid: Array<Array<string>>;
 
-  constructor() {
+  constructor(private productService: ProductService) {
     // this.images = this.navParams.get('images'); //get product image URIs
     // this.grid = Array(Math.ceil(this.images.length/2)); 
   }
-  ngOnInit() {
+  ngOnInit() 
+  {
+    this.productService.retrieveAllProducts().subscribe(
+      response => {
+        this.products = response.products 
+      },
+      error => {
+        this.errorMessage = error 
+      }
+    );
   }
 
   // ionViewLoaded() {

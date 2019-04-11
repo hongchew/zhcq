@@ -28,6 +28,15 @@ export class BookService
 	{
 	}
 	
+
+	retrieveAllMembers(): Observable<any>
+	{
+		return this.httpClient.get<any>(this.baseUrl + "/retrieveAllMembers").pipe
+		(
+			catchError(this.handleError)
+		)
+	}
+
 	
 	// retrieveAllBooks(): Observable<any> 
 	// {
@@ -61,15 +70,15 @@ export class BookService
 	
 	
 	
-	// updateBook(book: Book): Observable<any>
-	// {
-	// 	let updateBookReq = {"book": book};		
+	updateMember(member: Member): Observable<any>
+	{
+		let updateMemberReq = {"member": member};		
 		
-	// 	return this.httpClient.post<any>(this.baseUrl, updateBookReq, httpOptions).pipe
-	// 	(
-	// 		catchError(this.handleError)
-	// 	);
-	// }
+		return this.httpClient.post<any>(this.baseUrl, updateMemberReq, httpOptions).pipe
+		(
+			catchError(this.handleError)
+		);
+	}
 	
 	
 	

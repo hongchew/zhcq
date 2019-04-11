@@ -64,6 +64,7 @@ public class MemberResource {
             List<Member> list = memberControllerLocal.retrieveAllMembers();
             for (Member member : list) {
                 member.getWishList().setMember(null);
+                member.getShoppingCart().setMember(null);
                 List<SaleTransaction> listST = member.getSaleTransactions();
                 for (SaleTransaction saleTransaction : listST) {
                     saleTransaction.setMember(null);
@@ -83,14 +84,19 @@ public class MemberResource {
     public Response createMember(CreateMemberReq createMemberReq) {
         if (createMemberReq != null) {
             try {
-                Member member = createMemberReq.getMember();
-                Member newMember = memberControllerLocal.createNewMember(member);
+
+                String firstName = createMemberReq.getFirstName();
+                String lastName = createMemberReq.getLastName();
+                String username = createMemberReq.getUsername();
+                String password = createMemberReq.getPassword();
+                Member newMember = memberControllerLocal.createNewMember(new Member(firstName, lastName, username, password, 0));
                 newMember.getWishList().setMember(null);
-                List<SaleTransaction> listST = member.getSaleTransactions();
+                newMember.getShoppingCart().setMember(null);
+                List<SaleTransaction> listST = newMember.getSaleTransactions();
                 for (SaleTransaction saleTransaction : listST) {
                     saleTransaction.setMember(null);
                 }
-                CreateMemberRsp createMemberRsp = new CreateMemberRsp(newMember.getMemberId());
+                CreateMemberRsp createMemberRsp = new CreateMemberRsp(newMember);
                 return Response.status(Response.Status.OK).entity(createMemberRsp).build();
             } catch (InputDataValidationException ex) {
                 ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
@@ -105,13 +111,14 @@ public class MemberResource {
         }
     }
 
-    @Path("retrieveMember")
+    @Path("retrieveMember/{id}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response retrieveMember(@PathParam("id") Long id) {
         try {
             Member member = memberControllerLocal.retrieveMemberById(id);
             member.getWishList().setMember(null);
+            member.getShoppingCart().setMember(null);
             List<SaleTransaction> listST = member.getSaleTransactions();
             for (SaleTransaction saleTransaction : listST) {
                 saleTransaction.setMember(null);

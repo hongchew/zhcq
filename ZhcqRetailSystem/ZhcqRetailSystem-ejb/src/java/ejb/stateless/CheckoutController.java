@@ -84,7 +84,8 @@ public class CheckoutController implements CheckoutControllerLocal {
 
         ShoppingCart shoppingCart = retrieveShoppingCartById(cartId);
         ProductEntity prod = productControllerLocal.retrieveProductById(productId);
-
+        
+        
 
         if (addition) {
             if (prod.getQuantityOnHand()<=0) {
@@ -92,11 +93,19 @@ public class CheckoutController implements CheckoutControllerLocal {
                 throw new OutOfStockException("Oops! Product out of stock!");
             }
             shoppingCart.getProducts().add(prod);
+            for(ProductEntity pdt : shoppingCart.getProducts()){
+                System.out.println(pdt.getProductName());
+            }
+            System.out.println("***CHECK***");
             prod.setQuantityOnHand(prod.getQuantityOnHand()-1);
-
-        } else {
-            shoppingCart.getProducts().remove(prod);
+            em.merge(shoppingCart);
+            
+        } else { //addtion == false
+            if(shoppingCart.getProducts().remove(prod)){
             prod.setQuantityOnHand(prod.getQuantityOnHand()+1);
+            }else{
+                throw new ProductNotFoundException("No such product on the shopping cart");
+            }
         }
       
     }

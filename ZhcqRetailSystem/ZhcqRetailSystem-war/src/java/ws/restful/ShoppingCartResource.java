@@ -133,8 +133,13 @@ public class ShoppingCartResource {
             return Response.status(Response.Status.OK).build();
             
         } catch (OutOfStockException | ShoppingCartNotFoundException | ProductNotFoundException ex) {
+            System.err.println("***Error: " + ex.getMessage() );
             ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
             return Response.status(Response.Status.BAD_REQUEST).entity(errorRsp).build();
+        } catch (Exception ex){
+            System.err.println("***Error: " + ex.getMessage() );
+            ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(errorRsp).build();
         }
         
     }
@@ -149,6 +154,10 @@ public class ShoppingCartResource {
         } catch (OutOfStockException | ShoppingCartNotFoundException | ProductNotFoundException ex) {
             ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
             return Response.status(Response.Status.BAD_REQUEST).entity(errorRsp).build();
+        } catch (Exception ex){
+            System.err.println("***Error: " + ex.getMessage() );
+            ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(errorRsp).build();
         }
     }
     
@@ -194,6 +203,10 @@ public class ShoppingCartResource {
         } catch (ShoppingCartNotFoundException ex) {
             ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
             return Response.status(Response.Status.BAD_REQUEST).entity(errorRsp).build();
+        } catch (Exception ex){
+            System.err.println("***Error: " + ex.getMessage() );
+            ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(errorRsp).build();
         }
         
         

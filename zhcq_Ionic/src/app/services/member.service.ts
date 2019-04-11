@@ -1,0 +1,103 @@
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
+import { Member } from '../entities/member';
+
+
+
+
+const httpOptions = {
+	headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+};
+
+
+
+@Injectable({
+  providedIn: 'root'
+})
+
+export class BookService 
+{
+	baseUrl: string = "http://localhost:8080/ZhcqRetailSystem-war/Resources/Member";
+	
+	
+	
+	constructor(private httpClient: HttpClient)
+	{
+	}
+	
+	
+	// retrieveAllBooks(): Observable<any> 
+	// {
+	// 	return this.httpClient.get<any>(this.baseUrl + "/retrieveAllBooks").pipe
+	// 	(
+	// 		catchError(this.handleError)
+	// 	);		
+	// }
+	
+	
+	
+	retrieveMember(id: number): Observable<any> 
+	{
+		return this.httpClient.get<any>(this.baseUrl + "/retrieveMember/" + id).pipe
+		(
+			catchError(this.handleError)
+		);
+	}
+	
+	
+	
+	createMember(member: Member): Observable<any>
+	{
+		let createMemberReq = {"member": member};		
+		
+		return this.httpClient.put<any>(this.baseUrl, createMemberReq, httpOptions).pipe
+		(
+			catchError(this.handleError)
+		);
+	}
+	
+	
+	
+	// updateBook(book: Book): Observable<any>
+	// {
+	// 	let updateBookReq = {"book": book};		
+		
+	// 	return this.httpClient.post<any>(this.baseUrl, updateBookReq, httpOptions).pipe
+	// 	(
+	// 		catchError(this.handleError)
+	// 	);
+	// }
+	
+	
+	
+	deleteMember(id: number): Observable<any> 
+	{
+		return this.httpClient.delete<any>(this.baseUrl + "/" + id).pipe
+		(			
+			catchError(this.handleError)
+		);
+	}
+	
+	
+	
+	private handleError(error: HttpErrorResponse)
+	{
+		let errorMessage: string = "";
+		
+		if (error.error instanceof ErrorEvent) 
+		{		
+			errorMessage = "An unknown error has occurred: " + error.error.message;
+		} 
+		else 
+		{		
+			errorMessage = "A HTTP error has occurred: " + `HTTP ${error.status}: ${error.error.message}`;
+		}
+		
+		console.error(errorMessage);
+		
+		return throwError(errorMessage);		
+	}
+}

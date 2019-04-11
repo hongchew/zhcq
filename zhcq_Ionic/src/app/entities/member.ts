@@ -7,7 +7,6 @@ import { ShoppingCart } from './cart';
 export class Member
 {
 
-
     memberId: number;
     firstName: string;
     lastName: string;
@@ -32,8 +31,4 @@ export class Member
         this.saleTransactions = saleTransactions;
         this.shoppingCart = shoppingCart;
     }
-
-
-
-	
 }

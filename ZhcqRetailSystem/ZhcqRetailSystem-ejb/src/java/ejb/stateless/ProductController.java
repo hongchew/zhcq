@@ -353,6 +353,9 @@ public class ProductController implements ProductControllerLocal {
             query.setParameter("name", selectedProduct.getProductName());
             query.setParameter("colour", selectedProduct.getColourEnum());
             List<ProductEntity> diffColours = query.getResultList();
+            if (diffColours==null || diffColours.isEmpty()) {
+                return null;
+            }
             return diffColours;
         } else {
             throw new ProductNotFoundException("Product of ID "+ productId + " Not Found!");
@@ -370,6 +373,9 @@ public class ProductController implements ProductControllerLocal {
             query.setParameter("colour", selectedProduct.getColourEnum());
             query.setParameter("size", selectedProduct.getSizeEnum());
             List<ProductEntity> diffSizes = query.getResultList();
+            if (diffSizes==null || diffSizes.isEmpty()) {
+                return null;
+            }
             return diffSizes;
         } else {
             throw new ProductNotFoundException("Product of ID "+ productId + " Not Found!");

@@ -7,6 +7,7 @@ import entity.SaleTransactionLineItem;
 import entity.ShoppingCart;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import javax.ejb.EJB;
 import javax.ejb.Local;
 import javax.ejb.Stateless;
@@ -83,9 +84,9 @@ public class CheckoutController implements CheckoutControllerLocal {
     public void updateCart (Long cartId, Long productId, boolean addition) throws OutOfStockException, ShoppingCartNotFoundException, ProductNotFoundException { //true if adding, false if deleting
 
         ShoppingCart shoppingCart = retrieveShoppingCartById(cartId);
+        System.out.println("***CHECK UPDATE 1***");
         ProductEntity prod = productControllerLocal.retrieveProductById(productId);
-        
-        
+        System.out.println("***CHECK UPDATE 2***");
 
         if (addition) {
             if (prod.getQuantityOnHand()<=0) {
@@ -94,15 +95,17 @@ public class CheckoutController implements CheckoutControllerLocal {
             }
             shoppingCart.getProducts().add(prod);
             for(ProductEntity pdt : shoppingCart.getProducts()){
-                System.out.println(pdt.getProductName());
+                System.out.println(pdt.getProductId());
             }
-            System.out.println("***CHECK***");
+            System.out.println("***CHECK ADD***");
             prod.setQuantityOnHand(prod.getQuantityOnHand()-1);
-            em.merge(shoppingCart);
+            em.merge(shoppingCart); 
             
         } else { //addtion == false
+            System.out.println("***CHECK REMOVE 1***");
             if(shoppingCart.getProducts().remove(prod)){
-            prod.setQuantityOnHand(prod.getQuantityOnHand()+1);
+                System.out.println("***CHECK REMOVE 2***");
+                prod.setQuantityOnHand(prod.getQuantityOnHand()+1);
             }else{
                 throw new ProductNotFoundException("No such product on the shopping cart");
             }
@@ -116,15 +119,36 @@ public class CheckoutController implements CheckoutControllerLocal {
         
         ShoppingCart shoppingCart = retrieveShoppingCartById(cartId);
         SaleTransaction transaction = new SaleTransaction(shoppingCart.getMember());
+        
+        for(ProductEntity pdt : shoppingCart.getProducts()){
+            System.out.println("*** Pdt in cart ID: " + pdt.getProductId());
+        }
 
         List <SaleTransactionLineItem> list = new ArrayList <> ();
+        boolean added = false;
         for (ProductEntity product : shoppingCart.getProducts()) {
-            SaleTransactionLineItem lineItem = new SaleTransactionLineItem (transaction, product);
-            list.add(lineItem);
-            em.persist(lineItem);
+            for(SaleTransactionLineItem stli : list){
+                if(Objects.equals(stli.getProductEntity().getProductId(), product.getProductId())){
+                    stli.setQuantity(stli.getQuantity() + 1);
+                    System.out.println("Pdt id: " + product.getProductId() + " added to existing line item");
+                    added = true;
+                    break;
+                }
+            }
+            if(!added){
+                SaleTransactionLineItem lineItem = new SaleTransactionLineItem (transaction, product);
+                lineItem.setQuantity(1);
+                list.add(lineItem);
+                em.persist(lineItem);
+                System.out.println("Pdt id: " + product.getProductId() + " added to new line item");
+            }
+            added = false;
         }
         transaction.setSaleTransactionLineItems(list);
         em.persist(transaction);
+        shoppingCart.getProducts().clear();
+        em.merge(shoppingCart);
+        
         return transaction;
           
         

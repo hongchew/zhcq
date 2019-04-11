@@ -35,7 +35,6 @@ public class ProductTag implements Serializable {
         this.productTagName = productTagName; 
     }
     
-
     public Long getProductTagId() {
         return productTagId;
     }

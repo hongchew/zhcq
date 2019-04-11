@@ -4,15 +4,17 @@ import { WishList } from './wishlist';
 import { CoordinatedOutfit } from './outfit';
 import { ShoppingCart } from './cart';
 import { Promotion } from './promotion';
+import { SizeEnum } from './size-enum.enum';
 
 export class ProductEntity 
 {
     productId: number;
     productName: string;
     description: string; 
-    unitPrice: bigint;
+    unitPrice: number;
     dateAdded: Date;
     quantityOnHand: number;
+    sizeEnum: SizeEnum;
     colourEnum: ColourEnum;
     picturePath: string; 
 
@@ -22,7 +24,7 @@ export class ProductEntity
     shoppingCarts: ShoppingCart[];
     promotion: Promotion;
 
-    constructor(productId?: number, productName?: string, description?: string, unitPrice?: bigint, dateAdded?: Date, quantityOnHand?: number, colourEnum?: ColourEnum, picturePath?: string)
+    constructor(productId?: number, productName?: string, description?: string, unitPrice?: number, dateAdded?: Date, quantityOnHand?: number, sizeEnum?: SizeEnum, colourEnum?: ColourEnum, picturePath?: string)
     {
         this.productId = productId;
         this.productName = productName;
@@ -30,6 +32,7 @@ export class ProductEntity
         this.unitPrice = unitPrice;
         this.dateAdded = dateAdded;
         this.quantityOnHand = quantityOnHand;
+        this.sizeEnum = sizeEnum;
         this.colourEnum = colourEnum;
         this.picturePath = picturePath;
     }

@@ -58,7 +58,7 @@ public class Member implements Serializable {
     private String salt;
     
     
-    @OneToOne(cascade = {CascadeType.REMOVE,})
+    @OneToOne(cascade = {CascadeType.REMOVE})
     private WishList wishList;
     
     @OneToMany
@@ -69,9 +69,7 @@ public class Member implements Serializable {
 
     public Member() {
         this.salt = CryptographicHelper.getInstance().generateRandomString(32);
-
-        saleTransactions = new ArrayList<>();
-        shoppingCart = new ShoppingCart();
+        saleTransactions = new ArrayList<SaleTransaction>();
     }
 
     public Member(String firstName, String lastName, String username, String password, Integer loyaltyPoints) {

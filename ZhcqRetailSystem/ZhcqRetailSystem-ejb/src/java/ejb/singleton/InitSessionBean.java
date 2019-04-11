@@ -13,6 +13,7 @@ import entity.ProductEntity;
 import entity.ProductTag;
 import entity.Promotion;
 import entity.Staff;
+import entity.WishList;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
@@ -33,7 +34,7 @@ import util.exception.StaffNotFoundException;
 public class InitSessionBean {
 
     @EJB
-    private MemberControllerLocal memberController;
+    private MemberControllerLocal memberControllerLocal;
 
     @EJB(name = "PromotionControllerLocal")
     private PromotionControllerLocal promotionControllerLocal;
@@ -71,7 +72,7 @@ public class InitSessionBean {
    {
         try {
             staffControllerLocal.createNewStaff(new Staff("Admin", "Staff", "staff", "password"));
-            memberController.createNewMember(new Member("Member", "Default", "member", "password", 0));
+            memberControllerLocal.createNewMember(new Member("Member", "Default", "member", "password", 0));
             
             Category dresses = categoryControllerLocal.createNewCategoryEntity(new Category("DRESSES","DRESSES"));
             Category tops = categoryControllerLocal.createNewCategoryEntity(new Category("TOPS","TOPS"));
@@ -140,6 +141,14 @@ public class InitSessionBean {
             productIds.add(product1.getProductId());
             productIds.add(product2.getProductId());
             promotionControllerLocal.createNewPromotion(promotion, productIds);
+            
+            
+            Member member = new Member("member", "1", "member1", "password", 0);
+            memberControllerLocal.createNewMember(member);
+            Member member2 = new Member("member", "2", "member2", "password", 0);
+            memberControllerLocal.createNewMember(member2);
+            Member member3 = new Member("member", "3", "member3", "password", 0);
+            memberControllerLocal.createNewMember(member3);
             
         } catch (Exception ex) {
             System.err.println("********** DataInitializationSessionBean.initializeData(): " + ex.getMessage());

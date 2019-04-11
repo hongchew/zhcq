@@ -25,6 +25,8 @@ public interface CheckoutControllerLocal {
     public SaleTransaction checkOut (Long cartId) throws ShoppingCartNotFoundException;
     public void updateCart(Long cartId, Long productId, boolean addition) throws OutOfStockException, ShoppingCartNotFoundException, ProductNotFoundException;
 
+    public ShoppingCart retrieveShoppingCartByUserId(Long userId) throws ShoppingCartNotFoundException;
+
 
     
 }

@@ -12,6 +12,7 @@ import javax.ejb.Local;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
@@ -49,6 +50,19 @@ public class CheckoutController implements CheckoutControllerLocal {
             return shoppingCart;
         } else {
             throw new ShoppingCartNotFoundException("Shopping Cart " + cartId + " does not exist!");
+        }
+    }
+    
+    @Override
+    public ShoppingCart retrieveShoppingCartByUserId(Long userId) throws ShoppingCartNotFoundException{
+        Query query = em.createQuery("select sc from ShoppingCart sc where sc.member.memberId = :userId");
+        query.setParameter("userId", userId);
+        
+        ShoppingCart sc = (ShoppingCart) query.getSingleResult();
+        if(sc == null){
+            throw new ShoppingCartNotFoundException("User Id does not exist: userId=" + userId);
+        }else{
+            return sc;
         }
     }
     

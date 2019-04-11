@@ -23,6 +23,7 @@ export class BrowseProductsPage implements OnInit {
   {
     this.productService.retrieveAllProducts().subscribe(
       response => {
+        console.log(response);
         this.products = response.products 
       },
       error => {

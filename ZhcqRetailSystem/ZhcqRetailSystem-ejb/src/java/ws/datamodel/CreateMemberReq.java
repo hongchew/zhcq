@@ -5,30 +5,60 @@
  */
 package ws.datamodel;
 
-import entity.Member;
-
 /**
  *
  * @author chengyang
  */
 public class CreateMemberReq {
     
-    private Member member;
+    private String firstName;
+    private String lastName;
+    private String username;
+    private String password;
 
     public CreateMemberReq() {
     }
 
-    public CreateMemberReq(Member member) {
-        this.member = member;
+    public CreateMemberReq(String firstName, String lastName, String username, String password) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.username = username;
+        this.password = password;
     }
 
-    public Member getMember() {
-        return member;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setMember(Member member) {
-        this.member = member;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    
     
     
 }

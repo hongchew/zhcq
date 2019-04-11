@@ -58,7 +58,7 @@ public class Member implements Serializable {
     private String salt;
     
     
-    @OneToOne(cascade = {CascadeType.REMOVE})
+    @OneToOne(cascade = CascadeType.REMOVE)
     private WishList wishList;
     
     @OneToMany

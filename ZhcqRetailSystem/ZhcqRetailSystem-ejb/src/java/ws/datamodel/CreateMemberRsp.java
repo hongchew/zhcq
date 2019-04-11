@@ -5,27 +5,31 @@
  */
 package ws.datamodel;
 
+import entity.Member;
+
 /**
  *
  * @author chengyang
  */
 public class CreateMemberRsp {
     
-    private Long id;
+    private Member member;
 
     public CreateMemberRsp() {
     }
 
-    public CreateMemberRsp(Long id) {
-        this.id = id;
+    public CreateMemberRsp(Member member) {
+        this.member = member;
     }
 
-    public Long getId() {
-        return id;
+    public Member getMember() {
+        return member;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setMember(Member member) {
+        this.member = member;
     }
+
+   
     
 }

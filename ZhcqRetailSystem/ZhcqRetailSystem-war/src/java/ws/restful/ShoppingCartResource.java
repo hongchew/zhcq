@@ -145,7 +145,7 @@ public class ShoppingCartResource {
     }
     
     @DELETE
-    public Response removeFromCart(@QueryParam("cartId") Long cartId, @QueryParam("pdtId") Long pdtId){
+    public Response removeFromCart(@QueryParam("cartId") Long cartId, @QueryParam("productId") Long pdtId){
         
         try {
             checkoutController.updateCart(cartId, pdtId, false);
@@ -164,7 +164,7 @@ public class ShoppingCartResource {
     @Path("checkout")
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public Response checkout(@QueryParam("cartid") Long cartId){
+    public Response checkout(@QueryParam("cartId") Long cartId){
         try {
             SaleTransaction txn = checkoutController.checkOut(cartId);
             for(SaleTransactionLineItem lineItem : txn.getSaleTransactionLineItems()){

@@ -84,8 +84,9 @@ public class CheckoutController implements CheckoutControllerLocal {
     public void updateCart (Long cartId, Long productId, boolean addition) throws OutOfStockException, ShoppingCartNotFoundException, ProductNotFoundException { //true if adding, false if deleting
 
         ShoppingCart shoppingCart = retrieveShoppingCartById(cartId);
+        System.out.println("***CHECK UPDATE 1***");
         ProductEntity prod = productControllerLocal.retrieveProductById(productId);
-        
+        System.out.println("***CHECK UPDATE 2***");
 
         if (addition) {
             if (prod.getQuantityOnHand()<=0) {
@@ -101,8 +102,9 @@ public class CheckoutController implements CheckoutControllerLocal {
             em.merge(shoppingCart); 
             
         } else { //addtion == false
+            System.out.println("***CHECK REMOVE 1***");
             if(shoppingCart.getProducts().remove(prod)){
-                System.out.println("***CHECK REMOVE***");
+                System.out.println("***CHECK REMOVE 2***");
                 prod.setQuantityOnHand(prod.getQuantityOnHand()+1);
             }else{
                 throw new ProductNotFoundException("No such product on the shopping cart");
@@ -145,6 +147,7 @@ public class CheckoutController implements CheckoutControllerLocal {
         transaction.setSaleTransactionLineItems(list);
         em.persist(transaction);
         shoppingCart.getProducts().clear();
+        em.merge(shoppingCart);
         
         return transaction;
           

@@ -7,6 +7,7 @@ package ws.restful;
 
 import ejb.stateless.MemberControllerLocal;
 import entity.Member;
+import entity.SaleTransaction;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -60,8 +61,15 @@ public class MemberResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response retriveAllMembers() {
         try {
-            List<Member> member = memberControllerLocal.retrieveAllMembers();
-            RetrieveAllMembersRsp retrieveAllMembersRsp = new RetrieveAllMembersRsp(member);
+            List<Member> list = memberControllerLocal.retrieveAllMembers();
+            for (Member member : list) {
+                member.getWishList().setMember(null);
+                List<SaleTransaction> listST = member.getSaleTransactions();
+                for (SaleTransaction saleTransaction : listST) {
+                    saleTransaction.setMember(null);
+                }
+            }
+            RetrieveAllMembersRsp retrieveAllMembersRsp = new RetrieveAllMembersRsp(list);
             return Response.status(Status.OK).entity(retrieveAllMembersRsp).build();
         } catch (Exception ex) {
             ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
@@ -77,6 +85,11 @@ public class MemberResource {
             try {
                 Member member = createMemberReq.getMember();
                 Member newMember = memberControllerLocal.createNewMember(member);
+                newMember.getWishList().setMember(null);
+                List<SaleTransaction> listST = member.getSaleTransactions();
+                for (SaleTransaction saleTransaction : listST) {
+                    saleTransaction.setMember(null);
+                }
                 CreateMemberRsp createMemberRsp = new CreateMemberRsp(newMember.getMemberId());
                 return Response.status(Response.Status.OK).entity(createMemberRsp).build();
             } catch (InputDataValidationException ex) {
@@ -98,6 +111,11 @@ public class MemberResource {
     public Response retrieveMember(@PathParam("id") Long id) {
         try {
             Member member = memberControllerLocal.retrieveMemberById(id);
+            member.getWishList().setMember(null);
+            List<SaleTransaction> listST = member.getSaleTransactions();
+            for (SaleTransaction saleTransaction : listST) {
+                saleTransaction.setMember(null);
+            }
             RetrieveMemberRsp retrieveMemberRsp = new RetrieveMemberRsp(member);
             return Response.status(Response.Status.OK).entity(retrieveMemberRsp).build();
         } catch (MemberNotFoundException ex) {
@@ -105,7 +123,7 @@ public class MemberResource {
             return Response.status(Response.Status.BAD_REQUEST).entity(errorRsp).build();
         }
     }
-    
+
     @DELETE
     @Produces(MediaType.APPLICATION_JSON)
     public Response deleteMember(@PathParam("id") Long id) {

@@ -69,7 +69,13 @@ public class ShoppingCartResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response retrieveShoppingCart(@QueryParam("userId") Long id){
         try {
-            ShoppingCart cart = checkoutController.retrieveShoppingCartById(id);
+            ShoppingCart cart = checkoutController.retrieveShoppingCartByUserId(id);
+            
+            cart.getMember().setShoppingCart(null);
+            cart.getMember().setSaleTransactions(null);
+            cart.getMember().setWishList(null);
+            cart.getMember().setPassword(null);
+            cart.getMember().setSalt(null);
             
             for(ProductEntity product : cart.getProducts()){
                 
@@ -108,8 +114,13 @@ public class ShoppingCartResource {
             return Response.status(Response.Status.OK).entity(cartRsp).build();
             
         } catch (ShoppingCartNotFoundException ex) {
+            System.err.println(ex.getMessage());
             ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
             return Response.status(Response.Status.BAD_REQUEST).entity(errorRsp).build();
+        } catch (Exception ex) {
+            System.err.println(ex.getMessage());
+            ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(errorRsp).build();
         }
     }
     

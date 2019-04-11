@@ -144,98 +144,111 @@ public class ProductResource {
             
             List<ProductEntity> diffColours = productControllerLocal.retrieveDiffColours(id);
             
-            for(ProductEntity pdt : diffColours)
-            {
-                category = pdt.getProductCategory();
-                category.getProductEntities().clear();
-            
-                for(ProductTag tag: pdt.getProductTags())
-                {
-                    tag.getProductEntities().clear();
-                }
-                for(WishList wishlist: pdt.getWishLists())
-                {
-                    wishlist.getProductEntities().clear();
-                }     
+            if (diffColours!=null ) {
+                for(ProductEntity pdt : diffColours) {
+                    category = pdt.getProductCategory();
+                    category.getProductEntities().clear();
 
-                for(ShoppingCart cart: pdt.getShoppingcarts())
-                {
-                    cart.getProducts().clear();
+                    for(ProductTag tag: pdt.getProductTags())
+                    {
+                        tag.getProductEntities().clear();
+                    }
+                    for(WishList wishlist: pdt.getWishLists())
+                    {
+                        wishlist.getProductEntities().clear();
+                    }     
+
+                    for(ShoppingCart cart: pdt.getShoppingcarts())
+                    {
+                        cart.getProducts().clear();
+                    }
+                    outfit = pdt.getCoordinatedOutfit();
+                    if(outfit !=null){
+                    outfit.getProductEntities().clear();
+                    }
+
+                    promotion = pdt.getPromotion();
+
+                    if(promotion !=null){
+                        promotion.getPromotionalProducts().clear();  
+                    }
                 }
-                outfit = pdt.getCoordinatedOutfit();
-                if(outfit !=null){
-                outfit.getProductEntities().clear();
-                }
-            
-                promotion = pdt.getPromotion();
-                
-                if(promotion !=null){
-                    promotion.getPromotionalProducts().clear();  
-                }
+            } else { 
+                diffColours = new ArrayList<>();
             }
+            
             
             List<ProductEntity> diffSizes = productControllerLocal.retrieveDiffSizes(id);
             
-            for(ProductEntity suggestion : diffSizes)
-            {
-                category = suggestion.getProductCategory();
-                category.getProductEntities().clear();
-            
-                for(ProductTag tag: suggestion.getProductTags())
+            if (diffSizes!=null ) {
+                for(ProductEntity suggestion : diffSizes)
                 {
-                    tag.getProductEntities().clear();
-                }
-                for(WishList wishlist: suggestion.getWishLists())
-                {
-                    wishlist.getProductEntities().clear();
-                }     
+                    category = suggestion.getProductCategory();
+                    category.getProductEntities().clear();
 
-                for(ShoppingCart cart: suggestion.getShoppingcarts())
-                {
-                    cart.getProducts().clear();
+                    for(ProductTag tag: suggestion.getProductTags())
+                    {
+                        tag.getProductEntities().clear();
+                    }
+                    for(WishList wishlist: suggestion.getWishLists())
+                    {
+                        wishlist.getProductEntities().clear();
+                    }     
+
+                    for(ShoppingCart cart: suggestion.getShoppingcarts())
+                    {
+                        cart.getProducts().clear();
+                    }
+                    outfit = suggestion.getCoordinatedOutfit();
+                    if(outfit !=null){
+                    outfit.getProductEntities().clear();
+                    }
+
+                    promotion = suggestion.getPromotion();
+
+                    if(promotion !=null){
+                        promotion.getPromotionalProducts().clear();  
+                    }
                 }
-                outfit = suggestion.getCoordinatedOutfit();
-                if(outfit !=null){
-                outfit.getProductEntities().clear();
-                }
-            
-                promotion = suggestion.getPromotion();
-                
-                if(promotion !=null){
-                    promotion.getPromotionalProducts().clear();  
-                }
+            } else { 
+                diffSizes = new ArrayList<>();
             }
             
             List<ProductEntity> productSuggestions = productControllerLocal.retrieveProductSuggestions(id);
             
-            for(ProductEntity suggestion : productSuggestions)
-            {
-                category = suggestion.getProductCategory();
-                category.getProductEntities().clear();
-            
-                for(ProductTag tag: suggestion.getProductTags())
+            if (productSuggestions!=null ) {
+                for(ProductEntity suggestion : productSuggestions)
                 {
-                    tag.getProductEntities().clear();
-                }
-                for(WishList wishlist: suggestion.getWishLists())
-                {
-                    wishlist.getProductEntities().clear();
-                }     
+                    category = suggestion.getProductCategory();
+                    category.getProductEntities().clear();
 
-                for(ShoppingCart cart: suggestion.getShoppingcarts())
-                {
-                    cart.getProducts().clear();
+                    for(ProductTag tag: suggestion.getProductTags())
+                    {
+                        tag.getProductEntities().clear();
+                    }
+                    for(WishList wishlist: suggestion.getWishLists())
+                    {
+                        wishlist.getProductEntities().clear();
+                    }     
+
+                    for(ShoppingCart cart: suggestion.getShoppingcarts())
+                    {
+                        cart.getProducts().clear();
+                    }
+                    outfit = suggestion.getCoordinatedOutfit();
+                    if(outfit !=null){
+                    outfit.getProductEntities().clear();
+                    }
+
+                    promotion = suggestion.getPromotion();
+
+                    if(promotion !=null){
+                        promotion.getPromotionalProducts().clear();  
+                    }
                 }
-                outfit = suggestion.getCoordinatedOutfit();
-                if(outfit !=null){
-                outfit.getProductEntities().clear();
-                }
-            
-                promotion = suggestion.getPromotion();
-                
-                if(promotion !=null){
-                    promotion.getPromotionalProducts().clear();  
-                }
+            }
+            else { 
+                productSuggestions = new ArrayList<>();
             }
             
             

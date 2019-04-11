@@ -31,6 +31,4 @@ public class RetrieveAllMembersRsp {
         this.members = members;
     }
     
-    
-    
 }

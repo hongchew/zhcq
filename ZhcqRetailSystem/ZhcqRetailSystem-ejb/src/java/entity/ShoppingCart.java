@@ -8,8 +8,6 @@ package entity;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -22,10 +20,12 @@ import javax.validation.constraints.NotNull;
 @Entity
 public class ShoppingCart implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+    
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)
     private Long cartId;
-    
+        
     @NotNull
     @OneToOne(mappedBy ="shoppingCart")
     private Member member; 

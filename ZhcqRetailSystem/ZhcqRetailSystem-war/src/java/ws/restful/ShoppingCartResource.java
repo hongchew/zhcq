@@ -64,6 +64,7 @@ public class ShoppingCartResource {
         }
     }
     
+    @Path("retrieveShoppingCart")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response retrieveShoppingCart(@QueryParam("userId") Long id){

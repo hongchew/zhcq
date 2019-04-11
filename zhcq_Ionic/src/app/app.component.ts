@@ -16,15 +16,16 @@ export class AppComponent {
       icon: 'home'
     },
     {
+      title: 'Shop',
+      url: '/browse-products',
+      icon: 'search'
+    },
+    {
       title: 'About Us',
       url: '/about-us',
       icon: 'help'
-    },
-    {
-      title: 'Browse Products',
-      url: '/browseProducts',
-      icon: 'search'
     }
+    
   ];
 
   constructor(

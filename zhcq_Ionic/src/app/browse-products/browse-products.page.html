@@ -1,13 +1,120 @@
 <ion-header>
-    <ion-toolbar>
-      <ion-buttons slot="start">
-        <ion-menu-button></ion-menu-button>
-      </ion-buttons>
-      <ion-title>
-        Browse Products
-      </ion-title>
-    </ion-toolbar>
-  </ion-header>
-<ion-content>
+  <ion-toolbar>
+    <ion-menu-button start></ion-menu-button>
+    <ion-title>
+      zhcq & co.
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
 
+<ion-content>
+  <ion-list>
+    <ion-grid>
+      
+      <ion-row>
+        <ion-col>
+            <ion-row>
+              <ion-img src="/assets/productimages/bardot_top_pink.jpg"></ion-img>
+            </ion-row>
+          <ion-row>
+            <h6>Bardot Top &nbsp; $38</h6>
+          </ion-row>
+        </ion-col>
+        <ion-col>
+          <ion-row>
+            <ion-img src="/assets/productimages/overland_top_black.jpg"></ion-img>
+          </ion-row>
+          <ion-row>
+            <h6>Overland Top &nbsp; $58</h6>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+        <ion-row>
+          <ion-col>
+          <ion-row>
+            <ion-img src="/assets/productimages/crimini_dress_white.jpg"></ion-img>
+          </ion-row>
+          <ion-row>
+            <h6>Crimini Dress &nbsp; $108</h6>
+          </ion-row>
+        </ion-col>
+       
+        <ion-col>
+          <ion-row>
+            <ion-img src="/assets/productimages/tanner_pant_cream.jpg"></ion-img>
+          </ion-row>
+          <ion-row>
+            <h6>Tanner Pant &nbsp; $128</h6>
+          </ion-row>
+        </ion-col>
+          
+        </ion-row>
+        <ion-row>
+            <ion-col>
+            <ion-row>
+              <ion-img src="/assets/productimages/overland_top_white.jpg"></ion-img>
+            </ion-row>
+            <ion-row>
+              <h6>Overland Top &nbsp; $58</h6>
+            </ion-row>
+          </ion-col>
+         
+          <ion-col>
+            <ion-row>
+              <ion-img src="/assets/productimages/vikki_dress_blue.jpg"></ion-img>
+            </ion-row>
+            <ion-row>
+              <h6>Vikki Dress &nbsp; $128</h6>
+            </ion-row>
+          </ion-col>
+            
+          </ion-row>
+          <ion-row>
+              <ion-col>
+              <ion-row>
+                <ion-img src="/assets/productimages/venus_top_black.jpg"></ion-img>
+              </ion-row>
+              <ion-row>
+                <h6>Venus Top &nbsp; $58</h6>
+              </ion-row>
+            </ion-col>
+           
+            <ion-col>
+              <ion-row>
+                <ion-img src="/assets/productimages/simi_dress_white.jpg"></ion-img>
+              </ion-row>
+              <ion-row>
+                <h6>Simi Dress &nbsp; $128</h6>
+              </ion-row>
+            </ion-col>
+              
+            </ion-row>
+          
+          <ion-row>
+              <ion-col>
+              <ion-row>
+                <ion-img src="/assets/productimages/surrey_dress_black.jpg"></ion-img>
+              </ion-row>
+              <ion-row>
+                <h6>Surrey Dress &nbsp; $58</h6>
+              </ion-row>
+            </ion-col>
+           
+            <ion-col>
+              <ion-row>
+                <ion-img src="/assets/productimages/lex_top_black.jpg"></ion-img>
+              </ion-row>
+              <ion-row>
+                <h6>Lex Top &nbsp; $128</h6>
+              </ion-row>
+            </ion-col>
+              
+            </ion-row>
+        
+    </ion-grid>
+  </ion-list>
+  <ion-infinite-scroll (ionInfinite)="loadMoreProducts($event)">
+    <ion-infinite-scroll-content></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 </ion-content>
+

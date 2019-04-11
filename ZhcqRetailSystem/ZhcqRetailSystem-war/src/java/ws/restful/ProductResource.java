@@ -131,10 +131,83 @@ public class ProductResource {
             {
                 cart.getProducts().clear();
             }
+            CoordinatedOutfit outfit = product.getCoordinatedOutfit();
+            if(outfit !=null){
+                outfit.getProductEntities().clear();
+            }
+            
+            Promotion promotion = product.getPromotion();
+                    
+            if(promotion !=null){
+                promotion.getPromotionalProducts().clear();  
+            }
+            
+            List<ProductEntity> sameProducts = productControllerLocal.retrieveSameProducts(id);
+            
+            for(ProductEntity pdt : sameProducts)
+            {
+                category = pdt.getProductCategory();
+                category.getProductEntities().clear();
+            
+                for(ProductTag tag: pdt.getProductTags())
+                {
+                    tag.getProductEntities().clear();
+                }
+                for(WishList wishlist: pdt.getWishLists())
+                {
+                    wishlist.getProductEntities().clear();
+                }     
+
+                for(ShoppingCart cart: pdt.getShoppingcarts())
+                {
+                    cart.getProducts().clear();
+                }
+                outfit = pdt.getCoordinatedOutfit();
+                if(outfit !=null){
+                outfit.getProductEntities().clear();
+                }
+            
+                promotion = pdt.getPromotion();
+                
+                if(promotion !=null){
+                    promotion.getPromotionalProducts().clear();  
+                }
+            }
+            
+            List<ProductEntity> productSuggestions = productControllerLocal.retrieveProductSuggestions(id);
+            
+            for(ProductEntity suggestion : sameProducts)
+            {
+                category = suggestion.getProductCategory();
+                category.getProductEntities().clear();
+            
+                for(ProductTag tag: suggestion.getProductTags())
+                {
+                    tag.getProductEntities().clear();
+                }
+                for(WishList wishlist: suggestion.getWishLists())
+                {
+                    wishlist.getProductEntities().clear();
+                }     
+
+                for(ShoppingCart cart: suggestion.getShoppingcarts())
+                {
+                    cart.getProducts().clear();
+                }
+                outfit = suggestion.getCoordinatedOutfit();
+                if(outfit !=null){
+                outfit.getProductEntities().clear();
+                }
+            
+                promotion = suggestion.getPromotion();
+                
+                if(promotion !=null){
+                    promotion.getPromotionalProducts().clear();  
+                }
+            }
             
             
-            
-            RetrieveProductByIdRsp retrieveProductByIdRsp = new RetrieveProductByIdRsp(product); 
+            RetrieveProductByIdRsp retrieveProductByIdRsp = new RetrieveProductByIdRsp(product,sameProducts,productSuggestions); 
             System.out.println("New Object created!");
             
             return Response.status(Status.OK).entity(retrieveProductByIdRsp).build();
@@ -228,9 +301,6 @@ public class ProductResource {
             throw new RuntimeException(ne);
         }
     }
-    
-    
-    
     
     
 }

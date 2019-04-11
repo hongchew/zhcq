@@ -6,11 +6,14 @@
 package ws.datamodel;
 
 import entity.ProductEntity;
+import java.util.List;
 
 
 public class RetrieveProductByIdRsp {
     
     private ProductEntity selectedProduct; 
+    private List<ProductEntity> sameProducts; 
+    private List<ProductEntity> suggestedProducts; 
     
     
 
@@ -18,11 +21,13 @@ public class RetrieveProductByIdRsp {
         
     }
 
-    public RetrieveProductByIdRsp(ProductEntity selectedProduct) {
+    public RetrieveProductByIdRsp(ProductEntity selectedProduct, List<ProductEntity> sameProducts, List<ProductEntity> suggestedProducts) {
         this.selectedProduct = selectedProduct;
-        
+        this.sameProducts = sameProducts;
+        this.suggestedProducts = suggestedProducts;
     }
-   
+
+    
 
     
     public ProductEntity getSelectedProduct() {
@@ -32,6 +37,26 @@ public class RetrieveProductByIdRsp {
     
     public void setSelectedProduct(ProductEntity selectedProduct) {
         this.selectedProduct = selectedProduct;
+    }
+
+   
+    public List<ProductEntity> getSameProducts() {
+        return sameProducts;
+    }
+
+    
+    public void setSameProducts(List<ProductEntity> sameProducts) {
+        this.sameProducts = sameProducts;
+    }
+
+  
+    public List<ProductEntity> getSuggestedProducts() {
+        return suggestedProducts;
+    }
+
+   
+    public void setSuggestedProducts(List<ProductEntity> suggestedProducts) {
+        this.suggestedProducts = suggestedProducts;
     }
     
     

@@ -1,5 +1,6 @@
 package ws.restful;
 
+import com.sun.xml.ws.security.trust.elements.AllowPostdating;
 import ejb.stateless.ProductControllerLocal;
 import entity.Category;
 import entity.CoordinatedOutfit;
@@ -44,6 +45,7 @@ public class ProductResource {
     {
         productControllerLocal = lookupProductControllerLocal();
     }
+    
     
     @Path("retrieveAllProducts")
     @GET
@@ -91,8 +93,7 @@ public class ProductResource {
                     }
                 }
             }
-             
-           
+            
             RetrieveAllProductsRsp retrieveAllProductsRsp  = new RetrieveAllProductsRsp(allProducts);
         
             return Response.status(Status.OK).entity(retrieveAllProductsRsp).build();

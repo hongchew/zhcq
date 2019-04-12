@@ -23,7 +23,8 @@ import util.security.CryptographicHelper;
 
 @Entity
 public class Member implements Serializable {
-
+    private static final long serialVersionUID = 1L;
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long memberId;
@@ -58,13 +59,13 @@ public class Member implements Serializable {
     private String salt;
     
     
-    @OneToOne(cascade = CascadeType.REMOVE)
+    @OneToOne(cascade = {CascadeType.REMOVE, CascadeType.PERSIST, CascadeType.MERGE})
     private WishList wishList;
     
     @OneToMany
     private List<SaleTransaction> saleTransactions;
     
-    @OneToOne(cascade = CascadeType.REMOVE)
+    @OneToOne(cascade = {CascadeType.REMOVE, CascadeType.PERSIST, CascadeType.MERGE})
     private ShoppingCart shoppingCart;
 
     public Member() {

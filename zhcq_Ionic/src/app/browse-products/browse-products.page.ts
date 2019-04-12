@@ -14,6 +14,7 @@ export class BrowseProductsPage implements OnInit {
   errorMessage: string;
   products: ProductEntity[];
   catId: number;
+ 
   // images: Array<string>;  
   // grid: Array<Array<string>>;
 
@@ -32,6 +33,7 @@ export class BrowseProductsPage implements OnInit {
         response => {
           console.log(response);
           this.products = response.products 
+          // imagePath = "../ZhcqRetailSystem/ZhcqRetailSystem-war/build/web/systemAdministration/images/canyon_top_black.jpg";
         },
         error => {
           this.errorMessage = error 

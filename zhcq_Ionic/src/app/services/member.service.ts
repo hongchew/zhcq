@@ -18,7 +18,7 @@ const httpOptions = {
   providedIn: 'root'
 })
 
-export class BookService 
+export class MemberService 
 {
 	baseUrl: string = "http://localhost:8080/ZhcqRetailSystem-war/Resources/Member";
 	
@@ -37,17 +37,6 @@ export class BookService
 		)
 	}
 
-	
-	// retrieveAllBooks(): Observable<any> 
-	// {
-	// 	return this.httpClient.get<any>(this.baseUrl + "/retrieveAllBooks").pipe
-	// 	(
-	// 		catchError(this.handleError)
-	// 	);		
-	// }
-	
-	
-	
 	retrieveMember(id: number): Observable<any> 
 	{
 		return this.httpClient.get<any>(this.baseUrl + "/retrieveMember/" + id).pipe
@@ -58,9 +47,9 @@ export class BookService
 	
 	
 	
-	createMember(member: Member): Observable<any>
+	createMember(firstName: string, lastName: string, username : string, password : string): Observable<any>
 	{
-		let createMemberReq = {"member": member};		
+		let createMemberReq = {"firstName" : firstName, "lastName" : lastName, "username": username, "password": password };		
 		
 		return this.httpClient.put<any>(this.baseUrl, createMemberReq, httpOptions).pipe
 		(

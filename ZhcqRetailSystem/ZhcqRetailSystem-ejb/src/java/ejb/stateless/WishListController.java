@@ -22,6 +22,7 @@ import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
+import util.exception.AlreadyInWishlistException;
 import util.exception.DeleteWishListException;
 import util.exception.InputDataValidationException;
 import util.exception.MemberNotFoundException;
@@ -141,12 +142,16 @@ public class WishListController implements WishListControllerLocal {
     }
     
     @Override
-    public void addProductToWishlist(Long memberId, Long pdtId) throws MemberNotFoundException, ProductNotFoundException{
+    public void addProductToWishlist(Long memberId, Long pdtId) throws MemberNotFoundException, ProductNotFoundException, AlreadyInWishlistException{
         
         Member member = memberControllerLocal.retrieveMemberById(memberId);
         ProductEntity pdt = productControllerLocal.retrieveProductById(pdtId);
+        if(member.getWishList().getProductEntities().contains(pdt)){
+            throw new AlreadyInWishlistException("Item Already In Wishlist.");
+        }
         
         member.getWishList().getProductEntities().add(pdt);
+        pdt.getWishLists().add(member.getWishList());
         
     }
     
@@ -155,8 +160,12 @@ public class WishListController implements WishListControllerLocal {
         Member member = memberControllerLocal.retrieveMemberById(memberId);
         ProductEntity pdt = productControllerLocal.retrieveProductById(pdtId);
         
+        
+        
         if(!member.getWishList().getProductEntities().remove(pdt)){
             throw new ProductNotFoundException("Product is not in the wishlist");
+        }else{
+            pdt.getWishLists().remove(member.getWishList());
         }
     }
 

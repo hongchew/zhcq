@@ -19,6 +19,8 @@ const routes: Routes = [
   { path: 'browse-products/:catId', loadChildren: './browse-products/browse-products.module#BrowseProductsPageModule' },
   { path: 'about-us', loadChildren: './about-us/about-us.module#AboutUsPageModule' },
   { path: 'product-details/:id', loadChildren: './product-details/product-details.module#ProductDetailsPageModule' },
+  { path: 'register', loadChildren: './register/register.module#RegisterPageModule' },
+  { path: 'login', loadChildren: './login/login.module#LoginPageModule' },
 ];
 
 @NgModule({

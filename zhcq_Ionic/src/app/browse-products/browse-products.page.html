@@ -11,28 +11,17 @@
   <div *ngIf='errorMessage' class="errorText">
     {{errorMessage}}
   </div>
-  <ion-grid>
-      
+  <h2 text-center>Shop</h2>
+  <ion-grid> 
     <ion-row>
-      <ion-col *ngFor="let product of products">
-        <ion-card>
-          <ion-item [routerLink]="['/product-details',product.productId]" class="activated">
-            <img src="assets/{{product.picturePath}}" class="img-responsive"/>
-            </ion-item>
-          <ion-card-header>
-            <ion-card-subtitle>SGD {{product.unitPrice}}</ion-card-subtitle>
-            <ion-card-title>{{product.productName}}</ion-card-title>
-          </ion-card-header>
-        
-          <ion-card-content>
-            {{product.picturePath}}
-          </ion-card-content>
-        </ion-card>
-        </ion-col>
-              
-            </ion-row>
-        
-    </ion-grid>
+      <ion-col size="6" *ngFor="let product of products" [routerLink]="['/product-details',product.productId]" class="activated">
+            <ion-img src="/assets/productimages/overland_top_black.jpg"></ion-img>
+            <h6>{{product.productName}} &nbsp;&nbsp;${{product.unitPrice}}</h6>
+            {{product.colourEnum}}
+            {{product.description}}
+      </ion-col>
+    </ion-row>
+  </ion-grid>
   <ion-infinite-scroll (ionInfinite)="loadMoreProducts($event)">
     <ion-infinite-scroll-content></ion-infinite-scroll-content>
   </ion-infinite-scroll> 

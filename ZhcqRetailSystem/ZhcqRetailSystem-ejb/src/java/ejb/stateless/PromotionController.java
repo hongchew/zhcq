@@ -79,6 +79,7 @@ public class PromotionController implements PromotionControllerLocal {
                         ProductEntity product = productControllerLocal.retrieveProductById(productId);
                         newPromotion.addProduct(product);
                     }
+                    
                 }
                 em.flush();
 

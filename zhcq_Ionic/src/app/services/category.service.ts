@@ -21,7 +21,6 @@ export class CategoryService
 
     constructor(private httpClient: HttpClient)
     {
-
     }
     
     retrieveAllCategories(): Observable<any>

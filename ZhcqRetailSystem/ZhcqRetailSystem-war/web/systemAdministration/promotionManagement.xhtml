@@ -149,7 +149,7 @@
                     <p:row>
                         <p:column colspan="3">
                             <p:commandButton type="reset" value="Clear" />
-                            <p:commandButton type="submit" value="Create New Promotion" update="@form formAllPromotions:dataTableAllPromotions" actionListener="#{promotionManagedBean.createPromotion}" oncomplete="PF('dialogCreateNewCategory').show();"/>
+                            <p:commandButton type="submit" value="Create New Promotion" update="@form formAllPromotions" actionListener="#{promotionManagedBean.createPromotion}"/>
                         </p:column>
                     </p:row>
                 </p:panelGrid>
@@ -308,7 +308,7 @@
                         
                         <p:row>
                             <p:column colspan="3">
-                                <p:commandButton  value="Update Promotion" update="@form formAllPromotions" actionListener="#{promotionManagedBean.updatePromotion}"/> 
+                                <p:commandButton  value="Update Promotion" update="@form formAllPromotions" actionListener="#{promotionManagedBean.updatePromotion}"/>
                             </p:column>
                         </p:row>
                     </p:panelGrid>

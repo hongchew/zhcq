@@ -60,6 +60,7 @@ public class Promotion implements Serializable {
     public void addProduct(ProductEntity product) {
         if (product != null) {
             if (!this.promotionalProducts.contains(product)) {
+                System.out.println("Added Product Id " + product.getProductName() );
                 this.promotionalProducts.add(product);
                 product.setPromotion(this);
             }

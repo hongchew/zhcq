@@ -7,13 +7,11 @@ package ejb.stateless;
 
 import entity.ProductEntity;
 import entity.Promotion;
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.Set;
 import javax.ejb.EJB;
 import javax.ejb.Local;
-import javax.ejb.Schedule;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -49,7 +47,12 @@ public class PromotionController implements PromotionControllerLocal {
     @Override
     public List<Promotion> retrieveAllPromotions() {
         Query query = em.createQuery("SELECT p FROM Promotion p");
-        return query.getResultList();
+        
+        List<Promotion> promotions = query.getResultList();
+        for(Promotion promotion: promotions) {
+            promotion.getPromotionalProducts().size();
+        }
+        return promotions;
     }
 
     @Override
@@ -61,6 +64,7 @@ public class PromotionController implements PromotionControllerLocal {
         Promotion promotion = em.find(Promotion.class, promotionId);
 
         if (promotion != null) {
+            promotion.getPromotionalProducts().size();
             return promotion;
         } else {
             throw new PromotionNotFoundException("Promotion ID " + promotionId + " does not exist!");
@@ -103,13 +107,20 @@ public class PromotionController implements PromotionControllerLocal {
                 promotionToUpdate.setPromotionName(promotion.getPromotionName());
                 promotionToUpdate.setStartDate(promotion.getStartDate());
                 promotionToUpdate.setEndDate(promotion.getEndDate());
-                for (ProductEntity product : promotionToUpdate.getPromotionalProducts()) {
-                    promotionToUpdate.removeProduct(product);
+                
+                //disassociate both sides
+                for(ProductEntity product : promotionToUpdate.getPromotionalProducts()) {
+                    product.setPromotion(null);
+                    System.out.println("disassociated!");
                 }
+                promotionToUpdate.setPromotionalProducts(new ArrayList<ProductEntity>());
+     
+                
                 if (productIds != null || (!productIds.isEmpty())) {
                     for (Long id : productIds) {
                         ProductEntity product = productControllerLocal.retrieveProductById(id);
                         promotionToUpdate.addProduct(product);
+                        System.out.println("added product " + product.getProductName());
                     }
                 }
             } catch (ProductNotFoundException | PromotionNotFoundException ex) {

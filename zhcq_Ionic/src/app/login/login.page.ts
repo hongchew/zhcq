@@ -3,6 +3,7 @@ import { MemberService } from '../services/member.service';
 import { AlertController } from '@ionic/angular';
 import { Member } from '../entities/member';
 import { Router } from  "@angular/router";
+import { Storage } from '@ionic/storage';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +17,7 @@ export class LoginPage implements OnInit {
 
   member: Member;
 
-  constructor(public memberService: MemberService, public alertController: AlertController, public router : Router) {
+  constructor(public memberService: MemberService, private alertController: AlertController, private router : Router, private storage: Storage) {
   }
 
   ngOnInit() {
@@ -26,6 +27,8 @@ export class LoginPage implements OnInit {
     this.memberService.login(this.username, this.password).subscribe(
       response =>{
         this.member = response.member;
+        this.storage.set('isLogin', true);
+        this.storage.set('currentCustomer', this.member);
         this.router.navigateByUrl('home');
       },
       error=> {

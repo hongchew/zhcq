@@ -12,7 +12,24 @@
     {{errorMessage}}
   </div>
   <div *ngIf="!errorMessage">
-      <table border="1" style="width: 100%; cellpadding: 3px; cellspacing: 1px;">
+    <div *ngFor="let product of products">
+        <ion-card>
+            <ion-item [routerLink]="['/product-details',product.productId]" class="activated">
+                <ion-img src="/assets/productimages/overland_top_black.jpg"></ion-img>
+              </ion-item>
+            <ion-card-header>
+              <ion-card-subtitle>SGD {{product.unitPrice}}</ion-card-subtitle>
+              <ion-card-title>{{product.productName}}</ion-card-title>
+            </ion-card-header>
+          
+            <ion-card-content>
+              {{product.description}}
+            </ion-card-content>
+          </ion-card>
+    </div>
+
+  </div>
+      <!-- <table border="1" style="width: 100%; cellpadding: 3px; cellspacing: 1px;">
         <thead>
           <tr>
             <th>NAME</th>
@@ -31,11 +48,11 @@
           <td>{{product.quantityOnHand}}</td>
           <td>{{product.sizeEnum}}</td>
           <td>{{product.colourEnum}}</td>
-          <td>{{product.picturePath}}</td>
+          <img>
         </tbody>
       
-      </table>
-  </div>
+      </table> -->
+  
   <!-- <ion-list>
     <ion-grid>
       

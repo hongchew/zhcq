@@ -12,7 +12,7 @@ import java.util.List;
 public class RetrieveProductByIdRsp {
     
     private ProductEntity selectedProduct; 
-    private List<ProductEntity> sameProducts; 
+   
     private List<ProductEntity> diffColours; 
     private List<ProductEntity> diffSizes; 
     private List<ProductEntity> suggestedProducts; 
@@ -42,14 +42,14 @@ public class RetrieveProductByIdRsp {
     }
 
    
-    public List<ProductEntity> getSameProducts() {
-        return sameProducts;
-    }
-
-    
-    public void setSameProducts(List<ProductEntity> sameProducts) {
-        this.sameProducts = sameProducts;
-    }
+//    public List<ProductEntity> getSameProducts() {
+//        return sameProducts;
+//    }
+//
+//    
+//    public void setSameProducts(List<ProductEntity> sameProducts) {
+//        this.sameProducts = sameProducts;
+//    }
 
   
     public List<ProductEntity> getSuggestedProducts() {

@@ -15,19 +15,115 @@
   
   <ion-item>
     <ion-row>
-        <h4>Overland Top &nbsp;&nbsp; $100 &nbsp;&nbsp; 
+        <h4>{{selectedProduct.productName}} &nbsp;&nbsp; SGD {{selectedProduct.unitPrice}}  &nbsp;&nbsp; 
           <button style="background:transparent" (click)="presentAlert()">
             <ion-icon name="heart"></ion-icon>
           </button>
         </h4>
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
       <br>
       <br>
+      {{selectedProduct.description}}
     </ion-row>
-    
-    
   
   </ion-item>
+
+  <div *ngIf="!errorMessage"> Selected Product
+      <table border="1" style="width: 100%; cellpadding: 3px; cellspacing: 1px;">
+        <thead> 
+          <tr>
+            <th>NAME</th>
+            <th>DESCRIPTION</th>
+            <th>UNITPRICE</th>
+            <th>QTY ON HAND</th>
+            <th>SIZE</th>
+            <th>COLOUR</th>
+            <th>PIC</th>
+          </tr>
+        </thead>
+        <tbody>
+          <td>{{selectedProduct.productName}}</td>
+          <td>{{selectedProduct.description}}</td>
+          <td>{{selectedProduct.unitPrice}}</td>
+          <td>{{selectedProduct.quantityOnHand}}</td>
+          <td>{{selectedProduct.sizeEnum}}</td>
+          <td>{{selectedProduct.colourEnum}}</td>
+          <img>
+        </tbody>
+      
+      </table>
+  </div>
+  <div *ngIf="!errorMessage"> Diff colours
+      <table border="1" style="width: 100%; cellpadding: 3px; cellspacing: 1px;">
+        <thead>
+          <tr>
+            <th>NAME</th>
+            <th>DESCRIPTION</th>
+            <th>UNITPRICE</th>
+            <th>QTY ON HAND</th>
+            <th>SIZE</th>
+            <th>COLOUR</th>
+            <th>PIC</th>
+          </tr>
+        </thead>
+        <tbody *ngFor="let product of diffColours">
+          <td>{{product.productName}}</td>
+          <td>{{product.description}}</td>
+          <td>{{product.unitPrice}}</td>
+          <td>{{product.quantityOnHand}}</td>
+          <td>{{product.sizeEnum}}</td>
+          <td>{{product.colourEnum}}</td>
+          <img>
+        </tbody>
+      </table>
+  </div>
+  <div *ngIf="!errorMessage"> Diff Sizes
+      <table border="1" style="width: 100%; cellpadding: 3px; cellspacing: 1px;">
+        <thead>
+          <tr>
+            <th>NAME</th>
+            <th>DESCRIPTION</th>
+            <th>UNITPRICE</th>
+            <th>QTY ON HAND</th>
+            <th>SIZE</th>
+            <th>COLOUR</th>
+            <th>PIC</th>
+          </tr>
+        </thead>
+        <tbody *ngFor="let pdt of diffSizes">
+          <td>{{pdt.productName}}</td>
+          <td>{{pdt.description}}</td>
+          <td>{{pdt.unitPrice}}</td>
+          <td>{{pdt.quantityOnHand}}</td>
+          <td>{{pdt.sizeEnum}}</td>
+          <td>{{pdt.colourEnum}}</td>
+          <img>
+        </tbody>
+      </table>
+  </div>
+  <div *ngIf="!errorMessage"> Suggestions
+      <table border="1" style="width: 100%; cellpadding: 3px; cellspacing: 1px;">
+        <thead>
+          <tr>
+            <th>NAME</th>
+            <th>DESCRIPTION</th>
+            <th>UNITPRICE</th>
+            <th>QTY ON HAND</th>
+            <th>SIZE</th>
+            <th>COLOUR</th>
+            <th>PIC</th>
+          </tr>
+        </thead>
+        <tbody *ngFor="let p of suggestedProducts">
+          <td>{{p.productName}}</td>
+          <td>{{p.description}}</td>
+          <td>{{p.unitPrice}}</td>
+          <td>{{p.quantityOnHand}}</td>
+          <td>{{p.sizeEnum}}</td>
+          <td>{{p.colourEnum}}</td>
+          <img>
+        </tbody>
+      </table>
+  </div>
     
 
 

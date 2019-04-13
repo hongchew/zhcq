@@ -158,7 +158,6 @@ public class ProductEntity implements Serializable {
     }
     
     
-    
     public Long getProductId() {
         return productId;
     }

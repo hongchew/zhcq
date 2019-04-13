@@ -147,7 +147,7 @@ public class ProductManagementManagedBean implements Serializable {
         
         try
         {
-            newProductEntity.setPicture(picturePath);
+            newProductEntity.setPicturePath(picturePath);
             ProductEntity pe = productController.createNewProduct(getNewProductEntity(), getCategoryIdNew(), tagIdsNew);
             getProductEntities().add(pe);
             

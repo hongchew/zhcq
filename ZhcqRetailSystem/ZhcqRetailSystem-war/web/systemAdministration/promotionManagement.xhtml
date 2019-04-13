@@ -128,9 +128,10 @@
                         </p:column>
                         <p:column>
                             <p:selectManyMenu id="products" value="#{promotionManagedBean.createProductIds}" showCheckbox="true" >
-                                <f:selectItems value="#{promotionManagedBean.productEntities}" var="productEntity" itemValue="#{productEntity.productId}" itemLabel="#{productEntity.productName}" />
+                                <f:selectItems value="#{promotionManagedBean.productEntities}" var="productEntity" itemValue="#{productEntity.productId}" itemLabel="#{productEntity.productName}-#{productEntity.colourEnum}" />
                             </p:selectManyMenu>
                         </p:column>
+                        <p:column></p:column>
                     </p:row>
 
                     <p:row>
@@ -148,7 +149,7 @@
                     <p:row>
                         <p:column colspan="3">
                             <p:commandButton type="reset" value="Clear" />
-                            <p:commandButton type="submit" value="Create New Promotion" update="@form formAllPromotions" actionListener="#{promotionManagedBean.createPromotion}" oncomplete="PF('dialogCreateNewCategory').show();"/>
+                            <p:commandButton type="submit" value="Create New Promotion" update="@form formAllPromotions:dataTableAllPromotions" actionListener="#{promotionManagedBean.createPromotion}" oncomplete="PF('dialogCreateNewCategory').show();"/>
                         </p:column>
                     </p:row>
                 </p:panelGrid>
@@ -260,7 +261,7 @@
                                 <p:outputLabel for="discountRate" value ="Discount Rate: "/>
                             </p:column>
                             <p:column>
-                                <p:inputNumber id="discountRate" value="#{promotionManagedBean.promotionToUpdate.discountRate}" required="true" requiredMessage="Promotion Name is required!" minValue="0" maxValue="1"/>
+                                <p:inputNumber id="discountRate" value="#{promotionManagedBean.promotionToUpdate.discountRate}" required="true" requiredMessage="Discount Rate is required!" minValue="0" maxValue="1" decimalPlaces="2"/>
                             </p:column>
                             <p:column>
                                 <p:message for="discountRate" />
@@ -307,7 +308,7 @@
                         
                         <p:row>
                             <p:column colspan="3">
-                                <p:commandButton  value="Update Promotion" update="@form formAllPromotions" actionListener="#{promotionManagedBean.updatePromotion}" oncomplete="PF('dialogUpdatePromotion').show();"/> 
+                                <p:commandButton  value="Update Promotion" update="@form formAllPromotions" actionListener="#{promotionManagedBean.updatePromotion}"/> 
                             </p:column>
                         </p:row>
                     </p:panelGrid>

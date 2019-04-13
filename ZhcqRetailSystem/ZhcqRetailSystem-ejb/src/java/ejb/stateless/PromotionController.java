@@ -7,10 +7,13 @@ package ejb.stateless;
 
 import entity.ProductEntity;
 import entity.Promotion;
+import java.util.Date;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Set;
 import javax.ejb.EJB;
 import javax.ejb.Local;
+import javax.ejb.Schedule;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -138,5 +141,7 @@ public class PromotionController implements PromotionControllerLocal {
         em.remove(promotionToRemove);
 
     }
+    
+    
 
 }

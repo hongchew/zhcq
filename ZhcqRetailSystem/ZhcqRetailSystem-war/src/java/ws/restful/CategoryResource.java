@@ -47,10 +47,7 @@ public class CategoryResource
             {
                 for(Category cat: categories)
                 {
-                    for(ProductEntity pdt: cat.getProductEntities())
-                    {
-                        pdt.setProductCategory(null);
-                    }
+                    cat.setProductEntities(null);
                 }
             }
             else  
@@ -59,6 +56,7 @@ public class CategoryResource
             }
             
             RetrieveAllCategoriesRsp retrieveAllCategoriesRsp = new RetrieveAllCategoriesRsp(categories);
+            
             System.out.println("retrieveAllCategoryRSP Created");
             for(Category cat: retrieveAllCategoriesRsp.getCategories())
             {

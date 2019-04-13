@@ -298,15 +298,9 @@ public class ProductResource {
                         tag.getProductEntities().clear();
                     }           
                     
-                    for(WishList wishlist: product.getWishLists())
-                    {
-                        wishlist.getProductEntities().clear();
-                    }     
+                    product.setWishLists(null);
                     
-                    for(ShoppingCart cart: product.getShoppingcarts())
-                    {
-                        cart.getProducts().clear();
-                    }
+                    product.setShoppingcarts(null);
                     
                     
                     CoordinatedOutfit outfit = product.getCoordinatedOutfit();

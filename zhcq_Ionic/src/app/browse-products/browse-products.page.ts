@@ -12,27 +12,30 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class BrowseProductsPage implements OnInit {
   errorMessage: string;
-  products: ProductEntity[];
+  public products: ProductEntity[];
   catId: number;
+  
+  public url= "images/bardot_top_black.jpg";
  
   // images: Array<string>;  
   // grid: Array<Array<string>>;
 
-  constructor(private productService: ProductService, 
-              private activatedRoute: ActivatedRoute) {
+  constructor(private productService: ProductService, private activatedRoute: ActivatedRoute) {
     // this.images = this.navParams.get('images'); //get product image URIs
     // this.grid = Array(Math.ceil(this.images.length/2)); 
   }
   ngOnInit() {
     this.catId = parseInt(this.activatedRoute.snapshot.paramMap.get('catId'));
-    console.log("CATEGORY ID IS: "+this.catId);
+    console.log("CATEGORY ID IS: "+ this.catId);
 
     if(!isNaN(this.catId))
 		{
       this.productService.retrieveProductByCat(this.catId).subscribe(
         response => {
-          console.log(response);
+          //console.log(response);
           this.products = response.products 
+          
+          
           // imagePath = "../ZhcqRetailSystem/ZhcqRetailSystem-war/build/web/systemAdministration/images/canyon_top_black.jpg";
         },
         error => {

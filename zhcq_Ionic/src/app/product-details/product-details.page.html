@@ -12,7 +12,7 @@
 </ion-header>
 
 <ion-content>
-  <ion-img src="/assets/productimages/overland_top_black.jpg"></ion-img>
+    <img src="assets/{{selectedProduct.picturePath}}" class="img-responsive"/>
   
   <ion-item>
     <ion-row>
@@ -21,41 +21,23 @@
             <ion-icon name="heart"></ion-icon>
           </button>
         </h4>
+<<<<<<< HEAD
       <hr/>
       <br/>
     </ion-row>
     <ion-row>
       {{selectedProduct.description}}
+=======
+      <br>
+      <br>
+       {{selectedProduct.description}}
+>>>>>>> 89283f1d1541cb603bd426ef10b6621c335a84f0
     </ion-row>
   
   </ion-item>
 
-  <div *ngIf="!errorMessage"> Selected Product
-      <table border="1" style="width: 100%; cellpadding: 3px; cellspacing: 1px;">
-        <thead> 
-          <tr>
-            <th>NAME</th>
-            <th>DESCRIPTION</th>
-            <th>UNITPRICE</th>
-            <th>QTY ON HAND</th>
-            <th>SIZE</th>
-            <th>COLOUR</th>
-            <th>PIC</th>
-          </tr>
-        </thead>
-        <tbody>
-          <td>{{selectedProduct.productName}}</td>
-          <td>{{selectedProduct.description}}</td>
-          <td>{{selectedProduct.unitPrice}}</td>
-          <td>{{selectedProduct.quantityOnHand}}</td>
-          <td>{{selectedProduct.sizeEnum}}</td>
-          <td>{{selectedProduct.colourEnum}}</td>
-          <img>
-        </tbody>
-      
-      </table>
-  </div>
-  <div *ngIf="!errorMessage"> Diff colours
+  
+  <div *ngIf="!errorMessage"> Other Colours!
       <table border="1" style="width: 100%; cellpadding: 3px; cellspacing: 1px;">
         <thead>
           <tr>

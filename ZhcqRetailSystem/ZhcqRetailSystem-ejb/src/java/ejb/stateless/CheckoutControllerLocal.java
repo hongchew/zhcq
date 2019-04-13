@@ -8,6 +8,7 @@ package ejb.stateless;
 import entity.SaleTransaction;
 import entity.ShoppingCart;
 import javax.ejb.Local;
+import util.exception.EmptyShoppingCartException;
 import util.exception.OutOfStockException;
 import util.exception.ProductNotFoundException;
 import util.exception.SaleTransactionNotFoundException;
@@ -22,7 +23,7 @@ public interface CheckoutControllerLocal {
     
     public ShoppingCart retrieveShoppingCartById(Long cartId) throws ShoppingCartNotFoundException;
     public SaleTransaction retrieveSaleTransactionById(Long transactionId) throws SaleTransactionNotFoundException;
-    public SaleTransaction checkOut (Long cartId) throws ShoppingCartNotFoundException;
+    public SaleTransaction checkOut (Long cartId) throws ShoppingCartNotFoundException, EmptyShoppingCartException;
     public void updateCart(Long cartId, Long productId, boolean addition) throws OutOfStockException, ShoppingCartNotFoundException, ProductNotFoundException;
 
     public ShoppingCart retrieveShoppingCartByUserId(Long userId) throws ShoppingCartNotFoundException;

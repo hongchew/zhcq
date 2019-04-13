@@ -307,7 +307,7 @@ public class ProductEntity implements Serializable {
     }
 
    
-    public void setPicture(String picturePath) {
+    public void setPicturePath(String picturePath) {
         this.picturePath = picturePath;
     }
 

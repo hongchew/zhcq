@@ -6,14 +6,14 @@ import java.util.List;
 public class RetrieveAllProductsRsp 
 {
     private List<ProductEntity> products;
-    private List<String> imgUrls;
+
 
     public RetrieveAllProductsRsp() {
     }
 
-    public RetrieveAllProductsRsp(List<ProductEntity> products, List<String> imgUrls) {
+    public RetrieveAllProductsRsp(List<ProductEntity> products) {
         this.products = products;
-        this.imgUrls = imgUrls;
+       
     }
     
 
@@ -27,18 +27,6 @@ public class RetrieveAllProductsRsp
         this.products = products;
     }
 
-    /**
-     * @return the imgUrls
-     */
-    public List<String> getImgUrls() {
-        return imgUrls;
-    }
-
-    /**
-     * @param imgUrls the imgUrls to set
-     */
-    public void setImgUrls(List<String> imgUrls) {
-        this.imgUrls = imgUrls;
-    }
+    
     
 }

@@ -59,9 +59,7 @@ public class ProductController implements ProductControllerLocal {
         Query q = em.createQuery("SELECT p FROM ProductEntity p");
         
         List<ProductEntity> allProducts = q.getResultList();
-        
-        
-        
+  
         return allProducts;
         
     }
@@ -96,7 +94,7 @@ public class ProductController implements ProductControllerLocal {
                 }
                 
                 Category categoryEntity = categoryControllerLocal.retrieveCategoryByCategoryId(categoryId);
-                
+                categoryEntity.addProduct(newProductEntity);
                 
                 em.persist(newProductEntity);
                 newProductEntity.setProductCategory(categoryEntity);
@@ -111,6 +109,8 @@ public class ProductController implements ProductControllerLocal {
                 }
                 
                 em.flush();
+                
+                System.out.println("pic path: " + newProductEntity.getPicturePath());
 
                 return newProductEntity;
             }
@@ -159,9 +159,9 @@ public class ProductController implements ProductControllerLocal {
     @Override
     public List<ProductEntity> filterProductsByCategory(Long categoryId) throws CategoryNotFoundException
     {
-        List<ProductEntity> productEntities = new ArrayList<>();
+         
         Category categoryEntity = categoryControllerLocal.retrieveCategoryByCategoryId(categoryId);
-        productEntities = categoryEntity.getProductEntities();            
+        List<ProductEntity> productEntities = categoryEntity.getProductEntities();            
         
          Collections.sort(productEntities, new Comparator<ProductEntity>()
             {

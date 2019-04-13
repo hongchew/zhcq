@@ -91,7 +91,7 @@ public class Category implements Serializable {
         {
             if(this.productEntities.contains(product))
             {
-                System.out.println("Entered HEREERERERERE");
+                //System.out.println("Entered HEREERERERERE");
                 this.productEntities.remove(product);
                 
             }

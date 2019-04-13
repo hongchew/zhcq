@@ -6,6 +6,7 @@
 package entity;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -34,6 +35,8 @@ public class SaleTransactionLineItem implements Serializable {
     private ProductEntity productEntity;
     
     private Integer quantity;
+    
+    private BigDecimal subTotal;
 
     public SaleTransactionLineItem() {
     }
@@ -42,6 +45,16 @@ public class SaleTransactionLineItem implements Serializable {
         this();
         this.saleTransaction = saleTransaction;
         this.productEntity = productEntity;
+    }
+    
+
+    
+    public BigDecimal getSubTotal() {
+        return subTotal;
+    }
+
+    public void setSubTotal(BigDecimal subTotal) {
+        this.subTotal = subTotal;
     }
    
     public Long getSaleTransactionLineItemId() {

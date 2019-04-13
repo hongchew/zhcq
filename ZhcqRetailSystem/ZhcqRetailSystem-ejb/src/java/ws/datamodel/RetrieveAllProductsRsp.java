@@ -6,14 +6,17 @@ import java.util.List;
 public class RetrieveAllProductsRsp 
 {
     private List<ProductEntity> products;
+    private List<String> imgUrls;
 
     public RetrieveAllProductsRsp() {
     }
+
+    public RetrieveAllProductsRsp(List<ProductEntity> products, List<String> imgUrls) {
+        this.products = products;
+        this.imgUrls = imgUrls;
+    }
     
 
-    public RetrieveAllProductsRsp(List<ProductEntity> products) {
-        this.products = products;
-    }
     
     public List<ProductEntity> getProducts() {
         return products;

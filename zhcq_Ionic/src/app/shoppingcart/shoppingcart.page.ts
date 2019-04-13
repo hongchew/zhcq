@@ -18,13 +18,12 @@ export class ShoppingcartPage implements OnInit {
   cart : ShoppingCart;
 
   constructor(private storage: Storage, private alertController: AlertController, private cartService: ShoppingCartService) {
-    // storage.get("currentCustomer").then((data) => {
-    //   this.member = data;
-    // });
-    this.member = storage.get('currentCustomer');
+    storage.get("currentCustomer").then((data) => {
+      this.member = data;
     console.log(this.member.firstName);
     console.log(this.member.lastName);
     console.log(this.member.username);
+    });
   }
 
   ngOnInit() {

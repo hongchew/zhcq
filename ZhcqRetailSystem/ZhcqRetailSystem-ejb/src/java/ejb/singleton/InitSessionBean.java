@@ -13,7 +13,6 @@ import entity.ProductEntity;
 import entity.ProductTag;
 import entity.Promotion;
 import entity.Staff;
-import entity.WishList;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;

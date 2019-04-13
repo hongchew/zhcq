@@ -44,6 +44,14 @@ export class MemberService
 			catchError(this.handleError)
 		);
 	}
+
+	login(username: string, password: string): Observable<any>
+	{
+		return this.httpClient.post<any>(this.baseUrl+ "/login?username=" +username + "&password=" + password, null, httpOptions).pipe 
+		(
+			catchError(this.handleError)
+		);
+	}
 	
 	
 	

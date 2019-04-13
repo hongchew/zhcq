@@ -15,6 +15,9 @@ public class LoginRsp {
     
     private Member member;
 
+    public LoginRsp() {
+    }
+
     public LoginRsp(Member member) {
         this.member = member;
     }

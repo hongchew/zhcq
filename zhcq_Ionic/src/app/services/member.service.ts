@@ -47,8 +47,7 @@ export class MemberService
 
 	login(username: string, password: string): Observable<any>
 	{
-		let loginReq = {"username" : username, "password" : password};
-		return this.httpClient.get<any>(this.baseUrl+ "/login?username=" +username + "&password=" + password).pipe 
+		return this.httpClient.post<any>(this.baseUrl+ "/login?username=" +username + "&password=" + password, null, httpOptions).pipe 
 		(
 			catchError(this.handleError)
 		);

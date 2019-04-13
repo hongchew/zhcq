@@ -20,7 +20,7 @@
   <ion-item>
     <ion-row>
         <h4>{{selectedProduct.productName}} &nbsp;&nbsp; ${{selectedProduct.unitPrice}}  &nbsp;&nbsp; 
-          <ion-button fill="transparent" size="default" (click)="wishListAlert()">
+          <ion-button type="submit" fill="transparent" size="default" (click)="addToWishList()">
             <ion-icon name="heart"></ion-icon>
           </ion-button>
           <ion-button type="submit" fill="transparent" size="default" (click)="addToCart()">

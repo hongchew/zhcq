@@ -8,6 +8,7 @@ import { Storage } from '@ionic/storage';
 import { Member } from '../entities/member';
 import { ShoppingCart } from '../entities/cart';
 import { ShoppingCartService } from '../services/shoppingcart.service';
+import { WishListService } from '../services/wishlist.service';
 
 
 @Component({
@@ -39,12 +40,12 @@ export class ProductDetailsPage implements OnInit {
   wishlisted = false;
 
   constructor(private productService: ProductService, 
-    private activatedRoute: ActivatedRoute, private alertController: AlertController, private storage: Storage, private shoppingCartService: ShoppingCartService) {
+    private activatedRoute: ActivatedRoute, private alertController: AlertController, private storage: Storage, private shoppingCartService: ShoppingCartService, private wishListService: WishListService) {
       storage.get('currentCustomer').then((data) => {
         this.member = data;
-        console.log(this.member.firstName);
-        console.log(this.member.lastName);
-        console.log(this.member.username);
+        // console.log(this.member.firstName);
+        // console.log(this.member.lastName);
+        // console.log(this.member.username);
       });
      }
 
@@ -75,37 +76,48 @@ export class ProductDetailsPage implements OnInit {
     
   }
 
-  async wishListAlert() { //called when user adds to wish list. insert wish list logic here
-    const alert = await this.alertController.create({
+  async addToWishList() {
+    console.log("Add to Wishlist: MemberId = " + this.member.memberId);
+    console.log("Add to Wishlist: ProductId = " + this.id);
+
+    const listSuccess = await this.alertController.create({
       header: 'added to wish list!'
     });
-    await alert.present();
-  }
 
-  addToWishList() {
-   this.wishlisted = !this.wishlisted;
+    this.wishListService.addToWishList(this.member.memberId, this.id).subscribe(
+      response=>{
+        console.log("response = " + response);
+        listSuccess.present();
+    },
+    error => {
+      this.presentAlert(error);
+      // this.ngOnInit();
+    }
+    );
   }
 
 
   async addToCart() {
     console.log("cartID = " + this.cartId)
     console.log("Product Id = " + this.id)
-    const alert = await this.alertController.create({
+
+    const cartAlert = await this.alertController.create({
       header: 'Added to Cart!'
     });
     this.shoppingCartService.addToCart(this.member.shoppingCart.cartId,this.id).subscribe(response => {
       console.log("response = " + response);
-      alert.present();
+      cartAlert.present();
     },
     error =>{
-      this.presentAlert(error);
+      this.presentAlert("ERROR FROM ADDING TO CART: " + error);
+      // this.ngOnInit();
     }
     );
   }
 
   async presentAlert(message: string) {
     const alert = await this.alertController.create({
-      message: message,
+      header: "ERROR: " + message.substring(37),
       buttons: ['OK']
     });
     await alert.present();

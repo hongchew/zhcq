@@ -21,6 +21,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -64,6 +65,7 @@ public class MemberResource {
     @Path("retrieveAllMembers")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
     public Response retriveAllMembers() {
         try {
             List<Member> list = memberControllerLocal.retrieveAllMembers();
@@ -84,25 +86,38 @@ public class MemberResource {
     }
 
     @Path("login")
-    @GET
-    @Consumes(MediaType.APPLICATION_JSON)
+    @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public Response login(LoginReq loginReq) {
-        if (loginReq != null) {
+    public Response login(@QueryParam("username") String username, @QueryParam("password") String password) {
+        System.out.println("CHECK0");
+        if (username != null && password != null) {
             try {
-                Member member = memberControllerLocal.memberLogin(loginReq.getUsername(), loginReq.getPassword());
-                member.getWishList().setMember(null);
-                member.getShoppingCart().setMember(null);
+                Member member = memberControllerLocal.memberLogin(username, password);
+                member.setWishList(null);
+                member.setShoppingCart(null);
+                member.setPassword(null);
+                member.setSalt(null);
                 List<SaleTransaction> listST = member.getSaleTransactions();
+                System.out.println("CHECK1");
                 for (SaleTransaction saleTransaction : listST) {
                     saleTransaction.setMember(null);
                 }
                 LoginRsp loginRsp = new LoginRsp(member);
+                System.out.println("CHECK2");
                 return Response.status(Response.Status.OK).entity(loginRsp).build();
+                
             } catch (InvalidLoginCredentialException ex) {
+                System.out.println("*** INVALID LOGIN CREDS");
                 ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
                 System.out.println(ex.getMessage());
                 return Response.status(Response.Status.BAD_REQUEST).entity(errorRsp).build();
+                
+            }catch (Exception ex){
+                System.out.println("*** SOME OTHER ERROR");
+                ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
+                System.out.println(ex.getMessage());
+                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(errorRsp).build();
+                
             }
         } else {
             ErrorRsp errorRsp = new ErrorRsp("Invalid login request");

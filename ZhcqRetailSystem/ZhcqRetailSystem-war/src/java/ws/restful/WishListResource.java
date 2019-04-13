@@ -13,6 +13,7 @@ import entity.ProductTag;
 import entity.Promotion;
 import entity.ShoppingCart;
 import entity.WishList;
+import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.naming.Context;
@@ -54,47 +55,93 @@ public class WishListResource {
     public Response retrieveWishList(@QueryParam("userId") Long userId){
         try{
             WishList wishList = wishListController.retrieveWishListByMemberId(userId);
+            System.out.println("***WISHLIST:\n" + wishList.toString() + "\nEND WISHLIST ***");
             wishList.getMember().setWishList(null);
             wishList.getMember().setShoppingCart(null);
             wishList.getMember().setPassword(null);
             wishList.getMember().setSalt(null);
             wishList.getMember().setSaleTransactions(null);
+            System.out.println("CHECK 1");
             
+//            for(ProductEntity product : wishList.getProductEntities()){
+//                
+//                Category category = product.getProductCategory();
+//                System.out.println("CHECK 1.1");
+//                category.getProductEntities().clear();
+//                System.out.println("CHECK 1.2 ");
+//                for(ProductTag tag: product.getProductTags())
+//                {
+//                    tag.getProductEntities().clear();
+//                }           
+//                System.out.println("CHECK 1.3");
+//                for(WishList wishlist: product.getWishLists())
+//                {
+//                    wishlist.getProductEntities().clear();
+//                }     
+//                System.out.println("CHECK 1.4");
+//                for(ShoppingCart cart: product.getShoppingcarts())
+//                {
+//                    cart.getProducts().clear();
+//                }
+//                System.out.println("CHECK 1.5");
+//
+//                CoordinatedOutfit outfit = product.getCoordinatedOutfit();
+//                if(outfit !=null){
+//                    outfit.getProductEntities().clear();
+//                }
+//                System.out.println("CHECK 1.6");
+//
+//                Promotion promotion = product.getPromotion();
+//                System.out.println("CHECK 1.7");
+//                if(promotion !=null){
+//                    promotion.getPromotionalProducts().clear();  
+//                }
+//                System.out.println("CHECK 1.8");
+//            }
+
             for(ProductEntity product : wishList.getProductEntities()){
+                
                 Category category = product.getProductCategory();
-                    category.getProductEntities().clear();
-                    
-                    for(ProductTag tag: product.getProductTags())
-                    {
-                        tag.getProductEntities().clear();
-                    }           
-                   
-                    for(WishList wishlist: product.getWishLists())
-                    {
-                        wishlist.getProductEntities().clear();
-                    }     
-                    
-                    for(ShoppingCart cart: product.getShoppingcarts())
-                    {
-                        cart.getProducts().clear();
-                    }
-                    
-                    
-                    CoordinatedOutfit outfit = product.getCoordinatedOutfit();
-                    if(outfit !=null){
-                        outfit.getProductEntities().clear();
-                    }
-                 
-                    
-                    Promotion promotion = product.getPromotion();
-                    
-                    if(promotion !=null){
-                        promotion.getPromotionalProducts().clear();  
-                    }
-                        
+                System.out.println("CHECK 1.1");
+                
+                category.getProductEntities().clear();
+                System.out.println("CHECK 1.2 ");
+                
+                for(ProductTag tag: product.getProductTags())
+                {
+                    tag.getProductEntities().clear();
+                }           
+                System.out.println("CHECK 1.3");
+                
+                
+                product.getWishLists().clear();
+                System.out.println("CHECK 1.4");
+                
+                for(ShoppingCart cart: product.getShoppingcarts())
+                {
+                    cart.getProducts().clear();
+                }
+                System.out.println("CHECK 1.5");
+
+                CoordinatedOutfit outfit = product.getCoordinatedOutfit();
+                if(outfit !=null){
+                    outfit.getProductEntities().clear();
+                }
+                System.out.println("CHECK 1.6");
+
+                Promotion promotion = product.getPromotion();
+                System.out.println("CHECK 1.7");
+                
+                if(promotion !=null){
+                    promotion.getPromotionalProducts().clear();  
+                }
+                System.out.println("CHECK 1.8");
             }
             
+            System.out.println("CHECK 2");
+            
             RetrieveWishListRsp rsp = new RetrieveWishListRsp(wishList);
+            System.out.println("CHECK 3");
             return Response.status(Response.Status.OK).entity(rsp).build();
 
             
@@ -104,6 +151,7 @@ public class WishListResource {
             return Response.status(Response.Status.BAD_REQUEST).entity(errorRsp).build();
         } catch (Exception ex){
             System.err.println("***Error: " + ex.getMessage() );
+            ex.printStackTrace();
             ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(errorRsp).build();
         }       

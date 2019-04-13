@@ -15,14 +15,14 @@
   
   <ion-item>
     <ion-row>
-        <h4>Overland Top &nbsp;&nbsp; $100 &nbsp;&nbsp; 
+        <h4>{{selectedProduct.productName}} &nbsp;&nbsp; SGD {{selectedProduct.unitPrice}}  &nbsp;&nbsp; 
           <button style="background:transparent" (click)="presentAlert()">
             <ion-icon name="heart"></ion-icon>
           </button>
         </h4>
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
       <br>
       <br>
+      {{selectedProduct.description}}
     </ion-row>
   
   </ion-item>

@@ -188,7 +188,7 @@ public class MemberResource {
             } catch (InputDataValidationException | MemberNotFoundException | UpdateMemberException ex) {
                 ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
                 return Response.status(Response.Status.BAD_REQUEST).entity(errorRsp).build();
-            }
+            } 
         } else {
             ErrorRsp errorRsp = new ErrorRsp("Invalid update member request");
             return Response.status(Response.Status.BAD_REQUEST).entity(errorRsp).build();

@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { MemberService } from '../services/member.service';
+import { AlertController } from '@ionic/angular';
+import { Member } from '../entities/member';
+import { Router } from  "@angular/router";
 
 @Component({
   selector: 'app-login',
@@ -7,9 +11,35 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoginPage implements OnInit {
 
-  constructor() { }
+  username : string;
+  password: string;
+
+  member: Member;
+
+  constructor(public memberService: MemberService, public alertController: AlertController, public router : Router) {
+  }
 
   ngOnInit() {
+  }
+
+  login() {
+    this.memberService.login(this.username, this.password).subscribe(
+      response =>{
+        this.member = response.member;
+        this.router.navigateByUrl('home');
+      },
+      error=> {
+        this.presentAlert(error);
+      }
+    )
+  }
+
+  async presentAlert(message: string) {
+    const alert = await this.alertController.create({
+      message: message,
+      buttons: ['OK']
+    });
+    await alert.present();
   }
 
 }

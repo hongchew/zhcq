@@ -1,6 +1,5 @@
 package ws.restful;
 
-import com.sun.xml.ws.security.trust.elements.AllowPostdating;
 import ejb.stateless.ProductControllerLocal;
 import entity.Category;
 import entity.CoordinatedOutfit;
@@ -92,12 +91,11 @@ public class ProductResource {
                     if(promotion !=null){
                         promotion.getPromotionalProducts().clear();  
                     }
-                    imgUrls.add(product.getPicturePath());
+                    
                 }
             }
             
-           
-            RetrieveAllProductsRsp retrieveAllProductsRsp  = new RetrieveAllProductsRsp(allProducts,imgUrls);
+            RetrieveAllProductsRsp retrieveAllProductsRsp  = new RetrieveAllProductsRsp(allProducts);
         
             return Response.status(Status.OK).entity(retrieveAllProductsRsp).build();
         }
@@ -276,13 +274,16 @@ public class ProductResource {
            
             List<ProductEntity> products = productControllerLocal.filterProductsByCategory(id);
             
+            System.out.println("number of products by Cat = "+ products.size());
             List<ProductEntity> catProducts = new ArrayList<>();
             
-            //to prevent ConcurrentModificationException !!! 
+            //to prevent ConcurrentModificationException !!!
+            
             if(products != null){
                 for(ProductEntity product:products)
                 {
                     catProducts.add(product);
+                    
                 }
             }
             
@@ -290,7 +291,7 @@ public class ProductResource {
                 for(ProductEntity product:catProducts)
                 {
                     Category category = product.getProductCategory();
-                    category.removeProduct(product);
+                    category.deleteProduct(product);
                    
                     for(ProductTag tag: product.getProductTags())
                     {

@@ -13,6 +13,7 @@ public class RetrieveAllCategoriesRsp {
 
     public RetrieveAllCategoriesRsp(List<Category> categories) {
         this.categories = categories;
+        System.out.println("Entered controller");
     }
 
     

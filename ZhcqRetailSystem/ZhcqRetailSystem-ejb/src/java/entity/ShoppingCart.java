@@ -32,14 +32,25 @@ public class ShoppingCart implements Serializable {
     
     @ManyToMany(mappedBy = "shoppingcarts")
     private List<ProductEntity> products; 
+    
+    private List<Integer> quantity; //same index means same item
 
     public ShoppingCart() {
         products = new ArrayList<>();
+        quantity = new ArrayList<>();
     }
 
     public ShoppingCart(Member cartOwner) {
         this();
         this.member = cartOwner;
+    }
+
+    public List<Integer> getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(List<Integer> quantity) {
+        this.quantity = quantity;
     }
     
     public Long getCartId() {
@@ -65,5 +76,5 @@ public class ShoppingCart implements Serializable {
     public void setMember(Member member) {
         this.member = member;
     }
-    
 }
+

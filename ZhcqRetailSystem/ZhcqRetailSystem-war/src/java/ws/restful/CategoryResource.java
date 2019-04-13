@@ -22,6 +22,7 @@ import javax.ws.rs.core.Response.Status;
 import ws.datamodel.ErrorRsp;
 
 @Path("Category")
+
 public class CategoryResource 
 {
     @Context
@@ -41,7 +42,7 @@ public class CategoryResource
         try
         {
             List<Category> categories = categoryControllerLocal.retrieveAllCategories();
-            
+            System.out.println("number of Categories = "+ categories.size());
             if(categories!=null)
             {
                 for(Category cat: categories)
@@ -58,11 +59,18 @@ public class CategoryResource
             }
             
             RetrieveAllCategoriesRsp retrieveAllCategoriesRsp = new RetrieveAllCategoriesRsp(categories);
+            System.out.println("retrieveAllCategoryRSP Created");
+            for(Category cat: retrieveAllCategoriesRsp.getCategories())
+            {
+                System.out.println(cat.getCategoryName());
+            }
+           
             return Response.status(Status.OK).entity(retrieveAllCategoriesRsp).build();
             
         }
         catch(Exception ex)
         {
+            System.out.println("Entered Error");
             ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
             
             return Response.status(Status.INTERNAL_SERVER_ERROR).entity(errorRsp).build();

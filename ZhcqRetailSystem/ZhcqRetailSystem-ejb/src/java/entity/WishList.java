@@ -117,4 +117,10 @@ public class WishList implements Serializable {
         }
     }
     
+    @Override
+    public String toString(){
+        return "Wishlist Id: " + wishListId + "\nMember Id: " + member.getMemberId() +"\nWishlist Size: " + productEntities.size();
+        
+    }
+    
 }

@@ -304,7 +304,9 @@ public class ProductResource {
                 }
             }
             
-            RetrieveProductsByCatRsp retrieveProductByCatRsp = new RetrieveProductsByCatRsp(catProducts);
+            List<ProductEntity> filteredCatproducts = productControllerLocal.retrieveDistinctNames(catProducts);
+            
+            RetrieveProductsByCatRsp retrieveProductByCatRsp = new RetrieveProductsByCatRsp(filteredCatproducts);
             
             return Response.status(Status.OK).entity(retrieveProductByCatRsp).build();
             

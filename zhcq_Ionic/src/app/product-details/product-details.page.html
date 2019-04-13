@@ -55,47 +55,13 @@
         </ion-grid>
   </div>
 
-  
-
-  <!-- <table border="1" style="width: 100%; cellpadding: 3px; cellspacing: 1px;">
-        <thead>
-          <tr>
-            <th>NAME</th>
-            <th>DESCRIPTION</th>
-            <th>UNITPRICE</th>
-            <th>QTY ON HAND</th>
-            <th>SIZE</th>
-            <th>COLOUR</th>
-            <th>PIC</th>
-          </tr>
-        </thead>
-        <tbody *ngFor="let pdt of diffSizes">
-          <td>{{pdt.productName}}</td>
-          <td>{{pdt.description}}</td>
-          <td>{{pdt.unitPrice}}</td>
-          <td>{{pdt.quantityOnHand}}</td>
-          <td>{{pdt.sizeEnum}}</td>
-          <td>{{pdt.colourEnum}}</td>
-          <img>
-        </tbody>
-      </table> -->
   <div *ngIf="!errorMessage"> OTHERS ALSO VIEWED THESE! 
-    <ion-slides class="image-slider" slidesPerView="2">
+    <ion-slides [options]="sliderOpts">
       <ion-slide *ngFor="let pdt of suggestedProducts" [routerLink]="['/product-details',pdt.productId]" >
-          <img src="assets/{{pdt.picturePath}}" class="img-responsive"/>
+          <img src="assets/{{pdt.picturePath}}" class="thumb-img"/>
       </ion-slide>
     </ion-slides>
-
-
-      <!-- <ion-virtual-scroll [items]="suggestedProducts">
-          <ion-item *virtualItem="let pdt">
-            <ion-avatar item-start>
-              <img src="assets/{{pdt.picturePath}}" class="img-responsive"/>
-            </ion-avatar>
-            {{ item.firstName }} {{ item.lastName }}
-          </ion-item>
-        </ion-virtual-scroll> -->
-      </div>
+  </div>
 
 
 

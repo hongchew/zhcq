@@ -332,28 +332,7 @@ public class ProductController implements ProductControllerLocal {
              List<ProductEntity> allSuggestedProducts = query.getResultList();
              
              
-             List<ProductEntity> suggestedProducts = new ArrayList<>();
-             
-             for(ProductEntity pdt : allSuggestedProducts) 
-             {
-                 String name = pdt.getProductName();
-                 
-                 if(suggestedProducts == null || suggestedProducts.isEmpty()){
-                     suggestedProducts.add(pdt);
-                 } else {
-                     List<String> names = new ArrayList<>();
-                     for(ProductEntity product : suggestedProducts) 
-                     {
-                         names.add(product.getProductName());
-                     }
-                     
-                     if(!names.contains(name)){
-                         suggestedProducts.add(pdt);
-                     }
-             
-                     
-                 }
-             }
+             List<ProductEntity> suggestedProducts = retrieveDistinctNames(allSuggestedProducts);
              
              return suggestedProducts;
             
@@ -401,6 +380,33 @@ public class ProductController implements ProductControllerLocal {
         } else {
             throw new ProductNotFoundException("Product of ID "+ productId + " Not Found!");
         }
+    }
+    
+    @Override
+    public List<ProductEntity> retrieveDistinctNames(List<ProductEntity> allProducts) 
+    {
+        List<ProductEntity> filteredProducts = new ArrayList<>();
+        
+        for(ProductEntity pdt : allProducts) 
+        {
+            String name = pdt.getProductName();
+                 
+            if(filteredProducts == null || filteredProducts.isEmpty()){
+                filteredProducts.add(pdt);
+            } else {
+                List<String> names = new ArrayList<>();
+                for(ProductEntity product : filteredProducts) 
+                {
+                    names.add(product.getProductName());
+                }
+                     
+                if(!names.contains(name)){
+                    filteredProducts.add(pdt);
+                }
+                     
+            }
+        }
+        return filteredProducts;
     }
     
     

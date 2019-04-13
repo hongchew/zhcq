@@ -8,6 +8,8 @@ package ws.restful;
 import ejb.stateless.MemberControllerLocal;
 import entity.Member;
 import entity.SaleTransaction;
+import entity.ShoppingCart;
+import entity.WishList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -93,8 +95,15 @@ public class MemberResource {
         if (username != null && password != null) {
             try {
                 Member member = memberControllerLocal.memberLogin(username, password);
-                member.setWishList(null);
-                member.setShoppingCart(null);
+//                member.setWishList(null);
+//                member.setShoppingCart(null);
+                
+                ShoppingCart cart = member.getShoppingCart();
+                cart.setMember(null);
+                WishList wishlist = member.getWishList();
+                wishlist.setMember(null);
+                
+                
                 member.setPassword(null);
                 member.setSalt(null);
                 List<SaleTransaction> listST = member.getSaleTransactions();

@@ -4,6 +4,10 @@ import {AlertController} from '@ionic/angular';
 import { ProductService } from '../services/product.service';
 import { ActivatedRoute } from '@angular/router';
 import { ProductEntity } from '../entities/product';
+import { Storage } from '@ionic/storage';
+import { Member } from '../entities/member';
+import { ShoppingCart } from '../entities/cart';
+import { ShoppingCartService } from '../services/shoppingcart.service';
 
 
 @Component({
@@ -20,6 +24,12 @@ export class ProductDetailsPage implements OnInit {
   diffSizes: ProductEntity[];
   suggestedProducts: ProductEntity[];
 
+  //For adding into cart
+  member: Member
+  cart: ShoppingCart;
+  cartId: number 
+  
+
   sliderOpts = {
     zoom: false,
     slidesPerView: 1.5,
@@ -29,7 +39,14 @@ export class ProductDetailsPage implements OnInit {
   wishlisted = false;
 
   constructor(private productService: ProductService, 
-    private activatedRoute: ActivatedRoute, private alertController: AlertController) { }
+    private activatedRoute: ActivatedRoute, private alertController: AlertController, private storage: Storage, private shoppingCartService: ShoppingCartService) {
+      storage.get('currentCustomer').then((data) => {
+        this.member = data;
+        console.log(this.member.firstName);
+        console.log(this.member.lastName);
+        console.log(this.member.username);
+      });
+     }
 
   ngOnInit() {
     this.id = parseInt(this.activatedRoute.snapshot.paramMap.get('id'));
@@ -46,13 +63,14 @@ export class ProductDetailsPage implements OnInit {
           this.suggestedProducts = response.suggestedProducts;
         },
         error => {
-          this.errorMessage = error
+          this.presentAlert(error);
         }
       );
     }
     else
     {
       this.errorMessage = "No Product ID was provided";
+      this.presentAlert(this.errorMessage);
     }
     
   }
@@ -63,13 +81,32 @@ export class ProductDetailsPage implements OnInit {
     });
     await alert.present();
   }
+
   addToWishList() {
    this.wishlisted = !this.wishlisted;
   }
 
-  async cartAlert() { //called when user adds to cart. insert wish list logic here
+
+  async addToCart() {
+    console.log("cartID = " + this.cartId)
+    console.log("Product Id = " + this.id)
     const alert = await this.alertController.create({
       header: 'Added to Cart!'
+    });
+    this.shoppingCartService.addToCart(this.member.shoppingCart.cartId,this.id).subscribe(response => {
+      console.log("response = " + response);
+      alert.present();
+    },
+    error =>{
+      this.presentAlert(error);
+    }
+    );
+  }
+
+  async presentAlert(message: string) {
+    const alert = await this.alertController.create({
+      message: message,
+      buttons: ['OK']
     });
     await alert.present();
   }

@@ -317,26 +317,45 @@ public class ProductController implements ProductControllerLocal {
     public List<ProductEntity> retrieveProductSuggestions(Long productId) throws ProductNotFoundException 
     {
         ProductEntity selectedProduct = retrieveProductById(productId);
+        List<ProductTag> tags = selectedProduct.getProductTags();
+        
+        Random rand = new Random();
         
         if(selectedProduct != null)
         {
-            List<ProductTag> tags = selectedProduct.getProductTags();
+            Query query = em.createQuery("SELECT DISTINCT pe FROM ProductEntity pe WHERE pe.productTags = :tag ");
+            query.setParameter("tag", tags.get(rand.nextInt(tags.size())));
+//            query.setParameter("colour", selectedProduct.getColourEnum().values()[rand.nextInt(selectedProduct.getColourEnum().values().length)]);
+//            query.setParameter("size", selectedProduct.getColourEnum().values()[rand.nextInt(selectedProduct.getColourEnum().values().length)]);
+            System.out.println("Randomly selected colour is: " + selectedProduct.getColourEnum().values()[rand.nextInt(selectedProduct.getColourEnum().values().length)]);
             
-            if(!tags.isEmpty())
-            {
-                 //Randomly select a Tag that the product has.
-                Random rand = new Random();
-                ProductTag selectedTag = tags.get(rand.nextInt(tags.size()));
-            
-                List<ProductEntity> suggestedProducts = selectedTag.getProductEntities();
-            
-            return suggestedProducts;
-            }
-            else 
-            {
-                System.out.println("Entered NULL AREA");
-                return null;
-            }
+             List<ProductEntity> allSuggestedProducts = query.getResultList();
+             
+             
+             List<ProductEntity> suggestedProducts = new ArrayList<>();
+             
+             for(ProductEntity pdt : allSuggestedProducts) 
+             {
+                 String name = pdt.getProductName();
+                 
+                 if(suggestedProducts == null || suggestedProducts.isEmpty()){
+                     suggestedProducts.add(pdt);
+                 } else {
+                     List<String> names = new ArrayList<>();
+                     for(ProductEntity product : suggestedProducts) 
+                     {
+                         names.add(product.getProductName());
+                     }
+                     
+                     if(!names.contains(name)){
+                         suggestedProducts.add(pdt);
+                     }
+             
+                     
+                 }
+             }
+             
+             return suggestedProducts;
             
         } else {
             throw new ProductNotFoundException("Error Occured! Product does not exist in the database");
@@ -349,9 +368,10 @@ public class ProductController implements ProductControllerLocal {
         
         ProductEntity selectedProduct = retrieveProductById(productId);
         if(selectedProduct!= null){
-            Query query = em.createQuery("SELECT DISTINCT pe FROM ProductEntity pe WHERE pe.productName = :name AND pe.colourEnum <> :colour ");
+            Query query = em.createQuery("SELECT DISTINCT pe FROM ProductEntity pe WHERE pe.productName = :name AND pe.colourEnum <> :colour AND pe.sizeEnum = :size ");
             query.setParameter("name", selectedProduct.getProductName());
             query.setParameter("colour", selectedProduct.getColourEnum());
+            query.setParameter("size", selectedProduct.getSizeEnum());
             List<ProductEntity> diffColours = query.getResultList();
             if (diffColours==null || diffColours.isEmpty()) {
                 return null;
@@ -368,7 +388,8 @@ public class ProductController implements ProductControllerLocal {
         
         ProductEntity selectedProduct = retrieveProductById(productId);
         if(selectedProduct!= null){
-            Query query = em.createQuery("SELECT pe FROM ProductEntity pe WHERE pe.productName = :name AND pe.colourEnum = :colour AND pe.sizeEnum <> :size");
+            System.out.println("Colour : " + selectedProduct.getColourEnum());
+            Query query = em.createQuery("SELECT DISTINCT pe FROM ProductEntity pe WHERE pe.productName = :name AND pe.colourEnum = :colour AND pe.sizeEnum <> :size");
             query.setParameter("name", selectedProduct.getProductName());
             query.setParameter("colour", selectedProduct.getColourEnum());
             query.setParameter("size", selectedProduct.getSizeEnum());

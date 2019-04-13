@@ -8,6 +8,7 @@ package ejb.stateless;
 import entity.WishList;
 import java.util.List;
 import javax.ejb.Local;
+import util.exception.AlreadyInWishlistException;
 import util.exception.CreateNewWishListException;
 import util.exception.DeleteWishListException;
 import util.exception.InputDataValidationException;
@@ -33,7 +34,7 @@ public interface WishListControllerLocal {
 
     public WishList retrieveWishListByWishListId(Long wishlistId) throws WishListNotFoundException;
 
-    public void addProductToWishlist(Long memberId, Long pdtId) throws MemberNotFoundException, ProductNotFoundException;
+    public void addProductToWishlist(Long memberId, Long pdtId) throws MemberNotFoundException, ProductNotFoundException, AlreadyInWishlistException;
 
     public void removeProductFromWishlist(Long memberId, Long pdtId) throws MemberNotFoundException, ProductNotFoundException;
     

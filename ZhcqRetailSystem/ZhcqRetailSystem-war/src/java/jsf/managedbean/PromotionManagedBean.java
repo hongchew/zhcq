@@ -84,7 +84,7 @@ public class PromotionManagedBean implements Serializable {
         }
         try {
             promotionControllerLocal.updatePromotion(promotionToUpdate, updateLongIds);
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Successfully updated promotion: ", null));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Successfully updated promotion: " + promotionToUpdate.getPromotionName(), null));
         } catch (UpdatePromotionException ex) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Failed to update promotion: " + ex.getMessage(), null));
         }

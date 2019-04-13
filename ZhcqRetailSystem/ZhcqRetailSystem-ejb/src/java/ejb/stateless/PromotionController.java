@@ -99,14 +99,19 @@ public class PromotionController implements PromotionControllerLocal {
                 promotionToUpdate.setPromotionName(promotion.getPromotionName());
                 promotionToUpdate.setStartDate(promotion.getStartDate());
                 promotionToUpdate.setEndDate(promotion.getEndDate());
-                for (ProductEntity product : promotionToUpdate.getPromotionalProducts()) {
-                    promotionToUpdate.removeProduct(product);
+                for(ProductEntity product : promotion.getPromotionalProducts()) {
+                    product.setPromotion(null);
                 }
+                promotion.getPromotionalProducts().clear();
+                
                 if (productIds != null || (!productIds.isEmpty())) {
+                    System.out.println("Not empty");
                     for (Long id : productIds) {
                         ProductEntity product = productControllerLocal.retrieveProductById(id);
                         promotionToUpdate.addProduct(product);
                     }
+                } else {
+                    System.out.println("Empty");
                 }
             } catch (ProductNotFoundException | PromotionNotFoundException ex) {
                 throw new UpdatePromotionException(ex.getMessage());

@@ -15,7 +15,7 @@
   <ion-grid> 
     <ion-row>
       <ion-col size="6" *ngFor="let product of products" [routerLink]="['/product-details',product.productId]" class="activated">
-            <ion-img src="/assets/productimages/overland_top_black.jpg"></ion-img>
+        <img src="assets/{{product.picturePath}}" class="img-responsive"/>
             <h6>{{product.productName}} &nbsp;&nbsp;${{product.unitPrice}}</h6>
             {{product.colourEnum}}
             {{product.description}}

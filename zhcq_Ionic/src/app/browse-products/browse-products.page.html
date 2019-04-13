@@ -11,163 +11,29 @@
   <div *ngIf='errorMessage' class="errorText">
     {{errorMessage}}
   </div>
-  <div *ngIf="!errorMessage">
-    <ion-grid>
-      <div *ngFor="let product of products">
-        <ion-row>
-          <ion-col size="6">
-              <ion-card>
-                  <ion-item [routerLink]="['/product-details',product.productId]" class="activated">
-                      <ion-img src="/assets/productimages/overland_top_black.jpg"></ion-img>
-                    </ion-item>
-                  <ion-card-header>
-                    <ion-card-subtitle>SGD {{product.unitPrice}}</ion-card-subtitle>
-                    <ion-card-title>{{product.productName}}</ion-card-title>
-                  </ion-card-header>
-                
-                  <ion-card-content>
-                    {{product.description}}
-                  </ion-card-content>
-                </ion-card>
-          </ion-col>
-        
-        </ion-row>
-      </div>
-    </ion-grid>
-        
-    </div>
-   
-
-
-      <!-- <table border="1" style="width: 100%; cellpadding: 3px; cellspacing: 1px;">
-        <thead>
-          <tr>
-            <th>NAME</th>
-            <th>DESCRIPTION</th>
-            <th>UNITPRICE</th>
-            <th>QTY ON HAND</th>
-            <th>SIZE</th>
-            <th>COLOUR</th>
-            <th>PIC</th>
-          </tr>
-        </thead>
-        <tbody *ngFor="let product of products">
-          <td>{{product.productName}}</td>
-          <td>{{product.description}}</td>
-          <td>{{product.unitPrice}}</td>
-          <td>{{product.quantityOnHand}}</td>
-          <td>{{product.sizeEnum}}</td>
-          <td>{{product.colourEnum}}</td>
-          <img>
-        </tbody>
+  <ion-grid>
       
-      </table> -->
-  
-  <!-- <ion-list>
-    <ion-grid>
-      
-      <ion-row>
-        <ion-col>
-            <ion-row>
-              <ion-img src="/assets/productimages/bardot_top_pink.jpg"></ion-img>
-            </ion-row>
-          <ion-row>
-            <h6>Bardot Top &nbsp; $38</h6>
-          </ion-row>
-        </ion-col>
-        <ion-col>
-          <ion-row>
-            <ion-img src="/assets/productimages/overland_top_black.jpg"></ion-img>
-          </ion-row>
-          <ion-row>
-            <h6>Overland Top &nbsp; $58</h6>
-          </ion-row>
-        </ion-col>
-      </ion-row>
-        <ion-row>
-          <ion-col>
-          <ion-row>
-            <ion-img src="/assets/productimages/crimini_dress_white.jpg"></ion-img>
-          </ion-row>
-          <ion-row>
-            <h6>Crimini Dress &nbsp; $108</h6>
-          </ion-row>
-        </ion-col>
-       
-        <ion-col>
-          <ion-row>
-            <ion-img src="/assets/productimages/tanner_pant_cream.jpg"></ion-img>
-          </ion-row>
-          <ion-row>
-            <h6>Tanner Pant &nbsp; $128</h6>
-          </ion-row>
-        </ion-col>
+    <ion-row>
+      <ion-col *ngFor="let product of products">
           
-        </ion-row>
-        <ion-row>
-            <ion-col>
-            <ion-row>
-              <ion-img src="/assets/productimages/overland_top_white.jpg"></ion-img>
-            </ion-row>
-            <ion-row>
-              <h6>Overland Top &nbsp; $58</h6>
-            </ion-row>
-          </ion-col>
-         
-          <ion-col>
-            <ion-row>
-              <ion-img src="/assets/productimages/vikki_dress_blue.jpg"></ion-img>
-            </ion-row>
-            <ion-row>
-              <h6>Vikki Dress &nbsp; $128</h6>
-            </ion-row>
-          </ion-col>
-            
-          </ion-row>
-          <ion-row>
-              <ion-col>
-              <ion-row>
-                <ion-img src="/assets/productimages/venus_top_black.jpg"></ion-img>
-              </ion-row>
-              <ion-row>
-                <h6>Venus Top &nbsp; $58</h6>
-              </ion-row>
-            </ion-col>
-           
-            <ion-col>
-              <ion-row>
-                <ion-img src="/assets/productimages/simi_dress_white.jpg"></ion-img>
-              </ion-row>
-              <ion-row>
-                <h6>Simi Dress &nbsp; $128</h6>
-              </ion-row>
-            </ion-col>
-              
-            </ion-row>
-          
-          <ion-row>
-              <ion-col>
-              <ion-row>
-                <ion-img src="/assets/productimages/surrey_dress_black.jpg"></ion-img>
-              </ion-row>
-              <ion-row>
-                <h6>Surrey Dress &nbsp; $58</h6>
-              </ion-row>
-            </ion-col>
-           
-            <ion-col>
-              <ion-row>
-                <ion-img src="/assets/productimages/lex_top_black.jpg"></ion-img>
-              </ion-row>
-              <ion-row>
-                <h6>Lex Top &nbsp; $128</h6>
-              </ion-row>
-            </ion-col>
+        <ion-card>
+          <ion-item [routerLink]="['/product-details',product.productId]" class="activated">
+              <ion-img src="/assets/productimages/overland_top_black.jpg"></ion-img>
+            </ion-item>
+          <ion-card-header>
+            <ion-card-subtitle>SGD {{product.unitPrice}}</ion-card-subtitle>
+            <ion-card-title>{{product.productName}}</ion-card-title>
+          </ion-card-header>
+        
+          <ion-card-content>
+            {{product.description}}
+          </ion-card-content>
+        </ion-card>
+        </ion-col>
               
             </ion-row>
         
     </ion-grid>
-  </ion-list>
   <ion-infinite-scroll (ionInfinite)="loadMoreProducts($event)">
     <ion-infinite-scroll-content></ion-infinite-scroll-content>
   </ion-infinite-scroll> -->

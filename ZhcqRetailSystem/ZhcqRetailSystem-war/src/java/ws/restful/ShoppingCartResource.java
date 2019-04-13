@@ -90,10 +90,7 @@ public class ShoppingCartResource {
                         wishlist.getProductEntities().clear();
                     }     
                     
-                    for(ShoppingCart scart: product.getShoppingcarts())
-                    {
-                        scart.getProducts().clear();
-                    }
+                    product.getShoppingcarts().clear();
                     
                     
                     CoordinatedOutfit outfit = product.getCoordinatedOutfit();
@@ -119,6 +116,7 @@ public class ShoppingCartResource {
             return Response.status(Response.Status.BAD_REQUEST).entity(errorRsp).build();
         } catch (Exception ex) {
             System.err.println(ex.getMessage());
+            ex.printStackTrace();
             ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(errorRsp).build();
         }
@@ -170,35 +168,26 @@ public class ShoppingCartResource {
             for(SaleTransactionLineItem lineItem : txn.getSaleTransactionLineItems()){
                 lineItem.setSaleTransaction(null);
                 lineItem.getProductEntity().getProductCategory().setProductEntities(null);
+                
+                lineItem.getProductEntity().setCoordinatedOutfit(null);
+                lineItem.getProductEntity().setShoppingcarts(null);
+                lineItem.getProductEntity().setWishLists(null);
+                lineItem.getProductEntity().setPromotion(null);
+
                 for(ProductTag tag: lineItem.getProductEntity().getProductTags())
                 {
                     tag.getProductEntities().clear();
                 }           
-
-                for(WishList wishlist: lineItem.getProductEntity().getWishLists())
-                {
-                    wishlist.getProductEntities().clear();
-                }     
-
-                for(ShoppingCart scart: lineItem.getProductEntity().getShoppingcarts())
-                {
-                    scart.getProducts().clear();
-                }
-
-
-                CoordinatedOutfit outfit = lineItem.getProductEntity().getCoordinatedOutfit();
-                if(outfit !=null){
-                    outfit.getProductEntities().clear();
-                }
-
-                if(lineItem.getProductEntity().getPromotion() !=null){
-                    lineItem.getProductEntity().getPromotion().getPromotionalProducts().clear();  
-                }
             }
             txn.getMember().setWishList(null);
             txn.getMember().setShoppingCart(null);
+            txn.getMember().setSaleTransactions(null);
+            txn.getMember().setPassword(null);
+            txn.getMember().setSalt(null);
+            
             
             CheckoutRsp checkoutRsp = new CheckoutRsp(txn);
+            
             return Response.status(Response.Status.OK).entity(checkoutRsp).build();
 
             

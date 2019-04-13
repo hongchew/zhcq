@@ -5,9 +5,9 @@ import entity.ProductEntity;
 import entity.SaleTransaction;
 import entity.SaleTransactionLineItem;
 import entity.ShoppingCart;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import javax.ejb.EJB;
 import javax.ejb.Local;
 import javax.ejb.Stateless;
@@ -17,6 +17,7 @@ import javax.persistence.Query;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
+import util.exception.EmptyShoppingCartException;
 import util.exception.OutOfStockException;
 import util.exception.ProductNotFoundException;
 import util.exception.SaleTransactionNotFoundException;
@@ -84,69 +85,86 @@ public class CheckoutController implements CheckoutControllerLocal {
     public void updateCart (Long cartId, Long productId, boolean addition) throws OutOfStockException, ShoppingCartNotFoundException, ProductNotFoundException { //true if adding, false if deleting
 
         ShoppingCart shoppingCart = retrieveShoppingCartById(cartId);
-        System.out.println("***CHECK UPDATE 1***");
         ProductEntity prod = productControllerLocal.retrieveProductById(productId);
-        System.out.println("***CHECK UPDATE 2***");
 
         if (addition) {
             if (prod.getQuantityOnHand()<=0) {
                 System.out.println("Oops! Product out of stock!");
                 throw new OutOfStockException("Oops! Product out of stock!");
             }
-            shoppingCart.getProducts().add(prod);
-            for(ProductEntity pdt : shoppingCart.getProducts()){
-                System.out.println(pdt.getProductId());
+            
+            if(shoppingCart.getProducts().contains(prod)){
+                int idx = shoppingCart.getProducts().indexOf(prod);
+                shoppingCart.getQuantity().set(idx, shoppingCart.getQuantity().get(idx) + 1);
+            }else{
+                shoppingCart.getProducts().add(prod);
+                shoppingCart.getQuantity().add(1);
+                prod.getShoppingcarts().add(shoppingCart);
             }
+            
             System.out.println("***CHECK ADD***");
+            for(int i = 0; i < shoppingCart.getProducts().size(); i++){
+                System.out.println("Product Id: " + shoppingCart.getProducts().get(i).getProductId());
+                System.out.println("Quantity: " + shoppingCart.getQuantity().get(i));
+                System.out.println();
+                
+            }      
+            System.out.println("***END CHECK ADD***");
             prod.setQuantityOnHand(prod.getQuantityOnHand()-1);
-            em.merge(shoppingCart); 
             
         } else { //addtion == false
-            System.out.println("***CHECK REMOVE 1***");
-            if(shoppingCart.getProducts().remove(prod)){
-                System.out.println("***CHECK REMOVE 2***");
-                prod.setQuantityOnHand(prod.getQuantityOnHand()+1);
+            if(shoppingCart.getProducts().contains(prod)){
+                int idx = shoppingCart.getProducts().indexOf(prod);
+                shoppingCart.getQuantity().set(idx, shoppingCart.getQuantity().get(idx) - 1);
+                if(shoppingCart.getQuantity().get(idx) < 1){
+                    shoppingCart.getProducts().remove(idx);
+                    shoppingCart.getQuantity().remove(idx);
+                    System.out.println("***Removed Product From Cart, Product Id: " + prod.getProductId());
+                    prod.getShoppingcarts().remove(shoppingCart);
+                }
+                 prod.setQuantityOnHand(prod.getQuantityOnHand()+1);
             }else{
                 throw new ProductNotFoundException("No such product on the shopping cart");
             }
+
         }
       
     }
     
     @Override
-    public SaleTransaction checkOut (Long cartId) throws ShoppingCartNotFoundException  {
+    public SaleTransaction checkOut (Long cartId) throws ShoppingCartNotFoundException, EmptyShoppingCartException  {
         
         
         ShoppingCart shoppingCart = retrieveShoppingCartById(cartId);
+        
+        if(shoppingCart.getProducts().isEmpty()){
+            throw new EmptyShoppingCartException("The shopping cart is empty.");
+        }
+        
         SaleTransaction transaction = new SaleTransaction(shoppingCart.getMember());
         
         for(ProductEntity pdt : shoppingCart.getProducts()){
             System.out.println("*** Pdt in cart ID: " + pdt.getProductId());
         }
 
+        
         List <SaleTransactionLineItem> list = new ArrayList <> ();
-        boolean added = false;
-        for (ProductEntity product : shoppingCart.getProducts()) {
-            for(SaleTransactionLineItem stli : list){
-                if(Objects.equals(stli.getProductEntity().getProductId(), product.getProductId())){
-                    stli.setQuantity(stli.getQuantity() + 1);
-                    System.out.println("Pdt id: " + product.getProductId() + " added to existing line item");
-                    added = true;
-                    break;
-                }
-            }
-            if(!added){
-                SaleTransactionLineItem lineItem = new SaleTransactionLineItem (transaction, product);
-                lineItem.setQuantity(1);
-                list.add(lineItem);
-                em.persist(lineItem);
-                System.out.println("Pdt id: " + product.getProductId() + " added to new line item");
-            }
-            added = false;
+        
+        for(int i = 0; i < shoppingCart.getProducts().size(); i++){
+            SaleTransactionLineItem lineItem = new SaleTransactionLineItem (transaction, shoppingCart.getProducts().get(i));
+            lineItem.setQuantity(shoppingCart.getQuantity().get(i));
+            lineItem.setSubTotal(shoppingCart.getProducts().get(i).getUnitPrice().multiply(BigDecimal.valueOf(shoppingCart.getQuantity().get(i))));
+            list.add(lineItem);
+            em.persist(lineItem);
+            transaction.addToTotalPrice(lineItem.getSubTotal());
+            System.out.println("Pdt id: " + shoppingCart.getProducts().get(i).getProductId() + " added to new line item");
+            
         }
+        
         transaction.setSaleTransactionLineItems(list);
         em.persist(transaction);
         shoppingCart.getProducts().clear();
+        shoppingCart.getQuantity().clear();
         em.merge(shoppingCart);
         
         return transaction;

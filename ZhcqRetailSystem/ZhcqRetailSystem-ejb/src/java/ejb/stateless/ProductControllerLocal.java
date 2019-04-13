@@ -43,5 +43,7 @@ public interface ProductControllerLocal {
     public List<ProductEntity> retrieveDiffSizes(Long productId) throws ProductNotFoundException;
 
     public List<ProductEntity> retrieveProductSuggestions(Long productId) throws ProductNotFoundException;
+
+    public List<ProductEntity> retrieveDistinctNames(List<ProductEntity> allProducts);
     
 }

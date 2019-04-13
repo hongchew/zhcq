@@ -20,6 +20,12 @@ export class ProductDetailsPage implements OnInit {
   diffSizes: ProductEntity[];
   suggestedProducts: ProductEntity[];
 
+  sliderOpts = {
+    zoom: false,
+    slidesPerView: 1.5,
+    spaceBetween: true
+  };
+
   wishlisted = false;
 
   constructor(private productService: ProductService, 

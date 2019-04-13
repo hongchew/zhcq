@@ -51,7 +51,7 @@ export class ProductDetailsPage implements OnInit {
     
   }
 
-  async presentAlert() { //called when user adds to wish list. insert wish list logic here
+  async wishListAlert() { //called when user adds to wish list. insert wish list logic here
     const alert = await this.alertController.create({
       header: 'added to wish list!'
     });
@@ -59,6 +59,13 @@ export class ProductDetailsPage implements OnInit {
   }
   addToWishList() {
    this.wishlisted = !this.wishlisted;
+  }
+
+  async cartAlert() { //called when user adds to cart. insert wish list logic here
+    const alert = await this.alertController.create({
+      header: 'Added to Cart!'
+    });
+    await alert.present();
   }
   
 }

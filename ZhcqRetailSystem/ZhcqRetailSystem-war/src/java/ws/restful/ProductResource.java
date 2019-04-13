@@ -224,29 +224,15 @@ public class ProductResource {
                     category = suggestion.getProductCategory();
                     category.getProductEntities().clear();
 
-                    for(ProductTag tag: suggestion.getProductTags())
-                    {
-                        tag.getProductEntities().clear();
-                    }
-                    for(WishList wishlist: suggestion.getWishLists())
-                    {
-                        wishlist.getProductEntities().clear();
-                    }     
+                    suggestion.getProductTags().clear();
+                    
+                    suggestion.getWishLists().clear();
 
-                    for(ShoppingCart cart: suggestion.getShoppingcarts())
-                    {
-                        cart.getProducts().clear();
-                    }
-                    outfit = suggestion.getCoordinatedOutfit();
-                    if(outfit !=null){
-                    outfit.getProductEntities().clear();
-                    }
+                    suggestion.getShoppingcarts().clear();
+                    
+                    suggestion.setCoordinatedOutfit(null);
 
-                    promotion = suggestion.getPromotion();
-
-                    if(promotion !=null){
-                        promotion.getPromotionalProducts().clear();  
-                    }
+                    suggestion.setPromotion(null);
                 }
             }
             else { 

@@ -1,5 +1,5 @@
 <ion-header>
-  <title>{{selectedProduct.productName}} - zhcq & co.</title>
+  <title> zhcq & co.</title>
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
@@ -12,57 +12,52 @@
 </ion-header>
 
 <ion-content>
+
+
+  <!-- SELECTED PRODUCT -->
     <img src="assets/{{selectedProduct.picturePath}}" class="img-responsive"/>
   
   <ion-item>
     <ion-row>
         <h4>{{selectedProduct.productName}} &nbsp;&nbsp; ${{selectedProduct.unitPrice}}  &nbsp;&nbsp; 
-          <button style="background:transparent" (click)="presentAlert()">
+          <ion-button fill="transparent" size="default" (click)="wishListAlert()">
             <ion-icon name="heart"></ion-icon>
-          </button>
+          </ion-button>
+          <ion-button fill="transparent" size="default" (click)="cartAlert()">
+              <ion-icon name="cart"></ion-icon>
+          </ion-button>
         </h4>
-<<<<<<< HEAD
-      <hr/>
-      <br/>
-    </ion-row>
-    <ion-row>
-      {{selectedProduct.description}}
-=======
-      <br>
-      <br>
-       {{selectedProduct.description}}
->>>>>>> 89283f1d1541cb603bd426ef10b6621c335a84f0
+    
+       {{selectedProduct.description}} &nbsp;&nbsp; Size: {{selectedProduct.sizeEnum}}
     </ion-row>
   
   </ion-item>
 
-  
-  <div *ngIf="!errorMessage"> Other Colours!
-      <table border="1" style="width: 100%; cellpadding: 3px; cellspacing: 1px;">
-        <thead>
-          <tr>
-            <th>NAME</th>
-            <th>DESCRIPTION</th>
-            <th>UNITPRICE</th>
-            <th>QTY ON HAND</th>
-            <th>SIZE</th>
-            <th>COLOUR</th>
-            <th>PIC</th>
-          </tr>
-        </thead>
-        <tbody *ngFor="let product of diffColours">
-          <td>{{product.productName}}</td>
-          <td>{{product.description}}</td>
-          <td>{{product.unitPrice}}</td>
-          <td>{{product.quantityOnHand}}</td>
-          <td>{{product.sizeEnum}}</td>
-          <td>{{product.colourEnum}}</td>
-          <img>
-        </tbody>
-      </table>
+  <div *ngIf="!errorMessage"> 
+      <ion-grid> 
+          <ion-row>
+            <ion-col size="2" *ngFor="let pdt of diffSizes" [routerLink]="['/product-details',pdt.productId]" class="activated">
+              <ion-button color="dark" fill="outline"> {{pdt.sizeEnum}} </ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      
   </div>
-  <div *ngIf="!errorMessage"> Diff Sizes
-      <table border="1" style="width: 100%; cellpadding: 3px; cellspacing: 1px;">
+
+  <!-- SHOW COLOUR ICON TO LINK TO PRODUCT -->
+  <div *ngIf="!errorMessage"> Other Colours!
+      <ion-grid> 
+          <ion-row>
+            <ion-col size="2" *ngFor="let product of diffColours" [routerLink]="['/product-details',product.productId]" class="activated">
+              <img src="assets/images/{{product.colourEnum}}.jpg" class="img-responsive"/>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+  </div>
+
+  
+
+  <!-- <table border="1" style="width: 100%; cellpadding: 3px; cellspacing: 1px;">
         <thead>
           <tr>
             <th>NAME</th>
@@ -83,10 +78,34 @@
           <td>{{pdt.colourEnum}}</td>
           <img>
         </tbody>
-      </table>
-  </div>
-  <div *ngIf="!errorMessage"> Suggestions
-      <table border="1" style="width: 100%; cellpadding: 3px; cellspacing: 1px;">
+      </table> -->
+  <div *ngIf="!errorMessage"> OTHERS ALSO VIEWED THESE! 
+    <ion-slides class="image-slider" slidesPerView="2">
+      <ion-slide *ngFor="let pdt of suggestedProducts" [routerLink]="['/product-details',pdt.productId]" >
+          <img src="assets/{{pdt.picturePath}}" class="img-responsive"/>
+      </ion-slide>
+    </ion-slides>
+
+
+      <!-- <ion-virtual-scroll [items]="suggestedProducts">
+          <ion-item *virtualItem="let pdt">
+            <ion-avatar item-start>
+              <img src="assets/{{pdt.picturePath}}" class="img-responsive"/>
+            </ion-avatar>
+            {{ item.firstName }} {{ item.lastName }}
+          </ion-item>
+        </ion-virtual-scroll> -->
+      </div>
+
+
+
+
+
+
+
+
+
+      <!-- <table border="1" style="width: 100%; cellpadding: 3px; cellspacing: 1px;">
         <thead>
           <tr>
             <th>NAME</th>
@@ -107,8 +126,8 @@
           <td>{{p.colourEnum}}</td>
           <img>
         </tbody>
-      </table>
-  </div>
+      </table> -->
+ 
     
   <ion-img src="/assets/size-guide.png"></ion-img>
 

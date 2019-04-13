@@ -1,7 +1,10 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>Sign In</ion-title>
-  </ion-toolbar>
+		<ion-toolbar>
+			<ion-menu-button start></ion-menu-button>
+			<ion-title>
+				Sign In
+			</ion-title>
+		</ion-toolbar>
 </ion-header>
 
 <ion-content>
@@ -14,12 +17,12 @@
 			</div>
 			<div padding>
 				<ion-item>
-        <ion-label>Username</ion-label>
+        			<ion-label>Username</ion-label>
 					<ion-input type="text" [(ngModel)]="username" placeholder="Username"></ion-input>
 				</ion-item>
 
 				<ion-item>
-        <ion-label>Password</ion-label>
+        			<ion-label>Password</ion-label>
 					<ion-input type="password" [(ngModel)] ="password" placeholder="Password"></ion-input>
 				</ion-item>
 			</div>

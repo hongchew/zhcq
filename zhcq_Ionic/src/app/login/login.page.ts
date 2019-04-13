@@ -12,7 +12,7 @@ import { Storage } from '@ionic/storage';
 })
 export class LoginPage implements OnInit {
 
-  username : string;
+  username: string;
   password: string;
 
   member: Member;

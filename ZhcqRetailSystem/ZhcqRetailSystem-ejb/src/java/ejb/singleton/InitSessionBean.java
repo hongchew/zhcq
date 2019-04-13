@@ -17,13 +17,20 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.ejb.Singleton;
 import javax.ejb.LocalBean;
+import javax.ejb.Schedule;
 import javax.ejb.Startup;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import util.enumeration.ColourEnum;
 import util.enumeration.SizeEnum;
+import util.exception.PromotionNotFoundException;
 import util.exception.StaffNotFoundException;
 
 
@@ -49,6 +56,9 @@ public class InitSessionBean {
 
     @EJB(name = "StaffControllerLocal")
     private StaffControllerLocal staffControllerLocal;
+    
+    @PersistenceContext(unitName = "ZhcqRetailSystem-ejbPU")
+    private EntityManager em;
     
     
     
@@ -154,7 +164,26 @@ public class InitSessionBean {
    
         }
    }
+
+    public void persist(Object object) {
+        em.persist(object);
+    }
    
-   
+    @Schedule
+    public void deleteOldPromotion(){
+        Date today = new Date();
+        Query query = em.createQuery("SELECT p FROM Promotion p WHERE p.endDate < :today");
+        query.setParameter("today", today);
+        
+        List<Promotion> oldPromo = query.getResultList();
+        
+        for(Promotion promo : oldPromo){
+            try {
+                promotionControllerLocal.deletePromotion(promo.getPromotionId());
+            } catch (PromotionNotFoundException ex) {
+                System.err.println("Promotion not found");
+            }
+        }    
+    }
    
 }

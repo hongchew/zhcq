@@ -6,6 +6,7 @@
 package entity;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Entity;
@@ -34,10 +35,15 @@ public class SaleTransaction implements Serializable {
     
     @OneToMany(mappedBy="saleTransaction")
     private List<SaleTransactionLineItem> saleTransactionLineItems;
+
+
+    
+    private BigDecimal totalPrice;
     
 
     public SaleTransaction() {
         saleTransactionLineItems = new ArrayList<SaleTransactionLineItem>();
+        totalPrice = BigDecimal.ZERO;
     }
     
     public SaleTransaction(Member member){
@@ -45,6 +51,10 @@ public class SaleTransaction implements Serializable {
         this.member = member;
     }
 
+    public void addToTotalPrice(BigDecimal subtotal){
+        totalPrice = totalPrice.add(subtotal);
+    }
+        
     public Long getSaleTransactionId() {
         return saleTransactionId;
     }
@@ -81,4 +91,12 @@ public class SaleTransaction implements Serializable {
         this.saleTransactionLineItems = saleTransactionLineItems;
     }
     
+    
+    public BigDecimal getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(BigDecimal totalPrice) {
+        this.totalPrice = totalPrice;
+    }
 }

@@ -18,7 +18,7 @@ export class ShoppingcartPage implements OnInit {
   cart : ShoppingCart;
 
   constructor(private storage: Storage, private alertController: AlertController, private cartService: ShoppingCartService) {
-    storage.get("currentCustomer").then((data) => {
+    storage.get('currentCustomer').then((data) => {
       this.member = data;
     console.log(this.member.firstName);
     console.log(this.member.lastName);

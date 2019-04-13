@@ -1,7 +1,6 @@
 
 package ws.restful;
 
-import com.sun.xml.internal.ws.api.message.Packet;
 import ejb.stateless.CategoryControllerLocal;
 import entity.Category;
 import entity.ProductEntity;
@@ -16,7 +15,6 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 import ws.datamodel.RetrieveAllCategoriesRsp;
 import javax.ws.rs.core.Response;

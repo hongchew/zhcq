@@ -24,15 +24,17 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.UriInfo;
 import util.exception.DeleteMemberException;
 import util.exception.InputDataValidationException;
+import util.exception.InvalidLoginCredentialException;
 import util.exception.MemberNotFoundException;
 import util.exception.UpdateMemberException;
 import ws.datamodel.CreateMemberReq;
 import ws.datamodel.CreateMemberRsp;
 import ws.datamodel.ErrorRsp;
+import ws.datamodel.LoginReq;
+import ws.datamodel.LoginRsp;
 import ws.datamodel.RetrieveAllMembersRsp;
 import ws.datamodel.RetrieveMemberRsp;
 import ws.datamodel.UpdateMemberReq;
@@ -77,6 +79,34 @@ public class MemberResource {
             return Response.status(Response.Status.OK).entity(retrieveAllMembersRsp).build();
         } catch (Exception ex) {
             ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(errorRsp).build();
+        }
+    }
+
+    @Path("login")
+    @GET
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response login(LoginReq loginReq) {
+        if (loginReq != null) {
+            try {
+                Member member = memberControllerLocal.memberLogin(loginReq.getUsername(), loginReq.getPassword());
+                member.getWishList().setMember(null);
+                member.getShoppingCart().setMember(null);
+                List<SaleTransaction> listST = member.getSaleTransactions();
+                for (SaleTransaction saleTransaction : listST) {
+                    saleTransaction.setMember(null);
+                }
+                LoginRsp loginRsp = new LoginRsp(member);
+                return Response.status(Response.Status.OK).entity(loginRsp).build();
+            } catch (InvalidLoginCredentialException ex) {
+                ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
+                System.out.println(ex.getMessage());
+                return Response.status(Response.Status.BAD_REQUEST).entity(errorRsp).build();
+            }
+        } else {
+            ErrorRsp errorRsp = new ErrorRsp("Invalid login request");
+            System.out.println("error");
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(errorRsp).build();
         }
     }

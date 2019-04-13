@@ -56,7 +56,8 @@ public class ProductResource {
         { 
             List<ProductEntity> allProducts = productControllerLocal.retrieveAllProducts();
             //System.out.println("REACHED 1 Length of Array = " + allProducts.size());
-            
+             List<String> imgUrls = new ArrayList<>();
+             
             if(allProducts != null){
                 for(ProductEntity product:allProducts)
                 {
@@ -91,10 +92,12 @@ public class ProductResource {
                     if(promotion !=null){
                         promotion.getPromotionalProducts().clear();  
                     }
+                    imgUrls.add(product.getPicturePath());
                 }
             }
             
-            RetrieveAllProductsRsp retrieveAllProductsRsp  = new RetrieveAllProductsRsp(allProducts);
+           
+            RetrieveAllProductsRsp retrieveAllProductsRsp  = new RetrieveAllProductsRsp(allProducts,imgUrls);
         
             return Response.status(Status.OK).entity(retrieveAllProductsRsp).build();
         }

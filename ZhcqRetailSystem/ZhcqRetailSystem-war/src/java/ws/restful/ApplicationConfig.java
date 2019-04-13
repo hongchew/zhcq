@@ -23,6 +23,7 @@ public class ApplicationConfig extends Application
         resources.add(ws.restful.CategoryResource.class);
         resources.add(ws.restful.MemberResource.class);
         resources.add(ws.restful.ProductResource.class);
+        resources.add(ws.restful.PromotionResource.class);
         resources.add(ws.restful.ShoppingCartResource.class);
         resources.add(ws.restful.WishListResource.class);
     }

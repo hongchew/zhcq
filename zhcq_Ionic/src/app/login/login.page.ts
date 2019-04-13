@@ -17,7 +17,7 @@ export class LoginPage implements OnInit {
 
   member: Member;
 
-  constructor(public memberService: MemberService, private alertController: AlertController, private router : Router, private storage: Storage) {
+  constructor(private memberService: MemberService, private alertController: AlertController, private router : Router, private storage: Storage) {
   }
 
   ngOnInit() {
@@ -34,7 +34,7 @@ export class LoginPage implements OnInit {
       error=> {
         this.presentAlert(error);
       }
-    )
+    );
   }
 
   async presentAlert(message: string) {

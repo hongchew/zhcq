@@ -1,9 +1,26 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>shoppingcart</ion-title>
+    <ion-menu-button start></ion-menu-button>
+    <ion-title>
+    Shopping Cart
+    </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+
+  <h2 text-center>Shopping Cart</h2>
+  <ion-grid> 
+    <ion-row>
+      <ion-col *ngFor="let product of products" [routerLink]="['/product-details',product.productId]" class="activated">
+        <img src="assets/{{product.picturePath}}" class="img-responsive"/>
+            <h6>{{product.productName}} &nbsp;&nbsp;${{product.unitPrice}}</h6>
+            <label>Quantity:</label> 
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-infinite-scroll (ionInfinite)="loadMoreProducts($event)">
+    <ion-infinite-scroll-content></ion-infinite-scroll-content>
+  </ion-infinite-scroll> 
 
 </ion-content>

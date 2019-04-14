@@ -20,16 +20,16 @@ export class ShoppingcartPage implements OnInit {
   constructor(private storage: Storage, private alertController: AlertController, private cartService: ShoppingCartService) {
     storage.get('currentCustomer').then((data) => {
       this.member = data;
-      console.log(this.member.firstName);
-      console.log(this.member.lastName);
-      console.log(this.member.username);
+      this.viewCart();
     });
   }
 
   ngOnInit() {
-    if (this.member == undefined) {
-       console.log("User is not logged in!");
-    } else {
+  }
+
+  viewCart() {
+    console.log('MEMBER EXIST? = ' + this.member);
+    if (this.member !== undefined && this.member !== null ) {
       this.cartService.retrieveShoppingCart(this.member.memberId).subscribe(
         response => {
           this.cart = response.userShoppingCart;
@@ -38,7 +38,9 @@ export class ShoppingcartPage implements OnInit {
         error => {
           this.presentAlert(error);
         }
-      )
+      );
+    } else {
+      this.presentAlert('Please Login to view shopping cart!');
     }
   }
 

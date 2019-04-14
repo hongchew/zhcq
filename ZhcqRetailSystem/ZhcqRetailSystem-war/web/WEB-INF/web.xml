@@ -78,4 +78,10 @@
         <local>ejb.stateless.PromotionControllerLocal</local>
         <ejb-link>ZhcqRetailSystem-ejb.jar#PromotionController</ejb-link>
     </ejb-local-ref>
+    <ejb-local-ref>
+        <ejb-ref-name>CoordinatedOutfitControllerLocal</ejb-ref-name>
+        <ejb-ref-type>Session</ejb-ref-type>
+        <local>ejb.stateless.CoordinatedOutfitControllerLocal</local>
+        <ejb-link>ZhcqRetailSystem-ejb.jar#CoordinatedOutfitController</ejb-link>
+    </ejb-local-ref>
 </web-app>

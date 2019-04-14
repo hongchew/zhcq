@@ -15,7 +15,6 @@ export class BrowseProductsPage implements OnInit {
   public products: ProductEntity[];
   catId: number;
   
-  public url= "images/bardot_top_black.jpg";
  
   // images: Array<string>;  
   // grid: Array<Array<string>>;
@@ -43,7 +42,7 @@ export class BrowseProductsPage implements OnInit {
     } 
     else 
     {
-      this.productService.retrieveAllProducts().subscribe(
+      this.productService.retrieveAllUniqueProducts().subscribe(
         response => {
           console.log(response);
           this.products = response.products 

@@ -24,7 +24,15 @@ export class ProductService
 
     retrieveAllProducts(): Observable<any>
     {
-        return this.httpClient.get<any>(this.baseUrl + "/retrieveAllProducts").pipe
+        return this.httpClient.get<any>(this.baseUrl + '/retrieveAllProducts').pipe
+        (
+            catchError(this.handleError)
+        );
+    } 
+
+    retrieveAllUniqueProducts(): Observable<any>
+    {
+        return this.httpClient.get<any>(this.baseUrl + '/retrieveAllUniqueProducts').pipe
         (
             catchError(this.handleError)
         );
@@ -32,7 +40,7 @@ export class ProductService
 
     retrieveProductById(id: number): Observable<any>
     {
-        return this.httpClient.get<any>(this.baseUrl + "/retrieveProductById/" + id).pipe
+        return this.httpClient.get<any>(this.baseUrl + '/retrieveProductById/' + id).pipe
         (
             catchError(this.handleError)
         );
@@ -40,7 +48,7 @@ export class ProductService
 
     retrieveProductByCat(catId: number): Observable<any>
     {
-        return this.httpClient.get<any>(this.baseUrl + "/retrieveProductByCat/" + catId).pipe
+        return this.httpClient.get<any>(this.baseUrl + '/retrieveProductByCat/' + catId).pipe
         (
             catchError(this.handleError)
         );

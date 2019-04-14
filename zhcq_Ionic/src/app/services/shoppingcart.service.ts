@@ -20,7 +20,7 @@ export class ShoppingCartService {
 
   retrieveShoppingCart(userId : number): Observable<any>
 	{
-		return this.httpClient.get<any>(this.baseUrl + "/retrieveShoppingCart?userId" + userId).pipe
+		return this.httpClient.get<any>(this.baseUrl + "/retrieveShoppingCart?userId=" + userId).pipe
 		(
 			catchError(this.handleError)
 		)

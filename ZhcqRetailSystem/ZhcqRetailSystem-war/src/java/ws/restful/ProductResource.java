@@ -27,6 +27,7 @@ import util.exception.CategoryNotFoundException;
 import util.exception.ProductNotFoundException;
 import ws.datamodel.ErrorRsp;
 import ws.datamodel.RetrieveAllProductsRsp;
+import ws.datamodel.RetrieveAllUniqueProductsRsp;
 import ws.datamodel.RetrieveProductsByCatRsp;
 import ws.datamodel.RetrieveProductByIdRsp;
 
@@ -54,11 +55,11 @@ public class ProductResource {
         try
         { 
             List<ProductEntity> allProducts = productControllerLocal.retrieveAllProducts();
-            //System.out.println("REACHED 1 Length of Array = " + allProducts.size());
-             List<String> imgUrls = new ArrayList<>();
+            
+            List<ProductEntity> distinctProducts = productControllerLocal.retrieveDistinctNames(allProducts);
              
             if(allProducts != null){
-                for(ProductEntity product:allProducts)
+                for(ProductEntity product:distinctProducts)
                 {
                    
                     Category category = product.getProductCategory();
@@ -95,9 +96,73 @@ public class ProductResource {
                 }
             }
             
-            RetrieveAllProductsRsp retrieveAllProductsRsp  = new RetrieveAllProductsRsp(allProducts);
+           
+            
+            RetrieveAllProductsRsp retrieveAllProductsRsp  = new RetrieveAllProductsRsp(distinctProducts);
         
             return Response.status(Status.OK).entity(retrieveAllProductsRsp).build();
+        }
+        catch(Exception ex)
+        {
+            ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
+            
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(errorRsp).build();
+        }
+        
+    }
+    
+    @Path("retrieveAllUniqueProducts")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response retrieveAllUniqueProducts()
+    {
+        try
+        { 
+            List<ProductEntity> allUniqueProducts = productControllerLocal.retrieveAllUniqueProducts();
+            //System.out.println("REACHED 1 Length of Array = " + allProducts.size());
+             List<String> imgUrls = new ArrayList<>();
+             
+            if(allUniqueProducts != null){
+                for(ProductEntity product:allUniqueProducts)
+                {
+                   
+                    Category category = product.getProductCategory();
+                    category.getProductEntities().clear();
+                    
+                    for(ProductTag tag: product.getProductTags())
+                    {
+                        tag.getProductEntities().clear();
+                    }           
+                   
+                    for(WishList wishlist: product.getWishLists())
+                    {
+                        wishlist.getProductEntities().clear();
+                    }     
+                    
+                    for(ShoppingCart cart: product.getShoppingcarts())
+                    {
+                        cart.getProducts().clear();
+                    }
+                    
+                    
+                    CoordinatedOutfit outfit = product.getCoordinatedOutfit();
+                    if(outfit !=null){
+                        outfit.getProductEntities().clear();
+                    }
+                 
+                    
+                    Promotion promotion = product.getPromotion();
+                    
+                    if(promotion !=null){
+                        promotion.getPromotionalProducts().clear();  
+                    }
+                    
+                }
+            }
+            
+            RetrieveAllUniqueProductsRsp retrieveAllUniqueProductsRsp  = new RetrieveAllUniqueProductsRsp(allUniqueProducts);
+        
+            return Response.status(Status.OK).entity(retrieveAllUniqueProductsRsp).build();
         }
         catch(Exception ex)
         {
@@ -124,22 +189,15 @@ public class ProductResource {
             {
                 tag.getProductEntities().clear();
             }
-            for(WishList wishlist: product.getWishLists())
-            {
-                wishlist.getProductEntities().clear();
-            }     
-                    
-            for(ShoppingCart cart: product.getShoppingcarts())
-            {
-                cart.getProducts().clear();
-            }
-            CoordinatedOutfit outfit = product.getCoordinatedOutfit();
-            if(outfit !=null){
-                outfit.getProductEntities().clear();
-            }
             
-            Promotion promotion = product.getPromotion();
+            product.getWishLists().clear();
                     
+            product.getShoppingcarts().clear();
+            
+            product.setCoordinatedOutfit(null);
+                    
+            Promotion promotion = product.getPromotion();
+                  
             if(promotion !=null){
                 promotion.getPromotionalProducts().clear();  
             }
@@ -155,20 +213,11 @@ public class ProductResource {
                     {
                         tag.getProductEntities().clear();
                     }
-                    for(WishList wishlist: pdt.getWishLists())
-                    {
-                        wishlist.getProductEntities().clear();
-                    }     
-
-                    for(ShoppingCart cart: pdt.getShoppingcarts())
-                    {
-                        cart.getProducts().clear();
-                    }
-                    outfit = pdt.getCoordinatedOutfit();
-                    if(outfit !=null){
-                    outfit.getProductEntities().clear();
-                    }
-
+                    product.getWishLists().clear();
+                    
+                    product.getShoppingcarts().clear();
+            
+                    product.setCoordinatedOutfit(null);
                     promotion = pdt.getPromotion();
 
                     if(promotion !=null){
@@ -192,19 +241,11 @@ public class ProductResource {
                     {
                         tag.getProductEntities().clear();
                     }
-                    for(WishList wishlist: suggestion.getWishLists())
-                    {
-                        wishlist.getProductEntities().clear();
-                    }     
-
-                    for(ShoppingCart cart: suggestion.getShoppingcarts())
-                    {
-                        cart.getProducts().clear();
-                    }
-                    outfit = suggestion.getCoordinatedOutfit();
-                    if(outfit !=null){
-                    outfit.getProductEntities().clear();
-                    }
+                    product.getWishLists().clear();
+                    
+                    product.getShoppingcarts().clear();
+            
+                    product.setCoordinatedOutfit(null);
 
                     promotion = suggestion.getPromotion();
 

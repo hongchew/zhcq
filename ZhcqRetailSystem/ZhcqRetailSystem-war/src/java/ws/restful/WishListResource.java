@@ -5,6 +5,7 @@
  */
 package ws.restful;
 
+import com.sun.xml.ws.security.opt.impl.util.SOAPUtil;
 import ejb.stateless.WishListControllerLocal;
 import entity.Category;
 import entity.CoordinatedOutfit;
@@ -49,7 +50,7 @@ public class WishListResource {
     public WishListResource() {
     }
 
-    
+    @Path("retrieveWishList")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response retrieveWishList(@QueryParam("userId") Long userId){
@@ -121,10 +122,13 @@ public class WishListResource {
         }       
     }
     
+    @Path("addToWishlist")
     @POST
     public Response addToWishlist(@QueryParam("userId") Long userId, @QueryParam("productId") Long productId){
         try{
+            System.out.println("Entered add to wishlist method");
             wishListController.addProductToWishlist(userId, productId);            
+            System.out.println("Product added to wishlist");
             return Response.status(Response.Status.OK).build();
             
         } catch (MemberNotFoundException | ProductNotFoundException ex) {

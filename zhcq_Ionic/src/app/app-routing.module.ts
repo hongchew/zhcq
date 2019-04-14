@@ -21,7 +21,10 @@ const routes: Routes = [
   { path: 'product-details/:id', loadChildren: './product-details/product-details.module#ProductDetailsPageModule' },
   { path: 'register', loadChildren: './register/register.module#RegisterPageModule' },
   { path: 'login', loadChildren: './login/login.module#LoginPageModule' },
-  { path: 'shoppingcart', loadChildren: './shoppingcart/shoppingcart.module#ShoppingcartPageModule' }
+  { path: 'shoppingcart', loadChildren: './shoppingcart/shoppingcart.module#ShoppingcartPageModule' },
+  { path: 'promotional-products', loadChildren: './promotional-products/promotional-products.module#PromotionalProductsPageModule' },
+  { path: 'sizeguide', loadChildren: './sizeguide/sizeguide.module#SizeguidePageModule' },
+  // { path: 'header', loadChildren: './header/header.module#HeaderPageModule' }
 ];
 
 @NgModule({

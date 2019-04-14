@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MemberService } from '../services/member.service';
 import { AlertController } from '@ionic/angular';
 import { Member } from '../entities/member';
-import { Router } from  "@angular/router";
+import { Router } from '@angular/router';
 import { Storage } from '@ionic/storage';
 
 @Component({
@@ -12,7 +12,7 @@ import { Storage } from '@ionic/storage';
 })
 export class LoginPage implements OnInit {
 
-  username : string;
+  username: string;
   password: string;
 
   member: Member;
@@ -30,6 +30,9 @@ export class LoginPage implements OnInit {
         this.storage.set('isLogin', true);
         this.storage.set('currentCustomer', this.member);
         this.router.navigateByUrl('home');
+        console.log("TEST FOR LOGGED IN ");
+        console.log("Member = " + this.member);
+        
       },
       error=> {
         this.presentAlert(error);
@@ -39,7 +42,7 @@ export class LoginPage implements OnInit {
 
   async presentAlert(message: string) {
     const alert = await this.alertController.create({
-      message: message,
+      header: "ERROR: " + message.substring(37),
       buttons: ['OK']
     });
     await alert.present();

@@ -18,14 +18,24 @@ export class AppComponent {
       icon: 'home'
     },
     {
-      title: 'Shop All',
-      url: '/browse-products',
-      icon: 'search'
+      title: 'Login',
+      url: '/login',
+      icon: 'checkmark'
+    },
+    {
+      title: 'Register',
+      url: '/register',
+      icon: 'add'
     },
     {
       title: 'About Us',
       url: '/about-us',
       icon: 'help'
+    },
+    {
+      title: 'SALE',
+      url: '/promotional-products',
+      icon: 'happy'
     }
     
   ];

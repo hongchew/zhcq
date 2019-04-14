@@ -24,6 +24,8 @@ public interface ProductControllerLocal {
 
     public ProductEntity retrieveProductById(Long id) throws ProductNotFoundException;
 
+    public List<ProductEntity> retrieveAllUniqueProducts();
+
     public List<ProductEntity> filterProductsByCategory(Long categoryId) throws CategoryNotFoundException;
 
     public List<ProductEntity> searchProductsByName(String searchString);

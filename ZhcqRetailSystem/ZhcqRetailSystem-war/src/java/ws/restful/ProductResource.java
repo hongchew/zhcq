@@ -55,11 +55,11 @@ public class ProductResource {
         try
         { 
             List<ProductEntity> allProducts = productControllerLocal.retrieveAllProducts();
-            //System.out.println("REACHED 1 Length of Array = " + allProducts.size());
-             List<String> imgUrls = new ArrayList<>();
+            
+            List<ProductEntity> distinctProducts = productControllerLocal.retrieveDistinctNames(allProducts);
              
             if(allProducts != null){
-                for(ProductEntity product:allProducts)
+                for(ProductEntity product:distinctProducts)
                 {
                    
                     Category category = product.getProductCategory();
@@ -96,7 +96,9 @@ public class ProductResource {
                 }
             }
             
-            RetrieveAllProductsRsp retrieveAllProductsRsp  = new RetrieveAllProductsRsp(allProducts);
+           
+            
+            RetrieveAllProductsRsp retrieveAllProductsRsp  = new RetrieveAllProductsRsp(distinctProducts);
         
             return Response.status(Status.OK).entity(retrieveAllProductsRsp).build();
         }

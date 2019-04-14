@@ -47,90 +47,95 @@ export class ProductDetailsPage implements OnInit {
     private activatedRoute: ActivatedRoute, private alertController: AlertController, private storage: Storage, private shoppingCartService: ShoppingCartService, private wishListService: WishListService) {
       storage.get('currentCustomer').then((data) => {
         this.member = data;
-        // console.log(this.member.firstName);
-        // console.log(this.member.lastName);
-        // console.log(this.member.username);
+        console.log(this.member.firstName);
+        console.log(this.member.lastName);
+        console.log(this.member.username);
       });
      }
 
   ngOnInit() {
     this.id = parseInt(this.activatedRoute.snapshot.paramMap.get('id'));
-    console.log("Selected productid = " + this.id);
+    console.log('Selected productid = ' + this.id);
 
-    if(!isNaN(this.id))
+    if (!isNaN(this.id))
 		{
       this.productService.retrieveProductById(this.id).subscribe(
         response => {
-          console.log("response = "+response);
+          console.log('response = '+response);
           this.selectedProduct = response.selectedProduct;
           this.diffColours = response.diffColours;
           this.diffSizes = response.diffSizes;
           this.suggestedProducts = response.suggestedProducts;
 
-          //Check for promotion
+          // Check for promotion
           if(this.selectedProduct.promotion != null){
             this.onPromotion = true;
             this.promotionalPrice = (this.selectedProduct.promotion.discountRate * this.selectedProduct.unitPrice);
-            console.log("Product Price is: " + this.selectedProduct.unitPrice);
-            console.log("Promotional rate is: " + this.selectedProduct.promotion.discountRate);
-            console.log("Calculated Promotional Price is: " + this.promotionalPrice);
+            console.log('Product Price is: ' + this.selectedProduct.unitPrice);
+            console.log('Promotional rate is: ' + this.selectedProduct.promotion.discountRate);
+            console.log('Calculated Promotional Price is: ' + this.promotionalPrice);
           }
         },
         error => {
           this.presentAlert(error.substring(37));
         }
       );
-    }
-    else
-    {
-      this.errorMessage = "No Product ID was provided";
+    } else {
+      this.errorMessage = 'No Product ID was provided';
       this.presentAlert(this.errorMessage);
     }
-    
   }
 
   async addToWishList() {
-    console.log("Add to Wishlist: MemberId = " + this.member.memberId);
-    console.log("Add to Wishlist: ProductId = " + this.id);
+    // console.log('Add to Wishlist: MemberId = ' + this.member.memberId);
+    // console.log('Add to Wishlist: ProductId = ' + this.id);
 
     const listSuccess = await this.alertController.create({
       header: 'added to wish list!'
     });
-
-    this.wishListService.addToWishList(this.member.memberId, this.id).subscribe(
-      response=>{
-        console.log("response = " + response);
-        listSuccess.present();
-    },
-    error => {
-      this.presentAlert(error.substring(37));
-      // this.ngOnInit();
+    if (this.member !== null && this.cartId !== undefined ) {
+      this.wishListService.addToWishList(this.member.memberId, this.id).subscribe(
+        response => {
+          console.log('response = ' + response);
+          listSuccess.present();
+      },
+      error => {
+        this.presentAlert(error.substring(37));
+        // this.ngOnInit();
+      }
+      );
+    } else {
+      this.presentAlert('Please Login to perform operation!');
     }
-    );
   }
 
 
   async addToCart() {
-    console.log("cartID = " + this.cartId)
-    console.log("Product Id = " + this.id)
+    // console.log('cartID = ' + this.cartId)
+    // console.log('Product Id = ' + this.id)
 
     const cartAlert = await this.alertController.create({
       header: 'Added to Cart!'
     });
-    this.shoppingCartService.addToCart(this.member.shoppingCart.cartId,this.id).subscribe(response => {
-      console.log("response = " + response);
-      cartAlert.present();
-    },
-    error =>{
-      this.presentAlert("ERROR FROM ADDING TO CART: " + error.substring(37));
-      // this.ngOnInit();
+
+    if (this.member !== null && this.cartId !== undefined ) {
+      this.shoppingCartService.addToCart(this.member.shoppingCart.cartId,this.id).subscribe(response => {
+        console.log('response = ' + response);
+        cartAlert.present();
+      },
+      error => {
+        this.presentAlert('ERROR FROM ADDING TO CART: ' + error.substring(37));
+        // this.ngOnInit();
+      }
+      );
+    } else {
+      this.presentAlert('Please Login to perform operation!');
     }
-    );
   }
 
   async presentAlert(message: string) {
     const alert = await this.alertController.create({
-      header: "ERROR: " + message,
+      header: 'Error: ' + message,
       buttons: ['OK']
     });
     await alert.present();

@@ -334,10 +334,7 @@ public class ProductResource {
                     product.setShoppingcarts(null);
                     
                     
-                    CoordinatedOutfit outfit = product.getCoordinatedOutfit();
-                    if(outfit !=null){
-                        outfit.getProductEntities().clear();
-                    }
+                    product.setCoordinatedOutfit(null);
                  
                     
                     Promotion promotion = product.getPromotion();

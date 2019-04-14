@@ -47,9 +47,9 @@ public class CoordinatedOutfit implements Serializable {
         productEntities = new ArrayList<ProductEntity>();
     }
 
-    public CoordinatedOutfit(Date dateCreated, String outfitName) {
+    public CoordinatedOutfit(String outfitName) {
         this();
-        this.dateCreated = dateCreated;
+        
         this.outfitName = outfitName;
     }
     

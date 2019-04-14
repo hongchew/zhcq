@@ -88,6 +88,7 @@ public class InitSessionBean {
             Category skirts = categoryControllerLocal.createNewCategoryEntity(new Category("SKIRTS","SKIRTS"));
             Category bottoms = categoryControllerLocal.createNewCategoryEntity(new Category("BOTTOMS","BOTTOMS"));
             
+            ProductTag tagBasic = productTagControllerLocal.createNewProductTag(new ProductTag("BASIC"));
             ProductTag tagPopular = productTagControllerLocal.createNewProductTag(new ProductTag("POPULAR"));
             ProductTag tagPolkaDots = productTagControllerLocal.createNewProductTag(new ProductTag("POLKADOTS"));
             ProductTag tagFloral = productTagControllerLocal.createNewProductTag(new ProductTag("FLORAL"));
@@ -95,29 +96,16 @@ public class InitSessionBean {
             ProductTag tagStripes = productTagControllerLocal.createNewProductTag(new ProductTag("STRIPES"));
             ProductTag tagPrints = productTagControllerLocal.createNewProductTag(new ProductTag("PRINTS"));
             ProductTag tagCheckered = productTagControllerLocal.createNewProductTag(new ProductTag("CHECKERED"));
+            ProductTag tagLace = productTagControllerLocal.createNewProductTag(new ProductTag("LACE"));
 
 
             
             List<Long> tagIds = new ArrayList<>();
-            tagIds.add(tagCheckered.getProductTagId());
-            tagIds.add(tagFloral.getProductTagId());
+            tagIds.add(tagBasic.getProductTagId());
+            tagIds.add(tagPopular.getProductTagId());
             ProductEntity product1 = productControllerLocal.createNewProduct(new ProductEntity("Bardot Top", "100% Cotton", BigDecimal.valueOf(28.00), 20, SizeEnum.S, ColourEnum.BLACK,"images/bardot_top_black.jpg"), tops.getCategoryId() , tagIds);
             ProductEntity product2 = productControllerLocal.createNewProduct(new ProductEntity("Bardot Top", "100% Cotton", BigDecimal.valueOf(28.00), 20, SizeEnum.S, ColourEnum.CREAM,"images/bardot_top_cream.jpg"), tops.getCategoryId() ,tagIds);
             productControllerLocal.createNewProduct(new ProductEntity("Bardot Top", "100% Cotton", BigDecimal.valueOf(28.00), 20, SizeEnum.S, ColourEnum.PINK,"images/bardot_top_pink.jpg"), tops.getCategoryId() ,tagIds);
-            
-            tagIds = new ArrayList<>();
-            tagIds.add(tagPolkaDots.getProductTagId());
-            tagIds.add(tagPopular.getProductTagId());
-            productControllerLocal.createNewProduct(new ProductEntity("Calista Dress", "100% Cotton", BigDecimal.valueOf(80.00), 20, SizeEnum.S, ColourEnum.BLUE,"images/calista_dress_blue.jpg"), dresses.getCategoryId(),tagIds);
-            productControllerLocal.createNewProduct(new ProductEntity("Calista Dress", "100% Cotton", BigDecimal.valueOf(80.00), 20, SizeEnum.S, ColourEnum.WHITE,"images/calista_dress_white.jpg"), dresses.getCategoryId() ,tagIds);
-            productControllerLocal.createNewProduct(new ProductEntity("Calista Dress", "100% Cotton", BigDecimal.valueOf(80.00), 20, SizeEnum.M, ColourEnum.BLUE,"images/calista_dress_blue.jpg"), dresses.getCategoryId() ,tagIds);
-            productControllerLocal.createNewProduct(new ProductEntity("Calista Dress", "100% Cotton", BigDecimal.valueOf(80.00), 20, SizeEnum.M, ColourEnum.WHITE,"images/calista_dress_white.jpg"), dresses.getCategoryId() ,tagIds);
-            productControllerLocal.createNewProduct(new ProductEntity("Calista Dress", "100% Cotton", BigDecimal.valueOf(80.00), 20, SizeEnum.L, ColourEnum.BLUE,"images/calista_dress_blue.jpg"), dresses.getCategoryId() ,tagIds);
-            productControllerLocal.createNewProduct(new ProductEntity("Calista Dress", "100% Cotton", BigDecimal.valueOf(80.00), 20, SizeEnum.L, ColourEnum.WHITE,"images/calista_dress_white.jpg"), dresses.getCategoryId() ,tagIds);
-            
-            tagIds = new ArrayList<>();
-            tagIds.add(tagStripes.getProductTagId());
-            tagIds.add(tagPrints.getProductTagId());
             productControllerLocal.createNewProduct(new ProductEntity("Canyon Top", "100% Cotton", BigDecimal.valueOf(30.00), 20, SizeEnum.S, ColourEnum.BLACK,"images/canyon_top_black.jpg"), tops.getCategoryId() ,tagIds);
             productControllerLocal.createNewProduct(new ProductEntity("Canyon Top", "100% Cotton", BigDecimal.valueOf(30.00), 20, SizeEnum.S, ColourEnum.GREEN,"images/canyon_top_green.jpg"), tops.getCategoryId() ,tagIds);
             productControllerLocal.createNewProduct(new ProductEntity("Canyon Top", "100% Cotton", BigDecimal.valueOf(30.00), 20, SizeEnum.S, ColourEnum.PINK,"images/canyon_top_pink.jpg"), tops.getCategoryId() ,tagIds);
@@ -130,11 +118,6 @@ public class InitSessionBean {
             productControllerLocal.createNewProduct(new ProductEntity("Canyon Top", "100% Cotton", BigDecimal.valueOf(30.00), 20, SizeEnum.L, ColourEnum.GREEN,"images/canyon_top_green.jpg"), tops.getCategoryId() ,tagIds);
             productControllerLocal.createNewProduct(new ProductEntity("Canyon Top", "100% Cotton", BigDecimal.valueOf(30.00), 20, SizeEnum.L, ColourEnum.PINK,"images/canyon_top_pink.jpg"), tops.getCategoryId() ,tagIds);
             productControllerLocal.createNewProduct(new ProductEntity("Canyon Top", "100% Cotton", BigDecimal.valueOf(30.00), 20, SizeEnum.L, ColourEnum.WHITE,"images/canyon_top_white.jpg"), tops.getCategoryId() ,tagIds);
-            
-            tagIds = new ArrayList<>();
-            tagIds.add(tagCheckered.getProductTagId());
-            tagIds.add(tagPolkaDots.getProductTagId());
-            
             productControllerLocal.createNewProduct(new ProductEntity("Capulet Top", "100% Cotton", BigDecimal.valueOf(50.00), 20, SizeEnum.S, ColourEnum.WHITE,"images/capulet_top_white.jpg"), tops.getCategoryId() ,tagIds);
             productControllerLocal.createNewProduct(new ProductEntity("Cherry Skirt", "100% Cotton", BigDecimal.valueOf(55.00), 20, SizeEnum.S, ColourEnum.BLUE,"images/cherry_skirt_blue.jpg"),  skirts.getCategoryId() ,tagIds);
             productControllerLocal.createNewProduct(new ProductEntity("Cherry Skirt", "100% Cotton", BigDecimal.valueOf(55.00), 20, SizeEnum.S, ColourEnum.WHITE,"images/cherry_skirt_white.jpg"), skirts.getCategoryId() ,tagIds);
@@ -144,10 +127,6 @@ public class InitSessionBean {
             productControllerLocal.createNewProduct(new ProductEntity("Capulet Top", "100% Cotton", BigDecimal.valueOf(50.00), 20, SizeEnum.L, ColourEnum.WHITE,"images/capulet_top_white.jpg"), tops.getCategoryId() ,tagIds);
             productControllerLocal.createNewProduct(new ProductEntity("Cherry Skirt", "100% Cotton", BigDecimal.valueOf(55.00), 20, SizeEnum.L, ColourEnum.BLUE,"images/cherry_skirt_blue.jpg"),  skirts.getCategoryId() ,tagIds);
             productControllerLocal.createNewProduct(new ProductEntity("Cherry Skirt", "100% Cotton", BigDecimal.valueOf(55.00), 20, SizeEnum.L, ColourEnum.WHITE,"images/cherry_skirt_white.jpg"), skirts.getCategoryId() ,tagIds);
-            
-            tagIds = new ArrayList<>();
-            tagIds.add(tagDenim.getProductTagId());
-            tagIds.add(tagPopular.getProductTagId());
             productControllerLocal.createNewProduct(new ProductEntity("Christina Dress", "100% Cotton", BigDecimal.valueOf(60.00), 20, SizeEnum.S, ColourEnum.BLACK,"images/christina_dress_black.jpg"), dresses.getCategoryId() ,tagIds);
             productControllerLocal.createNewProduct(new ProductEntity("Christina Dress", "100% Cotton", BigDecimal.valueOf(60.00), 20, SizeEnum.S, ColourEnum.BLUE,"images/christina_dress_blue.jpg"), dresses.getCategoryId() ,tagIds);
             productControllerLocal.createNewProduct(new ProductEntity("Christina Dress", "100% Cotton", BigDecimal.valueOf(60.00), 20, SizeEnum.S, ColourEnum.YELLOW,"images/christina_dress_yellow.jpg"), dresses.getCategoryId() ,tagIds);
@@ -157,50 +136,75 @@ public class InitSessionBean {
             productControllerLocal.createNewProduct(new ProductEntity("Christina Dress", "100% Cotton", BigDecimal.valueOf(60.00), 20, SizeEnum.L, ColourEnum.BLACK,"images/christina_dress_black.jpg"), dresses.getCategoryId() ,tagIds);
             productControllerLocal.createNewProduct(new ProductEntity("Christina Dress", "100% Cotton", BigDecimal.valueOf(60.00), 20, SizeEnum.L, ColourEnum.BLUE,"images/christina_dress_blue.jpg"), dresses.getCategoryId() ,tagIds);
             productControllerLocal.createNewProduct(new ProductEntity("Christina Dress", "100% Cotton", BigDecimal.valueOf(60.00), 20, SizeEnum.L, ColourEnum.YELLOW,"images/christina_dress_yellow.jpg"), dresses.getCategoryId() ,tagIds);
-            
-            tagIds = new ArrayList<>();
-            tagIds.add(tagFloral.getProductTagId());
-            tagIds.add(tagPrints.getProductTagId());
-            
             productControllerLocal.createNewProduct(new ProductEntity("Christine Dress", "100% Cotton", BigDecimal.valueOf(65.00), 20, SizeEnum.S, ColourEnum.BLACK,"images/christine_dress_black.jpg"), dresses.getCategoryId() ,tagIds);
-            productControllerLocal.createNewProduct(new ProductEntity("Christine Dress", "100% Cotton", BigDecimal.valueOf(65.00), 20, SizeEnum.S, ColourEnum.PINK,"images/christine_dress_pink.jpg"), dresses.getCategoryId() ,tagIds);
             productControllerLocal.createNewProduct(new ProductEntity("Christine Dress", "100% Cotton", BigDecimal.valueOf(65.00), 20, SizeEnum.S, ColourEnum.RED,"images/christine_dress_red.jpg"), dresses.getCategoryId() ,tagIds);
             productControllerLocal.createNewProduct(new ProductEntity("Christine Dress", "100% Cotton", BigDecimal.valueOf(65.00), 20, SizeEnum.M, ColourEnum.BLACK,"images/christine_dress_black.jpg"), dresses.getCategoryId() ,tagIds);
-            productControllerLocal.createNewProduct(new ProductEntity("Christine Dress", "100% Cotton", BigDecimal.valueOf(65.00), 20, SizeEnum.M, ColourEnum.PINK,"images/christine_dress_pink.jpg"), dresses.getCategoryId() ,tagIds);
             productControllerLocal.createNewProduct(new ProductEntity("Christine Dress", "100% Cotton", BigDecimal.valueOf(65.00), 20, SizeEnum.M, ColourEnum.RED,"images/christine_dress_red.jpg"), dresses.getCategoryId() ,tagIds);
             productControllerLocal.createNewProduct(new ProductEntity("Christine Dress", "100% Cotton", BigDecimal.valueOf(65.00), 20, SizeEnum.L, ColourEnum.BLACK,"images/christine_dress_black.jpg"), dresses.getCategoryId() ,tagIds);
-            productControllerLocal.createNewProduct(new ProductEntity("Christine Dress", "100% Cotton", BigDecimal.valueOf(65.00), 20, SizeEnum.L, ColourEnum.PINK,"images/christine_dress_pink.jpg"), dresses.getCategoryId() ,tagIds);
             productControllerLocal.createNewProduct(new ProductEntity("Christine Dress", "100% Cotton", BigDecimal.valueOf(65.00), 20, SizeEnum.L, ColourEnum.RED,"images/christine_dress_red.jpg"), dresses.getCategoryId() ,tagIds);
-            
-            tagIds = new ArrayList<>();
-            tagIds.add(tagCheckered.getProductTagId());
-            productControllerLocal.createNewProduct(new ProductEntity("Crimini Dress", "100% Cotton", BigDecimal.valueOf(89.00), 20, SizeEnum.S, ColourEnum.BLUE,"images/crimini_dress_blue.jpg"), dresses.getCategoryId() ,tagIds);
+            productControllerLocal.createNewProduct(new ProductEntity("Calista Dress", "100% Cotton", BigDecimal.valueOf(80.00), 20, SizeEnum.S, ColourEnum.WHITE,"images/calista_dress_white.jpg"), dresses.getCategoryId() ,tagIds);
+            productControllerLocal.createNewProduct(new ProductEntity("Calista Dress", "100% Cotton", BigDecimal.valueOf(80.00), 20, SizeEnum.M, ColourEnum.WHITE,"images/calista_dress_white.jpg"), dresses.getCategoryId() ,tagIds);
+            productControllerLocal.createNewProduct(new ProductEntity("Calista Dress", "100% Cotton", BigDecimal.valueOf(80.00), 20, SizeEnum.L, ColourEnum.WHITE,"images/calista_dress_white.jpg"), dresses.getCategoryId() ,tagIds);
+            productControllerLocal.createNewProduct(new ProductEntity("Della Jumpsuit", "100% Cotton", BigDecimal.valueOf(80.00), 20, SizeEnum.S, ColourEnum.BLACK,"images/della_jumpsuit_black.jpg"), dresses.getCategoryId() ,tagIds);
+            productControllerLocal.createNewProduct(new ProductEntity("Della Jumpsuit", "100% Cotton", BigDecimal.valueOf(80.00), 20, SizeEnum.M, ColourEnum.BLACK,"images/della_jumpsuit_black.jpg"), dresses.getCategoryId() ,tagIds);
+            productControllerLocal.createNewProduct(new ProductEntity("Della Jumpsuit", "100% Cotton", BigDecimal.valueOf(80.00), 20, SizeEnum.L, ColourEnum.BLACK,"images/della_jumpsuit_black.jpg"), dresses.getCategoryId() ,tagIds);
             productControllerLocal.createNewProduct(new ProductEntity("Crimini Dress", "100% Cotton", BigDecimal.valueOf(89.00), 20, SizeEnum.S, ColourEnum.RED,"images/crimini_dress_red.jpg"), dresses.getCategoryId() ,tagIds);
-            productControllerLocal.createNewProduct(new ProductEntity("Crimini Dress", "100% Cotton", BigDecimal.valueOf(89.00), 20, SizeEnum.S, ColourEnum.WHITE,"images/crimini_dress_white.jpg"), dresses.getCategoryId() ,tagIds);
-            productControllerLocal.createNewProduct(new ProductEntity("Crimini Dress", "100% Cotton", BigDecimal.valueOf(89.00), 20, SizeEnum.M, ColourEnum.BLUE,"images/crimini_dress_blue.jpg"), dresses.getCategoryId() ,tagIds);
             productControllerLocal.createNewProduct(new ProductEntity("Crimini Dress", "100% Cotton", BigDecimal.valueOf(89.00), 20, SizeEnum.M, ColourEnum.RED,"images/crimini_dress_red.jpg"), dresses.getCategoryId() ,tagIds);
-            productControllerLocal.createNewProduct(new ProductEntity("Crimini Dress", "100% Cotton", BigDecimal.valueOf(89.00), 20, SizeEnum.M, ColourEnum.WHITE,"images/crimini_dress_white.jpg"), dresses.getCategoryId() ,tagIds);
-            productControllerLocal.createNewProduct(new ProductEntity("Crimini Dress", "100% Cotton", BigDecimal.valueOf(89.00), 20, SizeEnum.L, ColourEnum.BLUE,"images/crimini_dress_blue.jpg"), dresses.getCategoryId() ,tagIds);
             productControllerLocal.createNewProduct(new ProductEntity("Crimini Dress", "100% Cotton", BigDecimal.valueOf(89.00), 20, SizeEnum.L, ColourEnum.RED,"images/crimini_dress_red.jpg"), dresses.getCategoryId() ,tagIds);
-            productControllerLocal.createNewProduct(new ProductEntity("Crimini Dress", "100% Cotton", BigDecimal.valueOf(89.00), 20, SizeEnum.L, ColourEnum.WHITE,"images/crimini_dress_white.jpg"), dresses.getCategoryId() ,tagIds);
+            productControllerLocal.createNewProduct(new ProductEntity("Emmie Dress", "100% Cotton", BigDecimal.valueOf(87.00), 20, SizeEnum.S, ColourEnum.BLUE,"images/emmie_dress_blue.jpg"), dresses.getCategoryId() ,tagIds);
+            productControllerLocal.createNewProduct(new ProductEntity("Emmie Dress", "100% Cotton", BigDecimal.valueOf(87.00), 20, SizeEnum.S, ColourEnum.RED,"images/emmie_dress_red.jpg"), dresses.getCategoryId() ,tagIds);
+            productControllerLocal.createNewProduct(new ProductEntity("Emmie Dress", "100% Cotton", BigDecimal.valueOf(87.00), 20, SizeEnum.M, ColourEnum.RED,"images/emmie_dress_blue.jpg"), dresses.getCategoryId() ,tagIds);
+            productControllerLocal.createNewProduct(new ProductEntity("Eliana Top", "100% Cotton", BigDecimal.valueOf(50.00), 20, SizeEnum.S, ColourEnum.WHITE,"images/eliana_top_white.jpg"), tops.getCategoryId() ,tagIds);
+            productControllerLocal.createNewProduct(new ProductEntity("Eliana Top", "100% Cotton", BigDecimal.valueOf(50.00), 20, SizeEnum.M, ColourEnum.WHITE,"images/eliana_top_white.jpg"), tops.getCategoryId() ,tagIds);
+            productControllerLocal.createNewProduct(new ProductEntity("Eliana Top", "100% Cotton", BigDecimal.valueOf(50.00), 20, SizeEnum.L, ColourEnum.WHITE,"images/eliana_top_white.jpg"), tops.getCategoryId() ,tagIds);
+            productControllerLocal.createNewProduct(new ProductEntity("Finnegan Top", "100% Cotton", BigDecimal.valueOf(50.00), 20, SizeEnum.S, ColourEnum.WHITE,"images/finnegan_top_white.jpg"), tops.getCategoryId() ,tagIds);
+            productControllerLocal.createNewProduct(new ProductEntity("Finnegan Top", "100% Cotton", BigDecimal.valueOf(50.00), 20, SizeEnum.M, ColourEnum.WHITE,"images/finnegan_top_white.jpg"), tops.getCategoryId() ,tagIds);
+            productControllerLocal.createNewProduct(new ProductEntity("Finnegan Top", "100% Cotton", BigDecimal.valueOf(50.00), 20, SizeEnum.L, ColourEnum.WHITE,"images/finnegan_top_white.jpg"), tops.getCategoryId() ,tagIds);
+            productControllerLocal.createNewProduct(new ProductEntity("Flora Top", "100% Cotton", BigDecimal.valueOf(50.00), 20, SizeEnum.S, ColourEnum.BLACK,"images/flora_top_black.jpg"), tops.getCategoryId() ,tagIds);
+            productControllerLocal.createNewProduct(new ProductEntity("Flora Top", "100% Cotton", BigDecimal.valueOf(50.00), 20, SizeEnum.M, ColourEnum.BLACK,"images/flora_top_black.jpg"), tops.getCategoryId() ,tagIds);
+            productControllerLocal.createNewProduct(new ProductEntity("Flora Top", "100% Cotton", BigDecimal.valueOf(50.00), 20, SizeEnum.L, ColourEnum.BLACK,"images/flora_top_black.jpg"), tops.getCategoryId() ,tagIds);
+            productControllerLocal.createNewProduct(new ProductEntity("Flora Top", "100% Cotton", BigDecimal.valueOf(50.00), 20, SizeEnum.S, ColourEnum.CREAM,"images/flora_top_cream.jpg"), tops.getCategoryId() ,tagIds);
+            productControllerLocal.createNewProduct(new ProductEntity("Flora Top", "100% Cotton", BigDecimal.valueOf(50.00), 20, SizeEnum.M, ColourEnum.CREAM,"images/flora_top_cream.jpg"), tops.getCategoryId() ,tagIds);
+            productControllerLocal.createNewProduct(new ProductEntity("Flora Top", "100% Cotton", BigDecimal.valueOf(50.00), 20, SizeEnum.L, ColourEnum.CREAM,"images/flora_top_cream.jpg"), tops.getCategoryId() ,tagIds);
+            productControllerLocal.createNewProduct(new ProductEntity("Flora Top", "100% Cotton", BigDecimal.valueOf(50.00), 20, SizeEnum.S, ColourEnum.RED,"images/flora_top_red.jpg"), tops.getCategoryId() ,tagIds);
+            productControllerLocal.createNewProduct(new ProductEntity("Flora Top", "100% Cotton", BigDecimal.valueOf(50.00), 20, SizeEnum.M, ColourEnum.RED,"images/flora_top_red.jpg"), tops.getCategoryId() ,tagIds);
+            productControllerLocal.createNewProduct(new ProductEntity("Flora Top", "100% Cotton", BigDecimal.valueOf(50.00), 20, SizeEnum.L, ColourEnum.RED,"images/flora_top_red.jpg"), tops.getCategoryId() ,tagIds);
+            productControllerLocal.createNewProduct(new ProductEntity("Tanner Pant", "100% Cotton", BigDecimal.valueOf(99.00), 20, SizeEnum.S, ColourEnum.CREAM,"images/tanner_pant_cream.jpg"), bottoms.getCategoryId(),tagIds);
+            productControllerLocal.createNewProduct(new ProductEntity("Tanner Pant", "100% Cotton", BigDecimal.valueOf(99.00), 20, SizeEnum.M, ColourEnum.CREAM,"images/tanner_pant_cream.jpg"), bottoms.getCategoryId(),tagIds);
+            productControllerLocal.createNewProduct(new ProductEntity("Tanner Pant", "100% Cotton", BigDecimal.valueOf(99.00), 20, SizeEnum.L, ColourEnum.CREAM,"images/tanner_pant_cream.jpg"), bottoms.getCategoryId(),tagIds);
+            productControllerLocal.createNewProduct(new ProductEntity("Overland Top", "100% Cotton", BigDecimal.valueOf(99.00), 20, SizeEnum.L, ColourEnum.BLACK,"images/overland_top_black.jpg"), tops.getCategoryId(),tagIds);
+            productControllerLocal.createNewProduct(new ProductEntity("Overland Top", "100% Cotton", BigDecimal.valueOf(99.00), 20, SizeEnum.M, ColourEnum.BLACK,"images/overland_top_black.jpg"), tops.getCategoryId(),tagIds);
+            productControllerLocal.createNewProduct(new ProductEntity("Overland Top", "100% Cotton", BigDecimal.valueOf(99.00), 20, SizeEnum.S, ColourEnum.BLACK,"images/overland_top_black.jpg"), tops.getCategoryId(),tagIds);
+            productControllerLocal.createNewProduct(new ProductEntity("Ingrid Dress", "100% Cotton", BigDecimal.valueOf(109.00), 20, SizeEnum.S, ColourEnum.PINK,"images/ingrid_dress_pink.jpg"), dresses.getCategoryId(),tagIds);
+            productControllerLocal.createNewProduct(new ProductEntity("Ingrid Dress", "100% Cotton", BigDecimal.valueOf(109.00), 20, SizeEnum.L, ColourEnum.PINK,"images/ingrid_dress_pink.jpg"), dresses.getCategoryId(),tagIds);
+            productControllerLocal.createNewProduct(new ProductEntity("Ingrid Dress", "100% Cotton", BigDecimal.valueOf(109.00), 20, SizeEnum.M, ColourEnum.PINK,"images/ingrid_dress_pink.jpg"), dresses.getCategoryId(),tagIds);
+
+            tagIds = new ArrayList<>();
+            tagIds.add(tagCheckered.getProductTagId());
+            tagIds.add(tagPopular.getProductTagId());
+            productControllerLocal.createNewProduct(new ProductEntity("Calista Dress", "100% Cotton", BigDecimal.valueOf(80.00), 20, SizeEnum.S, ColourEnum.BLUE,"images/calista_dress_blue.jpg"), dresses.getCategoryId(),tagIds);
+            productControllerLocal.createNewProduct(new ProductEntity("Calista Dress", "100% Cotton", BigDecimal.valueOf(80.00), 20, SizeEnum.M, ColourEnum.BLUE,"images/calista_dress_blue.jpg"), dresses.getCategoryId() ,tagIds);
+            productControllerLocal.createNewProduct(new ProductEntity("Calista Dress", "100% Cotton", BigDecimal.valueOf(80.00), 20, SizeEnum.L, ColourEnum.BLUE,"images/calista_dress_blue.jpg"), dresses.getCategoryId() ,tagIds);
+            productControllerLocal.createNewProduct(new ProductEntity("Simi Dress", "100% Cotton", BigDecimal.valueOf(76.00), 20, SizeEnum.S, ColourEnum.BLUE,"images/simi_dress_blue.jpg"), dresses.getCategoryId(),tagIds);
+            productControllerLocal.createNewProduct(new ProductEntity("Simi Dress", "100% Cotton", BigDecimal.valueOf(76.00), 20, SizeEnum.M, ColourEnum.BLUE,"images/simi_dress_blue.jpg"), dresses.getCategoryId(),tagIds);
+            productControllerLocal.createNewProduct(new ProductEntity("Simi Dress", "100% Cotton", BigDecimal.valueOf(76.00), 20, SizeEnum.L, ColourEnum.BLUE,"images/simi_dress_blue.jpg"), dresses.getCategoryId(),tagIds);
+            productControllerLocal.createNewProduct(new ProductEntity("Tori Dress", "100% Cotton", BigDecimal.valueOf(86.00), 20, SizeEnum.S, ColourEnum.BLUE,"images/tori_dress_blue.jpg"), dresses.getCategoryId(),tagIds);
+            productControllerLocal.createNewProduct(new ProductEntity("Tori Dress", "100% Cotton", BigDecimal.valueOf(86.00), 20, SizeEnum.M, ColourEnum.BLUE,"images/tori_dress_blue.jpg"), dresses.getCategoryId(),tagIds);
+            productControllerLocal.createNewProduct(new ProductEntity("Tori Dress", "100% Cotton", BigDecimal.valueOf(86.00), 20, SizeEnum.L, ColourEnum.BLUE,"images/tori_dress_blue.jpg"), dresses.getCategoryId(),tagIds);
+            productControllerLocal.createNewProduct(new ProductEntity("Velma Dress", "100% Cotton", BigDecimal.valueOf(86.00), 20, SizeEnum.S, ColourEnum.GREEN,"images/velma_dress_green.jpg"), dresses.getCategoryId(),tagIds);
+            productControllerLocal.createNewProduct(new ProductEntity("Velma Dress", "100% Cotton", BigDecimal.valueOf(86.00), 20, SizeEnum.M, ColourEnum.GREEN,"images/velma_dress_green.jpg"), dresses.getCategoryId(),tagIds);
+            productControllerLocal.createNewProduct(new ProductEntity("Velma Dress", "100% Cotton", BigDecimal.valueOf(86.00), 20, SizeEnum.L, ColourEnum.GREEN,"images/velma_dress_green.jpg"), dresses.getCategoryId(),tagIds);
+            productControllerLocal.createNewProduct(new ProductEntity("Vikki Dress", "100% Cotton", BigDecimal.valueOf(79.00), 20, SizeEnum.S, ColourEnum.BLUE,"images/vikki_dress_blue.jpg"), dresses.getCategoryId(),tagIds);
+            productControllerLocal.createNewProduct(new ProductEntity("Vikki Dress", "100% Cotton", BigDecimal.valueOf(79.00), 20, SizeEnum.M, ColourEnum.BLUE,"images/vikki_dress_blue.jpg"), dresses.getCategoryId(),tagIds);
+            productControllerLocal.createNewProduct(new ProductEntity("Vikki Dress", "100% Cotton", BigDecimal.valueOf(79.00), 20, SizeEnum.L, ColourEnum.BLUE,"images/vikki_dress_blue.jpg"), dresses.getCategoryId(),tagIds);
+            productControllerLocal.createNewProduct(new ProductEntity("Tanner Pant", "100% Cotton", BigDecimal.valueOf(99.00), 20, SizeEnum.S, ColourEnum.BLACK,"images/tanner_pant_black.jpg"), bottoms.getCategoryId(),tagIds);
+            productControllerLocal.createNewProduct(new ProductEntity("Tanner Pant", "100% Cotton", BigDecimal.valueOf(99.00), 20, SizeEnum.M, ColourEnum.BLACK,"images/tanner_pant_black.jpg"), bottoms.getCategoryId(),tagIds);
+            productControllerLocal.createNewProduct(new ProductEntity("Tanner Pant", "100% Cotton", BigDecimal.valueOf(99.00), 20, SizeEnum.L, ColourEnum.BLACK,"images/tanner_pant_black.jpg"), bottoms.getCategoryId(),tagIds);
            
-            tagIds = new ArrayList<>();
-            tagIds.add(tagCheckered.getProductTagId());
-            tagIds.add(tagStripes.getProductTagId());
-            tagIds.add(tagPolkaDots.getProductTagId());
-            
-            productControllerLocal.createNewProduct(new ProductEntity("Cybill Dress", "100% Cotton", BigDecimal.valueOf(87.00), 20, SizeEnum.S, ColourEnum.BLUE,"images/cybill_dress_blue.jpg"), dresses.getCategoryId() ,tagIds);
-            productControllerLocal.createNewProduct(new ProductEntity("Cybill Dress", "100% Cotton", BigDecimal.valueOf(87.00), 20, SizeEnum.S, ColourEnum.PINK,"images/cybill_dress_pink.jpg"), dresses.getCategoryId() ,tagIds);
-            productControllerLocal.createNewProduct(new ProductEntity("Cybill Dress", "100% Cotton", BigDecimal.valueOf(87.00), 20, SizeEnum.S, ColourEnum.RED,"images/cybill_dress_red.jpg"), dresses.getCategoryId() ,tagIds);
-            productControllerLocal.createNewProduct(new ProductEntity("Cybill Dress", "100% Cotton", BigDecimal.valueOf(87.00), 20, SizeEnum.M, ColourEnum.BLUE,"images/cybill_dress_blue.jpg"), dresses.getCategoryId() ,tagIds);
-            productControllerLocal.createNewProduct(new ProductEntity("Cybill Dress", "100% Cotton", BigDecimal.valueOf(87.00), 20, SizeEnum.M, ColourEnum.PINK,"images/cybill_dress_pink.jpg"), dresses.getCategoryId() ,tagIds);
-            productControllerLocal.createNewProduct(new ProductEntity("Cybill Dress", "100% Cotton", BigDecimal.valueOf(87.00), 20, SizeEnum.M, ColourEnum.RED,"images/cybill_dress_red.jpg"), dresses.getCategoryId() ,tagIds);
-            productControllerLocal.createNewProduct(new ProductEntity("Cybill Dress", "100% Cotton", BigDecimal.valueOf(87.00), 20, SizeEnum.L, ColourEnum.BLUE,"images/cybill_dress_blue.jpg"), dresses.getCategoryId() ,tagIds);
-            productControllerLocal.createNewProduct(new ProductEntity("Cybill Dress", "100% Cotton", BigDecimal.valueOf(87.00), 20, SizeEnum.L, ColourEnum.PINK,"images/cybill_dress_pink.jpg"), dresses.getCategoryId() ,tagIds);
-            productControllerLocal.createNewProduct(new ProductEntity("Cybill Dress", "100% Cotton", BigDecimal.valueOf(87.00), 20, SizeEnum.L, ColourEnum.RED,"images/cybill_dress_red.jpg"), dresses.getCategoryId() ,tagIds);
             
             tagIds = new ArrayList<>();
-            tagIds.add(tagCheckered.getProductTagId());
+            tagIds.add(tagDenim.getProductTagId());
+            tagIds.add(tagBasic.getProductTagId());
             productControllerLocal.createNewProduct(new ProductEntity("Cynthia Jeans", "100% Cotton", BigDecimal.valueOf(100.00), 20, SizeEnum.S, ColourEnum.BLACK,"images/cynthia_jeans_black.jpg"), bottoms.getCategoryId() ,tagIds);
             productControllerLocal.createNewProduct(new ProductEntity("Cynthia Jeans", "100% Cotton", BigDecimal.valueOf(100.00), 20, SizeEnum.S, ColourEnum.BLUE,"images/cynthia_jeans_blue.jpg"), bottoms.getCategoryId() ,tagIds);
             productControllerLocal.createNewProduct(new ProductEntity("Cynthia Jeans", "100% Cotton", BigDecimal.valueOf(100.00), 20, SizeEnum.S, ColourEnum.CREAM,"images/cynthia_jeans_cream.jpg"), bottoms.getCategoryId() ,tagIds);
@@ -210,42 +214,77 @@ public class InitSessionBean {
             productControllerLocal.createNewProduct(new ProductEntity("Cynthia Jeans", "100% Cotton", BigDecimal.valueOf(100.00), 20, SizeEnum.L, ColourEnum.BLACK,"images/cynthia_jeans_black.jpg"), bottoms.getCategoryId() ,tagIds);
             productControllerLocal.createNewProduct(new ProductEntity("Cynthia Jeans", "100% Cotton", BigDecimal.valueOf(100.00), 20, SizeEnum.L, ColourEnum.BLUE,"images/cynthia_jeans_blue.jpg"), bottoms.getCategoryId() ,tagIds);
             productControllerLocal.createNewProduct(new ProductEntity("Cynthia Jeans", "100% Cotton", BigDecimal.valueOf(100.00), 20, SizeEnum.L, ColourEnum.CREAM,"images/cynthia_jeans_cream.jpg"), bottoms.getCategoryId() ,tagIds);
-            
+            productControllerLocal.createNewProduct(new ProductEntity("Dixie Shorts", "100% Cotton", BigDecimal.valueOf(60.00), 20, SizeEnum.XS, ColourEnum.BLACK,"images/dixie_shorts_black.jpg"), bottoms.getCategoryId() ,tagIds);
+            productControllerLocal.createNewProduct(new ProductEntity("Dixie Shorts", "100% Cotton", BigDecimal.valueOf(60.00), 20, SizeEnum.XS, ColourEnum.WHITE,"images/dixie_shorts_white.jpg"), bottoms.getCategoryId() ,tagIds);
+            productControllerLocal.createNewProduct(new ProductEntity("Dixie Shorts", "100% Cotton", BigDecimal.valueOf(60.00), 20, SizeEnum.L, ColourEnum.WHITE,"images/dixie_shorts_white.jpg"), bottoms.getCategoryId() ,tagIds);
+            productControllerLocal.createNewProduct(new ProductEntity("Dixie Shorts", "100% Cotton", BigDecimal.valueOf(60.00), 20, SizeEnum.L, ColourEnum.BLACK,"images/dixie_shorts_black.jpg"), bottoms.getCategoryId() ,tagIds);
+            productControllerLocal.createNewProduct(new ProductEntity("Dixie Shorts", "100% Cotton", BigDecimal.valueOf(60.00), 20, SizeEnum.XL, ColourEnum.BLACK,"images/dixie_shorts_black.jpg"), bottoms.getCategoryId() ,tagIds);
+            productControllerLocal.createNewProduct(new ProductEntity("Dixie Shorts", "100% Cotton", BigDecimal.valueOf(60.00), 20, SizeEnum.XL, ColourEnum.BLUE,"images/dixie_shorts_blue.jpg"), bottoms.getCategoryId() ,tagIds);
+            productControllerLocal.createNewProduct(new ProductEntity("Dixie Shorts", "100% Cotton", BigDecimal.valueOf(60.00), 20, SizeEnum.XS, ColourEnum.BLUE,"images/dixie_shorts_blue.jpg"), bottoms.getCategoryId() ,tagIds);
             
             tagIds = new ArrayList<>();
-            tagIds.add(tagCheckered.getProductTagId());
-            productControllerLocal.createNewProduct(new ProductEntity("Della Jumpsuit", "100% Cotton", BigDecimal.valueOf(80.00), 20, SizeEnum.S, ColourEnum.BLACK,"images/della_jumpsuit_black.jpg"), dresses.getCategoryId() ,tagIds);
-            productControllerLocal.createNewProduct(new ProductEntity("Della Jumpsuit", "100% Cotton", BigDecimal.valueOf(80.00), 20, SizeEnum.S, ColourEnum.RED,"images/della_jumpsuit_red.jpg"), dresses.getCategoryId() , tagIds);
-            productControllerLocal.createNewProduct(new ProductEntity("Della Jumpsuit", "100% Cotton", BigDecimal.valueOf(80.00), 20, SizeEnum.M, ColourEnum.BLACK,"images/della_jumpsuit_black.jpg"), dresses.getCategoryId() ,tagIds);
-            productControllerLocal.createNewProduct(new ProductEntity("Della Jumpsuit", "100% Cotton", BigDecimal.valueOf(80.00), 20, SizeEnum.M, ColourEnum.RED,"images/della_jumpsuit_red.jpg"), dresses.getCategoryId() , tagIds);
-            productControllerLocal.createNewProduct(new ProductEntity("Della Jumpsuit", "100% Cotton", BigDecimal.valueOf(80.00), 20, SizeEnum.L, ColourEnum.BLACK,"images/della_jumpsuit_black.jpg"), dresses.getCategoryId() ,tagIds);
-            productControllerLocal.createNewProduct(new ProductEntity("Della Jumpsuit", "100% Cotton", BigDecimal.valueOf(80.00), 20, SizeEnum.L, ColourEnum.RED,"images/della_jumpsuit_red.jpg"), dresses.getCategoryId() , tagIds);
-            
+            tagIds.add(tagFloral.getProductTagId());
+            tagIds.add(tagPrints.getProductTagId());
+            productControllerLocal.createNewProduct(new ProductEntity("Christine Dress", "100% Cotton", BigDecimal.valueOf(65.00), 20, SizeEnum.S, ColourEnum.PINK,"images/christine_dress_pink.jpg"), dresses.getCategoryId() ,tagIds);
+            productControllerLocal.createNewProduct(new ProductEntity("Christine Dress", "100% Cotton", BigDecimal.valueOf(65.00), 20, SizeEnum.M, ColourEnum.PINK,"images/christine_dress_pink.jpg"), dresses.getCategoryId() ,tagIds);
+            productControllerLocal.createNewProduct(new ProductEntity("Christine Dress", "100% Cotton", BigDecimal.valueOf(65.00), 20, SizeEnum.L, ColourEnum.PINK,"images/christine_dress_pink.jpg"), dresses.getCategoryId() ,tagIds);
+            productControllerLocal.createNewProduct(new ProductEntity("Crimini Dress", "100% Cotton", BigDecimal.valueOf(89.00), 20, SizeEnum.S, ColourEnum.BLUE,"images/crimini_dress_blue.jpg"), dresses.getCategoryId() ,tagIds);
+            productControllerLocal.createNewProduct(new ProductEntity("Crimini Dress", "100% Cotton", BigDecimal.valueOf(89.00), 20, SizeEnum.M, ColourEnum.BLUE,"images/crimini_dress_blue.jpg"), dresses.getCategoryId() ,tagIds);
+            productControllerLocal.createNewProduct(new ProductEntity("Crimini Dress", "100% Cotton", BigDecimal.valueOf(89.00), 20, SizeEnum.L, ColourEnum.BLUE,"images/crimini_dress_blue.jpg"), dresses.getCategoryId() ,tagIds);
+            productControllerLocal.createNewProduct(new ProductEntity("Crimini Dress", "100% Cotton", BigDecimal.valueOf(89.00), 20, SizeEnum.S, ColourEnum.WHITE,"images/crimini_dress_white.jpg"), dresses.getCategoryId() ,tagIds);
+            productControllerLocal.createNewProduct(new ProductEntity("Crimini Dress", "100% Cotton", BigDecimal.valueOf(89.00), 20, SizeEnum.M, ColourEnum.WHITE,"images/crimini_dress_white.jpg"), dresses.getCategoryId() ,tagIds);
+            productControllerLocal.createNewProduct(new ProductEntity("Crimini Dress", "100% Cotton", BigDecimal.valueOf(89.00), 20, SizeEnum.L, ColourEnum.WHITE,"images/crimini_dress_white.jpg"), dresses.getCategoryId() ,tagIds);
+            productControllerLocal.createNewProduct(new ProductEntity("Cybill Dress", "100% Cotton", BigDecimal.valueOf(87.00), 20, SizeEnum.S, ColourEnum.BLUE,"images/cybill_dress_blue.jpg"), dresses.getCategoryId() ,tagIds);
+            productControllerLocal.createNewProduct(new ProductEntity("Cybill Dress", "100% Cotton", BigDecimal.valueOf(87.00), 20, SizeEnum.S, ColourEnum.PINK,"images/cybill_dress_pink.jpg"), dresses.getCategoryId() ,tagIds);
+            productControllerLocal.createNewProduct(new ProductEntity("Cybill Dress", "100% Cotton", BigDecimal.valueOf(87.00), 20, SizeEnum.S, ColourEnum.RED,"images/cybill_dress_red.jpg"), dresses.getCategoryId() ,tagIds);
+            productControllerLocal.createNewProduct(new ProductEntity("Cybill Dress", "100% Cotton", BigDecimal.valueOf(87.00), 20, SizeEnum.M, ColourEnum.BLUE,"images/cybill_dress_blue.jpg"), dresses.getCategoryId() ,tagIds);
+            productControllerLocal.createNewProduct(new ProductEntity("Cybill Dress", "100% Cotton", BigDecimal.valueOf(87.00), 20, SizeEnum.M, ColourEnum.PINK,"images/cybill_dress_pink.jpg"), dresses.getCategoryId() ,tagIds);
+            productControllerLocal.createNewProduct(new ProductEntity("Cybill Dress", "100% Cotton", BigDecimal.valueOf(87.00), 20, SizeEnum.M, ColourEnum.RED,"images/cybill_dress_red.jpg"), dresses.getCategoryId() ,tagIds);
+            productControllerLocal.createNewProduct(new ProductEntity("Cybill Dress", "100% Cotton", BigDecimal.valueOf(87.00), 20, SizeEnum.L, ColourEnum.BLUE,"images/cybill_dress_blue.jpg"), dresses.getCategoryId() ,tagIds);
+            productControllerLocal.createNewProduct(new ProductEntity("Cybill Dress", "100% Cotton", BigDecimal.valueOf(87.00), 20, SizeEnum.L, ColourEnum.PINK,"images/cybill_dress_pink.jpg"), dresses.getCategoryId() ,tagIds);
+            productControllerLocal.createNewProduct(new ProductEntity("Cybill Dress", "100% Cotton", BigDecimal.valueOf(87.00), 20, SizeEnum.L, ColourEnum.RED,"images/cybill_dress_red.jpg"), dresses.getCategoryId() ,tagIds);
+            productControllerLocal.createNewProduct(new ProductEntity("Emmie Dress", "100% Cotton", BigDecimal.valueOf(87.00), 20, SizeEnum.S, ColourEnum.WHITE,"images/emmie_dress_white.jpg"), dresses.getCategoryId() ,tagIds);
+            productControllerLocal.createNewProduct(new ProductEntity("Emmie Dress", "100% Cotton", BigDecimal.valueOf(87.00), 20, SizeEnum.M, ColourEnum.WHITE,"images/emmie_dress_white.jpg"), dresses.getCategoryId() ,tagIds);
+            productControllerLocal.createNewProduct(new ProductEntity("Emmie Dress", "100% Cotton", BigDecimal.valueOf(87.00), 20, SizeEnum.L, ColourEnum.WHITE,"images/emmie_dress_white.jpg"), dresses.getCategoryId() ,tagIds);
+            productControllerLocal.createNewProduct(new ProductEntity("Toulouse Dress", "100% Cotton", BigDecimal.valueOf(86.00), 20, SizeEnum.S, ColourEnum.WHITE,"images/toulouse_dress_white.jpg"), dresses.getCategoryId(),tagIds);
+            productControllerLocal.createNewProduct(new ProductEntity("Toulouse Dress", "100% Cotton", BigDecimal.valueOf(86.00), 20, SizeEnum.M, ColourEnum.WHITE,"images/toulouse_dress_white.jpg"), dresses.getCategoryId(),tagIds);
+            productControllerLocal.createNewProduct(new ProductEntity("Toulouse Dress", "100% Cotton", BigDecimal.valueOf(86.00), 20, SizeEnum.L, ColourEnum.WHITE,"images/toulouse_dress_white.jpg"), dresses.getCategoryId(),tagIds);
+            productControllerLocal.createNewProduct(new ProductEntity("Vikki Dress", "100% Cotton", BigDecimal.valueOf(79.00), 20, SizeEnum.S, ColourEnum.RED,"images/vikki_dress_red.jpg"), dresses.getCategoryId(),tagIds);
+            productControllerLocal.createNewProduct(new ProductEntity("Vikki Dress", "100% Cotton", BigDecimal.valueOf(79.00), 20, SizeEnum.M, ColourEnum.RED,"images/vikki_dress_red.jpg"), dresses.getCategoryId(),tagIds);
+            productControllerLocal.createNewProduct(new ProductEntity("Vikki Dress", "100% Cotton", BigDecimal.valueOf(79.00), 20, SizeEnum.L, ColourEnum.RED,"images/vikki_dress_red.jpg"), dresses.getCategoryId(),tagIds);
+            productControllerLocal.createNewProduct(new ProductEntity("Overland Top", "100% Cotton", BigDecimal.valueOf(69.00), 20, SizeEnum.L, ColourEnum.WHITE,"images/overland_top_white.jpg"), tops.getCategoryId(),tagIds);
+            productControllerLocal.createNewProduct(new ProductEntity("Overland Top", "100% Cotton", BigDecimal.valueOf(69.00), 20, SizeEnum.M, ColourEnum.WHITE,"images/overland_top_white.jpg"), tops.getCategoryId(),tagIds);
+            productControllerLocal.createNewProduct(new ProductEntity("Overland Top", "100% Cotton", BigDecimal.valueOf(69.00), 20, SizeEnum.S, ColourEnum.WHITE,"images/overland_top_white.jpg"), tops.getCategoryId(),tagIds);
+            productControllerLocal.createNewProduct(new ProductEntity("Ingrid Dress", "100% Cotton", BigDecimal.valueOf(109.00), 20, SizeEnum.S, ColourEnum.BLUE,"images/ingrid_dress_blue.jpg"), dresses.getCategoryId(),tagIds);
+            productControllerLocal.createNewProduct(new ProductEntity("Ingrid Dress", "100% Cotton", BigDecimal.valueOf(109.00), 20, SizeEnum.M, ColourEnum.BLUE,"images/ingrid_dress_blue.jpg"), dresses.getCategoryId(),tagIds);
+            productControllerLocal.createNewProduct(new ProductEntity("Ingrid Dress", "100% Cotton", BigDecimal.valueOf(109.00), 20, SizeEnum.L, ColourEnum.BLUE,"images/ingrid_dress_blue.jpg"), dresses.getCategoryId(),tagIds);
+            productControllerLocal.createNewProduct(new ProductEntity("Ingrid Dress", "100% Cotton", BigDecimal.valueOf(109.00), 20, SizeEnum.S, ColourEnum.CREAM,"images/ingrid_dress_cream.jpg"), dresses.getCategoryId(),tagIds);
+            productControllerLocal.createNewProduct(new ProductEntity("Ingrid Dress", "100% Cotton", BigDecimal.valueOf(109.00), 20, SizeEnum.M, ColourEnum.CREAM,"images/ingrid_dress_cream.jpg"), dresses.getCategoryId(),tagIds);
+            productControllerLocal.createNewProduct(new ProductEntity("Ingrid Dress", "100% Cotton", BigDecimal.valueOf(109.00), 20, SizeEnum.L, ColourEnum.CREAM,"images/ingrid_dress_cream.jpg"), dresses.getCategoryId(),tagIds);
+
             
             tagIds = new ArrayList<>();
             tagIds.add(tagPolkaDots.getProductTagId());
-            tagIds.add(tagPopular.getProductTagId());
-            
-            productControllerLocal.createNewProduct(new ProductEntity("Dixie Shorts", "100% Cotton", BigDecimal.valueOf(60.00), 20, SizeEnum.XS, ColourEnum.BLACK,"images/dixie_shorts_black.jpg"), bottoms.getCategoryId() ,tagIds);
-            productControllerLocal.createNewProduct(new ProductEntity("Dixie Shorts", "100% Cotton", BigDecimal.valueOf(60.00), 20, SizeEnum.XS, ColourEnum.WHITE,"images/dixie_shorts_white.jpg"), bottoms.getCategoryId() ,tagIds);
-            productControllerLocal.createNewProduct(new ProductEntity("Dixie Shorts", "100% Cotton", BigDecimal.valueOf(60.00), 20, SizeEnum.XS, ColourEnum.BLACK,"images/dixie_shorts_black.jpg"), bottoms.getCategoryId() ,tagIds);
-            productControllerLocal.createNewProduct(new ProductEntity("Dixie Shorts", "100% Cotton", BigDecimal.valueOf(60.00), 20, SizeEnum.L, ColourEnum.WHITE,"images/dixie_shorts_white.jpg"), bottoms.getCategoryId() ,tagIds);
-            productControllerLocal.createNewProduct(new ProductEntity("Dixie Shorts", "100% Cotton", BigDecimal.valueOf(60.00), 20, SizeEnum.L, ColourEnum.BLACK,"images/dixie_shorts_black.jpg"), bottoms.getCategoryId() ,tagIds);
-            productControllerLocal.createNewProduct(new ProductEntity("Dixie Shorts", "100% Cotton", BigDecimal.valueOf(60.00), 20, SizeEnum.L, ColourEnum.WHITE,"images/dixie_shorts_white.jpg"), bottoms.getCategoryId() ,tagIds);
-            productControllerLocal.createNewProduct(new ProductEntity("Dixie Shorts", "100% Cotton", BigDecimal.valueOf(60.00), 20, SizeEnum.XL, ColourEnum.BLACK,"images/dixie_shorts_black.jpg"), bottoms.getCategoryId() ,tagIds);
-            productControllerLocal.createNewProduct(new ProductEntity("Dixie Shorts", "100% Cotton", BigDecimal.valueOf(60.00), 20, SizeEnum.XL, ColourEnum.WHITE,"images/dixie_shorts_white.jpg"), bottoms.getCategoryId() ,tagIds);
+            tagIds.add(tagFloral.getProductTagId());
+            productControllerLocal.createNewProduct(new ProductEntity("Della Jumpsuit", "100% Cotton", BigDecimal.valueOf(80.00), 20, SizeEnum.S, ColourEnum.RED,"images/della_jumpsuit_red.jpg"), dresses.getCategoryId() , tagIds);
+            productControllerLocal.createNewProduct(new ProductEntity("Della Jumpsuit", "100% Cotton", BigDecimal.valueOf(80.00), 20, SizeEnum.M, ColourEnum.RED,"images/della_jumpsuit_red.jpg"), dresses.getCategoryId() , tagIds);
+            productControllerLocal.createNewProduct(new ProductEntity("Della Jumpsuit", "100% Cotton", BigDecimal.valueOf(80.00), 20, SizeEnum.L, ColourEnum.RED,"images/della_jumpsuit_red.jpg"), dresses.getCategoryId() , tagIds);
            
+            tagIds = new ArrayList<>();
+            tagIds.add(tagStripes.getProductTagId());
+            tagIds.add(tagPrints.getProductTagId());
+            productControllerLocal.createNewProduct(new ProductEntity("Finnegan Top", "100% Cotton", BigDecimal.valueOf(50.00), 20, SizeEnum.S, ColourEnum.RED,"images/finnegan_top_red.jpg"), tops.getCategoryId() ,tagIds);
+            productControllerLocal.createNewProduct(new ProductEntity("Finnegan Top", "100% Cotton", BigDecimal.valueOf(50.00), 20, SizeEnum.M, ColourEnum.RED,"images/finnegan_top_red.jpg"), tops.getCategoryId() ,tagIds);
+            productControllerLocal.createNewProduct(new ProductEntity("Finnegan Top", "100% Cotton", BigDecimal.valueOf(50.00), 20, SizeEnum.L, ColourEnum.RED,"images/finnegan_top_red.jpg"), tops.getCategoryId() ,tagIds);
+            
             
             tagIds = new ArrayList<>();
-            tagIds.add(tagCheckered.getProductTagId());
-            tagIds.add(tagStripes.getProductTagId());
-            productControllerLocal.createNewProduct(new ProductEntity("Eliana Top", "100% Cotton", BigDecimal.valueOf(55.00), 20, SizeEnum.S, ColourEnum.WHITE,"images/eliana_top_white.jpg"), tops.getCategoryId() ,tagIds);
+            tagIds.add(tagLace.getProductTagId());
+            tagIds.add(tagFloral.getProductTagId());
             productControllerLocal.createNewProduct(new ProductEntity("Emily Top", "100% Cotton", BigDecimal.valueOf(50.00), 20, SizeEnum.S, ColourEnum.BLACK,"images/emily_top_black.jpg"), tops.getCategoryId() ,tagIds);
             productControllerLocal.createNewProduct(new ProductEntity("Emily Top", "100% Cotton", BigDecimal.valueOf(50.00), 20, SizeEnum.S, ColourEnum.CREAM,"images/emily_top_cream.jpg"), tops.getCategoryId() ,tagIds);
-            productControllerLocal.createNewProduct(new ProductEntity("Eliana Top", "100% Cotton", BigDecimal.valueOf(55.00), 20, SizeEnum.XXS, ColourEnum.WHITE,"images/eliana_top_white.jpg"), tops.getCategoryId() ,tagIds);
             productControllerLocal.createNewProduct(new ProductEntity("Emily Top", "100% Cotton", BigDecimal.valueOf(50.00), 20, SizeEnum.XXS, ColourEnum.BLACK,"images/emily_top_black.jpg"), tops.getCategoryId() ,tagIds);
             productControllerLocal.createNewProduct(new ProductEntity("Emily Top", "100% Cotton", BigDecimal.valueOf(50.00), 20, SizeEnum.XXS, ColourEnum.CREAM,"images/emily_top_cream.jpg"), tops.getCategoryId() ,tagIds);
-            productControllerLocal.createNewProduct(new ProductEntity("Eliana Top", "100% Cotton", BigDecimal.valueOf(55.00), 20, SizeEnum.XXL, ColourEnum.WHITE,"images/eliana_top_white.jpg"), tops.getCategoryId() ,tagIds);
             productControllerLocal.createNewProduct(new ProductEntity("Emily Top", "100% Cotton", BigDecimal.valueOf(50.00), 20, SizeEnum.XXL, ColourEnum.BLACK,"images/emily_top_black.jpg"), tops.getCategoryId() ,tagIds);
             productControllerLocal.createNewProduct(new ProductEntity("Emily Top", "100% Cotton", BigDecimal.valueOf(50.00), 20, SizeEnum.XXL, ColourEnum.CREAM,"images/emily_top_cream.jpg"), tops.getCategoryId() ,tagIds);
             

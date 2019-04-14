@@ -18,6 +18,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -34,7 +35,9 @@ public class Promotion implements Serializable {
     @Size(max = 64)
     private String promotionName;
 
-    @Column(scale = 2)
+    @Column(nullable = false, precision = 11, scale = 2)
+    @NotNull
+    @DecimalMin("0.00")
     private BigDecimal discountRate;
 
     @Temporal(TemporalType.DATE)

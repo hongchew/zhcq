@@ -39,7 +39,7 @@ export class RegisterPage implements OnInit {
           this.presentAlert("New Member " + this.newMember.memberId + " created successfully");
         },
         error => {
-          this.presentAlert(error);
+          this.presentAlert(error.substring(37));
         }
       );
     }
@@ -47,7 +47,7 @@ export class RegisterPage implements OnInit {
 
   async presentAlert(message: string) {
     const alert = await this.alertController.create({
-      message: message,
+      header: "ERROR: " + message,
       buttons: ['OK']
     });
     await alert.present();

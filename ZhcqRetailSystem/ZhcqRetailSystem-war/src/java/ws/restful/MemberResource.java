@@ -95,6 +95,7 @@ public class MemberResource {
         if (username != null && password != null) {
             try {
                 Member member = memberControllerLocal.memberLogin(username, password);
+                
 //                member.setWishList(null);
 //                member.setShoppingCart(null);
                 

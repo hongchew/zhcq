@@ -26,7 +26,7 @@ public class ShoppingCart implements Serializable {
     @GeneratedValue(strategy = GenerationType.TABLE)
     private Long cartId;
         
-    @NotNull
+//    @NotNull
     @OneToOne(mappedBy ="shoppingCart")
     private Member member; 
     

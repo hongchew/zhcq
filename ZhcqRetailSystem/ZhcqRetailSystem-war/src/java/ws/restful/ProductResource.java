@@ -124,22 +124,15 @@ public class ProductResource {
             {
                 tag.getProductEntities().clear();
             }
-            for(WishList wishlist: product.getWishLists())
-            {
-                wishlist.getProductEntities().clear();
-            }     
-                    
-            for(ShoppingCart cart: product.getShoppingcarts())
-            {
-                cart.getProducts().clear();
-            }
-            CoordinatedOutfit outfit = product.getCoordinatedOutfit();
-            if(outfit !=null){
-                outfit.getProductEntities().clear();
-            }
             
-            Promotion promotion = product.getPromotion();
+            product.getWishLists().clear();
                     
+            product.getShoppingcarts().clear();
+            
+            product.setCoordinatedOutfit(null);
+                    
+            Promotion promotion = product.getPromotion();
+                  
             if(promotion !=null){
                 promotion.getPromotionalProducts().clear();  
             }
@@ -155,20 +148,11 @@ public class ProductResource {
                     {
                         tag.getProductEntities().clear();
                     }
-                    for(WishList wishlist: pdt.getWishLists())
-                    {
-                        wishlist.getProductEntities().clear();
-                    }     
-
-                    for(ShoppingCart cart: pdt.getShoppingcarts())
-                    {
-                        cart.getProducts().clear();
-                    }
-                    outfit = pdt.getCoordinatedOutfit();
-                    if(outfit !=null){
-                    outfit.getProductEntities().clear();
-                    }
-
+                    product.getWishLists().clear();
+                    
+                    product.getShoppingcarts().clear();
+            
+                    product.setCoordinatedOutfit(null);
                     promotion = pdt.getPromotion();
 
                     if(promotion !=null){
@@ -192,19 +176,11 @@ public class ProductResource {
                     {
                         tag.getProductEntities().clear();
                     }
-                    for(WishList wishlist: suggestion.getWishLists())
-                    {
-                        wishlist.getProductEntities().clear();
-                    }     
-
-                    for(ShoppingCart cart: suggestion.getShoppingcarts())
-                    {
-                        cart.getProducts().clear();
-                    }
-                    outfit = suggestion.getCoordinatedOutfit();
-                    if(outfit !=null){
-                    outfit.getProductEntities().clear();
-                    }
+                    product.getWishLists().clear();
+                    
+                    product.getShoppingcarts().clear();
+            
+                    product.setCoordinatedOutfit(null);
 
                     promotion = suggestion.getPromotion();
 

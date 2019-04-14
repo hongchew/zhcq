@@ -18,6 +18,16 @@ export class AppComponent {
       icon: 'home'
     },
     {
+      title: 'Login',
+      url: '/login',
+      icon: 'checkmark'
+    },
+    {
+      title: 'Register',
+      url: '/register',
+      icon: 'add'
+    },
+    {
       title: 'Shop All',
       url: '/browse-products',
       icon: 'search'

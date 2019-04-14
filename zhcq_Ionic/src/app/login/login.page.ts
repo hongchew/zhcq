@@ -12,7 +12,7 @@ import { Storage } from '@ionic/storage';
 })
 export class LoginPage implements OnInit {
 
-  username : string;
+  username: string;
   password: string;
 
   member: Member;
@@ -39,7 +39,7 @@ export class LoginPage implements OnInit {
 
   async presentAlert(message: string) {
     const alert = await this.alertController.create({
-      message: message,
+      header: "ERROR: " + message.substring(37),
       buttons: ['OK']
     });
     await alert.present();

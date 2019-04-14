@@ -14,7 +14,7 @@ const httpOptions = {
 
 export class ProductService
 {
-    baseUrl: string = 'http://localhost:8000/ZhcqRetailSystem-war/Resources/Product'
+    baseUrl: string = 'http://localhost:8080/ZhcqRetailSystem-war/Resources/Product'
 
 
     constructor(private httpClient: HttpClient)
@@ -25,6 +25,14 @@ export class ProductService
     retrieveAllProducts(): Observable<any>
     {
         return this.httpClient.get<any>(this.baseUrl + '/retrieveAllProducts').pipe
+        (
+            catchError(this.handleError)
+        );
+    } 
+
+    retrieveAllUniqueProducts(): Observable<any>
+    {
+        return this.httpClient.get<any>(this.baseUrl + '/retrieveAllUniqueProducts').pipe
         (
             catchError(this.handleError)
         );

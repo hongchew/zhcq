@@ -5,6 +5,8 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { CategoryService } from './services/category.service';
 import { Category } from './entities/category';
+import { Storage } from '@ionic/storage';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-root',
@@ -42,12 +44,15 @@ export class AppComponent {
 
   public categories: Category[];
   public errorMessage: string;
+  public isLogin: boolean;
 
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
-    private categoryService: CategoryService
+    private categoryService: CategoryService,
+    private storage: Storage, 
+    private alertController : AlertController
   ) {
     this.initializeApp();
 
@@ -59,6 +64,9 @@ export class AppComponent {
 				this.errorMessage = error
 			}
     );
+    storage.get('isLogin').then((data) => {
+      this.isLogin = data;
+    });
   }
 
   initializeApp() {
@@ -67,5 +75,20 @@ export class AppComponent {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
     });
+  }
+
+  logout() {
+    this.isLogin = false;
+    this.storage.set("isLogin", false);
+    this.storage.set("currentCustomer", undefined);
+    this.presentAlert("Logged out successfully!");
+  }
+
+  async presentAlert(message: string) {
+    const alert = await this.alertController.create({
+      header: "ERROR: " + message.substring(37),
+      buttons: ['OK']
+    });
+    await alert.present();
   }
 }

@@ -32,7 +32,6 @@ export class LoginPage implements OnInit {
         this.router.navigateByUrl('home');
         console.log("TEST FOR LOGGED IN ");
         console.log("Member = " + this.member);
-        
       },
       error=> {
         this.presentAlert(error);

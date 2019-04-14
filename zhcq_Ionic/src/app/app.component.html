@@ -16,6 +16,14 @@
               </ion-label>
             </ion-item>
           </ion-menu-toggle>
+          <ion-menu-toggle auto-hide="false" *ngIf="isLogin">
+            <ion-item (click) = "logout()">
+              <ion-icon slot="start" [name]="p.icon"></ion-icon>
+              <ion-label>
+                Logout
+              </ion-label>
+            </ion-item>
+          </ion-menu-toggle>
           <h4 style="padding-left: 10%">Shop By Category</h4>
           <ion-menu-toggle auto-hide="false" *ngFor="let cat of categories">
             <ion-item [routerDirection]="'root'" [routerLink]="['/browse-products/', cat.categoryId]">

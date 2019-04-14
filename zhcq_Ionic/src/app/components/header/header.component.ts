@@ -20,6 +20,9 @@ export class HeaderComponent implements OnInit {
   constructor(private cartService: ShoppingCartService, private alertController: AlertController, private storage: Storage) {
     storage.get('currentCustomer').then((data) => {
       this.member = data;
+    });
+    storage.get('isLogin').then((data) => {
+      this.loggedIn = data;
       this.checkstatus();
     });
   }
@@ -29,7 +32,8 @@ export class HeaderComponent implements OnInit {
 
   async checkstatus() {
     console.log('TEST FOR HEADER: ');
-    console.log('member : ' + this.member);
+    console.log('member username: ' + this.member.username);
+    console.log(this.loggedIn);
     if (this.member !== undefined && this.member !== null) {
       this.loggedIn = true;
     } else {

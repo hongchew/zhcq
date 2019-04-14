@@ -40,7 +40,7 @@ export class ShoppingcartPage implements OnInit {
         }
       );
     } else {
-      this.presentAlert('Please Login to view shopping cart!');
+      this.presentAlert('You are not logged in!');
     }
   }
 

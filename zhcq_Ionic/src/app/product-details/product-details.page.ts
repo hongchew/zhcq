@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import {AlertController} from '@ionic/angular';
+import {AlertController, ModalController} from '@ionic/angular';
 import { ProductService } from '../services/product.service';
 import { ActivatedRoute } from '@angular/router';
 import { ProductEntity } from '../entities/product';
@@ -9,8 +9,10 @@ import { Member } from '../entities/member';
 import { ShoppingCart } from '../entities/cart';
 import { ShoppingCartService } from '../services/shoppingcart.service';
 import { WishListService } from '../services/wishlist.service';
+import { SizeguidePageModule } from '../sizeguide/sizeguide.module';
+import { SizeguidePage } from '../sizeguide/sizeguide.page';
 
-
+ 
 @Component({
   selector: 'app-product-details',
   templateUrl: './product-details.page.html',
@@ -41,7 +43,7 @@ export class ProductDetailsPage implements OnInit {
 
   wishlisted = false;
 
-  constructor(private productService: ProductService, 
+  constructor(private productService: ProductService, private modalController:ModalController,
     private activatedRoute: ActivatedRoute, private alertController: AlertController, private storage: Storage, private shoppingCartService: ShoppingCartService, private wishListService: WishListService) {
       storage.get('currentCustomer').then((data) => {
         this.member = data;
@@ -138,4 +140,13 @@ export class ProductDetailsPage implements OnInit {
     });
     await alert.present();
   }
+
+
+  async openSizeGuide() {
+    const modal = await this.modalController.create({
+      component: SizeguidePage
+    })
+    modal.present();
+  }
+  
 }

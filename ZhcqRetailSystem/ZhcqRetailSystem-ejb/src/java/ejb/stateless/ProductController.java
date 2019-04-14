@@ -65,6 +65,21 @@ public class ProductController implements ProductControllerLocal {
     }
     
     @Override
+    public List<ProductEntity> retrieveAllUniqueProducts(){
+        
+        Query p = em.createQuery("SELECT p FROM ProductEntity p WHERE p.productId = 1");
+        ProductEntity product = (ProductEntity) p.getResultList().get(0);
+
+        Query q = em.createQuery("SELECT DISTINCT p FROM ProductEntity p WHERE p.sizeEnum = :size");
+        q.setParameter("size", product.getSizeEnum());
+
+        List<ProductEntity> allUniqueProducts = q.getResultList();
+  
+        return allUniqueProducts;
+        
+    }
+    
+    @Override
     public ProductEntity retrieveProductById(Long id) throws ProductNotFoundException{
         ProductEntity product = em.find(ProductEntity.class, id);
         if(product != null) {

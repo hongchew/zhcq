@@ -27,6 +27,7 @@ import util.exception.CategoryNotFoundException;
 import util.exception.ProductNotFoundException;
 import ws.datamodel.ErrorRsp;
 import ws.datamodel.RetrieveAllProductsRsp;
+import ws.datamodel.RetrieveAllUniqueProductsRsp;
 import ws.datamodel.RetrieveProductsByCatRsp;
 import ws.datamodel.RetrieveProductByIdRsp;
 
@@ -100,6 +101,68 @@ public class ProductResource {
             RetrieveAllProductsRsp retrieveAllProductsRsp  = new RetrieveAllProductsRsp(distinctProducts);
         
             return Response.status(Status.OK).entity(retrieveAllProductsRsp).build();
+        }
+        catch(Exception ex)
+        {
+            ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
+            
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(errorRsp).build();
+        }
+        
+    }
+    
+    @Path("retrieveAllUniqueProducts")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response retrieveAllUniqueProducts()
+    {
+        try
+        { 
+            List<ProductEntity> allUniqueProducts = productControllerLocal.retrieveAllUniqueProducts();
+            //System.out.println("REACHED 1 Length of Array = " + allProducts.size());
+             List<String> imgUrls = new ArrayList<>();
+             
+            if(allUniqueProducts != null){
+                for(ProductEntity product:allUniqueProducts)
+                {
+                   
+                    Category category = product.getProductCategory();
+                    category.getProductEntities().clear();
+                    
+                    for(ProductTag tag: product.getProductTags())
+                    {
+                        tag.getProductEntities().clear();
+                    }           
+                   
+                    for(WishList wishlist: product.getWishLists())
+                    {
+                        wishlist.getProductEntities().clear();
+                    }     
+                    
+                    for(ShoppingCart cart: product.getShoppingcarts())
+                    {
+                        cart.getProducts().clear();
+                    }
+                    
+                    
+                    CoordinatedOutfit outfit = product.getCoordinatedOutfit();
+                    if(outfit !=null){
+                        outfit.getProductEntities().clear();
+                    }
+                 
+                    
+                    Promotion promotion = product.getPromotion();
+                    
+                    if(promotion !=null){
+                        promotion.getPromotionalProducts().clear();  
+                    }
+                    
+                }
+            }
+            
+            RetrieveAllUniqueProductsRsp retrieveAllUniqueProductsRsp  = new RetrieveAllUniqueProductsRsp(allUniqueProducts);
+        
+            return Response.status(Status.OK).entity(retrieveAllUniqueProductsRsp).build();
         }
         catch(Exception ex)
         {

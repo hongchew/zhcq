@@ -200,11 +200,12 @@ public class ProductResource {
             
             product.setCoordinatedOutfit(null);
                     
-            Promotion promotion = product.getPromotion();
-                  
-            if(promotion !=null){
-                promotion.getPromotionalProducts().clear();  
-            }
+            product.setPromotion(null);
+//            Promotion promotion = product.getPromotion();
+//                  
+//            if(promotion !=null){
+//                promotion.getPromotionalProducts().clear();  
+//            }
             
             List<ProductEntity> diffColours = productControllerLocal.retrieveDiffColours(id);
             
@@ -217,16 +218,18 @@ public class ProductResource {
                     {
                         tag.getProductEntities().clear();
                     }
-                    product.getWishLists().clear();
+                    pdt.getWishLists().clear();
                     
-                    product.getShoppingcarts().clear();
+                    pdt.getShoppingcarts().clear();
             
-                    product.setCoordinatedOutfit(null);
-                    promotion = pdt.getPromotion();
-
-                    if(promotion !=null){
-                        promotion.getPromotionalProducts().clear();  
-                    }
+                    pdt.setCoordinatedOutfit(null);
+                    
+                    pdt.setPromotion(null);
+//                    promotion = pdt.getPromotion();
+//
+//                    if(promotion !=null){
+//                        promotion.getPromotionalProducts().clear();  
+//                    }
                 }
             } else { 
                 diffColours = new ArrayList<>();
@@ -245,17 +248,18 @@ public class ProductResource {
                     {
                         tag.getProductEntities().clear();
                     }
-                    product.getWishLists().clear();
+                    suggestion.getWishLists().clear();
                     
-                    product.getShoppingcarts().clear();
+                    suggestion.getShoppingcarts().clear();
             
-                    product.setCoordinatedOutfit(null);
+                    suggestion.setCoordinatedOutfit(null);
 
-                    promotion = suggestion.getPromotion();
-
-                    if(promotion !=null){
-                        promotion.getPromotionalProducts().clear();  
-                    }
+                    suggestion.setPromotion(null);
+//                    promotion = suggestion.getPromotion();
+//
+//                    if(promotion !=null){
+//                        promotion.getPromotionalProducts().clear();  
+//                    }
                 }
             } else { 
                 diffSizes = new ArrayList<>();

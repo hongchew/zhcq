@@ -70,7 +70,7 @@ export class ProductDetailsPage implements OnInit {
           // Check for promotion
           if(this.selectedProduct.promotion != null){
             this.onPromotion = true;
-            this.promotionalPrice = (this.selectedProduct.promotion.discountRate * this.selectedProduct.unitPrice);
+            this.promotionalPrice = ((1-this.selectedProduct.promotion.discountRate) * this.selectedProduct.unitPrice);
             console.log('Product Price is: ' + this.selectedProduct.unitPrice);
             console.log('Promotional rate is: ' + this.selectedProduct.promotion.discountRate);
             console.log('Calculated Promotional Price is: ' + this.promotionalPrice);

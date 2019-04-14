@@ -5,10 +5,10 @@
         {{errorMessage}}
   </div>
   <div  *ngIf='!errorMessage'>
-    <h2 text-center> Promotions! </h2>
+    <h2 text-center > Promotions! </h2>
 
     <ion-grid *ngFor="let promo of promotions">
-      <h4 style="text-align: center">{{promo.promotionName}}</h4>
+      <h4 style="text-align: center" >{{promo.promotionName}}</h4>
       <ion-slides [options]="sliderOpts" >
           <ion-slide *ngFor="let pdt of promo.promotionalProducts" [routerLink]="['/product-details', pdt.productId]" >
               <img src="assets/{{pdt.picturePath}}" class="thumb-img"/>

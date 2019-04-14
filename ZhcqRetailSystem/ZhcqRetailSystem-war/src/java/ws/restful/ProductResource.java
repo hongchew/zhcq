@@ -200,12 +200,12 @@ public class ProductResource {
             
             product.setCoordinatedOutfit(null);
                     
-            product.setPromotion(null);
-//            Promotion promotion = product.getPromotion();
-//                  
-//            if(promotion !=null){
-//                promotion.getPromotionalProducts().clear();  
-//            }
+            
+            Promotion promotion = product.getPromotion();
+                  
+            if(promotion !=null){
+                promotion.getPromotionalProducts().clear();  
+            }
             
             List<ProductEntity> diffColours = productControllerLocal.retrieveDiffColours(id);
             

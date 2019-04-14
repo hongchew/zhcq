@@ -16,6 +16,7 @@
               </ion-label>
             </ion-item>
           </ion-menu-toggle>
+          <h4 style="text-align: center">Categories</h4>
           <ion-menu-toggle auto-hide="false" *ngFor="let cat of categories">
             <ion-item [routerDirection]="'root'" [routerLink]="['/browse-products/', cat.categoryId]">
               <ion-icon slot="start" ></ion-icon>

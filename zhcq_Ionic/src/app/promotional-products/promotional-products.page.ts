@@ -15,6 +15,12 @@ export class PromotionalProductsPage implements OnInit {
   public promotions: Promotion[];
   promotionId: number;
 
+  sliderOpts = {
+    zoom: false,
+    slidesPerView: 2,
+    spaceBetween: true
+  };
+
   constructor(private promotionService: PromotionService, private alertController: AlertController) { }
 
   ngOnInit() {
@@ -23,7 +29,8 @@ export class PromotionalProductsPage implements OnInit {
        this.promotions = response.promotions;
      },
      error => {
-       this.presentAlert(error.substring(37));
+       this.errorMessage = error;
+       this.presentAlert(this.errorMessage.substring(37));
      }
    );
   }

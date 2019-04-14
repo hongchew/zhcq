@@ -1,6 +1,6 @@
-import { HttpHeaders, HttpErrorResponse } from "@angular/common/http";
+import { HttpHeaders, HttpErrorResponse, HttpClient } from "@angular/common/http";
 import { Observable, throwError } from 'rxjs';
-import { HttpClient } from 'selenium-webdriver/http';
+
 import { Injectable } from '@angular/core';
 import { catchError } from 'rxjs/operators';
 
@@ -14,16 +14,16 @@ const httpOptions = {
 
 export class PromotionService
 {
-    baseUrl: string = "http://localhost:8000/ZhcqRetailSystem-war/Resources/Promotion";
+    baseUrl: string = 'http://localhost:8000/ZhcqRetailSystem-war/Resources/Promotion';
 
-    constructor()
+    constructor(private httpClient: HttpClient)
     {
 
     }
 
     retrieveAllPromotions(): Observable<any>
     {
-        return this.httpClient.get<any>(this.baseUrl + "/retrieveAllPromotions").pipe
+        return this.httpClient.get<any>(this.baseUrl + '/retrieveAllPromotions').pipe
         (
             catchError(this.handleError)
         )
@@ -35,17 +35,16 @@ export class PromotionService
 	{
 		let errorMessage: string = "";
 		
-		if (error.error instanceof ErrorEvent) 
-		{		
-			errorMessage = "An unknown error has occurred: " + error.error.message;
+		if (error.error instanceof ErrorEvent) {		
+			errorMessage = 'An unknown error has occurred: ' + error.error.message;
 		} 
 		else 
 		{		
-			errorMessage = "A HTTP error has occurred: " + `HTTP ${error.status}: ${error.error.message}`;
+			errorMessage = 'A HTTP error has occurred: ' + `HTTP ${error.status}: ${error.error.message}`;
 		}
 		
 		console.error(errorMessage);
 		
-		return throwError(errorMessage);		
+		return throwError(errorMessage);
 	}
 }

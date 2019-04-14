@@ -36,6 +36,11 @@ export class AppComponent {
       title: 'About Us',
       url: '/about-us',
       icon: 'help'
+    },
+    {
+      title: 'SALE',
+      url: '/promotional-products',
+      icon: 'happy'
     }
     
   ];

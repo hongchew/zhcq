@@ -27,7 +27,7 @@ export class ShoppingcartPage implements OnInit {
   }
 
   ngOnInit() {
-    if(this.member.memberId != null) {
+    if(this.member !== undefined) {
       this.cartService.retrieveShoppingCart(this.member.memberId).subscribe(
         response =>{
           this.cart = response.userShoppingCart;
@@ -38,7 +38,7 @@ export class ShoppingcartPage implements OnInit {
         }
       )
     } else {
-      this.presentAlert("User is not logged in!");
+      this.presentAlert('Please Login to view shopping cart!');
     }
   }
 

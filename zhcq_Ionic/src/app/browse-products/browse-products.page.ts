@@ -15,7 +15,7 @@ export class BrowseProductsPage implements OnInit {
   public products: ProductEntity[];
   catId: number;
   
-  public url= "images/bardot_top_black.jpg";
+  // public url= "images/bardot_top_black.jpg";
  
   // images: Array<string>;  
   // grid: Array<Array<string>>;

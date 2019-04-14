@@ -75,7 +75,7 @@ export class ProductDetailsPage implements OnInit {
           }
         },
         error => {
-          this.presentAlert(error);
+          this.presentAlert(error.substring(37));
         }
       );
     }
@@ -101,7 +101,7 @@ export class ProductDetailsPage implements OnInit {
         listSuccess.present();
     },
     error => {
-      this.presentAlert(error);
+      this.presentAlert(error.substring(37));
       // this.ngOnInit();
     }
     );
@@ -120,7 +120,7 @@ export class ProductDetailsPage implements OnInit {
       cartAlert.present();
     },
     error =>{
-      this.presentAlert("ERROR FROM ADDING TO CART: " + error);
+      this.presentAlert("ERROR FROM ADDING TO CART: " + error.substring(37));
       // this.ngOnInit();
     }
     );
@@ -128,7 +128,7 @@ export class ProductDetailsPage implements OnInit {
 
   async presentAlert(message: string) {
     const alert = await this.alertController.create({
-      header: "ERROR: " + message.substring(37),
+      header: "ERROR: " + message,
       buttons: ['OK']
     });
     await alert.present();

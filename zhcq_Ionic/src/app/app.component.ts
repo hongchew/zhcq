@@ -28,11 +28,6 @@ export class AppComponent {
       icon: 'add'
     },
     {
-      title: 'Shop All',
-      url: '/browse-products',
-      icon: 'search'
-    },
-    {
       title: 'About Us',
       url: '/about-us',
       icon: 'help'

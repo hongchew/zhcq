@@ -14,29 +14,31 @@ import { ShoppingCartService } from '../services/shoppingcart.service';
 export class ShoppingcartPage implements OnInit {
 
   member: Member;
-  products : ProductEntity[];
-  cart : ShoppingCart;
+  products: ProductEntity[];
+  cart: ShoppingCart;
 
   constructor(private storage: Storage, private alertController: AlertController, private cartService: ShoppingCartService) {
     storage.get('currentCustomer').then((data) => {
       this.member = data;
-    console.log(this.member.firstName);
-    console.log(this.member.lastName);
-    console.log(this.member.username);
+      this.viewCart();
     });
   }
 
   ngOnInit() {
-    if(this.member !== undefined) {
+  }
+
+  viewCart() {
+    console.log('MEMBER EXIST? = ' + this.member);
+    if (this.member !== undefined && this.member !== null ) {
       this.cartService.retrieveShoppingCart(this.member.memberId).subscribe(
-        response =>{
+        response => {
           this.cart = response.userShoppingCart;
           this.products = this.cart.products;
         },
-        error =>{
+        error => {
           this.presentAlert(error);
         }
-      )
+      );
     } else {
       this.presentAlert('Please Login to view shopping cart!');
     }

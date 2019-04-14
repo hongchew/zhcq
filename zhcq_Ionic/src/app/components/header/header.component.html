@@ -5,12 +5,14 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-buttons slot="primary">
-      <ion-button>
+      <ion-button href="/login">
         <ion-icon slot="icon-only" name="contact"></ion-icon>
       </ion-button>
-      <ion-button>
-        <ion-icon slot="icon-only" name="search"></ion-icon>
-      </ion-button>
+      <div *ngIf="!loggedIn">
+          <ion-button href="/register" >
+            <ion-icon slot="icon-only" name="add"></ion-icon>
+          </ion-button>
+      </div>
       <ion-button href="/shoppingcart">
         <ion-icon slot="icon-only" name="cart"></ion-icon>
       </ion-button>
@@ -21,4 +23,6 @@
     
   </ion-toolbar>
 </ion-header>
+
+
 

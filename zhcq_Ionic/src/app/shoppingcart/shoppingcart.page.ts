@@ -27,14 +27,14 @@ export class ShoppingcartPage implements OnInit {
   }
 
   ngOnInit() {
-    if(this.member != undefined) {
+    if(this.member.memberId != null) {
       this.cartService.retrieveShoppingCart(this.member.memberId).subscribe(
-        response=>{
+        response =>{
           this.cart = response.userShoppingCart;
           this.products = this.cart.products;
-        }, 
+        },
         error =>{
-          // this.presentAlert(error);
+          this.presentAlert(error);
         }
       )
     } else {

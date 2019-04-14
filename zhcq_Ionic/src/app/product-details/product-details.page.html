@@ -8,16 +8,19 @@
   
   <ion-item>
     <ion-row>
-        <h4>{{selectedProduct.productName}} &nbsp;&nbsp; ${{selectedProduct.unitPrice}}  &nbsp;&nbsp; 
-          <ion-button type="submit" fill="transparent" size="default" (click)="addToWishList()">
-            <ion-icon name="heart"></ion-icon>
-          </ion-button>
-          <ion-button type="submit" fill="transparent" size="default" (click)="addToCart()">
-              <ion-icon name="cart"></ion-icon>
-          </ion-button>
-        </h4>
-    
-       {{selectedProduct.description}} &nbsp;&nbsp; Size: {{selectedProduct.sizeEnum}}
+        <h4>{{selectedProduct.productName}} </h4> &nbsp;&nbsp;
+        <h4>${{selectedProduct.unitPrice}}</h4> &nbsp;&nbsp; 
+        <h4 *ngIf="onPromotion" style="color: crimson"> Promotional Price: ${{promotionalPrice}}</h4> &nbsp;&nbsp; 
+        <h5>{{selectedProduct.description}} &nbsp;&nbsp; Size: {{selectedProduct.sizeEnum}}</h5>
+        
+        <ion-buttons>
+            <ion-button type="submit" fill="transparent" size="default" (click)="addToWishList()">
+                <ion-icon name="heart"></ion-icon>
+            </ion-button>
+            <ion-button type="submit" fill="transparent" size="default" (click)="addToCart()">
+                  <ion-icon name="cart"></ion-icon>
+            </ion-button>
+        </ion-buttons>
     </ion-row>
   
   </ion-item>
@@ -51,39 +54,6 @@
       </ion-slide>
     </ion-slides>
   </div>
-
-
-
-
-
-
-
-
-
-      <!-- <table border="1" style="width: 100%; cellpadding: 3px; cellspacing: 1px;">
-        <thead>
-          <tr>
-            <th>NAME</th>
-            <th>DESCRIPTION</th>
-            <th>UNITPRICE</th>
-            <th>QTY ON HAND</th>
-            <th>SIZE</th>
-            <th>COLOUR</th>
-            <th>PIC</th>
-          </tr>
-        </thead>
-        <tbody *ngFor="let p of suggestedProducts">
-          <td>{{p.productName}}</td>
-          <td>{{p.description}}</td>
-          <td>{{p.unitPrice}}</td>
-          <td>{{p.quantityOnHand}}</td>
-          <td>{{p.sizeEnum}}</td>
-          <td>{{p.colourEnum}}</td>
-          <img>
-        </tbody>
-      </table> -->
- 
-    
   <ion-img src="/assets/size-guide.png"></ion-img>
 
 </ion-content>

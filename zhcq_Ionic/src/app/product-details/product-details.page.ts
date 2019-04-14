@@ -24,6 +24,8 @@ export class ProductDetailsPage implements OnInit {
   diffColours: ProductEntity[];
   diffSizes: ProductEntity[];
   suggestedProducts: ProductEntity[];
+  onPromotion: boolean;
+  promotionalPrice: any;
 
   //For adding into cart
   member: Member
@@ -62,6 +64,15 @@ export class ProductDetailsPage implements OnInit {
           this.diffColours = response.diffColours;
           this.diffSizes = response.diffSizes;
           this.suggestedProducts = response.suggestedProducts;
+
+          //Check for promotion
+          if(this.selectedProduct.promotion != null){
+            this.onPromotion = true;
+            this.promotionalPrice = (this.selectedProduct.promotion.discountRate * this.selectedProduct.unitPrice);
+            console.log("Product Price is: " + this.selectedProduct.unitPrice);
+            console.log("Promotional rate is: " + this.selectedProduct.promotion.discountRate);
+            console.log("Calculated Promotional Price is: " + this.promotionalPrice);
+          }
         },
         error => {
           this.presentAlert(error);

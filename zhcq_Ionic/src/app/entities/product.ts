@@ -11,7 +11,7 @@ export class ProductEntity
     productId: number;
     productName: string;
     description: string; 
-    unitPrice: number;
+    unitPrice: any;
     dateAdded: Date;
     quantityOnHand: number;
     sizeEnum: SizeEnum;
@@ -24,7 +24,7 @@ export class ProductEntity
     shoppingCarts: ShoppingCart[];
     promotion: Promotion;
 
-    constructor(productId?: number, productName?: string, description?: string, unitPrice?: number, dateAdded?: Date, quantityOnHand?: number, sizeEnum?: SizeEnum, colourEnum?: ColourEnum, picturePath?: string)
+    constructor(productId?: number, productName?: string, description?: string, unitPrice?: any, dateAdded?: Date, quantityOnHand?: number, sizeEnum?: SizeEnum, colourEnum?: ColourEnum, picturePath?: string)
     {
         this.productId = productId;
         this.productName = productName;

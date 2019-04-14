@@ -3,6 +3,7 @@ package ws.restful;
 
 import ejb.stateless.CoordinatedOutfitControllerLocal;
 import ejb.stateless.ProductControllerLocal;
+import entity.Category;
 import entity.CoordinatedOutfit;
 import entity.ProductEntity;
 import java.util.List;
@@ -57,8 +58,21 @@ public class CoordinatedOutfitResource {
                     {
                         for(ProductEntity product:products)
                         {
+                            Category category = product.getProductCategory();
+                            category.getProductEntities().clear();
+
+                            product.getProductTags().clear();
+
+                            product.getWishLists().clear();
+
+                            product.getShoppingcarts().clear();
+
                             product.setCoordinatedOutfit(null);
+
+                            product.setPromotion(null);
+                           
                         }
+                        
                     }
                         
                 }

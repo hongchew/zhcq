@@ -13,7 +13,7 @@ const httpOptions = {
 
 export class ShoppingCartService {
 
-  baseUrl: string = "http://localhost:8080/ZhcqRetailSystem-war/Resources/ShoppingCart";
+  baseUrl: string = "http://localhost:8000/ZhcqRetailSystem-war/Resources/ShoppingCart";
 
   constructor(private httpClient: HttpClient) { }
 

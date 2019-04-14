@@ -93,6 +93,8 @@ public class ProductResource {
                         promotion.getPromotionalProducts().clear();  
                     }
                     
+                    product.setCoordinatedOutfit(null);
+                    
                 }
             }
             
@@ -156,6 +158,8 @@ public class ProductResource {
                     if(promotion !=null){
                         promotion.getPromotionalProducts().clear();  
                     }
+                    
+                    
                     
                 }
             }

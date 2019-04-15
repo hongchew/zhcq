@@ -86,7 +86,6 @@ export class AppComponent {
         this.presentAlert(this.errorMessage.substring(37));
       }
     );
-
     
   }
 

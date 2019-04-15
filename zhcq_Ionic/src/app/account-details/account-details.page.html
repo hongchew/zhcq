@@ -1,6 +1,6 @@
 <app-header></app-header>
 
-<ion-content>
+<ion-content class="ion-text-center">
 
   <div *ngIf=isLogin>
     <ion-card>
@@ -8,7 +8,7 @@
         <ion-thumbnail slot="start">
             <img src="../../assets/images/canyon_top_pink.jpg">
         </ion-thumbnail>
-        <ion-label>{{ member.firstName }} &nbsp; {{ member.lastName }}</ion-label>
+        <ion-label>{{ member.firstName }} {{ member.lastName }}</ion-label>
       </ion-item>
       <ion-card-content>
         <ion-card-title> {{ member.firstName }} &nbsp;&nbsp; {{ member.lastName }}</ion-card-title>
@@ -18,26 +18,21 @@
     </ion-card>
   </div>
 
-</ion-content>
-<div *ngIf=!isLogin>
-    <ion-card >
-          <ion-grid>
-              <ion-row>
-                  <ion-col size="12">
-                      <ion-button fill="outline" color="dark" expand="block" [routerLink]="['/login']">
-                        Login
-                      </ion-button>
-                    
-                      <ion-button fill="outline" color="dark" expand="block" [routerLink]="['/register']">
-                        Sign Up
-                      </ion-button>
-                  
-                </ion-col>
-              </ion-row>
-            </ion-grid>
-    </ion-card>
-    
-    
+
+  <div *ngIf=!isLogin>
+    <h3 style="margin-top: 100px; margin-bottom: 50px"><i>Hi there.</i>&nbsp;<ion-icon ios="ios-cafe" md="md-cafe"></ion-icon></h3>
+
+    <h5>Welcome back!</h5>
+      <ion-button color="light" [routerLink]="['/login']">
+        Login
+      </ion-button>
+    <h5>If you're new, join us here <ion-icon ios="ios-arrow-round-down" md="md-arrow-round-down"></ion-icon></h5>
+      <ion-button color="light" [routerLink]="['/register']">
+        Sign Up
+      </ion-button>
   </div>
+
+
+</ion-content>
 
 <app-footer></app-footer>

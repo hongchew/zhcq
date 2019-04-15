@@ -81,7 +81,7 @@ export class AppComponent {
     this.isLogin = false;
     this.storage.set("isLogin", false);
     this.storage.set("currentCustomer", undefined);
-    this.presentAlert("Logged out successfully!");
+    this.presentAlert("Logged out!");
   }
 
   async presentAlert(message: string) {

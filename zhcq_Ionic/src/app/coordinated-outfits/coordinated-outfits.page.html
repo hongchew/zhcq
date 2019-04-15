@@ -1,7 +1,16 @@
 <app-header></app-header>
 
 <ion-content>
+    <div *ngIf='errorMessage' class="errorText">
+        {{errorMessage}}
+    </div>
+    <div *ngIf='!errorMessage'>
 
+
+
+
+    </div>
+    
 </ion-content>
 
 <app-footer></app-footer>

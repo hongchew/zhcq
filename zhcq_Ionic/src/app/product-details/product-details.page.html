@@ -23,41 +23,32 @@
   <div *ngIf="!errorMessage">
     <img src="assets/{{selectedProduct.picturePath}}" class="img-responsive"/>
 
-    <ion-item>
-      <ion-row>
-        <h3 style="font-weight: bold">{{selectedProduct.productName}} </h3> &nbsp;&nbsp;
-        <h3 style="font-weight: bold">${{selectedProduct.unitPrice}}</h3> 
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <h4 *ngIf="selectedProduct.quantityOnHand > 10" class="inStock"> IN STOCK </h4>
-        <h4 *ngIf="selectedProduct.quantityOnHand <=10 && selectedProduct.quantityOnHand > 0" style="color:rgba(233, 103, 27, 0.938)"> RUNNING OUT </h4>
-        <h4 *ngIf="selectedProduct.quantityOnHand == 0" style="color: rgb(216, 15, 15)"> OUT OF STOCK </h4>
-        <h4 *ngIf="onPromotion" style="color: crimson"> Promotional Price: ${{promotionalPrice}}</h4> &nbsp;&nbsp; 
-        <h5>{{selectedProduct.description}} &nbsp;&nbsp; Size: {{selectedProduct.sizeEnum}}</h5>
-        
-        <ion-buttons>
-          <ion-button type="submit" fill="transparent" size="default" (click)="addToWishList()">
+    <ion-list lines="none" style="margin-bottom: 0">
+      <ion-item>
+          <h4 slot="start" style="margin-inline-end: 0%">{{selectedProduct.productName}}</h4> 
+          <ion-button type="submit" size="small" fill="transparent" size="default" (click)="addToWishList()">
               <ion-icon name="heart"></ion-icon>
           </ion-button>
-          <ion-button type="submit" fill="transparent" size="default" (click)="addToCart()">
-                <ion-icon name="ios-cart"></ion-icon>
-          </ion-button>
-        </ion-buttons>
-      </ion-row>
-    </ion-item>
+          <h4 slot="end">${{selectedProduct.unitPrice}}</h4> <br/>
+      </ion-item>
+     <ion-item *ngIf="onPromotion" >
+        <h4 slot="end" style="color: darkred; margin-top: 0%; margin-bottom: 0%"><ion-icon ios="ios-pricetag" md="md-pricetag"></ion-icon>&nbsp; ${{promotionalPrice}}</h4>
+     </ion-item>
+     <h4 *ngIf="selectedProduct.quantityOnHand > 10" class="inStock" style="margin-top: 0px"> 
+        &nbsp;&nbsp;&nbsp;&nbsp;<i>In stock </i></h4>
+     <h4 *ngIf="selectedProduct.quantityOnHand <=10 && selectedProduct.quantityOnHand > 0" style="color:rgba(233, 103, 27, 0.938); margin-top: 0px">
+        &nbsp;&nbsp;&nbsp;&nbsp;<i>Running out</i> </h4>
+     <h4 *ngIf="selectedProduct.quantityOnHand == 0" style="color: rgb(216, 15, 15); margin-top: 0px"> 
+        &nbsp;&nbsp;&nbsp;&nbsp;<i>Out of stock</i> </h4>
 
-    <ion-grid> 
-        <ion-row>
-          <ion-col size="2" *ngFor="let pdt of diffSizes" [routerLink]="['/product-details',pdt.productId]" class="activated">
-            <ion-button  color="dark" > {{pdt.sizeEnum}} </ion-button>
-          </ion-col>
-        </ion-row>
-    </ion-grid>
-    <ion-col size="2">
-      <ion-button color="light" size="small" (click)="openSizeGuide()"> <ion-icon ios="ios-shirt" md="md-shirt"></ion-icon>&nbsp; Size Guide</ion-button>
-    </ion-col>
-    
-  
-    <!-- SHOW COLOUR ICON TO LINK TO PRODUCT -->
+     <ion-item>
+        <h6>{{selectedProduct.description}}</h6>
+     </ion-item>
+     <ion-item>
+        <h6>Size: {{selectedProduct.sizeEnum}}</h6>  
+      </ion-item>
+    </ion-list>
+  <!-- DIFF COLORS -->
     
     <ion-grid> 
       <ion-row>
@@ -67,6 +58,30 @@
         </ion-col>
       </ion-row>
     </ion-grid>
+
+    <!-- DIFF SIZES -->
+    <ion-row>
+      <br/>
+        &nbsp;&nbsp;&nbsp;<h6>Select size</h6>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <!-- SIZE GUIDE DONT LAUGH AT THIS ^ PLS LOL SLOT=END NOT WORKING IDEK WHY-->
+      <ion-col >
+          &nbsp;
+          <ion-button color="light" size="small" (click)="openSizeGuide()"> <ion-icon ios="ios-shirt" md="md-shirt"></ion-icon>&nbsp; Size Guide</ion-button>
+        </ion-col>
+        <br/>
+    </ion-row>
+    <ion-row>
+        &nbsp;&nbsp;&nbsp;
+      <div *ngFor="let pdt of diffSizes" [routerLink]="['/product-details',pdt.productId]" class="activated">
+          <ion-button color="dark" > {{pdt.sizeEnum}} </ion-button> &nbsp;&nbsp;
+      </div>
+    </ion-row>
+    
+    <ion-button type="submit" color="dark" expand="full" (click)="addToCart()">
+        <ion-icon name="ios-cart"></ion-icon> &nbsp;&nbsp; add to bag
+    </ion-button>
+    
+    
     
     <h6 text-center>other cute stuff you'll love <ion-icon ios="ios-arrow-round-down" md="md-arrow-round-down"></ion-icon></h6>
     <ion-card>

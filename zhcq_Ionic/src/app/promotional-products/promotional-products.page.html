@@ -5,8 +5,7 @@
         {{errorMessage}}
   </div>
   <div  *ngIf='!errorMessage'>
-    <h2 text-center class="saleHeader"> S &nbsp;&nbsp; A &nbsp;&nbsp; L &nbsp;&nbsp; E &nbsp;&nbsp;! </h2>
-
+      <ion-img src="assets/sale-header.jpg"></ion-img>
     <ion-grid *ngFor="let promo of promotions">
       <h4 style="text-align: center" >{{promo.promotionName}}</h4>
       <ion-slides [options]="sliderOpts" >

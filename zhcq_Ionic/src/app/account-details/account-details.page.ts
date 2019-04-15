@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Member } from '../entities/member';
 import { MemberService } from '../services/member.service';
 import { Storage } from '@ionic/storage';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-account-details',
@@ -12,7 +13,8 @@ export class AccountDetailsPage implements OnInit {
   member: Member;
   isLogin: boolean;
 
-  constructor(private memberService: MemberService, private storage: Storage) { 
+  constructor(private memberService: MemberService, private storage: Storage, private alertController: AlertController,
+              ) {
     storage.get('isLogin').then((data) => {
       this.isLogin = data;
     });
@@ -26,13 +28,19 @@ export class AccountDetailsPage implements OnInit {
 
   }
 
-  // viewAccountDetails() {
-  //   if (this.isLogin) {
-  //     this.memberService.retrieveMember(this.member.memberId).subscribe(response => {
-  //       console.log(response);
-  //       this.member
-  //     });
-  //   }
+  async logout() {
+
+    const logoutSuccess = await this.alertController.create({
+      header: 'Successfully Logged Out!',
+      buttons: ['OK']
+    });
+
+    this.isLogin = false;
+    this.storage.set("isLogin", false);
+    this.storage.set("currentCustomer", undefined);
+    logoutSuccess.present();
+
+  }
   
 
 }

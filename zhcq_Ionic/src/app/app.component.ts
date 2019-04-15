@@ -21,16 +21,11 @@ export class AppComponent {
       url: '/home',
       icon: 'home'
     },
-    {
-      title: 'Login',
-      url: '/login',
-      icon: 'checkmark'
-    },
-    {
-      title: 'Register',
-      url: '/register',
-      icon: 'add'
-    },
+    // {
+    //   title: 'Login/Register',
+    //   url: '/account-details',
+    //   icon: 'add'
+    // },
     {
       title: 'About Us',
       url: '/about-us',
@@ -86,11 +81,9 @@ export class AppComponent {
         this.presentAlert(this.errorMessage.substring(37));
       }
     );
-    
   }
 
   initializeApp() {
-    
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();

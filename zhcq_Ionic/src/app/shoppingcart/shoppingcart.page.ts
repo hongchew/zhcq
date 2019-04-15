@@ -16,25 +16,33 @@ export class ShoppingcartPage implements OnInit {
   member: Member;
   products: ProductEntity[];
   cart: ShoppingCart;
-  quantity : number[];
+  quantity: number[];
+  isLogin: boolean;
 
   constructor(private storage: Storage, private alertController: AlertController, private shoppingCartService: ShoppingCartService) {
+    storage.get('currentCustomer').then((data) => {
+      this.member = data;
+    });
+    storage.get('isLogin').then((data) => {
+      this.isLogin = data;
+    });
+    this.viewCart();
   }
 
   ngOnInit() {
   }
 
-  ionViewWillEnter() {
-    this.storage.get('currentCustomer').then((data) => {
-      this.member = data;
+  // ionViewWillEnter() {
+  //   this.storage.get('currentCustomer').then((data) => {
+  //     this.member = data;
 
-      console.log("member username " + this.member.username);
-      this.viewCart();
-    });
-  }
+  //     console.log("member username " + this.member.username);
+  //     this.viewCart();
+  //   });
+  // }
 
   viewCart() {
-    if (this.member !== undefined && this.member !== null) {
+    if (this.isLogin) {
       this.shoppingCartService.retrieveShoppingCart(this.member.memberId).subscribe(
         response => {
           this.cart = response.userShoppingCart;

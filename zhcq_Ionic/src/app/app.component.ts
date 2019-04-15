@@ -37,7 +37,7 @@ export class AppComponent {
     {
       title: 'SALE',
       url: '/promotional-products',
-      icon: 'happy'
+      icon: 'pricetags'
     }
   ];
 

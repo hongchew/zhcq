@@ -16,26 +16,37 @@
         <ion-card-subtitle> Username: {{ member.username }} </ion-card-subtitle>
       </ion-card-content>
     </ion-card>
+    
+    <ion-grid>
+      <ion-row>
+        <ion-col size="12">
+            <ion-button fill="outline" color="dark" expand="block" (click)= "logout()">
+              Logout 
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    
   </div>
 
 </ion-content>
 <div *ngIf=!isLogin>
-    <ion-card >
-          <ion-grid>
-              <ion-row>
-                  <ion-col size="12">
-                      <ion-button fill="outline" color="dark" expand="block" [routerLink]="['/login']">
-                        Login
-                      </ion-button>
-                    
-                      <ion-button fill="outline" color="dark" expand="block" [routerLink]="['/register']">
-                        Sign Up
-                      </ion-button>
+  <ion-card >
+    <ion-grid>
+      <ion-row>
+        <ion-col size="12">
+          <ion-button fill="outline" color="dark" expand="block" [routerLink]="['/login']">
+            Login
+          </ion-button>
+        
+          <ion-button fill="outline" color="dark" expand="block" [routerLink]="['/register']">
+            Sign Up
+          </ion-button>
                   
-                </ion-col>
-              </ion-row>
-            </ion-grid>
-    </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-card>
     
     
   </div>

@@ -38,11 +38,8 @@ export class BrowseProductsPage implements OnInit {
           this.products = this.retrievedProducts;
 
           this.searchControl.valueChanges.pipe(debounceTime(700)).subscribe(search => {
-            if (search && search.trim() !== '') {
-              this.setFilteredItems(search);
-            } else {
               this.products = this.retrievedProducts;
-            }
+              this.setFilteredItems(search);
           });
         },
         error => {
@@ -59,11 +56,8 @@ export class BrowseProductsPage implements OnInit {
           // console.log('Products Aray: ' + this.products);
 
           this.searchControl.valueChanges.pipe(debounceTime(700)).subscribe(search => {
-            if (search && search.trim() !== '') {
-              this.setFilteredItems(search);
-            } else {
-              this.products = this.retrievedProducts;
-            }
+            this.products = this.retrievedProducts;
+            this.setFilteredItems(search);
           });
         },
         error => {

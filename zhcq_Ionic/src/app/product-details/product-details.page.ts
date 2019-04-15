@@ -95,7 +95,7 @@ export class ProductDetailsPage implements OnInit {
     });
 
     const listSuccess = await this.alertController.create({
-      header: 'added to wish list!'
+      header: 'Added to Wish List!'
     });
     if (this.isLogin) {
       console.log('Entered into add to wishlist method');

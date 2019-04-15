@@ -95,7 +95,7 @@ export class ProductDetailsPage implements OnInit {
     });
 
     const listSuccess = await this.alertController.create({
-      header: 'Added to Wish List!'
+      header: 'added to wish list!'
     });
     if (this.isLogin) {
       console.log('Entered into add to wishlist method');
@@ -150,7 +150,7 @@ export class ProductDetailsPage implements OnInit {
 
   async presentAlert(message: string) {
     const alert = await this.alertController.create({
-      header: 'Error: ' + message,
+      header: message,
       buttons: ['OK']
     });
     await alert.present();

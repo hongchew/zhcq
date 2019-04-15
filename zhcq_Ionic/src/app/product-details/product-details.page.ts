@@ -28,6 +28,7 @@ export class ProductDetailsPage implements OnInit {
   suggestedProducts: ProductEntity[];
   onPromotion: boolean;
   promotionalPrice: any;
+  isLogin: boolean;
 
   //For adding into cart
   member: Member
@@ -43,13 +44,18 @@ export class ProductDetailsPage implements OnInit {
 
   wishlisted = false;
 
-  constructor(private productService: ProductService, private modalController:ModalController,
-    private activatedRoute: ActivatedRoute, private alertController: AlertController, private storage: Storage, private shoppingCartService: ShoppingCartService, private wishListService: WishListService) {
+  constructor(private productService: ProductService,
+    private modalController:ModalController,
+    private activatedRoute: ActivatedRoute,
+    private alertController: AlertController,
+    private storage: Storage,
+    private shoppingCartService: ShoppingCartService,
+    private wishListService: WishListService) {
       storage.get('currentCustomer').then((data) => {
         this.member = data;
-        console.log(this.member.firstName);
-        console.log(this.member.lastName);
-        console.log(this.member.username);
+      });
+      storage.get('isLogin').then((data) => {
+        this.isLogin = data;
       });
      }
 
@@ -68,9 +74,9 @@ export class ProductDetailsPage implements OnInit {
           this.suggestedProducts = response.suggestedProducts;
 
           // Check for promotion
-          if(this.selectedProduct.promotion != null){
+          if (this.selectedProduct.promotion != null) {
             this.onPromotion = true;
-            this.promotionalPrice = ((1-this.selectedProduct.promotion.discountRate) * this.selectedProduct.unitPrice);
+            this.promotionalPrice = ((1 - this.selectedProduct.promotion.discountRate) * this.selectedProduct.unitPrice);
             console.log('Product Price is: ' + this.selectedProduct.unitPrice);
             console.log('Promotional rate is: ' + this.selectedProduct.promotion.discountRate);
             console.log('Calculated Promotional Price is: ' + this.promotionalPrice);
@@ -87,13 +93,15 @@ export class ProductDetailsPage implements OnInit {
   }
 
   async addToWishList() {
-    // console.log('Add to Wishlist: MemberId = ' + this.member.memberId);
-    // console.log('Add to Wishlist: ProductId = ' + this.id);
+    this.storage.get('isLogin').then((data) => {
+      this.isLogin = data;
+    });
 
     const listSuccess = await this.alertController.create({
       header: 'added to wish list!'
     });
-    if (this.member !== null && this.cartId !== undefined ) {
+    if (this.isLogin) {
+      console.log('Entered into add to wishlist method');
       this.wishListService.addToWishList(this.member.memberId, this.id).subscribe(
         response => {
           console.log('response = ' + response);
@@ -113,13 +121,18 @@ export class ProductDetailsPage implements OnInit {
   async addToCart() {
     // console.log('cartID = ' + this.cartId)
     // console.log('Product Id = ' + this.id)
+    this.storage.get('isLogin').then((data) => {
+      this.isLogin = data;
+    });
+
 
     const cartAlert = await this.alertController.create({
       header: 'Added to Cart!'
     });
 
-    if (this.member !== null && this.cartId !== undefined ) {
-      this.shoppingCartService.addToCart(this.member.shoppingCart.cartId,this.id).subscribe(response => {
+    if (this.isLogin) {
+      console.log('Entereed into add to cart method');
+      this.shoppingCartService.addToCart(this.member.shoppingCart.cartId, this.id).subscribe(response => {
         console.log('response = ' + response);
         cartAlert.present();
       },

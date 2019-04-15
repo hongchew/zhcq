@@ -39,7 +39,6 @@ export class AppComponent {
       url: '/promotional-products',
       icon: 'happy'
     }
-    
   ];
 
   public categories: Category[];

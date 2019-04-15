@@ -15,15 +15,17 @@
                 {{selectedOutfit.outfitName}}
             </ion-label> 
         </ion-item>
-
-        <ion-list>
-            <ion-item *ngFor="let product of selectedOutfit.productEntities" [routerLink]="['/product-details',product.productId]">
-                <img src="assets/{{product.picturePath}}" class="productImg"/>
-                <ion-label class="productLabel">
-                    {{product.productName}}
-                </ion-label>
-            </ion-item>
-        </ion-list>
+        <ion-card>
+            <ion-list>
+                <ion-item *ngFor="let product of selectedOutfit.productEntities" [routerLink]="['/product-details',product.productId]">
+                    <img src="assets/{{product.picturePath}}" class="productImg"/>
+                    <ion-label class="productLabel">
+                        {{product.productName}}
+                    </ion-label>
+                </ion-item>
+            </ion-list>
+        </ion-card>
+        
 
 
 

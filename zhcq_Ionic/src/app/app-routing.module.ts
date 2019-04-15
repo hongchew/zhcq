@@ -27,7 +27,8 @@ const routes: Routes = [
   { path: 'coordinated-outfits', loadChildren: './coordinated-outfits/coordinated-outfits.module#CoordinatedOutfitsPageModule' },
   { path: 'coordinated-outfit-details/:outfitId',
   loadChildren: './coordinated-outfit-details/coordinated-outfit-details.module#CoordinatedOutfitDetailsPageModule' },
-  // { path: 'header', loadChildren: './header/header.module#HeaderPageModule' }
+  { path: 'wishlist', loadChildren: './wishlist/wishlist.module#WishlistPageModule' },
+  { path: 'userinfo', loadChildren: './userinfo/userinfo.module#UserinfoPageModule' }
 ];
 
 @NgModule({

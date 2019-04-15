@@ -23,23 +23,10 @@ export class HeaderComponent implements OnInit {
     });
     storage.get('isLogin').then((data) => {
       this.loggedIn = data;
-      this.checkstatus();
     });
   }
 
   ngOnInit() {
-  }
-
-  async checkstatus() {
-    console.log('TEST FOR HEADER: ');
-    console.log('member username: ' + this.member.username);
-    console.log(this.loggedIn);
-    if (this.member !== undefined && this.member !== null) {
-      this.loggedIn = true;
-    } else {
-      this.loggedIn = false;
-    }
-    console.log('Logged in status: ' + this.loggedIn);
   }
 
   async presentAlert(message: string) {

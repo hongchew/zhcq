@@ -13,12 +13,15 @@
         <h6>{{product.productName}} &nbsp;&nbsp;${{product.unitPrice}}</h6>
         <label>Size: {{product.sizeEnum}}</label> <br/>
         <label>Quantity:</label> <br/><br/><br/><br/>
-        <ion-icon ios="ios-trash" md="md-trash"></ion-icon>
+
+        		<ion-button color="light" (click)="removeProduct(product)"  >Remove Item
+            </ion-button>
         
       </ion-col>
     </ion-row>
   </ion-grid>
+  <ion-button color="dark" expand="full">c h e c k &nbsp; o u t</ion-button>
 </ion-content>
-    <ion-button color="dark" expand="full">c h e c k &nbsp; o u t</ion-button>
+    
 
 <app-footer></app-footer>

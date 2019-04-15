@@ -14,7 +14,7 @@ const httpOptions = {
 
 export class PromotionService
 {
-    baseUrl: string = 'http://localhost:8000/ZhcqRetailSystem-war/Resources/Promotion';
+    baseUrl: string = 'http://localhost:8080/ZhcqRetailSystem-war/Resources/Promotion';
 
     constructor(private httpClient: HttpClient)
     {

@@ -391,26 +391,26 @@ public class InitSessionBean {
             promotionControllerLocal.createNewPromotion(promotion, productIds);
             
             
-            CoordinatedOutfit outfit1 = new CoordinatedOutfit("SPRING LOOK","Let's go outdoors","images/spring-outfit.jpg");
+            CoordinatedOutfit outfit1 = new CoordinatedOutfit("Spring Look","Let's go outdoors","images/spring-outfit.jpg");
             productIds = new ArrayList<>();
             productIds.add(product16.getProductId());
             productIds.add(product5.getProductId());
             coordinatedOutfitControllerLocal.createNewOutfit(outfit1, productIds,new Date());
             
   
-            CoordinatedOutfit outfit2 = new CoordinatedOutfit("SUMMER LOOK","Hello, sun.","images/summer-outfit.jpg");
+            CoordinatedOutfit outfit2 = new CoordinatedOutfit("Summer Look","Hello, sun.","images/summer-outfit.jpg");
             productIds = new ArrayList<>();
             productIds.add(product2.getProductId());
             productIds.add(product6.getProductId());
             coordinatedOutfitControllerLocal.createNewOutfit(outfit2, productIds,new Date());
             
-            CoordinatedOutfit outfit3 = new CoordinatedOutfit("AUTUMN LOOK","Fall in love with New","images/autumn-outfit.jpg");
+            CoordinatedOutfit outfit3 = new CoordinatedOutfit("Autumn Look","Fall in love with New","images/autumn-outfit.jpg");
             productIds = new ArrayList<>();
             productIds.add(product3.getProductId());
             productIds.add(product7.getProductId());
             coordinatedOutfitControllerLocal.createNewOutfit(outfit3, productIds,new Date());
             
-            CoordinatedOutfit outfit4 = new CoordinatedOutfit("WINTER LOOK","Furries forever.","images/winter-outfit.jpg");
+            CoordinatedOutfit outfit4 = new CoordinatedOutfit("Winter Look","Furries forever.","images/winter-outfit.jpg");
             productIds = new ArrayList<>();
             productIds.add(product4.getProductId());
             productIds.add(product8.getProductId());

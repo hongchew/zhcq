@@ -36,8 +36,15 @@ public class CoordinatedOutfit implements Serializable {
     
     @Temporal(TemporalType.TIMESTAMP)
     @Column(nullable = false)
-   
     private Date dateCreated;
+    
+    @Column(nullable = true)
+    private String picturePath; 
+    
+    @Column(length = 128)
+    @Size(max = 128)
+    private String description;
+    
     
     @OneToMany(mappedBy = "coordinatedOutfit")
     private List<ProductEntity> productEntities;
@@ -47,11 +54,15 @@ public class CoordinatedOutfit implements Serializable {
         productEntities = new ArrayList<ProductEntity>();
     }
 
-    public CoordinatedOutfit(String outfitName) {
+
+    public CoordinatedOutfit(String outfitName, String description, String picturePath) {
         this();
-        
         this.outfitName = outfitName;
+        this.picturePath = picturePath;
+        this.description = description;
     }
+    
+    
     
     public void addProduct(ProductEntity product){
         if(product != null)

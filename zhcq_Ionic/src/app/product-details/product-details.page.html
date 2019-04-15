@@ -51,11 +51,14 @@
     </ion-grid>
     
     <h6 text-center>other cute stuff you'll love <ion-icon ios="ios-arrow-round-down" md="md-arrow-round-down"></ion-icon></h6>
-    <ion-slides [options]="sliderOpts">
-      <ion-slide *ngFor="let pdt of suggestedProducts" [routerLink]="['/product-details',pdt.productId]" >
-          <img src="assets/{{pdt.picturePath}}" class="thumb-img"/>
-      </ion-slide>
-    </ion-slides>
+    <ion-card>
+      <ion-slides [options]="sliderOpts">
+          <ion-slide *ngFor="let pdt of suggestedProducts" [routerLink]="['/product-details',pdt.productId]" >
+              <img src="assets/{{pdt.picturePath}}" class="thumb-img"/>
+          </ion-slide>
+        </ion-slides>
+    </ion-card>
+    
       
   </div>
   

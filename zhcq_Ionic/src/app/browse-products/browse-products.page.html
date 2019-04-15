@@ -9,15 +9,17 @@
     <h2 text-center>Shop</h2>
     <ion-grid> 
       <ion-row>
-        <ion-col size="6" *ngFor="let product of products" [routerLink]="['/product-details',product.productId]" class="activated">
+        <ion-col size="6" *ngFor="let product of products"  class="activated">
           <img src="assets/{{product.picturePath}}" class="img-responsive"/>
               <h6>{{product.productName}} &nbsp; <img src="assets/images/{{product.colourEnum}}.jpg" class="colorImg"></h6>
+              <ion-button color="medium" [routerLink]="['/product-details',product.productId]">View Item
+            </ion-button>
         </ion-col>
       </ion-row>
     </ion-grid>
-    <ion-infinite-scroll (ionInfinite)="loadMoreProducts($event)">
+   <!-- <ion-infinite-scroll (ionInfinite)="loadMoreProducts($event)">
       <ion-infinite-scroll-content></ion-infinite-scroll-content>
-    </ion-infinite-scroll> 
+    </ion-infinite-scroll>  -->
   </div>
 </ion-content>
 <app-footer></app-footer>

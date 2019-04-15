@@ -17,7 +17,7 @@ export class ShoppingcartPage implements OnInit {
   products: ProductEntity[];
   cart: ShoppingCart;
 
-  constructor(private storage: Storage, private alertController: AlertController, private cartService: ShoppingCartService) {
+  constructor(private storage: Storage, private alertController: AlertController, private shoppingCartService: ShoppingCartService) {
     // storage.get('currentCustomer').then((data) => {
     //   this.member = data;
     //   this.viewCart();
@@ -25,16 +25,20 @@ export class ShoppingcartPage implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  ionViewWillEnter() {
     this.storage.get('currentCustomer').then((data) => {
       this.member = data;
+
+      console.log("member username " + this.member.username);
       this.viewCart();
     });
   }
 
   viewCart() {
-    console.log('MEMBER EXIST? = ' + this.member);
-    if (this.member !== undefined && this.member !== null ) {
-      this.cartService.retrieveShoppingCart(this.member.memberId).subscribe(
+    if (this.member !== undefined && this.member !== null) {
+      this.shoppingCartService.retrieveShoppingCart(this.member.memberId).subscribe(
         response => {
           this.cart = response.userShoppingCart;
           this.products = this.cart.products;
@@ -46,6 +50,43 @@ export class ShoppingcartPage implements OnInit {
     } else {
       this.presentAlert('You are not logged in!');
     }
+  }
+
+  async removeProduct(product: ProductEntity) {
+    const alert = await this.alertController.create({
+      header: 'Confirm',
+      message: 'Remove Item? <strong>:-(</strong>',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: () => {
+            console.log('Cancelled remove Product');
+          }
+        }, {
+          text: 'Confirm',
+          handler: () => {
+            console.log("attempt to remove product");
+            this.shoppingCartService.removeFromCart(this.cart.cartId, product.productId).subscribe(
+              response => {
+               const index:number = this.products.indexOf(product);
+                if(index != -1) {
+                  this.products.splice(index,1);
+                  console.log("successfully removed product!");
+                }
+                this.presentAlert("Successfully removed product!");
+              },
+              error => {
+                this.presentAlert(error);
+              }
+            );
+          }
+        }
+      ]
+    });
+
+    await alert.present();
   }
 
   async presentAlert(message: string) {

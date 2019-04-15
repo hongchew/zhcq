@@ -9,7 +9,6 @@ import { Member } from '../entities/member';
 import { ShoppingCart } from '../entities/cart';
 import { ShoppingCartService } from '../services/shoppingcart.service';
 import { WishListService } from '../services/wishlist.service';
-import { SizeguidePageModule } from '../sizeguide/sizeguide.module';
 import { SizeguidePage } from '../sizeguide/sizeguide.page';
 
 

@@ -2,13 +2,17 @@
 
 <ion-content>
 
-  <h2 text-center>Shopping Cart</h2>
+  <h4 text-center>In your cart</h4>
   <ion-grid> 
     <ion-row>
       <ion-col *ngFor="let product of products" [routerLink]="['/product-details',product.productId]" class="activated">
-        <img src="assets/{{product.picturePath}}" class="img-responsive"/>
+        <ion-item>
+          <img src="assets/{{product.picturePath}}" class="img-responsive"/>
             <h6>{{product.productName}} &nbsp;&nbsp;${{product.unitPrice}}</h6>
+            <label>Size: product.sizeEnum</label> 
             <label>Quantity:</label> 
+            <ion-icon ios="ios-trash" md="md-trash"></ion-icon>
+        </ion-item>
       </ion-col>
     </ion-row>
   </ion-grid>

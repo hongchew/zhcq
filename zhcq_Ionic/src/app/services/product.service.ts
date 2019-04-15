@@ -14,7 +14,7 @@ const httpOptions = {
 
 export class ProductService
 {
-    baseUrl: string = "http://localhost:8000/ZhcqRetailSystem-war/Resources/Product"
+    baseUrl: string = "http://localhost:8080/ZhcqRetailSystem-war/Resources/Product"
 
 
     constructor(private httpClient: HttpClient)

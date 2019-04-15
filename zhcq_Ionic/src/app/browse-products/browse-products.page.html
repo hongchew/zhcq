@@ -6,12 +6,15 @@
     {{errorMessage}}
   </div>
   <div *ngIf='!errorMessage'>
+    <ion-searchbar animated [formControl]="searchControl"></ion-searchbar>
     <h2 text-center>Shop</h2>
     <ion-grid> 
       <ion-row>
-        <ion-col size="6" *ngFor="let product of products" [routerLink]="['/product-details',product.productId]" class="activated">
-          <img src="assets/{{product.picturePath}}" class="img-responsive"/>
-              <h6>{{product.productName}} &nbsp; <img src="assets/images/{{product.colourEnum}}.jpg" class="colorImg"></h6>
+        <ion-col size="6" *ngFor="let product of products" [routerLink]="['/product-details',product.productId]">
+          <img src="assets/{{product.picturePath}}"/>
+          <h6>{{product.productName}} &nbsp; 
+              <img src="assets/images/{{product.colourEnum}}.jpg" class="colorImg">
+          </h6>
         </ion-col>
       </ion-row>
     </ion-grid>

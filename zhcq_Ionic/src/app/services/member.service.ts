@@ -20,7 +20,7 @@ const httpOptions = {
 
 export class MemberService 
 {
-	baseUrl: string = "http://localhost:8080/ZhcqRetailSystem-war/Resources/Member";
+	baseUrl: string = "http://localhost:8000/ZhcqRetailSystem-war/Resources/Member";
 	
 	
 	

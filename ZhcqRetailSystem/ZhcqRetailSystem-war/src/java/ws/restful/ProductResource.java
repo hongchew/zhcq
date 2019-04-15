@@ -131,26 +131,13 @@ public class ProductResource {
                     Category category = product.getProductCategory();
                     category.getProductEntities().clear();
                     
-                    for(ProductTag tag: product.getProductTags())
-                    {
-                        tag.getProductEntities().clear();
-                    }           
+                    product.getProductTags().clear();
                    
-                    for(WishList wishlist: product.getWishLists())
-                    {
-                        wishlist.getProductEntities().clear();
-                    }     
+                    product.getWishLists().clear();
                     
-                    for(ShoppingCart cart: product.getShoppingcarts())
-                    {
-                        cart.getProducts().clear();
-                    }
+                    product.getShoppingcarts().clear();
                     
-                    
-                    CoordinatedOutfit outfit = product.getCoordinatedOutfit();
-                    if(outfit !=null){
-                        outfit.getProductEntities().clear();
-                    }
+                    product.setCoordinatedOutfit(null);
                  
                     
                     Promotion promotion = product.getPromotion();
@@ -158,9 +145,6 @@ public class ProductResource {
                     if(promotion !=null){
                         promotion.getPromotionalProducts().clear();  
                     }
-                    
-                    
-                    
                 }
             }
             

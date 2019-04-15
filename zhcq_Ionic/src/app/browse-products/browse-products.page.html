@@ -1,29 +1,24 @@
-<!-- <ion-header>
-  <ion-toolbar>
-    <ion-menu-button start></ion-menu-button>
-    <ion-title>
-      zhcq & co.
-    </ion-title>
-  </ion-toolbar>
-</ion-header> -->
+
 <app-header></app-header>
 
 <ion-content>
   <div *ngIf='errorMessage' class="errorText">
     {{errorMessage}}
   </div>
-  <h2 text-center>Shop</h2>
-  <ion-grid> 
-    <ion-row>
-      <ion-col size="6" *ngFor="let product of products" [routerLink]="['/product-details',product.productId]" class="activated">
-        <img src="assets/{{product.picturePath}}" class="img-responsive"/>
-            <h6>{{product.productName}} &nbsp; <img src="assets/images/{{product.colourEnum}}.jpg" class="colorImg"></h6>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
-  <ion-infinite-scroll (ionInfinite)="loadMoreProducts($event)">
-    <ion-infinite-scroll-content></ion-infinite-scroll-content>
-  </ion-infinite-scroll> 
+  <div *ngIf='!errorMessage'>
+    <h2 text-center>Shop</h2>
+    <ion-grid> 
+      <ion-row>
+        <ion-col size="6" *ngFor="let product of products" [routerLink]="['/product-details',product.productId]" class="activated">
+          <img src="assets/{{product.picturePath}}" class="img-responsive"/>
+              <h6>{{product.productName}} &nbsp; <img src="assets/images/{{product.colourEnum}}.jpg" class="colorImg"></h6>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    <ion-infinite-scroll (ionInfinite)="loadMoreProducts($event)">
+      <ion-infinite-scroll-content></ion-infinite-scroll-content>
+    </ion-infinite-scroll> 
+  </div>
 </ion-content>
 <app-footer></app-footer>
 

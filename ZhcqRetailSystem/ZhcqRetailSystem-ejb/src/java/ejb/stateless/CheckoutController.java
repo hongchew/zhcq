@@ -17,6 +17,7 @@ import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
 import util.exception.EmptyShoppingCartException;
+import util.exception.OutOfStockException;
 import util.exception.ProductNotFoundException;
 import util.exception.SaleTransactionNotFoundException;
 import util.exception.ShoppingCartNotFoundException;
@@ -82,11 +83,6 @@ public class CheckoutController implements CheckoutControllerLocal {
         ShoppingCart shoppingCart = retrieveShoppingCartById(cartId);
         ProductEntity prod = productControllerLocal.retrieveProductById(productId);
 
-        //Dont have to check quantity first, only when checkout then check quantity
-//            if (prod.getQuantityOnHand()<=0) {
-//                System.out.println("Oops! Product out of stock!");
-//                throw new OutOfStockException("Oops! Product out of stock!");
-//            }
         if (shoppingCart.getProducts().contains(prod)) {
             int idx = shoppingCart.getProducts().indexOf(prod);
             shoppingCart.getQuantity().set(idx, shoppingCart.getQuantity().get(idx) + quantity);
@@ -103,26 +99,7 @@ public class CheckoutController implements CheckoutControllerLocal {
             System.out.println();
         }
     }
-//            System.out.println("***END CHECK ADD***");
-//            prod.setQuantityOnHand(prod.getQuantityOnHand()-1);
 
-//        } else { //addtion == false
-//            if(shoppingCart.getProducts().contains(prod)){
-//                int idx = shoppingCart.getProducts().indexOf(prod);
-//                shoppingCart.getQuantity().set(idx, shoppingCart.getQuantity().get(idx) - 1);
-//                if(shoppingCart.getQuantity().get(idx) < 1){
-//                    shoppingCart.getProducts().remove(idx);
-//                    shoppingCart.getQuantity().remove(idx);
-//                    System.out.println("***Removed Product From Cart, Product Id: " + prod.getProductId());
-//                    prod.getShoppingcarts().remove(shoppingCart);
-//                }
-////                 prod.setQuantityOnHand(prod.getQuantityOnHand()+1);
-//            } else{
-//                throw new ProductNotFoundException("No such product on the shopping cart");
-//            }
-//
-//        }
-//      
     @Override
     public void removeFromCart(Long cartId, Long productId) throws ShoppingCartNotFoundException, ProductNotFoundException {
         ShoppingCart shoppingCart = retrieveShoppingCartById(cartId);
@@ -149,7 +126,7 @@ public class CheckoutController implements CheckoutControllerLocal {
     }
 
     @Override
-    public SaleTransaction checkOut(Long cartId) throws ShoppingCartNotFoundException, EmptyShoppingCartException {
+    public SaleTransaction checkOut(Long cartId) throws ShoppingCartNotFoundException, EmptyShoppingCartException, OutOfStockException {
 
         ShoppingCart shoppingCart = retrieveShoppingCartById(cartId);
 
@@ -166,13 +143,22 @@ public class CheckoutController implements CheckoutControllerLocal {
         List<SaleTransactionLineItem> list = new ArrayList<>();
 
         for (int i = 0; i < shoppingCart.getProducts().size(); i++) {
-            SaleTransactionLineItem lineItem = new SaleTransactionLineItem(transaction, shoppingCart.getProducts().get(i));
-            lineItem.setQuantity(shoppingCart.getQuantity().get(i));
-            lineItem.setSubTotal(shoppingCart.getProducts().get(i).getUnitPrice().multiply(BigDecimal.valueOf(shoppingCart.getQuantity().get(i))));
-            list.add(lineItem);
-            em.persist(lineItem);
-            transaction.addToTotalPrice(lineItem.getSubTotal());
-            System.out.println("Pdt id: " + shoppingCart.getProducts().get(i).getProductId() + " added to new line item");
+            ProductEntity pe = shoppingCart.getProducts().get(i);
+            Integer quantity = shoppingCart.getQuantity().get(i);
+
+            if (pe.getQuantityOnHand() < quantity) {
+                throw new OutOfStockException("Product " + pe.getProductName() + " out of stock!");
+            } else {
+
+                SaleTransactionLineItem lineItem = new SaleTransactionLineItem(transaction, shoppingCart.getProducts().get(i));
+                lineItem.setQuantity(shoppingCart.getQuantity().get(i));
+                lineItem.setSubTotal(shoppingCart.getProducts().get(i).getUnitPrice().multiply(BigDecimal.valueOf(shoppingCart.getQuantity().get(i))));
+                pe.setQuantityOnHand(pe.getQuantityOnHand() - quantity);
+                list.add(lineItem);
+                em.persist(lineItem);
+                transaction.addToTotalPrice(lineItem.getSubTotal());
+                System.out.println("Pdt id: " + shoppingCart.getProducts().get(i).getProductId() + " added to new line item");
+            }
 
         }
 

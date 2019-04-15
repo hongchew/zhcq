@@ -1,8 +1,9 @@
 <app-header></app-header>
 
 <ion-content>
-
-  <h4 text-center>In your cart</h4>
+  <br/>
+  <h4 text-center><i>In your cart</i></h4>
+  <br/>
   <ion-grid> 
     <ion-row *ngFor="let product of products" [routerLink]="['/product-details',product.productId]" class="activated">
       <ion-col size="5">
@@ -17,9 +18,7 @@
       </ion-col>
     </ion-row>
   </ion-grid>
- 
-
 </ion-content>
-<ion-footer>
     <ion-button color="dark" expand="full">c h e c k &nbsp; o u t</ion-button>
-  </ion-footer>
+
+<app-footer></app-footer>

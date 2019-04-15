@@ -128,18 +128,23 @@ export class ProductDetailsPage implements OnInit {
     });
 
     if (this.isLogin) {
-      console.log('Entereed into add to cart method');
-      this.shoppingCartService.addToCart(this.member.shoppingCart.cartId, this.id).subscribe(response => {
-        console.log('response = ' + response);
-        cartAlert.present();
-      },
-      error => {
-        this.presentAlert('ERROR FROM ADDING TO CART: ' + error.substring(37));
-        // this.ngOnInit();
+      if (this.selectedProduct.quantityOnHand !== 0 ) { 
+        console.log('Entereed into add to cart method');
+        this.shoppingCartService.addToCart(this.member.shoppingCart.cartId, this.id).subscribe(response => {
+          console.log('response = ' + response);
+          cartAlert.present();
+        },
+        error => {
+          this.presentAlert('ERROR FROM ADDING TO CART: ' + error.substring(37));
+          // this.ngOnInit();
+        }
+        );
+      } else {
+        this.presentAlert('OUT OF STOCK!');
       }
-      );
+
     } else {
-      this.presentAlert('Please Login to perform operation!');
+        this.presentAlert('Please Login to perform operation!');
     }
   }
 

@@ -11,8 +11,12 @@
 
     <ion-item>
       <ion-row>
-        <h4>{{selectedProduct.productName}} </h4> &nbsp;&nbsp;
-        <h4>${{selectedProduct.unitPrice}}</h4> &nbsp;&nbsp; 
+        <h3 style="font-weight: bold">{{selectedProduct.productName}} </h3> &nbsp;&nbsp;
+        <h3 style="font-weight: bold">${{selectedProduct.unitPrice}}</h3> 
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <h4 *ngIf="selectedProduct.quantityOnHand > 10" class="inStock"> IN STOCK </h4>
+        <h4 *ngIf="selectedProduct.quantityOnHand <=10 && selectedProduct.quantityOnHand > 0" style="color:rgba(233, 103, 27, 0.938)"> RUNNING OUT </h4>
+        <h4 *ngIf="selectedProduct.quantityOnHand == 0" style="color: rgb(216, 15, 15)"> OUT OF STOCK </h4>
         <h4 *ngIf="onPromotion" style="color: crimson"> Promotional Price: ${{promotionalPrice}}</h4> &nbsp;&nbsp; 
         <h5>{{selectedProduct.description}} &nbsp;&nbsp; Size: {{selectedProduct.sizeEnum}}</h5>
         

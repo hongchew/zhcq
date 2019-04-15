@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ɵConsole } from '@angular/core';
 import { NavController, NavParams, AlertController } from '@ionic/angular';
 import { ProductEntity } from '../entities/product';
 import { ProductService } from '../services/product.service';
 import { ActivatedRoute } from '@angular/router';
+import { FormControl } from '@angular/forms';
+import { debounceTime } from 'rxjs/operators';
 
 
 @Component({
@@ -11,14 +13,16 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./browse-products.page.scss'],
 })
 export class BrowseProductsPage implements OnInit {
+  public searchControl: FormControl;
+
   errorMessage: string;
-  public products: ProductEntity[];
+  retrievedProducts: ProductEntity[];
+  products: ProductEntity[];
+  
   catId: number;
 
-  // images: Array<string>;
-  // grid: Array<Array<string>>;
-
   constructor(private productService: ProductService, private activatedRoute: ActivatedRoute, private alertController: AlertController) {
+    this.searchControl = new FormControl();
     // this.images = this.navParams.get('images'); //get product image URIs
     // this.grid = Array(Math.ceil(this.images.length/2)); 
   }
@@ -29,8 +33,17 @@ export class BrowseProductsPage implements OnInit {
     if (!isNaN(this.catId)) {
       this.productService.retrieveProductByCat(this.catId).subscribe(
         response => {
-          // console.log(response);
-          this.products = response.products ;
+
+          this.retrievedProducts = response.products ;
+          this.products = this.retrievedProducts;
+
+          this.searchControl.valueChanges.pipe(debounceTime(700)).subscribe(search => {
+            if (search && search.trim() !== '') {
+              this.setFilteredItems(search);
+            } else {
+              this.products = this.retrievedProducts;
+            }
+          });
         },
         error => {
           this.errorMessage = error;
@@ -39,8 +52,19 @@ export class BrowseProductsPage implements OnInit {
     } else {
       this.productService.retrieveAllUniqueProducts().subscribe(
         response => {
-          console.log(response);
-          this.products = response.products;
+
+          this.retrievedProducts = response.products ;
+          this.products = this.retrievedProducts;
+
+          // console.log('Products Aray: ' + this.products);
+
+          this.searchControl.valueChanges.pipe(debounceTime(700)).subscribe(search => {
+            if (search && search.trim() !== '') {
+              this.setFilteredItems(search);
+            } else {
+              this.products = this.retrievedProducts;
+            }
+          });
         },
         error => {
           this.errorMessage = error;
@@ -48,6 +72,22 @@ export class BrowseProductsPage implements OnInit {
         }
       );
     }
+  }
+
+  setFilteredItems(searchTerm: string) {
+
+    this.products = this.filterItems(searchTerm);
+  }
+
+  filterItems(searchTerm: string) {
+    console.log('PRODUCTS ARRAY IN FILTER ITEMS METHOD: ' + this.products);
+
+    return this.products.filter(product => {
+      console.log('Item Name = ' + product.productName);
+      console.log('Search Term = ' + searchTerm);
+
+      return product.productName.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1;
+    });
   }
 
   async presentAlert(message: string) {

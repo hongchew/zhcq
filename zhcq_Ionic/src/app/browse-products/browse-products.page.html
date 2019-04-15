@@ -6,6 +6,7 @@
     {{errorMessage}}
   </div>
   <div *ngIf='!errorMessage'>
+    <ion-searchbar animated [formControl]="searchControl"></ion-searchbar>
     <h2 text-center>Shop</h2>
     <ion-grid> 
       <ion-row>

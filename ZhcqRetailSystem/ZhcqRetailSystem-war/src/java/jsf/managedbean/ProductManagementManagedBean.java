@@ -97,6 +97,8 @@ public class ProductManagementManagedBean implements Serializable {
     
     public void createNewProduct(ActionEvent event)
     {
+        System.err.println("********* Real path JSF: " + FacesContext.getCurrentInstance().getExternalContext().getRealPath("/systemAdministration/images"));
+    
         String picturePath = "" ;
         
         if(productPhotoNew == null){
@@ -111,7 +113,8 @@ public class ProductManagementManagedBean implements Serializable {
             byte[] buffer = new byte[initialStream.available()];
             initialStream.read(buffer);
             
-            picturePath = "images/" + productPhotoNew.getFileName();
+            picturePath = FacesContext.getCurrentInstance().getExternalContext().getRealPath("/systemAdministration/images/");
+            //picturePath = FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath() + "\\web\\systemAdministration\\images\\" + productPhotoNew.getFileName();
             System.err.println("images/" + productPhotoNew.getFileName() );
             File targetFile = new File(picturePath);
             System.err.println(targetFile.getAbsolutePath());

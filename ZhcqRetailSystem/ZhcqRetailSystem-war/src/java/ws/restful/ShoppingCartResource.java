@@ -115,10 +115,10 @@ public class ShoppingCartResource {
     
     @Path("addToCart")
     @POST
-    public Response addToCart(@QueryParam("cartId") Long cartId, @QueryParam("productId") Long pdtId){
+    public Response addToCart(@QueryParam("cartId") Long cartId, @QueryParam("productId") Long pdtId, @QueryParam("quantity") Integer quantity){
         
         try {
-            checkoutController.updateCart(cartId, pdtId, true);
+            checkoutController.addToCart(cartId, pdtId, quantity);
             return Response.status(Response.Status.OK).build();
             
         } catch (OutOfStockException | ShoppingCartNotFoundException | ProductNotFoundException ex) {
@@ -137,10 +137,9 @@ public class ShoppingCartResource {
     public Response removeFromCart(@QueryParam("cartId") Long cartId, @QueryParam("productId") Long pdtId){
         
         try {
-            checkoutController.updateCart(cartId, pdtId, false);
+            checkoutController.removeFromCart(cartId, pdtId);
             return Response.status(Response.Status.OK).build();
-            
-        } catch (OutOfStockException | ShoppingCartNotFoundException | ProductNotFoundException ex) {
+        } catch (ShoppingCartNotFoundException | ProductNotFoundException ex) {
             ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
             return Response.status(Response.Status.BAD_REQUEST).entity(errorRsp).build();
         } catch (Exception ex){

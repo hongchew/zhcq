@@ -1,64 +1,64 @@
 <app-header></app-header>
 
 <ion-content>
-
+  <div *ngIf="errorMessage">
+    {{errorMessage}}
+  </div>
 
   <!-- SELECTED PRODUCT -->
+  <div *ngIf="!errorMessage">
     <img src="assets/{{selectedProduct.picturePath}}" class="img-responsive"/>
-  
-  <ion-item>
-    <ion-row>
+
+    <ion-item>
+      <ion-row>
         <h4>{{selectedProduct.productName}} </h4> &nbsp;&nbsp;
         <h4>${{selectedProduct.unitPrice}}</h4> &nbsp;&nbsp; 
         <h4 *ngIf="onPromotion" style="color: crimson"> Promotional Price: ${{promotionalPrice}}</h4> &nbsp;&nbsp; 
         <h5>{{selectedProduct.description}} &nbsp;&nbsp; Size: {{selectedProduct.sizeEnum}}</h5>
         
         <ion-buttons>
-            <ion-button type="submit" fill="transparent" size="default" (click)="addToWishList()">
-                <ion-icon name="heart"></ion-icon>
-            </ion-button>
-            <ion-button type="submit" fill="transparent" size="default" (click)="addToCart()">
-                  <ion-icon name="ios-cart"></ion-icon>
-            </ion-button>
+          <ion-button type="submit" fill="transparent" size="default" (click)="addToWishList()">
+              <ion-icon name="heart"></ion-icon>
+          </ion-button>
+          <ion-button type="submit" fill="transparent" size="default" (click)="addToCart()">
+                <ion-icon name="ios-cart"></ion-icon>
+          </ion-button>
         </ion-buttons>
-    </ion-row>
-  
-  </ion-item>
+      </ion-row>
+    </ion-item>
 
-  <div *ngIf="!errorMessage"> 
-      <ion-grid> 
-          <ion-row>
-            <ion-col size="2" *ngFor="let pdt of diffSizes" [routerLink]="['/product-details',pdt.productId]" class="activated">
-              <ion-button  color="dark" > {{pdt.sizeEnum}} </ion-button>
-            </ion-col>
-            
-          </ion-row>
-        </ion-grid>
-        <ion-col size="2">
-            <ion-button color="light" size="small" (click)="openSizeGuide()"> <ion-icon ios="ios-shirt" md="md-shirt"></ion-icon>&nbsp; Size Guide</ion-button>
+    <ion-grid> 
+        <ion-row>
+          <ion-col size="2" *ngFor="let pdt of diffSizes" [routerLink]="['/product-details',pdt.productId]" class="activated">
+            <ion-button  color="dark" > {{pdt.sizeEnum}} </ion-button>
           </ion-col>
-  </div>
-
-  <!-- SHOW COLOUR ICON TO LINK TO PRODUCT -->
-  <div *ngIf="!errorMessage">
-      <ion-grid> 
-          <ion-row>
-            &nbsp;&nbsp;
-            <ion-col size="1.5" *ngFor="let product of diffColours" [routerLink]="['/product-details',product.productId]" class="activated">
-              <img src="assets/images/{{product.colourEnum}}.jpg" width="30" height="30"/>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-  </div>
-
-  <div *ngIf="!errorMessage"> 
+        </ion-row>
+    </ion-grid>
+    <ion-col size="2">
+      <ion-button color="light" size="small" (click)="openSizeGuide()"> <ion-icon ios="ios-shirt" md="md-shirt"></ion-icon>&nbsp; Size Guide</ion-button>
+    </ion-col>
+    
+  
+    <!-- SHOW COLOUR ICON TO LINK TO PRODUCT -->
+    
+    <ion-grid> 
+      <ion-row>
+        &nbsp;&nbsp;
+        <ion-col size="1.5" *ngFor="let product of diffColours" [routerLink]="['/product-details',product.productId]" class="activated">
+          <img src="assets/images/{{product.colourEnum}}.jpg" width="30" height="30"/>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    
     <h6 text-center>other cute stuff you'll love <ion-icon ios="ios-arrow-round-down" md="md-arrow-round-down"></ion-icon></h6>
     <ion-slides [options]="sliderOpts">
       <ion-slide *ngFor="let pdt of suggestedProducts" [routerLink]="['/product-details',pdt.productId]" >
           <img src="assets/{{pdt.picturePath}}" class="thumb-img"/>
       </ion-slide>
     </ion-slides>
+      
   </div>
+  
   
 
 </ion-content>

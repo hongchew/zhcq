@@ -12,7 +12,7 @@ const httpOptions = {
 })
 
 export class OutfitService {
-    baseUrl: string = 'http://localhost:8000/ZhcqRetailSystem-war/Resources/Coordinatedoutfit'
+    baseUrl: string = 'http://localhost:8000/ZhcqRetailSystem-war/Resources/CoordinatedOutfit';
 
     constructor(private httpClient: HttpClient) {
 
@@ -25,8 +25,8 @@ export class OutfitService {
         );
     }
 
-    retrieveOutfit(): Observable<any>  {
-        return this.httpClient.get<any>(this.baseUrl + '/retrieveOutfitById').pipe
+    retrieveOutfit(outfitId:number): Observable<any>  {
+        return this.httpClient.get<any>(this.baseUrl + '/retrieveOutfitById/' + outfitId).pipe
         (
             catchError(this.handleError)
         );

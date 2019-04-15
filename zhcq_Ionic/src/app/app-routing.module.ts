@@ -25,7 +25,8 @@ const routes: Routes = [
   { path: 'promotional-products', loadChildren: './promotional-products/promotional-products.module#PromotionalProductsPageModule' },
   { path: 'sizeguide', loadChildren: './sizeguide/sizeguide.module#SizeguidePageModule' },
   { path: 'coordinated-outfits', loadChildren: './coordinated-outfits/coordinated-outfits.module#CoordinatedOutfitsPageModule' },
-  { path: 'coordinated-outfit-details', loadChildren: './coordinated-outfit-details/coordinated-outfit-details.module#CoordinatedOutfitDetailsPageModule' },
+  { path: 'coordinated-outfit-details/:outfitId',
+  loadChildren: './coordinated-outfit-details/coordinated-outfit-details.module#CoordinatedOutfitDetailsPageModule' },
   // { path: 'header', loadChildren: './header/header.module#HeaderPageModule' }
 ];
 

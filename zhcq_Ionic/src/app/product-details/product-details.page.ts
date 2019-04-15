@@ -12,7 +12,7 @@ import { WishListService } from '../services/wishlist.service';
 import { SizeguidePageModule } from '../sizeguide/sizeguide.module';
 import { SizeguidePage } from '../sizeguide/sizeguide.page';
 
- 
+
 @Component({
   selector: 'app-product-details',
   templateUrl: './product-details.page.html',
@@ -30,19 +30,16 @@ export class ProductDetailsPage implements OnInit {
   promotionalPrice: any;
   isLogin: boolean;
 
-  //For adding into cart
-  member: Member
+  // For adding into cart
+  member: Member;
   cart: ShoppingCart;
-  cartId: number 
-  
+  cartId: number ;
 
   sliderOpts = {
     zoom: false,
     slidesPerView: 1.5,
     spaceBetween: true
   };
-
-  wishlisted = false;
 
   constructor(private productService: ProductService,
     private modalController:ModalController,

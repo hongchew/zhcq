@@ -329,7 +329,7 @@ public class InitSessionBean {
             List<Long> productIds = new ArrayList<>();
             productIds.add(product1.getProductId());
             productIds.add(product2.getProductId());
-            productIds.add(product3.getProductId());
+            productIds.add(product3.getProductId());    
             productIds.add(product4.getProductId());
             productIds.add(product5.getProductId());
             promotionControllerLocal.createNewPromotion(promotion, productIds);

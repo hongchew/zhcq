@@ -13,7 +13,7 @@ const httpOptions = {
 
 export class ShoppingCartService {
 
-  baseUrl: string = 'http://localhost:8000/ZhcqRetailSystem-war/Resources/ShoppingCart';
+  baseUrl: string = 'http://localhost:8080/ZhcqRetailSystem-war/Resources/ShoppingCart';
 
   constructor(private httpClient: HttpClient) { }
 
@@ -26,9 +26,16 @@ export class ShoppingCartService {
 		)
   }
   
-  addToCart(cartId: number, productId : number): Observable<any>
+  addToCart(cartId: number, productId : number, quantity: number): Observable<any>
     {
-        return this.httpClient.post<any>(this.baseUrl + '/addToCart?cartId=' + cartId + '&productId=' + productId, null, httpOptions).pipe
+        return this.httpClient.post<any>(this.baseUrl + '/addToCart?cartId=' + cartId + '&productId=' + productId + "&quantity=" +quantity, null, httpOptions).pipe
+        (
+            catchError(this.handleError)
+        );
+    }
+
+    updateCart(cartId: number, productId : number, quantity: number): Observable<any> {
+        return this.httpClient.post<any>(this.baseUrl + '/updateCart?cartId=' + cartId + '&productId=' + productId + "&quantity=" +quantity, null, httpOptions).pipe
         (
             catchError(this.handleError)
         );

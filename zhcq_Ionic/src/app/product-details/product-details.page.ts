@@ -129,7 +129,7 @@ export class ProductDetailsPage implements OnInit {
     if (this.isLogin) {
       if (this.selectedProduct.quantityOnHand !== 0 ) { 
         console.log('Entereed into add to cart method');
-        this.shoppingCartService.addToCart(this.member.shoppingCart.cartId, this.id).subscribe(response => {
+        this.shoppingCartService.addToCart(this.member.shoppingCart.cartId, this.id, 1).subscribe(response => {
           console.log('response = ' + response);
           cartAlert.present();
         },

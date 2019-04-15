@@ -16,12 +16,9 @@ export class ShoppingcartPage implements OnInit {
   member: Member;
   products: ProductEntity[];
   cart: ShoppingCart;
+  quantity : number[];
 
   constructor(private storage: Storage, private alertController: AlertController, private shoppingCartService: ShoppingCartService) {
-    // storage.get('currentCustomer').then((data) => {
-    //   this.member = data;
-    //   this.viewCart();
-    // });
   }
 
   ngOnInit() {
@@ -42,6 +39,7 @@ export class ShoppingcartPage implements OnInit {
         response => {
           this.cart = response.userShoppingCart;
           this.products = this.cart.products;
+          this.quantity = this.cart.quantity;
         },
         error => {
           this.presentAlert(error);

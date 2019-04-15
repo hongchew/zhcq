@@ -124,7 +124,7 @@ export class ProductDetailsPage implements OnInit {
 
 
     const cartAlert = await this.alertController.create({
-      header: 'Added to Cart!'
+      header: 'Added to Bag!'
     });
 
     if (this.isLogin) {

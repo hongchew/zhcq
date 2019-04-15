@@ -10,11 +10,10 @@
     <h2 text-center>Shop</h2>
     <ion-grid> 
       <ion-row>
-        <ion-col size="6" *ngFor="let product of products"  class="activated">
-          <img src="assets/{{product.picturePath}}" class="img-responsive"/>
+        <ion-col size="6" *ngFor="let product of products"  class="activated" >
+          <img src="assets/{{product.picturePath}}" class="img-responsive" [routerLink]="['/product-details',product.productId]"/>
               <h6>{{product.productName}} &nbsp; <img src="assets/images/{{product.colourEnum}}.jpg" class="colorImg"></h6>
-              <ion-button color="medium" [routerLink]="['/product-details',product.productId]">View Item
-            </ion-button>
+              
         </ion-col>
       </ion-row>
     </ion-grid>

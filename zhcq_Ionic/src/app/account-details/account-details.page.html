@@ -1,0 +1,43 @@
+<app-header></app-header>
+
+<ion-content>
+
+  <div *ngIf=isLogin>
+    <ion-card>
+      <ion-item>
+        <ion-thumbnail slot="start">
+            <img src="../../assets/images/canyon_top_pink.jpg">
+        </ion-thumbnail>
+        <ion-label>{{ member.firstName }} &nbsp; {{ member.lastName }}</ion-label>
+      </ion-item>
+      <ion-card-content>
+        <ion-card-title> {{ member.firstName }} &nbsp;&nbsp; {{ member.lastName }}</ion-card-title>
+        <ion-card-subtitle> Points: {{ member.loyaltyPoints }} </ion-card-subtitle>
+        <ion-card-subtitle> Username: {{ member.username }} </ion-card-subtitle>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+</ion-content>
+<div *ngIf=!isLogin>
+    <ion-card >
+          <ion-grid>
+              <ion-row>
+                  <ion-col size="12">
+                      <ion-button fill="outline" color="dark" expand="block" [routerLink]="['/login']">
+                        Login
+                      </ion-button>
+                    
+                      <ion-button fill="outline" color="dark" expand="block" [routerLink]="['/login']">
+                        Sign Up
+                      </ion-button>
+                  
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+    </ion-card>
+    
+    
+  </div>
+
+<app-footer></app-footer>

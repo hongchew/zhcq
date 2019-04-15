@@ -13,14 +13,14 @@ const httpOptions = {
 
 export class ShoppingCartService {
 
-  baseUrl: string = "http://localhost:8000/ZhcqRetailSystem-war/Resources/ShoppingCart";
+  baseUrl: string = 'http://localhost:8000/ZhcqRetailSystem-war/Resources/ShoppingCart';
 
   constructor(private httpClient: HttpClient) { }
 
 
   retrieveShoppingCart(userId : number): Observable<any>
 	{
-		return this.httpClient.get<any>(this.baseUrl + "/retrieveShoppingCart?userId=" + userId).pipe
+		return this.httpClient.get<any>(this.baseUrl + '/retrieveShoppingCart?userId=' + userId).pipe
 		(
 			catchError(this.handleError)
 		)
@@ -28,7 +28,7 @@ export class ShoppingCartService {
   
   addToCart(cartId: number, productId : number): Observable<any>
     {
-        return this.httpClient.post<any>(this.baseUrl + "/addToCart?cartId=" + cartId + "&productId=" + productId, null, httpOptions).pipe
+        return this.httpClient.post<any>(this.baseUrl + '/addToCart?cartId=' + cartId + '&productId=' + productId, null, httpOptions).pipe
         (
             catchError(this.handleError)
         );
@@ -36,7 +36,7 @@ export class ShoppingCartService {
 
     removeFromCart(cartId:number, productId:number): Observable<any>
     {
-        return this.httpClient.delete<any>(this.baseUrl+ "?cartId=" + cartId+ "&productId="+ productId).pipe
+        return this.httpClient.delete<any>(this.baseUrl + '?cartId=' + cartId + '&productId='+ productId).pipe
         (
             catchError(this.handleError)
         );
@@ -44,7 +44,7 @@ export class ShoppingCartService {
 
     checkout(cartId: number): Observable<any>
     {
-        return this.httpClient.post<any>(this.baseUrl + "/checkout?cartId=" + cartId, null, httpOptions).pipe
+        return this.httpClient.post<any>(this.baseUrl + '/checkout?cartId=' + cartId, null, httpOptions).pipe
         (
             catchError(this.handleError)
         );

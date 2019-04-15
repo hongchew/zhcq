@@ -7,6 +7,8 @@ import { CategoryService } from './services/category.service';
 import { Category } from './entities/category';
 import { Storage } from '@ionic/storage';
 import { AlertController } from '@ionic/angular';
+import { CoordinatedOutfit } from './entities/outfit';
+import { OutfitService } from './services/outfit.service';
 
 @Component({
   selector: 'app-root',
@@ -38,10 +40,16 @@ export class AppComponent {
       title: 'SALE',
       url: '/promotional-products',
       icon: 'pricetags'
+    },
+    {
+      title: 'Outfits',
+      url: '/coordinated-outfits',
+      icon: 'shirt'
     }
   ];
 
   public categories: Category[];
+  public outfits: CoordinatedOutfit[];
   public errorMessage: string;
   public isLogin: boolean;
 
@@ -50,22 +58,36 @@ export class AppComponent {
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
     private categoryService: CategoryService,
-    private storage: Storage, 
-    private alertController : AlertController
+    private storage: Storage,
+    private alertController: AlertController,
+    private outfitService: OutfitService
   ) {
     this.initializeApp();
 
     this.categoryService.retrieveAllCategories().subscribe(
       response => {
-				this.categories = response.categories
-			},
-			error => {				
-				this.errorMessage = error
-			}
+        this.categories = response.categories;
+      },
+      error => {
+        this.errorMessage = error;
+      }
     );
     storage.get('isLogin').then((data) => {
       this.isLogin = data;
     });
+
+    this.outfitService.retrieveAllOutfits().subscribe(
+      response => {
+        console.log(response);
+        this.outfits = response.outfits;
+      },
+      error => {
+        this.errorMessage = error;
+        this.presentAlert(this.errorMessage.substring(37));
+      }
+    );
+
+    
   }
 
   initializeApp() {
@@ -76,11 +98,18 @@ export class AppComponent {
     });
   }
 
-  logout() {
+  async logout() {
+
+    const logoutSuccess = await this.alertController.create({
+      header: 'Successfully Logged Out!',
+      buttons: ['OK']
+    });
+
     this.isLogin = false;
     this.storage.set("isLogin", false);
     this.storage.set("currentCustomer", undefined);
-    this.presentAlert("Logged out successfully!");
+    logoutSuccess.present();
+
   }
 
   async presentAlert(message: string) {

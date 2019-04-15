@@ -23,11 +23,9 @@ public interface CheckoutControllerLocal {
     
     public ShoppingCart retrieveShoppingCartById(Long cartId) throws ShoppingCartNotFoundException;
     public SaleTransaction retrieveSaleTransactionById(Long transactionId) throws SaleTransactionNotFoundException;
-    public SaleTransaction checkOut (Long cartId) throws ShoppingCartNotFoundException, EmptyShoppingCartException;
-    public void updateCart(Long cartId, Long productId, boolean addition) throws OutOfStockException, ShoppingCartNotFoundException, ProductNotFoundException;
-
+    public SaleTransaction checkOut(Long cartId) throws ShoppingCartNotFoundException, EmptyShoppingCartException, OutOfStockException;
+    public void addToCart(Long cartId, Long productId, Integer quantity) throws ShoppingCartNotFoundException, ProductNotFoundException;
     public ShoppingCart retrieveShoppingCartByUserId(Long userId) throws ShoppingCartNotFoundException;
-
-
-    
+    public void removeFromCart(Long cartId, Long productId) throws ShoppingCartNotFoundException, ProductNotFoundException;
+    public void updateCart(Long cartId, Long productId, Integer quantity) throws ShoppingCartNotFoundException, ProductNotFoundException;
 }

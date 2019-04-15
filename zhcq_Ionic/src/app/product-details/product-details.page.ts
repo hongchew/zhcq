@@ -95,7 +95,7 @@ export class ProductDetailsPage implements OnInit {
     });
 
     const listSuccess = await this.alertController.create({
-      header: 'Added to Wish List!'
+      header: 'added to wish list!'
     });
     if (this.isLogin) {
       console.log('Entered into add to wishlist method');
@@ -128,24 +128,29 @@ export class ProductDetailsPage implements OnInit {
     });
 
     if (this.isLogin) {
-      console.log('Entereed into add to cart method');
-      this.shoppingCartService.addToCart(this.member.shoppingCart.cartId, this.id).subscribe(response => {
-        console.log('response = ' + response);
-        cartAlert.present();
-      },
-      error => {
-        this.presentAlert('ERROR FROM ADDING TO CART: ' + error.substring(37));
-        // this.ngOnInit();
+      if (this.selectedProduct.quantityOnHand !== 0 ) { 
+        console.log('Entereed into add to cart method');
+        this.shoppingCartService.addToCart(this.member.shoppingCart.cartId, this.id, 1).subscribe(response => {
+          console.log('response = ' + response);
+          cartAlert.present();
+        },
+        error => {
+          this.presentAlert('ERROR FROM ADDING TO CART: ' + error.substring(37));
+          // this.ngOnInit();
+        }
+        );
+      } else {
+        this.presentAlert('OUT OF STOCK!');
       }
-      );
+
     } else {
-      this.presentAlert('Please Login to perform operation!');
+        this.presentAlert('Please Login to perform operation!');
     }
   }
 
   async presentAlert(message: string) {
     const alert = await this.alertController.create({
-      header: 'Error: ' + message,
+      header: message,
       buttons: ['OK']
     });
     await alert.present();

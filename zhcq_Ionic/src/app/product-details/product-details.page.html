@@ -17,9 +17,16 @@
           </ion-button>
           <h4 slot="end">${{selectedProduct.unitPrice}}</h4> <br/>
       </ion-item>
-     <ion-item *ngIf="onPromotion">
-        <h4 slot="end" style="color: darkred"><ion-icon ios="ios-pricetag" md="md-pricetag"></ion-icon>&nbsp; ${{promotionalPrice}}</h4>
+     <ion-item *ngIf="onPromotion" >
+        <h4 slot="end" style="color: darkred; margin-top: 0%; margin-bottom: 0%"><ion-icon ios="ios-pricetag" md="md-pricetag"></ion-icon>&nbsp; ${{promotionalPrice}}</h4>
      </ion-item>
+     <h4 *ngIf="selectedProduct.quantityOnHand > 10" class="inStock" style="margin-top: 0px"> 
+        &nbsp;&nbsp;&nbsp;&nbsp;<i>In stock </i></h4>
+     <h4 *ngIf="selectedProduct.quantityOnHand <=10 && selectedProduct.quantityOnHand > 0" style="color:rgba(233, 103, 27, 0.938); margin-top: 0px">
+        &nbsp;&nbsp;&nbsp;&nbsp;<i>Running out</i> </h4>
+     <h4 *ngIf="selectedProduct.quantityOnHand == 0" style="color: rgb(216, 15, 15); margin-top: 0px"> 
+        &nbsp;&nbsp;&nbsp;&nbsp;<i>Out of stock</i> </h4>
+
      <ion-item>
         <h6>{{selectedProduct.description}}</h6>
      </ion-item>
@@ -41,9 +48,9 @@
     <!-- DIFF SIZES -->
     <ion-row>
       <br/>
-        &nbsp;&nbsp;&nbsp;<h6>Select size</h6>
-        <!-- SIZE GUIDE -->
-      <ion-col size="2" slot="end">
+        &nbsp;&nbsp;&nbsp;<h6>Select size</h6>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <!-- SIZE GUIDE DONT LAUGH AT THIS ^ PLS LOL SLOT=END NOT WORKING IDEK WHY-->
+      <ion-col >
           &nbsp;
           <ion-button color="light" size="small" (click)="openSizeGuide()"> <ion-icon ios="ios-shirt" md="md-shirt"></ion-icon>&nbsp; Size Guide</ion-button>
         </ion-col>

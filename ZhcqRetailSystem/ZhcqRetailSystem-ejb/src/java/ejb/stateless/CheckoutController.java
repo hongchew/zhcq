@@ -17,7 +17,6 @@ import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
 import util.exception.EmptyShoppingCartException;
-import util.exception.OutOfStockException;
 import util.exception.ProductNotFoundException;
 import util.exception.SaleTransactionNotFoundException;
 import util.exception.ShoppingCartNotFoundException;
@@ -78,7 +77,7 @@ public class CheckoutController implements CheckoutControllerLocal {
     }
 
     @Override
-    public void addToCart(Long cartId, Long productId, Integer quantity) throws OutOfStockException, ShoppingCartNotFoundException, ProductNotFoundException { //true if adding, false if deleting
+    public void addToCart(Long cartId, Long productId, Integer quantity) throws ShoppingCartNotFoundException, ProductNotFoundException { //true if adding, false if deleting
 
         ShoppingCart shoppingCart = retrieveShoppingCartById(cartId);
         ProductEntity prod = productControllerLocal.retrieveProductById(productId);

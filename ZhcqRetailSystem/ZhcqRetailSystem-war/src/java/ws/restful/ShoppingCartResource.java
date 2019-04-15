@@ -7,14 +7,12 @@ package ws.restful;
 
 import ejb.stateless.CheckoutControllerLocal;
 import entity.Category;
-import entity.CoordinatedOutfit;
 import entity.ProductEntity;
 import entity.ProductTag;
 import entity.Promotion;
 import entity.SaleTransaction;
 import entity.SaleTransactionLineItem;
 import entity.ShoppingCart;
-import entity.WishList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.naming.InitialContext;
@@ -29,7 +27,6 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
-import util.exception.OutOfStockException;
 import util.exception.ProductNotFoundException;
 import util.exception.ShoppingCartNotFoundException;
 import ws.datamodel.CheckoutRsp;
@@ -44,15 +41,13 @@ import ws.datamodel.RetrieveShoppingCartRsp;
 public class ShoppingCartResource {
 
     CheckoutControllerLocal checkoutController = lookupCheckoutControllerLocal();
-    
-    
-    
+
     @Context
     private UriInfo context;
 
     public ShoppingCartResource() {
- 
-    }  
+
+    }
 
     private CheckoutControllerLocal lookupCheckoutControllerLocal() {
         try {
@@ -63,44 +58,44 @@ public class ShoppingCartResource {
             throw new RuntimeException(ne);
         }
     }
-    
+
     @Path("retrieveShoppingCart")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response retrieveShoppingCart(@QueryParam("userId") Long id){
+    public Response retrieveShoppingCart(@QueryParam("userId") Long id) {
         try {
             ShoppingCart cart = checkoutController.retrieveShoppingCartByUserId(id);
-            
+
             cart.getMember().setShoppingCart(null);
             cart.getMember().setSaleTransactions(null);
             cart.getMember().setWishList(null);
             cart.getMember().setPassword(null);
             cart.getMember().setSalt(null);
-            
-            for(ProductEntity product : cart.getProducts()){
-                
+
+            for (ProductEntity product : cart.getProducts()) {
+
                 Category category = product.getProductCategory();
-                    category.getProductEntities().clear();
-                    
-                    product.getProductTags().clear();
-                   
-                    product.getWishLists().clear();
-                    
-                    product.getShoppingcarts().clear();
-                    
-                    product.setCoordinatedOutfit(null);
-                    
-                    Promotion promotion = product.getPromotion();
-                    
-                    if(promotion !=null){
-                        promotion.getPromotionalProducts().clear();  
-                    }
-                
+                category.getProductEntities().clear();
+
+                product.getProductTags().clear();
+
+                product.getWishLists().clear();
+
+                product.getShoppingcarts().clear();
+
+                product.setCoordinatedOutfit(null);
+
+                Promotion promotion = product.getPromotion();
+
+                if (promotion != null) {
+                    promotion.getPromotionalProducts().clear();
+                }
+
             }
-            
+
             RetrieveShoppingCartRsp cartRsp = new RetrieveShoppingCartRsp(cart);
             return Response.status(Response.Status.OK).entity(cartRsp).build();
-            
+
         } catch (ShoppingCartNotFoundException ex) {
             System.err.println(ex.getMessage());
             ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
@@ -112,84 +107,97 @@ public class ShoppingCartResource {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(errorRsp).build();
         }
     }
-    
+
     @Path("addToCart")
     @POST
-    public Response addToCart(@QueryParam("cartId") Long cartId, @QueryParam("productId") Long pdtId, @QueryParam("quantity") Integer quantity){
-        
+    public Response addToCart(@QueryParam("cartId") Long cartId, @QueryParam("productId") Long pdtId, @QueryParam("quantity") Integer quantity) {
+
         try {
             checkoutController.addToCart(cartId, pdtId, quantity);
             return Response.status(Response.Status.OK).build();
-            
-        } catch (OutOfStockException | ShoppingCartNotFoundException | ProductNotFoundException ex) {
-            System.err.println("***Error: " + ex.getMessage() );
+        } catch (ShoppingCartNotFoundException | ProductNotFoundException ex) {
+            System.err.println("***Error: " + ex.getMessage());
             ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
             return Response.status(Response.Status.BAD_REQUEST).entity(errorRsp).build();
-        } catch (Exception ex){
-            System.err.println("***Error: " + ex.getMessage() );
+        } catch (Exception ex) {
+            System.err.println("***Error: " + ex.getMessage());
             ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(errorRsp).build();
         }
-        
+
     }
-    
+
     @DELETE
-    public Response removeFromCart(@QueryParam("cartId") Long cartId, @QueryParam("productId") Long pdtId){
-        
+    public Response removeFromCart(@QueryParam("cartId") Long cartId, @QueryParam("productId") Long pdtId) {
+
         try {
             checkoutController.removeFromCart(cartId, pdtId);
             return Response.status(Response.Status.OK).build();
         } catch (ShoppingCartNotFoundException | ProductNotFoundException ex) {
             ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
             return Response.status(Response.Status.BAD_REQUEST).entity(errorRsp).build();
-        } catch (Exception ex){
-            System.err.println("***Error: " + ex.getMessage() );
+        } catch (Exception ex) {
+            System.err.println("***Error: " + ex.getMessage());
             ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(errorRsp).build();
         }
     }
-    
+
+    @Path("updateCart")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response updateCart(@QueryParam("cartId") Long cartId, @QueryParam("productId") Long productId, @QueryParam("quantity") Integer quantity) {
+
+        try {
+            checkoutController.updateCart(cartId, productId, quantity);
+            return Response.status(Response.Status.OK).build();
+        } catch (ShoppingCartNotFoundException | ProductNotFoundException ex) {
+            ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
+            return Response.status(Response.Status.BAD_REQUEST).entity(errorRsp).build();
+        } catch (Exception ex) {
+            System.err.println("***Error: " + ex.getMessage());
+            ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(errorRsp).build();
+        }
+    }
+
     @Path("checkout")
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public Response checkout(@QueryParam("cartId") Long cartId){
+    public Response checkout(@QueryParam("cartId") Long cartId) {
         try {
             SaleTransaction txn = checkoutController.checkOut(cartId);
-            for(SaleTransactionLineItem lineItem : txn.getSaleTransactionLineItems()){
+            for (SaleTransactionLineItem lineItem : txn.getSaleTransactionLineItems()) {
                 lineItem.setSaleTransaction(null);
                 lineItem.getProductEntity().getProductCategory().setProductEntities(null);
-                
+
                 lineItem.getProductEntity().setCoordinatedOutfit(null);
                 lineItem.getProductEntity().setShoppingcarts(null);
                 lineItem.getProductEntity().setWishLists(null);
                 lineItem.getProductEntity().setPromotion(null);
 
-                for(ProductTag tag: lineItem.getProductEntity().getProductTags())
-                {
+                for (ProductTag tag : lineItem.getProductEntity().getProductTags()) {
                     tag.getProductEntities().clear();
-                }           
+                }
             }
             txn.getMember().setWishList(null);
             txn.getMember().setShoppingCart(null);
             txn.getMember().setSaleTransactions(null);
             txn.getMember().setPassword(null);
             txn.getMember().setSalt(null);
-            
-            
+
             CheckoutRsp checkoutRsp = new CheckoutRsp(txn);
-            
+
             return Response.status(Response.Status.OK).entity(checkoutRsp).build();
 
-            
         } catch (ShoppingCartNotFoundException ex) {
             ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
             return Response.status(Response.Status.BAD_REQUEST).entity(errorRsp).build();
-        } catch (Exception ex){
-            System.err.println("***Error: " + ex.getMessage() );
+        } catch (Exception ex) {
+            System.err.println("***Error: " + ex.getMessage());
             ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(errorRsp).build();
         }
-        
-        
+
     }
 }

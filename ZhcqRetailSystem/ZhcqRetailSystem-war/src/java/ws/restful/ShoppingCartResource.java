@@ -6,6 +6,7 @@
 package ws.restful;
 
 import ejb.stateless.CheckoutControllerLocal;
+import entity.Category;
 import entity.CoordinatedOutfit;
 import entity.ProductEntity;
 import entity.ProductTag;
@@ -78,25 +79,16 @@ public class ShoppingCartResource {
             
             for(ProductEntity product : cart.getProducts()){
                 
-                product.getProductCategory().setProductEntities(null);
-                for(ProductTag tag: product.getProductTags())
-                    {
-                        tag.getProductEntities().clear();
-                    }           
+                Category category = product.getProductCategory();
+                    category.getProductEntities().clear();
                     
-                    for(WishList wishlist: product.getWishLists())
-                    {
-                        wishlist.getProductEntities().clear();
-                    }     
+                    product.getProductTags().clear();
+                   
+                    product.getWishLists().clear();
                     
                     product.getShoppingcarts().clear();
                     
-                    
-                    CoordinatedOutfit outfit = product.getCoordinatedOutfit();
-                    if(outfit !=null){
-                        outfit.getProductEntities().clear();
-                    }
-                 
+                    product.setCoordinatedOutfit(null);
                     
                     Promotion promotion = product.getPromotion();
                     

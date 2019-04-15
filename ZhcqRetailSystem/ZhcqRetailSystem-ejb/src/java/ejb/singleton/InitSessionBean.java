@@ -213,9 +213,9 @@ public class InitSessionBean {
             tagIds = new ArrayList<>();
             tagIds.add(tagPopular.getProductTagId());
             tagIds.add(tagCold.getProductTagId());
-            ProductEntity product7 = productControllerLocal.createNewProduct(new ProductEntity("Freddie Coat", "100% Fur", BigDecimal.valueOf(80.00), 220, SizeEnum.S, ColourEnum.CREAM,"images/fredde_coat_cream.jpg"), tops.getCategoryId(),tagIds);
-            productControllerLocal.createNewProduct(new ProductEntity("Freddie Coat", "100% Fur", BigDecimal.valueOf(80.00), 220, SizeEnum.M, ColourEnum.CREAM,"images/fredde_coat_cream.jpg"), tops.getCategoryId(),tagIds);
-            productControllerLocal.createNewProduct(new ProductEntity("Freddie Coat", "100% Fur", BigDecimal.valueOf(80.00), 220, SizeEnum.L, ColourEnum.CREAM,"images/fredde_coat_cream.jpg"), tops.getCategoryId(),tagIds);
+            ProductEntity product7 = productControllerLocal.createNewProduct(new ProductEntity("Freddie Coat", "100% Fur", BigDecimal.valueOf(80.00), 220, SizeEnum.S, ColourEnum.CREAM,"images/freddie_coat_cream.jpg"), tops.getCategoryId(),tagIds);
+            productControllerLocal.createNewProduct(new ProductEntity("Freddie Coat", "100% Fur", BigDecimal.valueOf(80.00), 220, SizeEnum.M, ColourEnum.CREAM,"images/freddie_coat_cream.jpg"), tops.getCategoryId(),tagIds);
+            productControllerLocal.createNewProduct(new ProductEntity("Freddie Coat", "100% Fur", BigDecimal.valueOf(80.00), 220, SizeEnum.L, ColourEnum.CREAM,"images/freddie_coat_cream.jpg"), tops.getCategoryId(),tagIds);
             ProductEntity product8 = productControllerLocal.createNewProduct(new ProductEntity("Templeton Coat", "100% Fur", BigDecimal.valueOf(80.00), 320, SizeEnum.S, ColourEnum.BLUE,"images/templeton_coat_blue.jpg"), tops.getCategoryId(),tagIds);
             productControllerLocal.createNewProduct(new ProductEntity("Templeton Coat", "100% Fur", BigDecimal.valueOf(80.00), 320, SizeEnum.M, ColourEnum.BLUE,"images/templeton_coat_blue.jpg"), tops.getCategoryId(),tagIds);
             productControllerLocal.createNewProduct(new ProductEntity("Templeton Coat", "100% Fur", BigDecimal.valueOf(80.00), 320, SizeEnum.L, ColourEnum.BLUE,"images/templeton_coat_blue.jpg"), tops.getCategoryId(),tagIds);

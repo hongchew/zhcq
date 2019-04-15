@@ -130,5 +130,33 @@ public class CoordinatedOutfit implements Serializable {
         this.outfitName = outfitName;
     }
 
+    /**
+     * @return the picturePath
+     */
+    public String getPicturePath() {
+        return picturePath;
+    }
+
+    /**
+     * @param picturePath the picturePath to set
+     */
+    public void setPicturePath(String picturePath) {
+        this.picturePath = picturePath;
+    }
+
+    /**
+     * @return the description
+     */
+    public String getDescription() {
+        return description;
+    }
+
+    /**
+     * @param description the description to set
+     */
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
 
 }

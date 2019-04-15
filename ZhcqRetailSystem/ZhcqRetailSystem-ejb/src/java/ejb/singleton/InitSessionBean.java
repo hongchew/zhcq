@@ -368,7 +368,7 @@ public class InitSessionBean {
             productIds.add(product11.getProductId());
             coordinatedOutfitControllerLocal.createNewOutfit(outfit2, productIds,new Date());
             
-            CoordinatedOutfit outfit3 = new CoordinatedOutfit("AUTUM LOOK","Seasonal Colours With radiant look","/");
+            CoordinatedOutfit outfit3 = new CoordinatedOutfit("AUTUMN LOOK","Seasonal Colours With radiant look","/");
             productIds = new ArrayList<>();
             productIds.add(product3.getProductId());
             productIds.add(product7.getProductId());

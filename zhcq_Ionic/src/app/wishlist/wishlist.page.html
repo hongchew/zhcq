@@ -1,9 +1,25 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>wishlist</ion-title>
-  </ion-toolbar>
-</ion-header>
+<app-header></app-header>
 
 <ion-content>
+  <br/>
+  <h4 text-center><i>My Wish List</i></h4>
+  <br/>
+  <ion-grid> 
+    <ion-row *ngFor="let product of products"  [routerLink]="['/product-details',product.productId]" class="activated">
+      <ion-col size="5">
+        <img src="assets/{{product.picturePath}}" class="img-responsive"/>
+      </ion-col>
+      <ion-col size="7">
+        <h6>{{product.productName}} &nbsp;&nbsp;${{product.unitPrice}}</h6>
+        <label>Size: {{product.sizeEnum}}</label> <br/>
 
+        		<ion-button color="light" (click)="removeProduct(product)">Remove Item
+            </ion-button>
+        
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>
+    
+
+<app-footer></app-footer>

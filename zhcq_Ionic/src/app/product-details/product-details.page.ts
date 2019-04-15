@@ -109,10 +109,11 @@ export class ProductDetailsPage implements OnInit {
       }
       );
     } else {
-      this.presentAlert('Please Login to perform operation!');
+      this.presentAlert('Please Login!');
     }
   }
 
+  
 
   async addToCart() {
     // console.log('cartID = ' + this.cartId)
@@ -143,7 +144,7 @@ export class ProductDetailsPage implements OnInit {
       }
 
     } else {
-        this.presentAlert('Please Login to perform operation!');
+        this.presentAlert('Please Login!');
     }
   }
 

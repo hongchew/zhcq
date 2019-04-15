@@ -22,8 +22,24 @@ export class WishListService{
     (
         catchError(this.handleError)
     );
+	}
+	
+	retrieveWishList(userId : number): Observable<any>
+	{
+		return this.httpClient.get<any>(this.baseUrl + '/retrieveWishList?userId=' + userId).pipe
+		(
+			catchError(this.handleError)
+		)
   }
 
+	removeFromWishList(cartId:number, productId:number): Observable<any>
+	{
+			return this.httpClient.delete<any>(this.baseUrl + '?wishListId=' + cartId + '&productId='+ productId).pipe
+			(
+					catchError(this.handleError)
+			);
+	} 
+		
   private handleError(error: HttpErrorResponse)
 	{
 		let errorMessage: string = "";

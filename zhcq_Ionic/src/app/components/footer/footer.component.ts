@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ShoppingCartService } from '../../services/shoppingcart.service';
+import { WishListService } from '../../services/wishlist.service';
 import { Member } from '../../entities/member';
 import { Storage } from '@ionic/storage';
 import { AlertController } from '@ionic/angular';
 import { ShoppingCart } from '../../entities/cart';
+import { WishList } from '../../entities/wishlist';
+
 
 @Component({
   selector: 'app-footer',
@@ -15,8 +18,9 @@ export class FooterComponent implements OnInit {
   loggedIn: boolean;
   member: Member;
   cart: ShoppingCart;
+  wishList: WishList
 
-  constructor(private cartService: ShoppingCartService, private alertController: AlertController, private storage: Storage) {
+  constructor(private cartService: ShoppingCartService, wishListService: WishListService, private alertController: AlertController, private storage: Storage) {
     storage.get('currentCustomer').then((data) => {
       this.member = data;
     });

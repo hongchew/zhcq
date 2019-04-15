@@ -6,6 +6,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { WishlistPage } from './wishlist.page';
+import { SharedComponentsModule } from '../components/shared-components.module';
+
 
 const routes: Routes = [
   {
@@ -19,7 +21,8 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     IonicModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    SharedComponentsModule
   ],
   declarations: [WishlistPage]
 })

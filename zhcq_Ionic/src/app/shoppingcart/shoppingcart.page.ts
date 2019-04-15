@@ -53,7 +53,7 @@ export class ShoppingcartPage implements OnInit {
   async removeProduct(product: ProductEntity) {
     const alert = await this.alertController.create({
       header: 'Confirm',
-      message: 'Remove Item? <strong>:-(</strong>',
+      message: 'Remove Item? <ion-icon ios="ios-sad" md="md-sad"></ion-icon>',
       buttons: [
         {
           text: 'Cancel',
@@ -73,7 +73,7 @@ export class ShoppingcartPage implements OnInit {
                   this.products.splice(index,1);
                   console.log("successfully removed product!");
                 }
-                this.presentAlert("Successfully removed product!");
+                this.presentAlert("Item removed from bag");
               },
               error => {
                 this.presentAlert(error);

@@ -25,6 +25,10 @@ export class ShoppingcartPage implements OnInit {
   }
 
   ngOnInit() {
+    this.storage.get('currentCustomer').then((data) => {
+      this.member = data;
+      this.viewCart();
+    });
   }
 
   viewCart() {

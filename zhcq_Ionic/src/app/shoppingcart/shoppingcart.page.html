@@ -1,19 +1,24 @@
 <app-header></app-header>
 
 <ion-content>
-
-  <h2 text-center>Shopping Cart</h2>
+  <br/>
+  <h4 text-center><i>In your cart</i></h4>
+  <br/>
   <ion-grid> 
-    <ion-row>
-      <ion-col *ngFor="let product of products" [routerLink]="['/product-details',product.productId]" class="activated">
+    <ion-row *ngFor="let product of products" [routerLink]="['/product-details',product.productId]" class="activated">
+      <ion-col size="5">
         <img src="assets/{{product.picturePath}}" class="img-responsive"/>
-            <h6>{{product.productName}} &nbsp;&nbsp;${{product.unitPrice}}</h6>
-            <label>Quantity:</label> 
+      </ion-col>
+      <ion-col size="7">
+        <h6>{{product.productName}} &nbsp;&nbsp;${{product.unitPrice}}</h6>
+        <label>Size: {{product.sizeEnum}}</label> <br/>
+        <label>Quantity:</label> <br/><br/><br/><br/>
+        <ion-icon ios="ios-trash" md="md-trash"></ion-icon>
+        
       </ion-col>
     </ion-row>
   </ion-grid>
-  <ion-infinite-scroll (ionInfinite)="loadMoreProducts($event)">
-    <ion-infinite-scroll-content></ion-infinite-scroll-content>
-  </ion-infinite-scroll> 
-
 </ion-content>
+    <ion-button color="dark" expand="full">c h e c k &nbsp; o u t</ion-button>
+
+<app-footer></app-footer>

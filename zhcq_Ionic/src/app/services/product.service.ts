@@ -14,7 +14,7 @@ const httpOptions = {
 
 export class ProductService
 {
-    baseUrl: string = "http://localhost:8080/ZhcqRetailSystem-war/Resources/Product"
+    baseUrl: string = 'http://localhost:8080/ZhcqRetailSystem-war/Resources/Product'
 
 
     constructor(private httpClient: HttpClient)
@@ -58,20 +58,17 @@ export class ProductService
 
     private handleError(error: HttpErrorResponse)
     {
-        let errorMessage: string = "";
-        
-        if (error.error instanceof ErrorEvent) 
-        {		
-            errorMessage = "An unknown error has occurred: " + error.error.message;
-        } 
-        else 
-        {		
-            errorMessage = "A HTTP error has occurred: " + `HTTP ${error.status}: ${error.error.message}`;
+        let errorMessage: string = '';
+
+        if (error.error instanceof ErrorEvent)
+        {
+            errorMessage = 'An unknown error has occurred: ' + error.error.message;
+        } else {
+            errorMessage = 'A HTTP error has occurred: ' + `HTTP ${error.status}: ${error.error.message}`;
         }
-        
         console.error(errorMessage);
-        
-        return throwError(errorMessage);		
+
+        return throwError(errorMessage);
     }
 }
 

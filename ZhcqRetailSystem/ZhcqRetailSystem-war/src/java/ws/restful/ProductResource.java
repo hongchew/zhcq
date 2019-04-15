@@ -93,6 +93,8 @@ public class ProductResource {
                         promotion.getPromotionalProducts().clear();  
                     }
                     
+                    product.setCoordinatedOutfit(null);
+                    
                 }
             }
             
@@ -129,26 +131,13 @@ public class ProductResource {
                     Category category = product.getProductCategory();
                     category.getProductEntities().clear();
                     
-                    for(ProductTag tag: product.getProductTags())
-                    {
-                        tag.getProductEntities().clear();
-                    }           
+                    product.getProductTags().clear();
                    
-                    for(WishList wishlist: product.getWishLists())
-                    {
-                        wishlist.getProductEntities().clear();
-                    }     
+                    product.getWishLists().clear();
                     
-                    for(ShoppingCart cart: product.getShoppingcarts())
-                    {
-                        cart.getProducts().clear();
-                    }
+                    product.getShoppingcarts().clear();
                     
-                    
-                    CoordinatedOutfit outfit = product.getCoordinatedOutfit();
-                    if(outfit !=null){
-                        outfit.getProductEntities().clear();
-                    }
+                    product.setCoordinatedOutfit(null);
                  
                     
                     Promotion promotion = product.getPromotion();
@@ -156,7 +145,6 @@ public class ProductResource {
                     if(promotion !=null){
                         promotion.getPromotionalProducts().clear();  
                     }
-                    
                 }
             }
             
@@ -196,6 +184,7 @@ public class ProductResource {
             
             product.setCoordinatedOutfit(null);
                     
+            
             Promotion promotion = product.getPromotion();
                   
             if(promotion !=null){
@@ -213,16 +202,18 @@ public class ProductResource {
                     {
                         tag.getProductEntities().clear();
                     }
-                    product.getWishLists().clear();
+                    pdt.getWishLists().clear();
                     
-                    product.getShoppingcarts().clear();
+                    pdt.getShoppingcarts().clear();
             
-                    product.setCoordinatedOutfit(null);
-                    promotion = pdt.getPromotion();
-
-                    if(promotion !=null){
-                        promotion.getPromotionalProducts().clear();  
-                    }
+                    pdt.setCoordinatedOutfit(null);
+                    
+                    pdt.setPromotion(null);
+//                    promotion = pdt.getPromotion();
+//
+//                    if(promotion !=null){
+//                        promotion.getPromotionalProducts().clear();  
+//                    }
                 }
             } else { 
                 diffColours = new ArrayList<>();
@@ -241,17 +232,18 @@ public class ProductResource {
                     {
                         tag.getProductEntities().clear();
                     }
-                    product.getWishLists().clear();
+                    suggestion.getWishLists().clear();
                     
-                    product.getShoppingcarts().clear();
+                    suggestion.getShoppingcarts().clear();
             
-                    product.setCoordinatedOutfit(null);
+                    suggestion.setCoordinatedOutfit(null);
 
-                    promotion = suggestion.getPromotion();
-
-                    if(promotion !=null){
-                        promotion.getPromotionalProducts().clear();  
-                    }
+                    suggestion.setPromotion(null);
+//                    promotion = suggestion.getPromotion();
+//
+//                    if(promotion !=null){
+//                        promotion.getPromotionalProducts().clear();  
+//                    }
                 }
             } else { 
                 diffSizes = new ArrayList<>();
@@ -330,10 +322,7 @@ public class ProductResource {
                     product.setShoppingcarts(null);
                     
                     
-                    CoordinatedOutfit outfit = product.getCoordinatedOutfit();
-                    if(outfit !=null){
-                        outfit.getProductEntities().clear();
-                    }
+                    product.setCoordinatedOutfit(null);
                  
                     
                     Promotion promotion = product.getPromotion();

@@ -329,7 +329,7 @@ public class InitSessionBean {
             List<Long> productIds = new ArrayList<>();
             productIds.add(product1.getProductId());
             productIds.add(product2.getProductId());
-            productIds.add(product3.getProductId());
+            productIds.add(product3.getProductId());    
             productIds.add(product4.getProductId());
             productIds.add(product5.getProductId());
             promotionControllerLocal.createNewPromotion(promotion, productIds);
@@ -353,7 +353,7 @@ public class InitSessionBean {
             promotionControllerLocal.createNewPromotion(promotion, productIds);
             
             
-            CoordinatedOutfit outfit1 = new CoordinatedOutfit("Outfit 1");
+            CoordinatedOutfit outfit1 = new CoordinatedOutfit("SPRING LOOK","Seasonal Colours With radiant look","/");
             productIds = new ArrayList<>();
             productIds.add(product1.getProductId());
             productIds.add(product5.getProductId());
@@ -361,21 +361,21 @@ public class InitSessionBean {
             coordinatedOutfitControllerLocal.createNewOutfit(outfit1, productIds,new Date());
             
   
-            CoordinatedOutfit outfit2 = new CoordinatedOutfit("Outfit 2");
+            CoordinatedOutfit outfit2 = new CoordinatedOutfit("SUMMER LOOK","Seasonal Colours With radiant look","/");
             productIds = new ArrayList<>();
             productIds.add(product2.getProductId());
             productIds.add(product6.getProductId());
             productIds.add(product11.getProductId());
             coordinatedOutfitControllerLocal.createNewOutfit(outfit2, productIds,new Date());
             
-            CoordinatedOutfit outfit3 = new CoordinatedOutfit("Outfit 3");
+            CoordinatedOutfit outfit3 = new CoordinatedOutfit("AUTUMN LOOK","Seasonal Colours With radiant look","/");
             productIds = new ArrayList<>();
             productIds.add(product3.getProductId());
             productIds.add(product7.getProductId());
             productIds.add(product12.getProductId());
             coordinatedOutfitControllerLocal.createNewOutfit(outfit3, productIds,new Date());
             
-            CoordinatedOutfit outfit4 = new CoordinatedOutfit("Outfit 4");
+            CoordinatedOutfit outfit4 = new CoordinatedOutfit("WINTER LOOK","Seasonal Colours With radiant look","/");
             productIds = new ArrayList<>();
             productIds.add(product4.getProductId());
             productIds.add(product8.getProductId());

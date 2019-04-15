@@ -3,6 +3,7 @@ package ws.restful;
 
 import ejb.stateless.CoordinatedOutfitControllerLocal;
 import ejb.stateless.ProductControllerLocal;
+import entity.Category;
 import entity.CoordinatedOutfit;
 import entity.ProductEntity;
 import java.util.List;
@@ -12,6 +13,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
@@ -20,6 +22,7 @@ import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.UriInfo;
 import ws.datamodel.ErrorRsp;
 import ws.datamodel.RetrieveAllOutfitsRsp;
+import ws.datamodel.RetrieveOutfitByIdRsp;
 
 /**
  *
@@ -40,7 +43,7 @@ public class CoordinatedOutfitResource {
         coordinatedOutfitController = lookupCoordinatedOutfitControllerLocal();
     }
     
-   @Path("retrieveAllOutfits")
+    @Path("retrieveAllOutfits")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response retrieveAllOutfits()
@@ -57,8 +60,21 @@ public class CoordinatedOutfitResource {
                     {
                         for(ProductEntity product:products)
                         {
+                            Category category = product.getProductCategory();
+                            category.getProductEntities().clear();
+
+                            product.getProductTags().clear();
+
+                            product.getWishLists().clear();
+
+                            product.getShoppingcarts().clear();
+
                             product.setCoordinatedOutfit(null);
+
+                            product.setPromotion(null);
+                           
                         }
+                        
                     }
                         
                 }
@@ -77,6 +93,45 @@ public class CoordinatedOutfitResource {
         
     }
     
+    @Path("retrieveOutfitById/{id}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response retrieveOutfitById(@PathParam("id") Long id)
+    {
+        try{
+            CoordinatedOutfit outfit = coordinatedOutfitController.retrieveOutfitById(id);
+            
+            List<ProductEntity> products = outfit.getProductEntities();
+            if(products != null && !products.isEmpty())
+                {
+                    for(ProductEntity product:products)
+                    {
+                        Category category = product.getProductCategory();
+                        category.getProductEntities().clear();
+
+                        product.getProductTags().clear();
+
+                        product.getWishLists().clear();
+
+                        product.getShoppingcarts().clear();
+
+                        product.setCoordinatedOutfit(null);
+
+                        product.setPromotion(null);
+
+                    }
+
+                }
+            
+            
+            RetrieveOutfitByIdRsp retrieveOutfitByIdRsp = new RetrieveOutfitByIdRsp(outfit);
+            return Response.status(Status.OK).entity(retrieveOutfitByIdRsp).build();
+            
+        } catch (Exception ex){
+            ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
+            return Response.status(Status.BAD_REQUEST).entity(errorRsp).build();
+        }
+    }
     
     
 

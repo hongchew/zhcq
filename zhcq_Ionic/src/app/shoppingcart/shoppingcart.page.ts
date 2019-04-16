@@ -5,6 +5,7 @@ import { ProductEntity } from '../entities/product';
 import { ShoppingCart } from '../entities/cart';
 import { AlertController } from '@ionic/angular';
 import { ShoppingCartService } from '../services/shoppingcart.service';
+import { log } from 'util';
 
 @Component({
   selector: 'app-shoppingcart',
@@ -17,14 +18,14 @@ export class ShoppingcartPage implements OnInit {
   products: ProductEntity[];
   cart: ShoppingCart;
   quantity: number[];
+  subtotal: number[];
   isLogin: boolean;
 
   constructor(private storage: Storage, private alertController: AlertController, private shoppingCartService: ShoppingCartService) {
-
   }
 
   ngOnInit() {
-
+    this.subtotal =[];
   }
 
   ionViewWillEnter() {
@@ -36,20 +37,23 @@ export class ShoppingcartPage implements OnInit {
         this.isLogin = data;
       console.log('lOGIN Status: ' + this.isLogin );
       console.log('Member: ' + this.member);
-      this.viewCart();
+      this.initialiseCart();
     });
   }
 
-  viewCart() {
-    console.log('lOGIN Status: ' + this.isLogin );
-    console.log('Member: ' + this.member);
-
+  initialiseCart() {
     if (this.isLogin) {
       this.shoppingCartService.retrieveShoppingCart(this.member.memberId).subscribe(
         response => {
           this.cart = response.userShoppingCart;
           this.products = this.cart.products;
           this.quantity = this.cart.quantity;
+          for(var i = 0 ; i < this.products.length; i++) {
+            this.subtotal.push(this.products[i].unitPrice * this.quantity[i]);
+            console.log("initialized product " + this.products[i].productName);
+            console.log("initialized quantity " + this.quantity[i] );
+            console.log("initialized subtotal " + this.subtotal[i] );
+          }
         },
         error => {
           this.presentAlert(error);
@@ -58,6 +62,24 @@ export class ShoppingcartPage implements OnInit {
     } else {
       this.presentAlert('You are not logged in!');
     }
+  }
+
+  updateCart() {
+    for(var i = 0 ; i < this.quantity.length; i++) {
+        if(this.quantity[i] <= 0) {
+          this.quantity[i] = 0;
+          this.presentAlert("Quantity of " + this.products[i].productName + " must be >= 0");
+        }
+        this.shoppingCartService.updateCart(this.cart.cartId, this.products[i].productId, this.quantity[i]).subscribe(
+          response => {
+            console.log("Successfully updated cart!");
+          },
+          error => {
+            this.presentAlert(error);
+          }
+        );
+    }
+    this.initialiseCart();
   }
 
   async removeProduct(product: ProductEntity) {
@@ -81,6 +103,7 @@ export class ShoppingcartPage implements OnInit {
                const index:number = this.products.indexOf(product);
                 if(index != -1) {
                   this.products.splice(index,1);
+                  this.subtotal.splice(index,1);
                   console.log('successfully removed product!');
                 }
                 this.presentAlert("Item removed from bag");

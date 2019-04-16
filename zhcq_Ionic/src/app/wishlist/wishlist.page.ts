@@ -18,6 +18,7 @@ export class WishlistPage implements OnInit {
     constructor(private storage: Storage, private alertController: AlertController, private wishListService: WishListService) {
 
     }
+
   ngOnInit() {
   }
 

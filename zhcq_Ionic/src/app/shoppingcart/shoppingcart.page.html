@@ -5,21 +5,25 @@
   <h2 text-center style="font-weight: bold">S&nbsp;&nbsp;H&nbsp;&nbsp;O&nbsp;&nbsp;P&nbsp;&nbsp;P&nbsp;&nbsp;I&nbsp;&nbsp;N&nbsp;&nbsp;G &nbsp;&nbsp;&nbsp;&nbsp;B&nbsp;&nbsp;A&nbsp;&nbsp;G</h2>
   <br/>
   <ion-grid> 
-    <ion-row *ngFor="let product of products"  [routerLink]="['/product-details',product.productId]" class="activated">
+    <ion-row *ngFor="let product of products" class="activated">
       <ion-col size="5">
         <img src="assets/{{product.picturePath}}" class="img-responsive"/>
       </ion-col>
       <ion-col size="7">
         <h6>{{product.productName}} &nbsp;&nbsp;${{product.unitPrice}}</h6>
         <label>Size: {{product.sizeEnum}}</label> <br/>
-        <label>Quantity: {{quantity[products.indexOf(product)]}} </label> <br/><br/><br/><br/>
-
-        		<ion-button color="light" (click)="removeProduct(product)"  >Remove Item
-            </ion-button>
-        
+        <label>Quantity: </label> 
+        <ion-input style="border-top-left-radius: 5px;
+    border-top-right-radius: 5px;" [(ngModel)]="quantity[products.indexOf(product)]" required></ion-input>
+        <br/>
+        <label>Subtotal: {{subtotal[products.indexOf(product)]}}</label> 
+        <br/>
+        <ion-button color="light" (click)="removeProduct(product)"  >Remove Item
+        </ion-button>
       </ion-col>
     </ion-row>
   </ion-grid>
+  <ion-button color="dark" expand="full" (click)="updateCart()" >Update Bag</ion-button>
   <ion-button color="dark" expand="full">c h e c k &nbsp; o u t</ion-button>
 </ion-content>
     

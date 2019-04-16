@@ -147,7 +147,8 @@ public class MemberResource {
                 String lastName = createMemberReq.getLastName();
                 String username = createMemberReq.getUsername();
                 String password = createMemberReq.getPassword();
-                Member newMember = memberControllerLocal.createNewMember(new Member(firstName, lastName, username, password, 0));
+                String email = createMemberReq.getEmail();
+                Member newMember = memberControllerLocal.createNewMember(new Member(firstName, lastName, username, password, 0, email));
                 newMember.getWishList().setMember(null);
                 newMember.getShoppingCart().setMember(null);
                 List<SaleTransaction> listST = newMember.getSaleTransactions();

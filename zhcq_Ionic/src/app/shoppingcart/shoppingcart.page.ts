@@ -96,7 +96,19 @@ export class ShoppingcartPage implements OnInit {
           }
         );
     }
-    this.initialiseCart();
+  }
+
+  checkout() {
+    this.shoppingCartService.checkout(this.cart.cartId).subscribe(
+      response => {
+         var transaction = response.txn;
+         this.presentAlert("Successfully checked out! Sale transaction Id: " + transaction.saleTransactionId);
+        },
+      error => {
+        this.presentAlert(error);
+      }
+    );
+
   }
 
   async removeProduct(product: ProductEntity) {
@@ -133,8 +145,6 @@ export class ShoppingcartPage implements OnInit {
         }
       ]
     });
-
-    await alert.present();
   }
 
   async presentAlert(message: string) {

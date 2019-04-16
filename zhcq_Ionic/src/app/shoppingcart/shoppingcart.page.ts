@@ -16,7 +16,7 @@ import { log } from 'util';
   styleUrls: ['./shoppingcart.page.scss'],
 })
 export class ShoppingcartPage implements OnInit {
-
+  errorMessage: string;
   member: Member;
   products: ProductEntity[];
   cart: ShoppingCart;
@@ -95,7 +95,8 @@ export class ShoppingcartPage implements OnInit {
           this.presentAlert('Successfully updated cart!');
         },
         error => {
-          this.presentAlert(error);
+          this.errorMessage = error;
+          this.presentAlert(this.errorMessage.substring(37));
         }
       );
     }
@@ -108,18 +109,19 @@ export class ShoppingcartPage implements OnInit {
         this.presentAlert("Successfully checked out! Sale transaction Id: " + transaction.saleTransactionId);
       },
       error => {
-        this.presentAlert(error);
+        this.errorMessage = error;
+        this.presentAlert(this.errorMessage.substring(37));
       }
     );
 
   }
 
-  removeProduct(product: ProductEntity) {
-    console.log("start");
-    this.presentAlertConfirm(product);
-  }
+  // removeProduct(product: ProductEntity) {
+  //   console.log("start");
+  //   this.presentAlertConfirm(product);
+  // }
 
-  async presentAlertConfirm(product: ProductEntity) {
+  async removeProduct(product: ProductEntity) {
     const alert = await this.alertController.create({
       header: 'Confirm!',
       message: 'Remove Item? <ion-icon ios="ios-sad" md="md-sad"></ion-icon>',
@@ -153,6 +155,8 @@ export class ShoppingcartPage implements OnInit {
         }
       ]
     });
+
+    await alert.present();
   }
   // const alert = await this.alertController.create({
   //   header: 'Confirm',
@@ -191,7 +195,7 @@ export class ShoppingcartPage implements OnInit {
 
   async presentAlert(message: string) {
     const alert = await this.alertController.create({
-      message: message,
+      header: message,
       buttons: ['OK']
     });
     await alert.present();

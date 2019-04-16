@@ -5,6 +5,8 @@ import { ProductService } from '../services/product.service';
 import { ActivatedRoute } from '@angular/router';
 import { FormControl } from '@angular/forms';
 import { debounceTime } from 'rxjs/operators';
+import { CategoryService } from '../services/category.service';
+import { Category } from '../entities/category';
 
 
 @Component({
@@ -18,19 +20,30 @@ export class BrowseProductsPage implements OnInit {
   errorMessage: string;
   retrievedProducts: ProductEntity[];
   products: ProductEntity[];
-  
   catId: number;
+  category: Category;
 
-  constructor(private productService: ProductService, private activatedRoute: ActivatedRoute, private alertController: AlertController) {
+  constructor(private productService: ProductService, 
+    private activatedRoute: ActivatedRoute, private alertController: AlertController, private categoryService: CategoryService) {
     this.searchControl = new FormControl();
+    
     // this.images = this.navParams.get('images'); //get product image URIs
     // this.grid = Array(Math.ceil(this.images.length/2)); 
   }
   ngOnInit() {
     this.catId = parseInt(this.activatedRoute.snapshot.paramMap.get('catId'));
     console.log('CATEGORY ID IS: ' + this.catId);
-
-    if (!isNaN(this.catId)) {
+    if (!isNaN(this.catId)) { // Localhost:8100/browse-products/id
+      this.categoryService.retrieveCategoryById(this.catId).subscribe(
+        response => {
+          this.category = response.category;
+          console.log("category retrieved = " + this.category.categoryName);
+        },
+        error => {
+          this.errorMessage = error;
+          this.presentAlert(this.errorMessage.substring(37));
+        }
+      );
       this.productService.retrieveProductByCat(this.catId).subscribe(
         response => {
 
@@ -46,14 +59,12 @@ export class BrowseProductsPage implements OnInit {
           this.errorMessage = error;
         }
       );
-    } else {
+    } else { // Localhost:8100/browse-products
       this.productService.retrieveAllUniqueProducts().subscribe(
         response => {
 
           this.retrievedProducts = response.products ;
           this.products = this.retrievedProducts;
-
-          // console.log('Products Aray: ' + this.products);
 
           this.searchControl.valueChanges.pipe(debounceTime(700)).subscribe(search => {
             this.products = this.retrievedProducts;
@@ -66,6 +77,7 @@ export class BrowseProductsPage implements OnInit {
         }
       );
     }
+
   }
 
   setFilteredItems(searchTerm: string) {

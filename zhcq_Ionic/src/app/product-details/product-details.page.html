@@ -108,6 +108,20 @@
           <ion-button color="dark" > {{pdt.sizeEnum}} </ion-button> &nbsp;&nbsp;
       </div> -->
     </ion-row>
+    <ion-card>
+      <ion-button fill="clear" disabled color="dark" strong>
+          <strong>Select Quantity: </strong>
+      </ion-button>
+      <ion-button fill="clear" (click)=decrement() color="dark">
+        <ion-icon name="remove" ></ion-icon>
+      </ion-button>
+      <ion-button fill="clear" disabled color="dark">
+          <strong>{{ quantity }}</strong>
+      </ion-button>
+      <ion-button fill="clear" (click) = increment() color="dark">
+        <ion-icon name="add" ></ion-icon>
+      </ion-button>
+    </ion-card>
     
     <ion-button type="submit" color="dark" expand="full" (click)="addToCart()">
         <ion-icon name="ios-cart"></ion-icon> &nbsp;&nbsp; add to bag

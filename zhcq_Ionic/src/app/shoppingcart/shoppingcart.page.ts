@@ -74,15 +74,15 @@ export class ShoppingcartPage implements OnInit {
 
   decrement(product: ProductEntity) {
     var idx = this.products.indexOf(product);
-    if(this.quantity[idx] == 0) {
-      this.presentAlert("Quantity cannot be < 0");
+    if (this.quantity[idx] === 0) {
+      this.presentAlert('Quantity cannot be < 0');
     } else {
       this.quantity[idx]--;
     }
   }
 
   updateCart() {
-    for(var i = 0 ; i < this.quantity.length; i++) {
+    for (var i = 0 ; i < this.quantity.length; i++) {
         // if(this.quantity[i] <= 0) {
         //   this.quantity[i] = 0;
         //   this.presentAlert("Quantity of " + this.products[i].productName + " must be >= 0");

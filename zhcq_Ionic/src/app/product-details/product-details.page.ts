@@ -51,6 +51,7 @@ export class ProductDetailsPage implements OnInit {
   member: Member;
   cart: ShoppingCart;
   cartId: number ;
+  quantity: number;
 
   sliderOpts = {
     zoom: false,
@@ -73,6 +74,8 @@ export class ProductDetailsPage implements OnInit {
       });
       console.log('lOGIN Status: ' + this.isLogin );
       console.log('Member: ' + this.member);
+
+      this.quantity = 0;
 
      }
 
@@ -182,8 +185,6 @@ export class ProductDetailsPage implements OnInit {
     }
   }
 
-  
-
   async addToCart() {
     // console.log('cartID = ' + this.cartId)
     // console.log('Product Id = ' + this.id)
@@ -197,9 +198,9 @@ export class ProductDetailsPage implements OnInit {
     });
 
     if (this.isLogin) {
-      if (this.selectedProduct.quantityOnHand !== 0 ) { 
-        console.log('Entereed into add to cart method');
-        this.shoppingCartService.addToCart(this.member.shoppingCart.cartId, this.id, 1).subscribe(response => {
+      if (this.selectedProduct.quantityOnHand !== 0 ) {
+        console.log('Entered into add to cart method');
+        this.shoppingCartService.addToCart(this.member.shoppingCart.cartId, this.id, this.quantity).subscribe(response => {
           console.log('response = ' + response);
           cartAlert.present();
         },
@@ -217,6 +218,23 @@ export class ProductDetailsPage implements OnInit {
     }
   }
 
+  increment() {
+    if (this.quantity === this.selectedProduct.quantityOnHand) {
+      this.presentAlert('No Available Piece Left!');
+    } else {
+      this.quantity++;
+    }
+  }
+
+  decrement(product: ProductEntity) {
+
+    if (this.quantity === 0) {
+      this.presentAlert('Quantity cannot be < 0');
+    } else {
+      this.quantity--;
+    }
+  }
+
   async presentAlert(message: string) {
     const alert = await this.alertController.create({
       header: message,
@@ -229,8 +247,8 @@ export class ProductDetailsPage implements OnInit {
   async openSizeGuide() {
     const modal = await this.modalController.create({
       component: SizeguidePage
-    })
+    });
     modal.present();
   }
-  
+
 }

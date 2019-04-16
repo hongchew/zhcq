@@ -34,8 +34,9 @@ export class WishlistPage implements OnInit {
     if (this.member !== undefined && this.member !== null) {
       this.wishListService.retrieveWishList(this.member.memberId).subscribe(
         response => {
-          this.wishlist = response.userShoppingCart;
-          this.products = this.wishlist.products;
+          this.wishlist = response.wishlist;
+          this.products = this.wishlist.productEntities;
+          console.log('LENGTH OF PRODUCTS = ' + this.products.length)
         },
         error => {
           this.presentAlert(error);

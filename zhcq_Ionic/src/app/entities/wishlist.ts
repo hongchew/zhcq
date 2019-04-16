@@ -4,11 +4,11 @@ export class WishList
 {
     wishListId: number;
     member: Member;
-    products: ProductEntity[];
+    productEntities: ProductEntity[];
 
-    constructor(cartId?: number, member?: Member, products?: ProductEntity[]) {
+    constructor(cartId?: number, member?: Member, productEntities?: ProductEntity[]) {
         this.wishListId = cartId;
         this.member = member;
-        this.products = products;
+        this.productEntities = productEntities;
     }
 }

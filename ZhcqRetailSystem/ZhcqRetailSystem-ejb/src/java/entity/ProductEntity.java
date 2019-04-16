@@ -50,8 +50,8 @@ public class ProductEntity implements Serializable {
     @Size(max = 64)
     private String productName;
     
-    @Column(length = 128)
-    @Size(max = 128)
+    @Column(length = 1000)
+    @Size(max = 1000)
     private String description;
     
     @Column(nullable = false, precision = 11, scale = 2)

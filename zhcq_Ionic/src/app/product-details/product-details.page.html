@@ -29,7 +29,8 @@
           <ion-button type="submit" size="small" fill="transparent" size="default" (click)="addToWishList()">
               <ion-icon name="heart"></ion-icon>
           </ion-button>
-          <h4 slot="end">${{selectedProduct.unitPrice}}</h4> <br/>
+          <h4 *ngIf="!onPromotion" slot="end">${{selectedProduct.unitPrice}}</h4> 
+          <h4 *ngIf="onPromotion" slot="end"><s>${{selectedProduct.unitPrice}}</s></h4> <br/>
       </ion-item>
      <ion-item *ngIf="onPromotion" >
         <h4 slot="end" style="color: darkred; margin-top: 0%; margin-bottom: 0%"><ion-icon ios="ios-pricetag" md="md-pricetag"></ion-icon>&nbsp; ${{promotionalPrice}}</h4>

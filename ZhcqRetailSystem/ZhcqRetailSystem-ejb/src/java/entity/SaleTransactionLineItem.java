@@ -37,6 +37,9 @@ public class SaleTransactionLineItem implements Serializable {
     private Integer quantity;
     
     private BigDecimal subTotal;
+    
+    @OneToOne
+    private Promotion promotionApplied;
 
     public SaleTransactionLineItem() {
     }
@@ -99,6 +102,20 @@ public class SaleTransactionLineItem implements Serializable {
      */
     public void setProductEntity(ProductEntity productEntity) {
         this.productEntity = productEntity;
+    }
+
+    /**
+     * @return the promotionApplied
+     */
+    public Promotion getPromotionApplied() {
+        return promotionApplied;
+    }
+
+    /**
+     * @param promotionApplied the promotionApplied to set
+     */
+    public void setPromotionApplied(Promotion promotionApplied) {
+        this.promotionApplied = promotionApplied;
     }
 
     

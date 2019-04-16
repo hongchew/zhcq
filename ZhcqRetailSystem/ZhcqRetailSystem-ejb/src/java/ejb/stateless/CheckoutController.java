@@ -79,7 +79,9 @@ public class CheckoutController implements CheckoutControllerLocal {
 
     @Override
     public void addToCart(Long cartId, Long productId, Integer quantity) throws ShoppingCartNotFoundException, ProductNotFoundException { //true if adding, false if deleting
-
+        if(quantity < 1){ //nothing to add
+            return;
+        }
         ShoppingCart shoppingCart = retrieveShoppingCartById(cartId);
         ProductEntity prod = productControllerLocal.retrieveProductById(productId);
 
@@ -108,6 +110,7 @@ public class CheckoutController implements CheckoutControllerLocal {
             int idx = shoppingCart.getProducts().indexOf(prod);
             shoppingCart.getQuantity().remove(idx);
             shoppingCart.getProducts().remove(idx);
+            prod.getShoppingcarts().remove(shoppingCart);
         } else {
             throw new ProductNotFoundException("No such product on the shopping cart");
         }
@@ -118,11 +121,17 @@ public class CheckoutController implements CheckoutControllerLocal {
         ShoppingCart shoppingCart = retrieveShoppingCartById(cartId);
         ProductEntity prod = productControllerLocal.retrieveProductById(productId);
         if (shoppingCart.getProducts().contains(prod)) {
-            int idx = shoppingCart.getProducts().indexOf(prod);
-            shoppingCart.getQuantity().set(idx, quantity);
+            if(quantity < 1) {
+                removeFromCart(cartId, productId);
+                        
+            }else{
+                int idx = shoppingCart.getProducts().indexOf(prod);
+                shoppingCart.getQuantity().set(idx, quantity);
+            }
         } else {
             throw new ProductNotFoundException("No such product on the shopping cart");
         }
+        
     }
 
     @Override
@@ -152,9 +161,18 @@ public class CheckoutController implements CheckoutControllerLocal {
 
                 SaleTransactionLineItem lineItem = new SaleTransactionLineItem(transaction, shoppingCart.getProducts().get(i));
                 lineItem.setQuantity(shoppingCart.getQuantity().get(i));
-                lineItem.setSubTotal(shoppingCart.getProducts().get(i).getUnitPrice().multiply(BigDecimal.valueOf(shoppingCart.getQuantity().get(i))));
+                BigDecimal subtotal = shoppingCart.getProducts().get(i).getUnitPrice().multiply(BigDecimal.valueOf(shoppingCart.getQuantity().get(i)));
+                if(pe.getPromotion() != null){
+                    BigDecimal discount = pe.getPromotion().getDiscountRate();
+                    discount = BigDecimal.ONE.subtract(discount);
+                    subtotal = subtotal.multiply(discount);
+                    lineItem.setSubTotal(subtotal);
+                    lineItem.setPromotionApplied(pe.getPromotion());
+                }else{
+                    lineItem.setSubTotal(subtotal);
+                }
                 pe.setQuantityOnHand(pe.getQuantityOnHand() - quantity);
-                list.add(lineItem);
+                list.add(lineItem); 
                 em.persist(lineItem);
                 transaction.addToTotalPrice(lineItem.getSubTotal());
                 System.out.println("Pdt id: " + shoppingCart.getProducts().get(i).getProductId() + " added to new line item");

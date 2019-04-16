@@ -84,4 +84,10 @@
         <local>ejb.stateless.CoordinatedOutfitControllerLocal</local>
         <ejb-link>ZhcqRetailSystem-ejb.jar#CoordinatedOutfitController</ejb-link>
     </ejb-local-ref>
+    <ejb-local-ref>
+        <ejb-ref-name>SalesTransactionSessionBean</ejb-ref-name>
+        <ejb-ref-type>Session</ejb-ref-type>
+        <local>ejb.stateless.SalesTransactionSessionBeanLocal</local>
+        <ejb-link>ZhcqRetailSystem-ejb.jar#SalesTransactionSessionBean</ejb-link>
+    </ejb-local-ref>
 </web-app>

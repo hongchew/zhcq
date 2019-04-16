@@ -55,9 +55,9 @@ export class MemberService
 	
 	
 	
-	createMember(firstName: string, lastName: string, username : string, password : string): Observable<any>
+	createMember(firstName: string, lastName: string, username : string, password : string, email : string): Observable<any>
 	{
-		let createMemberReq = {"firstName" : firstName, "lastName" : lastName, "username": username, "password": password };		
+		let createMemberReq = {"firstName" : firstName, "lastName" : lastName, "username": username, "password": password, "email" : email };		
 		
 		return this.httpClient.put<any>(this.baseUrl, createMemberReq, httpOptions).pipe
 		(

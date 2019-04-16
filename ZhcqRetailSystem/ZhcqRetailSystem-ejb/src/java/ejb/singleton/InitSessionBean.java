@@ -91,7 +91,7 @@ public class InitSessionBean {
    {
         try {
             staffControllerLocal.createNewStaff(new Staff("Admin", "Staff", "staff", "password"));
-            memberControllerLocal.createNewMember(new Member("Member", "Default", "member", "password", 0));
+            memberControllerLocal.createNewMember(new Member("Member", "Default", "member", "password", 0, "0@email.com"));
             
             Category dresses = categoryControllerLocal.createNewCategoryEntity(new Category("DRESSES","DRESSES"));
             Category tops = categoryControllerLocal.createNewCategoryEntity(new Category("TOPS","TOPS"));
@@ -205,9 +205,6 @@ public class InitSessionBean {
             productControllerLocal.createNewProduct(new ProductEntity("Tanner Pant", "We think linen is kind of a big deal. This is a high rise, ankle length pant with center front pleats, side pockets and a cuffed hem. The Tanner is slim fitting with a slightly cropped leg.", BigDecimal.valueOf(99.00), 20, SizeEnum.S, ColourEnum.CREAM,"images/tanner_pant_cream.jpg"), bottoms.getCategoryId(),tagIds);
             productControllerLocal.createNewProduct(new ProductEntity("Tanner Pant", "We think linen is kind of a big deal. This is a high rise, ankle length pant with center front pleats, side pockets and a cuffed hem. The Tanner is slim fitting with a slightly cropped leg.", BigDecimal.valueOf(99.00), 20, SizeEnum.M, ColourEnum.CREAM,"images/tanner_pant_cream.jpg"), bottoms.getCategoryId(),tagIds);
             ProductEntity product12 = productControllerLocal.createNewProduct(new ProductEntity("Tanner Pant", "We think linen is kind of a big deal. This is a high rise, ankle length pant with center front pleats, side pockets and a cuffed hem. The Tanner is slim fitting with a slightly cropped leg.", BigDecimal.valueOf(99.00), 20, SizeEnum.L, ColourEnum.CREAM,"images/tanner_pant_cream.jpg"), bottoms.getCategoryId(),tagIds);
-            productControllerLocal.createNewProduct(new ProductEntity("Tanner Pant", "We think linen is kind of a big deal. This is a high rise, ankle length pant with center front pleats, side pockets and a cuffed hem. The Tanner is slim fitting with a slightly cropped leg.", BigDecimal.valueOf(99.00), 20, SizeEnum.S, ColourEnum.BLACK,"images/tanner_pant_black.jpg"), bottoms.getCategoryId(),tagIds);
-            productControllerLocal.createNewProduct(new ProductEntity("Tanner Pant", "We think linen is kind of a big deal. This is a high rise, ankle length pant with center front pleats, side pockets and a cuffed hem. The Tanner is slim fitting with a slightly cropped leg.", BigDecimal.valueOf(99.00), 20, SizeEnum.M, ColourEnum.BLACK,"images/tanner_pant_black.jpg"), bottoms.getCategoryId(),tagIds);
-            productControllerLocal.createNewProduct(new ProductEntity("Tanner Pant", "We think linen is kind of a big deal. This is a high rise, ankle length pant with center front pleats, side pockets and a cuffed hem. The Tanner is slim fitting with a slightly cropped leg.", BigDecimal.valueOf(99.00), 20, SizeEnum.L, ColourEnum.BLACK,"images/tanner_pant_black.jpg"), bottoms.getCategoryId(),tagIds);
             
             productControllerLocal.createNewProduct(new ProductEntity("Overland Top", "We think linen is kind of a big deal. This is a hip length top with a straight neckline and adjustable straps. The Overland is slim fitting throughout with a smocked back bodice.", BigDecimal.valueOf(99.00), 20, SizeEnum.L, ColourEnum.BLACK,"images/overland_top_black.jpg"), tops.getCategoryId(),tagIds);
             ProductEntity product13 = productControllerLocal.createNewProduct(new ProductEntity("Overland Top", "We think linen is kind of a big deal. This is a hip length top with a straight neckline and adjustable straps. The Overland is slim fitting throughout with a smocked back bodice.", BigDecimal.valueOf(99.00), 20, SizeEnum.M, ColourEnum.BLACK,"images/overland_top_black.jpg"), tops.getCategoryId(),tagIds);
@@ -433,11 +430,11 @@ public class InitSessionBean {
             coordinatedOutfitControllerLocal.createNewOutfit(outfit4, productIds,new Date());
             
             
-            Member member = new Member("member", "1", "member1", "password", 0);
+            Member member = new Member("member", "1", "member1", "password", 0, "1@email.com");
             memberControllerLocal.createNewMember(member);
-            Member member2 = new Member("member", "2", "member2", "password", 0);
+            Member member2 = new Member("member", "2", "member2", "password", 0, "2@email.com");
             memberControllerLocal.createNewMember(member2);
-            Member member3 = new Member("member", "3", "member3", "password", 0);
+            Member member3 = new Member("member", "3", "member3", "password", 0, "3@email.com");
             memberControllerLocal.createNewMember(member3);
             
            

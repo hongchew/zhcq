@@ -36,8 +36,8 @@ export class WishlistPage implements OnInit {
       this.wishListService.retrieveWishList(this.member.memberId).subscribe(
         response => {
           this.wishlist = response.wishlist;
-          console.log('wishlist retrieved: ' + this.wishlist );
-          this.products = this.wishlist.products;
+          this.products = this.wishlist.productEntities;
+          console.log('LENGTH OF PRODUCTS = ' + this.products.length)
         },
         error => {
           this.presentAlert(error);

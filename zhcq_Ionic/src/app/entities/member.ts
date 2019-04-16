@@ -17,8 +17,9 @@ export class Member
     wishList: WishList;
     saleTransactions: SaleTransaction[];
     shoppingCart: ShoppingCart;
+    email: string;
 
-	constructor(memberId?: number, firstName?: string, lastName?: string, username?: string, password?: string, loyaltyPoints?: number, salt?:string, wishList?: WishList, saleTransactions?: SaleTransaction[], shoppingCart?:ShoppingCart)
+	constructor(memberId?: number, firstName?: string, lastName?: string, username?: string, password?: string, loyaltyPoints?: number, email?: string, salt?:string, wishList?: WishList, saleTransactions?: SaleTransaction[], shoppingCart?:ShoppingCart)
 	{
         this.memberId = memberId;
         this.firstName = firstName;
@@ -30,5 +31,6 @@ export class Member
         this.wishList= wishList;
         this.saleTransactions = saleTransactions;
         this.shoppingCart = shoppingCart;
+        this.email = email;
     }
 }

@@ -200,4 +200,44 @@ public class ShoppingCartResource {
         }
 
     }
+    
+    @Path("checkoutWithPoints")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response checkoutWithPoints(@QueryParam("cartId") Long cartId) {
+        try {
+            SaleTransaction txn = checkoutController.checkOutWithPoints(cartId);
+            for (SaleTransactionLineItem lineItem : txn.getSaleTransactionLineItems()) {
+                lineItem.setSaleTransaction(null);
+                lineItem.getProductEntity().getProductCategory().setProductEntities(null);
+
+                lineItem.getProductEntity().setCoordinatedOutfit(null);
+                lineItem.getProductEntity().setShoppingcarts(null);
+                lineItem.getProductEntity().setWishLists(null);
+                lineItem.getProductEntity().setPromotion(null);
+                lineItem.getPromotionApplied().setPromotionalProducts(null);
+                for (ProductTag tag : lineItem.getProductEntity().getProductTags()) {
+                    tag.getProductEntities().clear();
+                }
+            }
+            txn.getMember().setWishList(null);
+            txn.getMember().setShoppingCart(null);
+            txn.getMember().setSaleTransactions(null);
+            txn.getMember().setPassword(null);
+            txn.getMember().setSalt(null);
+
+            CheckoutRsp checkoutRsp = new CheckoutRsp(txn);
+
+            return Response.status(Response.Status.OK).entity(checkoutRsp).build();
+
+        } catch (ShoppingCartNotFoundException ex) {
+            ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
+            return Response.status(Response.Status.BAD_REQUEST).entity(errorRsp).build();
+        } catch (Exception ex) {
+            System.err.println("***Error: " + ex.getMessage());
+            ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(errorRsp).build();
+        }
+
+    }
 }

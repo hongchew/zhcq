@@ -4,7 +4,7 @@
 
   <div *ngIf=isLogin>
     <ion-card>
-      <ion-item>
+      <ion-item>  
         <ion-thumbnail slot="start">
             <img src="../../assets/images/canyon_top_pink.jpg">
         </ion-thumbnail>
@@ -26,7 +26,19 @@
           </ion-col>
         </ion-row>
       </ion-grid>
-    
+      <br/>
+      <br/>
+      <br/>
+      <div *ngIf="transactions">
+        <h3>Transaction History</h3>
+        <ion-row *ngFor="let txn of transactions" class="activated">
+          <ion-col>
+            <ion-card>
+                {{txn.saleTransactionId}}
+            </ion-card>
+          </ion-col>
+        </ion-row>
+      </div>
   </div>
 
 
@@ -41,6 +53,7 @@
       <ion-button color="light" [routerLink]="['/register']">
         Sign Up
       </ion-button>
+    
   </div>
 
 

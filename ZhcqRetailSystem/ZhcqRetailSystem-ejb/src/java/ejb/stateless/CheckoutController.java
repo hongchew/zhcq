@@ -18,6 +18,7 @@ import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
 import util.exception.EmptyShoppingCartException;
+import util.exception.MemberNotFoundException;
 import util.exception.OutOfStockException;
 import util.exception.ProductNotFoundException;
 import util.exception.SaleTransactionNotFoundException;
@@ -26,6 +27,9 @@ import util.exception.ShoppingCartNotFoundException;
 @Stateless
 @Local(CheckoutControllerLocal.class)
 public class CheckoutController implements CheckoutControllerLocal {
+
+    @EJB
+    private MemberControllerLocal memberController;
 
     @EJB
     private ProductControllerLocal productControllerLocal;
@@ -136,7 +140,7 @@ public class CheckoutController implements CheckoutControllerLocal {
     }
 
     @Override
-    public SaleTransaction checkOut(Long cartId) throws ShoppingCartNotFoundException, EmptyShoppingCartException, OutOfStockException {
+    public SaleTransaction checkOut(Long cartId) throws ShoppingCartNotFoundException, EmptyShoppingCartException, OutOfStockException, MemberNotFoundException {
 
         ShoppingCart shoppingCart = retrieveShoppingCartById(cartId);
 
@@ -182,15 +186,93 @@ public class CheckoutController implements CheckoutControllerLocal {
             pe.getShoppingcarts().remove(shoppingCart);
 
         }
-        Member member = shoppingCart.getMember();
+        Member member = memberController.retrieveMemberById(shoppingCart.getMember().getMemberId());
+        member.getSaleTransactions().add(transaction);
         member.setLoyaltyPoints(member.getLoyaltyPoints() + transaction.getTotalPrice().intValue());
+        transaction.setMember(member);
+        transaction.setSaleTransactionLineItems(list); 
+
         
-        transaction.setSaleTransactionLineItems(list);
         em.persist(transaction);
         shoppingCart.getProducts().clear();
         shoppingCart.getQuantity().clear();
         em.merge(shoppingCart);
+        
 
+        return transaction;
+
+    }
+    
+    @Override
+    public SaleTransaction checkOutWithPoints(Long cartId) throws ShoppingCartNotFoundException, EmptyShoppingCartException, OutOfStockException, MemberNotFoundException {
+
+        ShoppingCart shoppingCart = retrieveShoppingCartById(cartId);
+
+        if (shoppingCart.getProducts().isEmpty()) {
+            throw new EmptyShoppingCartException("The shopping cart is empty.");
+        }
+
+        SaleTransaction transaction = new SaleTransaction(shoppingCart.getMember());
+
+        for (ProductEntity pdt : shoppingCart.getProducts()) {
+            System.out.println("*** Pdt in cart ID: " + pdt.getProductId());
+        }
+
+        List<SaleTransactionLineItem> list = new ArrayList<>();
+
+        for (int i = 0; i < shoppingCart.getProducts().size(); i++) {
+            ProductEntity pe = shoppingCart.getProducts().get(i);
+            Integer quantity = shoppingCart.getQuantity().get(i);
+
+            if (pe.getQuantityOnHand() < quantity) {
+                throw new OutOfStockException("Product " + pe.getProductName() + " out of stock!");
+            } else {
+
+                SaleTransactionLineItem lineItem = new SaleTransactionLineItem(transaction, shoppingCart.getProducts().get(i));
+                lineItem.setQuantity(shoppingCart.getQuantity().get(i));
+                BigDecimal subtotal = shoppingCart.getProducts().get(i).getUnitPrice().multiply(BigDecimal.valueOf(shoppingCart.getQuantity().get(i)));
+                if(pe.getPromotion() != null){
+                    BigDecimal discount = pe.getPromotion().getDiscountRate();
+                    discount = BigDecimal.ONE.subtract(discount);
+                    subtotal = subtotal.multiply(discount);
+                    lineItem.setSubTotal(subtotal);
+                    lineItem.setPromotionApplied(pe.getPromotion());
+                }else{
+                    lineItem.setSubTotal(subtotal);
+                }
+                pe.setQuantityOnHand(pe.getQuantityOnHand() - quantity);
+                list.add(lineItem); 
+                em.persist(lineItem);
+                transaction.addToTotalPrice(lineItem.getSubTotal());
+                System.out.println("Pdt id: " + shoppingCart.getProducts().get(i).getProductId() + " added to new line item");
+            }
+            
+            pe.getShoppingcarts().remove(shoppingCart);
+
+        }
+        
+        
+        Member member = memberController.retrieveMemberById(shoppingCart.getMember().getMemberId());
+        BigDecimal points = BigDecimal.valueOf(member.getLoyaltyPoints()).divide(BigDecimal.TEN);
+        if(points.compareTo(transaction.getTotalPrice()) >= 0){ //points can pay more than total
+            member.setLoyaltyPoints(member.getLoyaltyPoints() - transaction.getTotalPrice().intValue());
+            transaction.setTotalPrice(BigDecimal.ZERO);
+        }else{
+            transaction.setTotalPrice(transaction.getTotalPrice().subtract(points));
+            member.setLoyaltyPoints(0);
+        }
+        
+        member.getSaleTransactions().add(transaction);
+        transaction.setMember(member);
+        transaction.setSaleTransactionLineItems(list);
+        
+        em.persist(transaction);
+        shoppingCart.getProducts().clear();
+        shoppingCart.getQuantity().clear();
+        em.merge(shoppingCart);
+        
+        
+        member.setLoyaltyPoints(member.getLoyaltyPoints() + transaction.getTotalPrice().intValue());
         return transaction;
 
     }

@@ -9,6 +9,8 @@ import { ProductService } from '../services/product.service';
 import { decreaseElementDepthCount } from '@angular/core/src/render3/state';
 import { queueComponentIndexForCheck } from '@angular/core/src/render3/instructions';
 import { log } from 'util';
+import { SaleTransaction } from '../entities/saletransaction';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @Component({
   selector: 'app-shoppingcart',
@@ -23,6 +25,7 @@ export class ShoppingcartPage implements OnInit {
   quantity: number[];
   subtotal: number[];
   isLogin: boolean;
+  transaction: SaleTransaction;
 
   constructor(private storage: Storage, private alertController: AlertController, private shoppingCartService: ShoppingCartService) {
   }
@@ -105,8 +108,11 @@ export class ShoppingcartPage implements OnInit {
   checkout() {
     this.shoppingCartService.checkout(this.cart.cartId).subscribe(
       response => {
-        var transaction = response.txn;
-        this.presentAlert("Successfully checked out! Sale transaction Id: " + transaction.saleTransactionId);
+        this.transaction = response.txn;
+        console.log("transaction ID =" + this.transaction.saleTransactionId)
+
+        this.presentAlert("Successfully checked out! Sale transaction Id: " + this.transaction.saleTransactionId);
+        
       },
       error => {
         this.errorMessage = error;

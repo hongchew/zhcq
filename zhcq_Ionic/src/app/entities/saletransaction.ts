@@ -1,9 +1,10 @@
 import { Member } from './member';
 import { SaleTransactionLineItem } from './lineitem';
+
 export class SaleTransaction 
 {
-    saleTransactionId : number;
-    member : Member;
+    saleTransactionId: number;
+    member: Member;
     saleTransactionLineItems: SaleTransactionLineItem[];
     totalPrice: number;
 

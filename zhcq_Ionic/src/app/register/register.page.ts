@@ -17,6 +17,7 @@ export class RegisterPage implements OnInit {
   username: string;
   password: string;
   confirmPassword: string;
+  email: string;
 
   newMember: Member;
 
@@ -30,13 +31,14 @@ export class RegisterPage implements OnInit {
     console.log(this.lastName);
     console.log(this.username);
     console.log(this.password);
+    console.log(this.email);
     if (this.password != this.confirmPassword) {
       this.presentAlert("Password does not match");
     } else {
-      this.memberService.createMember(this.firstName, this.lastName, this.username, this.password).subscribe(
+      this.memberService.createMember(this.firstName, this.lastName, this.username, this.password, this.email).subscribe(
         response => {
           this.newMember = response.member;
-          this.presentAlert("New Member " + this.newMember.memberId + " created successfully");
+          this.presentAlert("Account created!");
         },
         error => {
           this.presentAlert(error.substring(37));

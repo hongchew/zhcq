@@ -68,12 +68,17 @@ public class Member implements Serializable {
     @OneToOne(cascade = {CascadeType.REMOVE, CascadeType.PERSIST, CascadeType.MERGE})
     private ShoppingCart shoppingCart;
 
+    @Column(nullable = false)
+    @NotNull
+    private String email;
+    
+    
     public Member() {
         this.salt = CryptographicHelper.getInstance().generateRandomString(32);
         saleTransactions = new ArrayList<SaleTransaction>();
     }
 
-    public Member(String firstName, String lastName, String username, String password, Integer loyaltyPoints) {
+    public Member(String firstName, String lastName, String username, String password, Integer loyaltyPoints, String email) {
         this();
         
         this.firstName = firstName;
@@ -81,6 +86,7 @@ public class Member implements Serializable {
         this.username = username;
         setPassword(password);
         this.loyaltyPoints = loyaltyPoints;
+        this.email = email;
     }
     
     
@@ -221,6 +227,14 @@ public class Member implements Serializable {
      */
     public void setShoppingCart(ShoppingCart shoppingCart) {
         this.shoppingCart = shoppingCart;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     

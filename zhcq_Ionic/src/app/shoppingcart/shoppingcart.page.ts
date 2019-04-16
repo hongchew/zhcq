@@ -9,6 +9,8 @@ import { ProductService } from '../services/product.service';
 import { decreaseElementDepthCount } from '@angular/core/src/render3/state';
 import { queueComponentIndexForCheck } from '@angular/core/src/render3/instructions';
 import { log } from 'util';
+import { SaleTransaction } from '../entities/saletransaction';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @Component({
   selector: 'app-shoppingcart',
@@ -16,13 +18,14 @@ import { log } from 'util';
   styleUrls: ['./shoppingcart.page.scss'],
 })
 export class ShoppingcartPage implements OnInit {
-
+  errorMessage: string;
   member: Member;
   products: ProductEntity[];
   cart: ShoppingCart;
   quantity: number[];
   subtotal: number[];
   isLogin: boolean;
+  transaction: SaleTransaction;
 
   constructor(private storage: Storage, private alertController: AlertController, private shoppingCartService: ShoppingCartService) {
   }
@@ -95,7 +98,8 @@ export class ShoppingcartPage implements OnInit {
           this.presentAlert('Successfully updated cart!');
         },
         error => {
-          this.presentAlert(error);
+          this.errorMessage = error;
+          this.presentAlert(this.errorMessage.substring(37));
         }
       );
     }
@@ -104,22 +108,26 @@ export class ShoppingcartPage implements OnInit {
   checkout() {
     this.shoppingCartService.checkout(this.cart.cartId).subscribe(
       response => {
-        var transaction = response.txn;
-        this.presentAlert("Successfully checked out! Sale transaction Id: " + transaction.saleTransactionId);
+        this.transaction = response.txn;
+        console.log("transaction ID =" + this.transaction.saleTransactionId)
+
+        this.presentAlert("Successfully checked out! Sale transaction Id: " + this.transaction.saleTransactionId);
+        
       },
       error => {
-        this.presentAlert(error);
+        this.errorMessage = error;
+        this.presentAlert(this.errorMessage.substring(37));
       }
     );
 
   }
 
-  removeProduct(product: ProductEntity) {
-    console.log("start");
-    this.presentAlertConfirm(product);
-  }
+  // removeProduct(product: ProductEntity) {
+  //   console.log("start");
+  //   this.presentAlertConfirm(product);
+  // }
 
-  async presentAlertConfirm(product: ProductEntity) {
+  async removeProduct(product: ProductEntity) {
     const alert = await this.alertController.create({
       header: 'Confirm!',
       message: 'Remove Item? <ion-icon ios="ios-sad" md="md-sad"></ion-icon>',
@@ -153,6 +161,8 @@ export class ShoppingcartPage implements OnInit {
         }
       ]
     });
+
+    await alert.present();
   }
   // const alert = await this.alertController.create({
   //   header: 'Confirm',
@@ -191,7 +201,7 @@ export class ShoppingcartPage implements OnInit {
 
   async presentAlert(message: string) {
     const alert = await this.alertController.create({
-      message: message,
+      header: message,
       buttons: ['OK']
     });
     await alert.present();

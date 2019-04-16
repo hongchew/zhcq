@@ -157,6 +157,7 @@ public class WishListController implements WishListControllerLocal {
     
     @Override
     public void removeProductFromWishlist(Long memberId, Long pdtId) throws MemberNotFoundException, ProductNotFoundException{
+        System.out.println("MemberID passed into wishlist controller is: " + memberId);
         Member member = memberControllerLocal.retrieveMemberById(memberId);
         ProductEntity pdt = productControllerLocal.retrieveProductById(pdtId);
         

@@ -29,6 +29,24 @@ export class ProductDetailsPage implements OnInit {
   promotionalPrice: any;
   isLogin: boolean;
 
+  sizeXS: boolean;
+  sizeS: boolean;
+  sizeM: boolean;
+  sizeL: boolean;
+  sizeXL: boolean;
+  currentSizeXS: boolean;
+  currentSizeS: boolean;
+  currentSizeM: boolean;
+  currentSizeL: boolean;
+  currentSizeXL: boolean;
+  
+
+  sizeXSId: number;
+  sizeSId: number;
+  sizeMId: number;
+  sizeLId: number;
+  sizeXLId: number;
+
   // For adding into cart
   member: Member;
   cart: ShoppingCart;
@@ -55,6 +73,7 @@ export class ProductDetailsPage implements OnInit {
       });
       console.log("lOGIN Status: " + this.isLogin );
       console.log("Member: " + this.member);
+      
      }
 
   ngOnInit() {
@@ -71,6 +90,27 @@ export class ProductDetailsPage implements OnInit {
           this.diffSizes = response.diffSizes;
           this.suggestedProducts = response.suggestedProducts;
 
+          if (this.selectedProduct.sizeEnum.toString() === 'XS') {
+            this.currentSizeXS = true;
+            this.sizeXSId = this.selectedProduct.productId;
+          }
+          if (this.selectedProduct.sizeEnum.toString() === 'S') {
+            this.currentSizeS = true;
+            this.sizeSId = this.selectedProduct.productId;
+          }
+          if (this.selectedProduct.sizeEnum.toString() === 'M') {
+            this.currentSizeM = true;
+            this.sizeMId = this.selectedProduct.productId;
+          }
+          if (this.selectedProduct.sizeEnum.toString() === 'L') {
+            this.currentSizeL = true;
+            this.sizeLId = this.selectedProduct.productId;
+          }
+          if (this.selectedProduct.sizeEnum.toString() === 'XL') {
+            this.currentSizeXL = true;
+            this.sizeXLId = this.selectedProduct.productId;
+          }
+
           // Check for promotion
           if (this.selectedProduct.promotion != null) {
             this.onPromotion = true;
@@ -78,6 +118,31 @@ export class ProductDetailsPage implements OnInit {
             console.log('Product Price is: ' + this.selectedProduct.unitPrice);
             console.log('Promotional rate is: ' + this.selectedProduct.promotion.discountRate);
             console.log('Calculated Promotional Price is: ' + this.promotionalPrice);
+          }
+
+          if (this.diffSizes.length !== 0) {
+            for (let product of this.diffSizes) {
+              if (product.sizeEnum.toString() === 'XS') {
+                this.sizeXS = true;
+                this.sizeXSId = product.productId;
+              }
+              if (product.sizeEnum.toString() === 'S') {
+                this.sizeS = true;
+                this.sizeSId = product.productId;
+              }
+              if (product.sizeEnum.toString() === 'M') {
+                this.sizeM = true;
+                this.sizeMId = product.productId;
+              }
+              if (product.sizeEnum.toString() === 'L') {
+                this.sizeL = true;
+                this.sizeLId = product.productId;
+              }
+              if (product.sizeEnum.toString() === 'XL') {
+                this.sizeXL = true;
+                this.sizeXLId = product.productId;
+              }
+            }
           }
         },
         error => {

@@ -101,21 +101,22 @@ public class MemberResource {
                 
                 ShoppingCart cart = member.getShoppingCart();
                 cart.setMember(null);
+                
                 WishList wishlist = member.getWishList();
                 wishlist.setMember(null);
-                
-                
                 member.setPassword(null);
                 member.setSalt(null);
-                List<SaleTransaction> listST = member.getSaleTransactions();
-                System.out.println("CHECK1");
-                for (SaleTransaction saleTransaction : listST) {
-                    saleTransaction.setMember(null);
-                }
+                
+//                List<SaleTransaction> listST = member.getSaleTransactions();
+//                System.out.println("CHECK1");
+//                for (SaleTransaction saleTransaction : listST) {
+//                    saleTransaction.setMember(null);
+//                }
+                member.getSaleTransactions().clear();
+                
                 LoginRsp loginRsp = new LoginRsp(member);
                 System.out.println("CHECK2");
                 return Response.status(Response.Status.OK).entity(loginRsp).build();
-                
             } catch (InvalidLoginCredentialException ex) {
                 System.out.println("*** INVALID LOGIN CREDS");
                 ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());

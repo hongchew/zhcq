@@ -5,6 +5,7 @@ import { ProductEntity } from '../entities/product';
 import { WishList } from '../entities/wishlist';
 import { AlertController } from '@ionic/angular';
 import { WishListService } from '../services/wishlist.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-wishlist',
@@ -16,9 +17,11 @@ export class WishlistPage implements OnInit {
     products: ProductEntity[];
     wishlist: WishList;
     exists: boolean;
+    isLogin: boolean;
 
 
-    constructor(private storage: Storage, private alertController: AlertController, private wishListService: WishListService) {
+    constructor(private storage: Storage, private alertController: AlertController, private wishListService: WishListService,
+               private router: Router) {
 
     }
 
@@ -28,14 +31,15 @@ export class WishlistPage implements OnInit {
   ionViewWillEnter() {
     this.storage.get('currentCustomer').then((data) => {
       this.member = data;
-
-      console.log("member username " + this.member.username);
+    });
+    this.storage.get('isLogin').then((data) => {
+      this.isLogin = data;
       this.viewWishList();
     });
   }
 
   viewWishList() {
-    if (this.member !== undefined && this.member !== null) {
+    if (this.isLogin) {
       this.wishListService.retrieveWishList(this.member.memberId).subscribe(
         response => {
           this.wishlist = response.wishlist;
@@ -51,6 +55,7 @@ export class WishlistPage implements OnInit {
       );
     } else {
       this.presentAlert('You are not logged in!');
+      this.router.navigate(['/home']);
     }
   }
 
@@ -95,10 +100,14 @@ export class WishlistPage implements OnInit {
   async presentAlert(message: string) {
     const alert = await this.alertController.create({
       message: message,
-      buttons: ['OK']
+      buttons: [{
+        text: 'OK'
+      }]
     });
     await alert.present();
   }
+
+ 
 
 
 }

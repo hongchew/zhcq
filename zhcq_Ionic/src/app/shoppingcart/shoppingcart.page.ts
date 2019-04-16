@@ -10,7 +10,7 @@ import { decreaseElementDepthCount } from '@angular/core/src/render3/state';
 import { queueComponentIndexForCheck } from '@angular/core/src/render3/instructions';
 import { log } from 'util';
 import { SaleTransaction } from '../entities/saletransaction';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-shoppingcart',
@@ -27,7 +27,8 @@ export class ShoppingcartPage implements OnInit {
   isLogin: boolean;
   transaction: SaleTransaction;
 
-  constructor(private storage: Storage, private alertController: AlertController, private shoppingCartService: ShoppingCartService) {
+  constructor(private storage: Storage, private alertController: AlertController, private shoppingCartService: ShoppingCartService,
+    private router: Router) {
   }
 
   ngOnInit() {
@@ -63,10 +64,12 @@ export class ShoppingcartPage implements OnInit {
         },
         error => {
           this.presentAlert(error);
+          this.router.navigate(['/home']);
         }
       );
     } else {
       this.presentAlert('You are not logged in!');
+      this.router.navigate(['/home']);
     }
   }
 
@@ -109,10 +112,10 @@ export class ShoppingcartPage implements OnInit {
     this.shoppingCartService.checkout(this.cart.cartId).subscribe(
       response => {
         this.transaction = response.txn;
-        console.log("transaction ID =" + this.transaction.saleTransactionId)
+        console.log('transaction ID =' + this.transaction.saleTransactionId);
 
-        this.presentAlert("Successfully checked out! Sale transaction Id: " + this.transaction.saleTransactionId);
-        
+        this.presentAlert('Successfully checked out! Sale transaction Id: ' + this.transaction.saleTransactionId);
+        this.router.navigate(['/home']);
       },
       error => {
         this.errorMessage = error;

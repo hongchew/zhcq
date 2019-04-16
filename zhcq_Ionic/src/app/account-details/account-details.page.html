@@ -6,13 +6,38 @@
   <div *ngIf=isLogin  >
 
     <ion-card>
+      <ion-card-content>
+          <ion-card-title>{{ member.firstName }} {{ member.lastName }}</ion-card-title>
+          <ion-card-subtitle>Username: {{ member.username}}<br/>Points: {{ member.loyaltyPoints }} </ion-card-subtitle>
+      </ion-card-content>
       <!-- <img src ="../../assets/white-sheets.jpg"/> -->
-      <div class="card-title">{{ member.firstName }} {{ member.lastName }}</div>
-      <div class="card-subtitle">Username: {{ member.username}}<br/>Points: {{ member.loyaltyPoints }} </div>
-    </ion-card>
-
+      <!-- <div class="card-title">{{ member.firstName }} {{ member.lastName }}</div>
+      <div class="card-subtitle">Username: {{ member.username}}<br/>Points: {{ member.loyaltyPoints }} </div> -->
       
-    <ion-grid>
+    </ion-card>
+    
+      
+      <!-- <div *ngIf="transactions"> -->
+        <h3><b>Transaction History</b></h3>
+        <!-- <ion-row *ngFor="let txn of transactions" class="activated"> -->
+          <!-- <ion-col> -->
+            <ion-card *ngFor="let txn of transactions">
+              <ion-card-content>
+                <ion-card-title>Transaction ID: {{ txn.saleTransactionId }} </ion-card-title>
+                <h2>Total = SGD {{ txn.totalPrice }}</h2><br>
+                  <ion-card-subtitle *ngFor="let item of txn.saleTransactionLineItems">
+                    {{ item.productEntity.productName}} <b> X </b> 
+                    {{ item.quantity}} <b> = SGD</b>
+                    {{ item.subTotal}} 
+                  </ion-card-subtitle>
+              </ion-card-content>
+            </ion-card>
+          <!-- </ion-col> -->
+        <!-- </ion-row> -->
+      <!-- </div> -->
+  </div>
+  <br/><br/><br/>
+  <ion-grid>
       <ion-row>
         <ion-col size="12">
             <ion-button color="dark" expand="block" (click)= "logout()">
@@ -21,31 +46,17 @@
           </ion-col>
         </ion-row>
       </ion-grid>
-      <br/>
-      <br/>
-      <br/>
-      <div *ngIf="transactions">
-        <h3>Transaction History</h3>
-        <ion-row *ngFor="let txn of transactions" class="activated">
-          <ion-col>
-            <ion-card>
-                {{txn.saleTransactionId}}
-            </ion-card>
-          </ion-col>
-        </ion-row>
-      </div>
-  </div>
 
 
   <div *ngIf=!isLogin  >
     <h3 style="margin-top: 100px; margin-bottom: 50px"><i>Hi there.</i>&nbsp;<ion-icon ios="ios-cafe" md="md-cafe"></ion-icon></h3>
 
     <h5>Welcome back!</h5>
-      <ion-button color="light" [routerLink]="['/login']">
+      <ion-button color="dark" [routerLink]="['/login']">
         Log In
       </ion-button>
     <h5>If you're new, join us here <ion-icon ios="ios-arrow-round-down" md="md-arrow-round-down"></ion-icon></h5>
-      <ion-button color="light" [routerLink]="['/register']">
+      <ion-button color="dark" [routerLink]="['/register']">
         Sign Up
       </ion-button>
     

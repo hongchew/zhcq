@@ -4,6 +4,8 @@ package ws.restful;
 import ejb.stateless.CategoryControllerLocal;
 import entity.Category;
 import entity.ProductEntity;
+import entity.ProductTag;
+import entity.Promotion;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -12,6 +14,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
@@ -20,6 +23,7 @@ import ws.datamodel.RetrieveAllCategoriesRsp;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 import ws.datamodel.ErrorRsp;
+import ws.datamodel.RetrieveCategoyByIdRsp;
 
 @Path("Category")
 
@@ -75,6 +79,46 @@ public class CategoryResource
         }
     }
     
+    @Path("retrieveCategoryById/{id}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response retrieveCategoryById(@PathParam("id") Long id)
+    {
+        System.out.println("catId = " + id);
+        try{
+            Category category = categoryControllerLocal.retrieveCategoryByCategoryId(id);
+            
+            if(category != null){
+                for( ProductEntity product: category.getProductEntities())
+                {
+                    product.setProductCategory(null);
+
+                    for(ProductTag tag: product.getProductTags())
+                    {
+                        tag.getProductEntities().clear();
+                    }
+
+                    product.getWishLists().clear();
+
+                    product.getShoppingcarts().clear();
+
+                    product.setCoordinatedOutfit(null);
+                    
+                    Promotion promotion = product.getPromotion();
+
+                    if(promotion !=null){
+                        promotion.getPromotionalProducts().clear();  
+                    }
+                }
+            }
+            RetrieveCategoyByIdRsp retrieveCategoyByIdRsp = new RetrieveCategoyByIdRsp(category);
+            return Response.status(Status.OK).entity(retrieveCategoyByIdRsp).build();
+        } catch (Exception ex){
+            ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
+            return Response.status(Status.BAD_REQUEST).entity(errorRsp).build();
+        }
+        
+    }
     
     
     

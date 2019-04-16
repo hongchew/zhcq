@@ -37,18 +37,27 @@ public class SaleTransactionResource {
             System.out.println("NO TRANSACTIONS");
         }
         for(SaleTransaction txn : txns){
+            System.out.println("Sale Transaction Testing");
+            System.out.println("ONE");
             System.out.println(txn.getSaleTransactionId());
             txn.setMember(null);
+            
+//            txn.getMember().getSaleTransactions().clear();
       
             for(SaleTransactionLineItem line : txn.getSaleTransactionLineItems()){
+                System.out.println("TWO");
                 line.getProductEntity().setWishLists(null);
                 line.getProductEntity().setShoppingcarts(null);
                 line.getProductEntity().setProductCategory(null);
                 line.getProductEntity().setPromotion(null);
                 line.getProductEntity().setCoordinatedOutfit(null);
                 line.getProductEntity().setProductTags(null);
-                line.getPromotionApplied().setPromotionalProducts(null);
+//                line.getPromotionApplied().setPromotionalProducts(null); 
+//                CMI cus promotion applied is null and u cant (null).setpromotionalproducts
+
+                line.setPromotionApplied(null);
                 line.setSaleTransaction(null);
+                System.out.println("THREE");
             }
         }
         RetrieveSalesTransactionByUserIdRsp rsp = new RetrieveSalesTransactionByUserIdRsp(txns);

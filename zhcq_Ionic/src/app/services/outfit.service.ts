@@ -12,7 +12,7 @@ const httpOptions = {
 })
 
 export class OutfitService {
-    baseUrl: string = 'http://localhost:8080/ZhcqRetailSystem-war/Resources/CoordinatedOutfit'
+    baseUrl: string = 'http://localhost:8000/ZhcqRetailSystem-war/Resources/CoordinatedOutfit'
 
     constructor(private httpClient: HttpClient) {
 

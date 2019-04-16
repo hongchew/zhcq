@@ -64,17 +64,45 @@
       <br/>
         &nbsp;&nbsp;&nbsp;<h6>Select size</h6>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <!-- SIZE GUIDE DONT LAUGH AT THIS ^ PLS LOL SLOT=END NOT WORKING IDEK WHY-->
-      <ion-col >
-          &nbsp;
+        <ion-col >
+            &nbsp;
           <ion-button color="light" size="small" (click)="openSizeGuide()"> <ion-icon ios="ios-shirt" md="md-shirt"></ion-icon>&nbsp; Size Guide</ion-button>
         </ion-col>
         <br/>
+      
+      <!-- <div *ngIf="diffSizes.length == 0">
+        &nbsp;&nbsp;&nbsp;<h6>No Other Available Sizes!</h6>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+       
+        <ion-col >
+            &nbsp;
+          <ion-button color="light" size="small" (click)="openSizeGuide()"> <ion-icon ios="ios-shirt" md="md-shirt"></ion-icon>&nbsp; Size Guide</ion-button>
+        </ion-col>
+        <br>
+      </div> -->
+        
     </ion-row>
     <ion-row>
-        &nbsp;&nbsp;&nbsp;
-      <div *ngFor="let pdt of diffSizes" [routerLink]="['/product-details',pdt.productId]" class="activated">
-          <ion-button color="dark" > {{pdt.sizeEnum}} </ion-button> &nbsp;&nbsp;
+      <div>
+        <ion-button color="dark" fill="outline" *ngIf="sizeXS" [routerLink]="['/product-details',sizeXSId]"> XS </ion-button> 
+        <ion-button color="dark" fill="outline" *ngIf="!sizeXS && !currentSizeXS" disabled><s>XS</s></ion-button>
+        <ion-button color="dark" fill="solid" *ngIf="currentSizeXS">XS</ion-button> &nbsp; 
+        <ion-button color="dark" fill="outline" *ngIf="sizeS" [routerLink]="['/product-details',sizeSId]"> S </ion-button> 
+        <ion-button color="dark" fill="outline" *ngIf="!sizeS && !currentSizeS" disabled><s>S</s></ion-button> 
+        <ion-button color="dark" fill="solid" *ngIf="currentSizeS">S</ion-button> &nbsp;
+        <ion-button color="dark" fill="outline" *ngIf="sizeM" [routerLink]="['/product-details',sizeMId]"> M </ion-button>
+        <ion-button color="dark" fill="outline" *ngIf="!sizeM && !currentSizeM" disabled><s>M</s></ion-button>
+        <ion-button color="dark" fill="solid" *ngIf="currentSizeM">M</ion-button> &nbsp;
+        <ion-button color="dark" fill="outline" *ngIf="sizeL" [routerLink]="['/product-details',sizeLId]"> L </ion-button>
+        <ion-button color="dark" fill="outline" *ngIf="!sizeL && !currentSizeL"disabled><s>L</s></ion-button> 
+        <ion-button color="dark" fill="solid" *ngIf="currentSizeL">L</ion-button>&nbsp;
+        <ion-button color="dark" fill="outline" *ngIf="sizeXL" [routerLink]="['/product-details',sizeXLId]"> XL </ion-button> 
+        <ion-button color="dark" fill="outline" *ngIf="!sizeXL && !currentSizeXL" disabled><s>XL</s></ion-button> 
+        <ion-button color="dark" fill="solid" *ngIf="currentSizeXL">XL</ion-button>
       </div>
+        &nbsp;&nbsp;&nbsp;
+      <!-- <div *ngFor="let pdt of diffSizes" [routerLink]="['/product-details',pdt.productId]" class="activated">
+          <ion-button color="dark" > {{pdt.sizeEnum}} </ion-button> &nbsp;&nbsp;
+      </div> -->
     </ion-row>
     
     <ion-button type="submit" color="dark" expand="full" (click)="addToCart()">

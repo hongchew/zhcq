@@ -315,17 +315,29 @@ public class ProductController implements ProductControllerLocal {
     
     @Override
     public List<ProductEntity> productsAvailableForOutfit(){
-        Query query = em.createQuery("SELECT pe FROM ProductEntity pe WHERE pe.coordinatedOutfit IS NULL");
-    
-        List<ProductEntity> productEntities = query.getResultList();
+        List<ProductEntity> products = retrieveAllUniqueProducts();
         
-        for(ProductEntity productEntity:productEntities)
+//        Query query = em.createQuery("SELECT pe FROM ProductEntity pe WHERE pe.coordinatedOutfit IS NULL");
+    
+//        List<ProductEntity> productEntities = query.getResultList();
+
+        List<ProductEntity> productEntities = new ArrayList<>();
+        
+        for(ProductEntity pdt : products){
+            if(pdt.getCoordinatedOutfit() == null ){
+                productEntities.add(pdt);
+            }
+        }
+        
+        List<ProductEntity> filteredProducts = retrieveDistinctNames(productEntities);
+                
+        for(ProductEntity productEntity:filteredProducts)
         {
             productEntity.getProductCategory();
             productEntity.getProductTags().size();
         }
         
-        return productEntities;
+        return filteredProducts;
     }
     
     @Override

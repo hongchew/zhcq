@@ -18,6 +18,7 @@ export class WishlistPage implements OnInit {
     constructor(private storage: Storage, private alertController: AlertController, private wishListService: WishListService) {
 
     }
+
   ngOnInit() {
   }
 
@@ -34,7 +35,8 @@ export class WishlistPage implements OnInit {
     if (this.member !== undefined && this.member !== null) {
       this.wishListService.retrieveWishList(this.member.memberId).subscribe(
         response => {
-          this.wishlist = response.userShoppingCart;
+          this.wishlist = response.wishlist;
+          console.log('wishlist retrieved: ' + this.wishlist );
           this.products = this.wishlist.products;
         },
         error => {

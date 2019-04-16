@@ -7,7 +7,7 @@ import { FooterComponent } from './footer/footer.component';
 // import { BrowseProductsPage } from '../browse-products/browse-products.page';
 // import { ShoppingcartPage } from '../shoppingcart/shoppingcart.page';
 // import { WishlistPage } from '../wishlist/wishlist.page';
-// import { UserinfoPage } from '../userinfo/userinfo.page';
+
 
 // const routes: Routes = [
 //   {
@@ -21,10 +21,6 @@ import { FooterComponent } from './footer/footer.component';
 //   {
 //     path: 'wishList',
 //     component: WishlistPage
-//   },
-//   {
-//     path: 'user',
-//     component: UserinfoPage
 //   }
 // ];
 
@@ -35,6 +31,6 @@ import { FooterComponent } from './footer/footer.component';
     IonicModule
     // RouterModule.forChild(routes),
   ],
-  exports: [HeaderComponent,FooterComponent]
+  exports: [HeaderComponent, FooterComponent]
 })
 export class SharedComponentsModule { }

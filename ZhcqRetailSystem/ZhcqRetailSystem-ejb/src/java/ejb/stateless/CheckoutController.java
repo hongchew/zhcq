@@ -108,6 +108,7 @@ public class CheckoutController implements CheckoutControllerLocal {
             int idx = shoppingCart.getProducts().indexOf(prod);
             shoppingCart.getQuantity().remove(idx);
             shoppingCart.getProducts().remove(idx);
+            prod.getShoppingcarts().remove(shoppingCart);
         } else {
             throw new ProductNotFoundException("No such product on the shopping cart");
         }
@@ -118,11 +119,17 @@ public class CheckoutController implements CheckoutControllerLocal {
         ShoppingCart shoppingCart = retrieveShoppingCartById(cartId);
         ProductEntity prod = productControllerLocal.retrieveProductById(productId);
         if (shoppingCart.getProducts().contains(prod)) {
-            int idx = shoppingCart.getProducts().indexOf(prod);
-            shoppingCart.getQuantity().set(idx, quantity);
+            if(quantity < 1) {
+                removeFromCart(cartId, productId);
+                        
+            }else{
+                int idx = shoppingCart.getProducts().indexOf(prod);
+                shoppingCart.getQuantity().set(idx, quantity);
+            }
         } else {
             throw new ProductNotFoundException("No such product on the shopping cart");
         }
+        
     }
 
     @Override

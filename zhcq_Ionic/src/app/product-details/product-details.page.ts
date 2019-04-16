@@ -39,7 +39,7 @@ export class ProductDetailsPage implements OnInit {
   currentSizeM: boolean;
   currentSizeL: boolean;
   currentSizeXL: boolean;
-  
+
 
   sizeXSId: number;
   sizeSId: number;
@@ -71,17 +71,16 @@ export class ProductDetailsPage implements OnInit {
       storage.get('isLogin').then((data) => {
         this.isLogin = data;
       });
-      console.log("lOGIN Status: " + this.isLogin );
-      console.log("Member: " + this.member);
-      
+      console.log('lOGIN Status: ' + this.isLogin );
+      console.log('Member: ' + this.member);
+
      }
 
   ngOnInit() {
     this.id = parseInt(this.activatedRoute.snapshot.paramMap.get('id'));
     console.log('Selected productid = ' + this.id);
 
-    if (!isNaN(this.id))
-		{
+    if (!isNaN(this.id)) {
       this.productService.retrieveProductById(this.id).subscribe(
         response => {
           console.log('response = '+response);
@@ -160,8 +159,8 @@ export class ProductDetailsPage implements OnInit {
       this.isLogin = data;
     });
 
-    console.log("lOGIN Status: " + this.isLogin );
-    console.log("Member: " + this.member);
+    console.log('lOGIN Status: ' + this.isLogin );
+    console.log('Member: ' + this.member);
 
     const listSuccess = await this.alertController.create({
       header: 'added to wish list!'

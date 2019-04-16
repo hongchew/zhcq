@@ -28,7 +28,7 @@ export class ShoppingcartPage implements OnInit {
   }
 
   ngOnInit() {
-    this.subtotal =[];
+    this.subtotal = [];
   }
 
   ionViewWillEnter() {
@@ -53,9 +53,9 @@ export class ShoppingcartPage implements OnInit {
           this.quantity = this.cart.quantity;
           for(var i = 0 ; i < this.products.length; i++) {
             this.subtotal.push(this.products[i].unitPrice * this.quantity[i]);
-            console.log("initialized product " + this.products[i].productName);
-            console.log("initialized quantity " + this.quantity[i] );
-            console.log("initialized subtotal " + this.subtotal[i] );
+            console.log('initialized product ' + this.products[i].productName);
+            console.log('initialized quantity ' + this.quantity[i] );
+            console.log('initialized subtotal ' + this.subtotal[i] );
           }
         },
         error => {
@@ -89,7 +89,7 @@ export class ShoppingcartPage implements OnInit {
         // }
         this.shoppingCartService.updateCart(this.cart.cartId, this.products[i].productId, this.quantity[i]).subscribe(
           response => {
-            console.log("Successfully updated cart!");
+            console.log('Successfully updated cart!');
           },
           error => {
             this.presentAlert(error);
@@ -123,7 +123,7 @@ export class ShoppingcartPage implements OnInit {
                   this.subtotal.splice(index,1);
                   console.log('successfully removed product!');
                 }
-                this.presentAlert("Item removed from bag");
+                this.presentAlert('Item removed from bag');
               },
               error => {
                 this.presentAlert(error);

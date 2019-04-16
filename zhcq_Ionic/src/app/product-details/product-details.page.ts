@@ -41,7 +41,7 @@ export class ProductDetailsPage implements OnInit {
   };
 
   constructor(private productService: ProductService,
-    private modalController:ModalController,
+    private modalController: ModalController,
     private activatedRoute: ActivatedRoute,
     private alertController: AlertController,
     private storage: Storage,
@@ -53,6 +53,8 @@ export class ProductDetailsPage implements OnInit {
       storage.get('isLogin').then((data) => {
         this.isLogin = data;
       });
+      console.log("lOGIN Status: " + this.isLogin );
+      console.log("Member: " + this.member);
      }
 
   ngOnInit() {
@@ -92,6 +94,9 @@ export class ProductDetailsPage implements OnInit {
     this.storage.get('isLogin').then((data) => {
       this.isLogin = data;
     });
+
+    console.log("lOGIN Status: " + this.isLogin );
+    console.log("Member: " + this.member);
 
     const listSuccess = await this.alertController.create({
       header: 'added to wish list!'

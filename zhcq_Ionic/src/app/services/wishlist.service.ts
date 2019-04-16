@@ -12,7 +12,7 @@ const httpOptions = {
 })
 
 export class WishListService{
-    baseUrl: string = "http://localhost:8080/ZhcqRetailSystem-war/Resources/Wishlist";
+    baseUrl: string = "http://localhost:8000/ZhcqRetailSystem-war/Resources/Wishlist";
 
   constructor(private httpClient: HttpClient) { }
 

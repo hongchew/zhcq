@@ -4,8 +4,8 @@
   <br/>
   <h2 text-center style="font-weight: bold">W &nbsp;&nbsp;I&nbsp;&nbsp;S&nbsp;&nbsp;H&nbsp;&nbsp; L&nbsp;&nbsp;I&nbsp;&nbsp;S&nbsp;&nbsp;T</h2>
   <br/>
-  <ion-grid> 
-    <ion-row *ngFor="let product of products"  [routerLink]="['/product-details',product.productId]" class="activated">
+  <ion-grid *ngIf=exists> 
+    <ion-row *ngFor="let product of products"  [routerLink]="['/product-details',product.productId]" class="activated" >
       <ion-col size="5">
         <img src="assets/{{product.picturePath}}" class="img-responsive"/>
       </ion-col>
@@ -19,6 +19,13 @@
       </ion-col>
     </ion-row>
   </ion-grid>
+
+  <ion-card *ngIf=!exists>
+    <ion-card-content>
+      <ion-card-title style="text-align: center" >O&nbsp;P&nbsp;P&nbsp;S</ion-card-title>
+      <ion-card-header style="text-align: center"> Your WishList is Empty! </ion-card-header>
+    </ion-card-content>
+  </ion-card>
 </ion-content>
     
 

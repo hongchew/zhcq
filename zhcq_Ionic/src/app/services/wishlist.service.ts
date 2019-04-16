@@ -16,8 +16,7 @@ export class WishListService{
 
   constructor(private httpClient: HttpClient) { }
 
-  addToWishList(userId: number, productId: number): Observable<any>
-  {
+  addToWishList(userId: number, productId: number): Observable<any> {
     return this.httpClient.post<any>(this.baseUrl + "/addToWishlist?userId=" + userId + "&productId=" + productId, null, httpOptions).pipe
     (
         catchError(this.handleError)
@@ -32,9 +31,9 @@ export class WishListService{
 		)
   }
 
-	removeFromWishList(cartId:number, productId:number): Observable<any>
+	removeFromWishList(userId: number, productId: number): Observable<any>
 	{
-			return this.httpClient.delete<any>(this.baseUrl + '?wishListId=' + cartId + '&productId='+ productId).pipe
+			return this.httpClient.delete<any>(this.baseUrl + '?userId=' + userId + '&productId='+ productId).pipe
 			(
 					catchError(this.handleError)
 			);

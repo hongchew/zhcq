@@ -192,27 +192,28 @@ export class ProductDetailsPage implements OnInit {
       this.isLogin = data;
     });
 
-
     const cartAlert = await this.alertController.create({
       header: 'Added to Bag!'
     });
 
     if (this.isLogin) {
-      if (this.selectedProduct.quantityOnHand !== 0 ) {
-        console.log('Entered into add to cart method');
-        this.shoppingCartService.addToCart(this.member.shoppingCart.cartId, this.id, this.quantity).subscribe(response => {
-          console.log('response = ' + response);
-          cartAlert.present();
-        },
-        error => {
-          this.presentAlert('ERROR FROM ADDING TO CART: ' + error.substring(37));
-          // this.ngOnInit();
+      if (this.quantity < this.selectedProduct.quantityOnHand) {
+        if (this.quantity === 0) {
+          this.presentAlert('Please Enter A Quantity!');
+        } else {
+          this.shoppingCartService.addToCart(this.member.shoppingCart.cartId, this.id, this.quantity).subscribe(response => {
+            console.log('response = ' + response);
+            cartAlert.present();
+            },
+            error => {
+            this.presentAlert('ERROR FROM ADDING TO CART: ' + error.substring(37));
+            // this.ngOnInit();
+            }
+          );
         }
-        );
       } else {
         this.presentAlert('OUT OF STOCK!');
       }
-
     } else {
         this.presentAlert('Please Login!');
     }

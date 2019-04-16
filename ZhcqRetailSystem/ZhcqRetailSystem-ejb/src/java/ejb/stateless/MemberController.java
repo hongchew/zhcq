@@ -72,6 +72,7 @@ public class MemberController implements MemberControllerLocal {
 
     @Override
     public Member retrieveMemberById(Long memberId) throws MemberNotFoundException {
+        System.out.println("MemberID passed into retieve Member method is: " + memberId);
         Member memberEntity = em.find(Member.class, memberId);
 
         if (memberEntity != null) {

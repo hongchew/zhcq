@@ -15,6 +15,9 @@ export class WishlistPage implements OnInit {
     member: Member;
     products: ProductEntity[];
     wishlist: WishList;
+    exists: boolean;
+
+
     constructor(private storage: Storage, private alertController: AlertController, private wishListService: WishListService) {
 
     }
@@ -36,6 +39,9 @@ export class WishlistPage implements OnInit {
       this.wishListService.retrieveWishList(this.member.memberId).subscribe(
         response => {
           this.wishlist = response.wishlist;
+          if (this.wishlist.productEntities.length > 0) {
+            this.exists = true;
+          }
           this.products = this.wishlist.productEntities;
           console.log('LENGTH OF PRODUCTS = ' + this.products.length)
         },
@@ -64,7 +70,7 @@ export class WishlistPage implements OnInit {
           text: 'Confirm',
           handler: () => {
             console.log("attempt to remove product");
-            this.wishListService.removeFromWishList(this.wishlist.wishListId, product.productId).subscribe(
+            this.wishListService.removeFromWishList(this.member.memberId, product.productId).subscribe(
               response => {
                const index:number = this.products.indexOf(product);
                 if(index != -1) {

@@ -72,26 +72,31 @@ public class WishListResource {
                 category.getProductEntities().clear();
                 System.out.println("CHECK 1.2 ");
                 
-                for(ProductTag tag: product.getProductTags())
-                {
-                    tag.getProductEntities().clear();
-                }           
+//                for(ProductTag tag: product.getProductTags())
+//                {
+//                    tag.getProductEntities().clear();
+//                }           
+
+                product.getProductTags().clear();
                 System.out.println("CHECK 1.3");
                 
                 
                 product.getWishLists().clear();
                 System.out.println("CHECK 1.4");
                 
-                for(ShoppingCart cart: product.getShoppingcarts())
-                {
-                    cart.getProducts().clear();
-                }
+//                for(ShoppingCart cart: product.getShoppingcarts())
+//                {
+//                    cart.getProducts().clear();
+//                }
+                product.getShoppingcarts().clear();
                 System.out.println("CHECK 1.5");
 
-                CoordinatedOutfit outfit = product.getCoordinatedOutfit();
-                if(outfit !=null){
-                    outfit.getProductEntities().clear();
-                }
+//                CoordinatedOutfit outfit = product.getCoordinatedOutfit();
+//                if(outfit !=null){
+//                    outfit.getProductEntities().clear();
+//                }
+                
+                product.setCoordinatedOutfit(null);
                 System.out.println("CHECK 1.6");
 
                 Promotion promotion = product.getPromotion();

@@ -38,7 +38,7 @@ export class RegisterPage implements OnInit {
       this.memberService.createMember(this.firstName, this.lastName, this.username, this.password, this.email).subscribe(
         response => {
           this.newMember = response.member;
-          this.presentAlert("Account created!");
+          this.presentAlert("Your account has been created, " + this.firstName + " " + this.lastName + "!");
         },
         error => {
           this.presentAlert(error.substring(37));

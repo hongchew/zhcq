@@ -19,7 +19,7 @@ import { IonicStorageModule } from '@ionic/storage';
     BrowserModule,
     IonicModule.forRoot(),
     AppRoutingModule,
-    HttpClientModule, 
+    HttpClientModule,
     IonicStorageModule.forRoot(),
     SizeguidePageModule
   ],

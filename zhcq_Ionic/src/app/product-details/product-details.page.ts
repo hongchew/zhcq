@@ -39,7 +39,7 @@ export class ProductDetailsPage implements OnInit {
   currentSizeM: boolean;
   currentSizeL: boolean;
   currentSizeXL: boolean;
-  
+
 
   sizeXSId: number;
   sizeSId: number;
@@ -51,6 +51,7 @@ export class ProductDetailsPage implements OnInit {
   member: Member;
   cart: ShoppingCart;
   cartId: number ;
+  quantity: number;
 
   sliderOpts = {
     zoom: false,
@@ -71,17 +72,18 @@ export class ProductDetailsPage implements OnInit {
       storage.get('isLogin').then((data) => {
         this.isLogin = data;
       });
-      console.log("lOGIN Status: " + this.isLogin );
-      console.log("Member: " + this.member);
-      
+      console.log('lOGIN Status: ' + this.isLogin );
+      console.log('Member: ' + this.member);
+
+      this.quantity = 0;
+
      }
 
   ngOnInit() {
     this.id = parseInt(this.activatedRoute.snapshot.paramMap.get('id'));
     console.log('Selected productid = ' + this.id);
 
-    if (!isNaN(this.id))
-		{
+    if (!isNaN(this.id)) {
       this.productService.retrieveProductById(this.id).subscribe(
         response => {
           console.log('response = '+response);
@@ -160,8 +162,8 @@ export class ProductDetailsPage implements OnInit {
       this.isLogin = data;
     });
 
-    console.log("lOGIN Status: " + this.isLogin );
-    console.log("Member: " + this.member);
+    console.log('lOGIN Status: ' + this.isLogin );
+    console.log('Member: ' + this.member);
 
     const listSuccess = await this.alertController.create({
       header: 'added to wish list!'
@@ -183,8 +185,6 @@ export class ProductDetailsPage implements OnInit {
     }
   }
 
-  
-
   async addToCart() {
     // console.log('cartID = ' + this.cartId)
     // console.log('Product Id = ' + this.id)
@@ -198,9 +198,9 @@ export class ProductDetailsPage implements OnInit {
     });
 
     if (this.isLogin) {
-      if (this.selectedProduct.quantityOnHand !== 0 ) { 
-        console.log('Entereed into add to cart method');
-        this.shoppingCartService.addToCart(this.member.shoppingCart.cartId, this.id, 1).subscribe(response => {
+      if (this.selectedProduct.quantityOnHand !== 0 ) {
+        console.log('Entered into add to cart method');
+        this.shoppingCartService.addToCart(this.member.shoppingCart.cartId, this.id, this.quantity).subscribe(response => {
           console.log('response = ' + response);
           cartAlert.present();
         },
@@ -218,6 +218,23 @@ export class ProductDetailsPage implements OnInit {
     }
   }
 
+  increment() {
+    if (this.quantity === this.selectedProduct.quantityOnHand) {
+      this.presentAlert('No Available Piece Left!');
+    } else {
+      this.quantity++;
+    }
+  }
+
+  decrement(product: ProductEntity) {
+
+    if (this.quantity === 0) {
+      this.presentAlert('Quantity cannot be < 0');
+    } else {
+      this.quantity--;
+    }
+  }
+
   async presentAlert(message: string) {
     const alert = await this.alertController.create({
       header: message,
@@ -230,8 +247,8 @@ export class ProductDetailsPage implements OnInit {
   async openSizeGuide() {
     const modal = await this.modalController.create({
       component: SizeguidePage
-    })
+    });
     modal.present();
   }
-  
+
 }

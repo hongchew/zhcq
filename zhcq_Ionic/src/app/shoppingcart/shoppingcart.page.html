@@ -11,20 +11,37 @@
       </ion-col>
       <ion-col size="7">
         <h6>{{product.productName}} &nbsp;&nbsp;${{product.unitPrice}}</h6>
-        <label>Size: {{product.sizeEnum}}</label> <br/>
-        <label>Quantity: </label> 
-        <ion-input style="border-top-left-radius: 5px;
-    border-top-right-radius: 5px;" [(ngModel)]="quantity[products.indexOf(product)]" required></ion-input>
+        <label>Size: {{product.sizeEnum}}</label> <br>
+        <!-- <label>Quantity: </label> 
+        
+        <ion-icon name="remove" (click)=decrement(product)></ion-icon> 
+     {{quantity[products.indexOf(product)]}}
+        <ion-icon name="add" (click) = increment(product)></ion-icon> -->
+
+          <ion-button fill="clear" color="dark" strong >
+              <strong> Qty: </strong>
+          </ion-button>
+          <ion-button fill="clear" (click)=decrement(product) color="dark" size="small">
+            <ion-icon name="remove" ></ion-icon>
+          </ion-button>
+          <ion-button fill="clear" color="dark" size="small" strong>
+              <strong>{{quantity[products.indexOf(product)]}}</strong>
+          </ion-button>
+          <ion-button fill="clear" (click) = increment(product) color="dark" size="small">
+            <ion-icon name="add" ></ion-icon>
+          </ion-button>
+         
+        <!--<ion-input style="border: 1px;" [(ngModel)]="quantity[products.indexOf(product)]" required></ion-input> -->
         <br/>
-        <label>Subtotal: {{subtotal[products.indexOf(product)]}}</label> 
-        <br/>
-        <ion-button color="light" (click)="removeProduct(product)"  >Remove Item
+        <label>Subtotal: SGD {{subtotal[products.indexOf(product)]}}</label> 
+        <br><br>
+        <ion-button (click)="removeProduct(product)"  fill="outline" color="dark"  size="small" >Remove Item
         </ion-button>
       </ion-col>
     </ion-row>
   </ion-grid>
   <ion-button color="dark" expand="full" (click)="updateCart()" >Update Bag</ion-button>
-  <ion-button color="dark" expand="full">c h e c k &nbsp; o u t</ion-button>
+  <ion-button color="dark" expand="full" (click)="checkout()">c h e c k &nbsp; o u t</ion-button>
 </ion-content>
     
 

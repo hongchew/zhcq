@@ -1,5 +1,6 @@
 package ejb.stateless;
 
+import entity.Member;
 import entity.ProductEntity;
 import entity.SaleTransaction;
 import entity.SaleTransactionLineItem;
@@ -177,9 +178,13 @@ public class CheckoutController implements CheckoutControllerLocal {
                 transaction.addToTotalPrice(lineItem.getSubTotal());
                 System.out.println("Pdt id: " + shoppingCart.getProducts().get(i).getProductId() + " added to new line item");
             }
+            
+            pe.getShoppingcarts().remove(shoppingCart);
 
         }
-
+        Member member = shoppingCart.getMember();
+        member.setLoyaltyPoints(member.getLoyaltyPoints() + transaction.getTotalPrice().intValue());
+        
         transaction.setSaleTransactionLineItems(list);
         em.persist(transaction);
         shoppingCart.getProducts().clear();

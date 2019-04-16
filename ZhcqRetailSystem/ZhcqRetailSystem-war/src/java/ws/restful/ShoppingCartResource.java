@@ -175,7 +175,7 @@ public class ShoppingCartResource {
                 lineItem.getProductEntity().setShoppingcarts(null);
                 lineItem.getProductEntity().setWishLists(null);
                 lineItem.getProductEntity().setPromotion(null);
-
+                lineItem.getPromotionApplied().setPromotionalProducts(null);
                 for (ProductTag tag : lineItem.getProductEntity().getProductTags()) {
                     tag.getProductEntities().clear();
                 }

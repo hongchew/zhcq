@@ -90,6 +90,7 @@ export class ShoppingcartPage implements OnInit {
         this.shoppingCartService.updateCart(this.cart.cartId, this.products[i].productId, this.quantity[i]).subscribe(
           response => {
             console.log('Successfully updated cart!');
+            this.presentAlert('Successfully updated cart!');
           },
           error => {
             this.presentAlert(error);

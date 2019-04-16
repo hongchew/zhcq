@@ -32,10 +32,10 @@
           </ion-button>
          
         <!--<ion-input style="border: 1px;" [(ngModel)]="quantity[products.indexOf(product)]" required></ion-input> -->
-        
+        <br/>
         <label>Subtotal: SGD {{subtotal[products.indexOf(product)]}}</label> 
         <br><br>
-        <ion-button fill="outline" color="dark" (click)="removeProduct(product)" size="small" >Remove Item
+        <ion-button (click)="removeProduct(product)"  fill="outline" color="dark"  size="small" >Remove Item
         </ion-button>
       </ion-col>
     </ion-row>

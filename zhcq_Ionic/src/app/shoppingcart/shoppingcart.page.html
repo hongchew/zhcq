@@ -33,7 +33,14 @@
          
         <!--<ion-input style="border: 1px;" [(ngModel)]="quantity[products.indexOf(product)]" required></ion-input> -->
         <br/>
-        <label>Subtotal: SGD {{subtotal[products.indexOf(product)]}}</label> 
+        <label *ngIf="product.promotion == undefined">Subtotal: SGD {{subtotal[products.indexOf(product)]}}</label> 
+        <label *ngIf="product.promotion != undefined">
+        <s>Subtotal: SGD {{subtotal[products.indexOf(product)]}}</s>
+        </label> 
+        <br/>
+        <label *ngIf="product.promotion != undefined">
+        <strong>Subtotal: SGD {{subtotal[products.indexOf(product)]*(1-product.promotion.discountRate)}}</strong>
+        </label> 
         <br><br>
         <ion-button (click)="removeProduct(product)"  fill="outline" color="dark"  size="small" >Remove Item
         </ion-button>

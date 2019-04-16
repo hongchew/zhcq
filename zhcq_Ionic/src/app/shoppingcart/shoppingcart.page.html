@@ -13,8 +13,11 @@
         <h6>{{product.productName}} &nbsp;&nbsp;${{product.unitPrice}}</h6>
         <label>Size: {{product.sizeEnum}}</label> <br/>
         <label>Quantity: </label> 
-        <ion-input style="border-top-left-radius: 5px;
-    border-top-right-radius: 5px;" [(ngModel)]="quantity[products.indexOf(product)]" required></ion-input>
+        <ion-icon name="remove" (click)=decrement(product)></ion-icon>
+     {{quantity[products.indexOf(product)]}}
+        <ion-icon name="add" (click) = increment(product)></ion-icon>
+        
+        <!--<ion-input style="border: 1px;" [(ngModel)]="quantity[products.indexOf(product)]" required></ion-input> -->
         <br/>
         <label>Subtotal: {{subtotal[products.indexOf(product)]}}</label> 
         <br/>

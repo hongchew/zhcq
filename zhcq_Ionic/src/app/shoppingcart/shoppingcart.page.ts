@@ -5,6 +5,9 @@ import { ProductEntity } from '../entities/product';
 import { ShoppingCart } from '../entities/cart';
 import { AlertController } from '@ionic/angular';
 import { ShoppingCartService } from '../services/shoppingcart.service';
+import { ProductService } from '../services/product.service';
+import { decreaseElementDepthCount } from '@angular/core/src/render3/state';
+import { queueComponentIndexForCheck } from '@angular/core/src/render3/instructions';
 import { log } from 'util';
 
 @Component({
@@ -64,12 +67,26 @@ export class ShoppingcartPage implements OnInit {
     }
   }
 
+  increment(product: ProductEntity) {
+    var idx = this.products.indexOf(product);
+    this.quantity[idx]++;
+  }
+
+  decrement(product: ProductEntity) {
+    var idx = this.products.indexOf(product);
+    if(this.quantity[idx] == 0) {
+      this.presentAlert("Quantity cannot be < 0");
+    } else {
+      this.quantity[idx]--;
+    }
+  }
+
   updateCart() {
     for(var i = 0 ; i < this.quantity.length; i++) {
-        if(this.quantity[i] <= 0) {
-          this.quantity[i] = 0;
-          this.presentAlert("Quantity of " + this.products[i].productName + " must be >= 0");
-        }
+        // if(this.quantity[i] <= 0) {
+        //   this.quantity[i] = 0;
+        //   this.presentAlert("Quantity of " + this.products[i].productName + " must be >= 0");
+        // }
         this.shoppingCartService.updateCart(this.cart.cartId, this.products[i].productId, this.quantity[i]).subscribe(
           response => {
             console.log("Successfully updated cart!");

@@ -1,11 +1,12 @@
 <app-header></app-header>
 
-<ion-content padding class="card-background-page" >
-
+<ion-content padding class="background" >
+  
+      
   <div *ngIf=isLogin  >
 
     <ion-card>
-      <img src ="../../assets/white-sheets.jpg"/>
+      <!-- <img src ="../../assets/white-sheets.jpg"/> -->
       <div class="card-title">{{ member.firstName }} {{ member.lastName }}</div>
       <div class="card-subtitle">Username: {{ member.username}}<br/>Points: {{ member.loyaltyPoints }} </div>
     </ion-card>
@@ -36,7 +37,6 @@
         Sign Up
       </ion-button>
   </div>
-
 
 </ion-content>
 

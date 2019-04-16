@@ -20,28 +20,30 @@ export class ShoppingcartPage implements OnInit {
   isLogin: boolean;
 
   constructor(private storage: Storage, private alertController: AlertController, private shoppingCartService: ShoppingCartService) {
-    storage.get('currentCustomer').then((data) => {
-      this.member = data;
-    });
-    storage.get('isLogin').then((data) => {
-      this.isLogin = data;
-    });
-    this.viewCart();
+
   }
 
   ngOnInit() {
+
   }
 
-  // ionViewWillEnter() {
-  //   this.storage.get('currentCustomer').then((data) => {
-  //     this.member = data;
+  ionViewWillEnter() {
+    this.storage.get('currentCustomer').then((data) => {
+      this.member = data;
+    });
 
-  //     console.log("member username " + this.member.username);
-  //     this.viewCart();
-  //   });
-  // }
+    this.storage.get('isLogin').then((data) => {
+        this.isLogin = data;
+      console.log('lOGIN Status: ' + this.isLogin );
+      console.log('Member: ' + this.member);
+      this.viewCart();
+    });
+  }
 
   viewCart() {
+    console.log('lOGIN Status: ' + this.isLogin );
+    console.log('Member: ' + this.member);
+
     if (this.isLogin) {
       this.shoppingCartService.retrieveShoppingCart(this.member.memberId).subscribe(
         response => {
@@ -73,15 +75,15 @@ export class ShoppingcartPage implements OnInit {
         }, {
           text: 'Confirm',
           handler: () => {
-            console.log("attempt to remove product");
+            console.log('attempt to remove product');
             this.shoppingCartService.removeFromCart(this.cart.cartId, product.productId).subscribe(
               response => {
                const index:number = this.products.indexOf(product);
                 if(index != -1) {
                   this.products.splice(index,1);
-                  console.log("successfully removed product!");
+                  console.log('successfully removed product!');
                 }
-                this.presentAlert("Successfully removed product!");
+                this.presentAlert('Successfully removed product!');
               },
               error => {
                 this.presentAlert(error);

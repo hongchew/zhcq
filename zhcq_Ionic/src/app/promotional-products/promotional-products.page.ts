@@ -17,7 +17,7 @@ export class PromotionalProductsPage implements OnInit {
 
   sliderOpts = {
     zoom: false,
-    slidesPerView: 2,
+    slidesPerView: 2.5,
     spaceBetween: true
   };
 

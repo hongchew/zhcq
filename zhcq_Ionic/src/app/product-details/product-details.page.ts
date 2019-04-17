@@ -197,7 +197,7 @@ export class ProductDetailsPage implements OnInit {
     });
 
     if (this.isLogin) {
-      if (this.quantity < this.selectedProduct.quantityOnHand) {
+      if (this.quantity <= this.selectedProduct.quantityOnHand) {
         if (this.quantity === 0) {
           this.presentAlert('Please Enter A Quantity!');
         } else {

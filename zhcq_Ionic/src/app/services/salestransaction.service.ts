@@ -8,7 +8,7 @@ import { catchError } from 'rxjs/operators';
 })
 export class SalestransactionService {
 
-  baseUrl: string = 'http://localhost:8080/ZhcqRetailSystem-war/Resources/SaleTransaction';
+  baseUrl: string = 'http://localhost:8000/ZhcqRetailSystem-war/Resources/SaleTransaction';
 
   constructor(private httpClient: HttpClient) { 
 

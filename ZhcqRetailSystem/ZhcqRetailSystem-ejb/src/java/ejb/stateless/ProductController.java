@@ -426,10 +426,10 @@ public class ProductController implements ProductControllerLocal {
                 {
                     names.add(product.getProductName());
                 }
-                     
+                
                 if(!names.contains(name)){
                     filteredProducts.add(pdt);
-                }
+                }                
                      
             }
         }

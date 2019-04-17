@@ -1,6 +1,8 @@
 ion-content.background {
     // --background: url(../../assets/images/kiernan_dress_black.jpg)
-    --background: url("../../assets/white-sheets.jpg");
+    --background: url("../../assets/silk.jpg");
+    -webkit-mask-repeat: no-repeat;
+    -ms-scroll-limit: 0;
 }
 
 

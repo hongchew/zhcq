@@ -8,7 +8,12 @@
     <ion-card>
       <ion-card-content>
           <ion-card-title>{{ member.firstName }} {{ member.lastName }}</ion-card-title>
-          <ion-card-subtitle>Username: {{ member.username}}<br/>Points: {{ member.loyaltyPoints }} </ion-card-subtitle>
+          <ion-card-subtitle>
+            <br/>
+            Username: {{ member.username}}<br/>
+            Points: {{ member.loyaltyPoints }}<br/>
+            Email: {{ member.email }}<br/>
+           </ion-card-subtitle>
       </ion-card-content>
       <!-- <img src ="../../assets/white-sheets.jpg"/> -->
       <!-- <div class="card-title">{{ member.firstName }} {{ member.lastName }}</div>
@@ -21,6 +26,9 @@
         <h3><b>Transaction History</b></h3>
         <!-- <ion-row *ngFor="let txn of transactions" class="activated"> -->
           <!-- <ion-col> -->
+            <div *ngIf="transactions.length==0" style="text-align: center">
+              You have no transactions. (<i>yet</i>)
+            </div>
             <ion-card *ngFor="let txn of transactions">
               <ion-card-content>
                 <ion-card-title>Transaction ID: {{ txn.saleTransactionId }} </ion-card-title>
@@ -35,17 +43,18 @@
           <!-- </ion-col> -->
         <!-- </ion-row> -->
       <!-- </div> -->
-  </div>
-  <br/><br/><br/>
-  <ion-grid>
+      <br/><br/><br/>
+     <ion-grid>
       <ion-row>
         <ion-col size="12">
             <ion-button color="dark" expand="block" (click)= "logout()">
-              Logout 
+              Log Out 
             </ion-button>
           </ion-col>
         </ion-row>
       </ion-grid>
+  </div>
+  
 
 
   <div *ngIf=!isLogin  >

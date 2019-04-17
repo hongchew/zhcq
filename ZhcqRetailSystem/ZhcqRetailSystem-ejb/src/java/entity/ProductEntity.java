@@ -51,7 +51,7 @@ public class ProductEntity implements Serializable {
     private String productName;
     
     @Column(length = 1000)
-    @Size(max = 1000)
+    @Size(max = 10000)
     private String description;
     
     @Column(nullable = false, precision = 11, scale = 2)

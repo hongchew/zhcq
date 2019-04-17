@@ -85,8 +85,6 @@ public class OutfitManagementManagedBean implements Serializable {
         }
         
         try{
-            
-            
             CoordinatedOutfit outfit = coordinatedOutfitControllerLocal.createNewOutfit(newCoordinatedOutfit, productIdsNew, new Date());
             outfits.add(outfit);
             newCoordinatedOutfit = new CoordinatedOutfit();

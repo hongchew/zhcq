@@ -173,7 +173,8 @@ public class CoordinatedOutfitController implements CoordinatedOutfitControllerL
                         }
                     }
                     
-                    outfitToUpdate.setOutfitName(outfit.getOutfitName());   
+                    outfitToUpdate.setOutfitName(outfit.getOutfitName());
+                    outfitToUpdate.setPicturePath(outfit.getPicturePath());
                    
                     
                 } else {

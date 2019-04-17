@@ -83,7 +83,7 @@ and open the template in the editor.
                                 <p:outputLabel for="outfitName" value="Outfit Name: " style="font-weight: bold;"/>
                             </p:column>
                             <p:column>
-                                <p:inputText id="outfitName" value="#{outfitManagementManagedBean.newCoordinatedOutfit.outfitName}" required="true" requiredMessage="Outfit Name is required" />
+                                <p:inputText style="width: 200px" id="outfitName" value="#{outfitManagementManagedBean.newCoordinatedOutfit.outfitName}" required="true" requiredMessage="Outfit Name is required" />
                             </p:column>
                             <p:column>
                                 <p:message for="outfitName" />
@@ -94,13 +94,24 @@ and open the template in the editor.
                             <p:column>
                                 <p:outputLabel for="productEntities" value="Choose Products" style="font-weight: bold;" />
                             </p:column>
-                            <p:column>
-                                <p:selectManyMenu id="productEntities" value="#{outfitManagementManagedBean.newProductIds}" showCheckbox="true">
-                                    <f:selectItems value="#{outfitManagementManagedBean.availableProducts}" var="productEntity" itemValue="#{productEntity.productId}" itemLabel="#{productEntity.productName}" />
+                            <p:column  style="width: 200px">
+                                <p:selectManyMenu id="productEntities" value="#{outfitManagementManagedBean.newProductIds}" showCheckbox="true" style="width: 200px">
+                                    <f:selectItems value="#{outfitManagementManagedBean.availableProducts}" var="productEntity" itemValue="#{productEntity.productId}" itemLabel="#{productEntity.productName} - #{productEntity.colourEnum}" />
                                 </p:selectManyMenu>
                             </p:column>
                             <p:column>
                                 <p:message for="productEntities"/>
+                            </p:column>
+                        </p:row>
+                        <p:row>
+                            <p:column>
+                                <p:outputLabel for="picturePath" value="Enter Image Name: " style="font-weight: bold;"/>
+                            </p:column>
+                            <p:column>
+                                <p:inputText id="picturePath" placeholder="[filename].jpg" value="#{outfitManagementManagedBean.newCoordinatedOutfit.picturePath}" required="true" requiredMessage="Outfit Name is required" />
+                            </p:column>
+                            <p:column>
+                                <p:message for="picturePath" />
                             </p:column>
                         </p:row>
                         <p:row>
@@ -149,10 +160,18 @@ and open the template in the editor.
                             </p:column>
                             <p:column>
                                 <p:dataList value="#{outfitManagementManagedBean.selectedOutfitToView.productEntities}" var="product" type="unordered">
-                                    #{product.productName}
+                                    #{product.productName} - #{product.colourEnum}
                                 </p:dataList>
                             </p:column>
                         </p:row>  
+                        <p:row>
+                            <p:column>
+                                <h:outputLabel value="Outfit Image File: " />
+                            </p:column>
+                            <p:column>
+                                <h:outputText value="#{outfitManagementManagedBean.selectedOutfitToView.picturePath}" />
+                            </p:column>
+                        </p:row>
                     </p:panelGrid>
                 </p:dialog>
             </h:form>
@@ -191,13 +210,24 @@ and open the template in the editor.
                                 <p:outputLabel for="products" value="Products: " style="font-weight: bold;" />
                             </p:column>
                             <p:column>
-                                <p:selectManyMenu id="products" value="#{outfitManagementManagedBean.updatedProductIds}" showCheckbox="true">
-                                    <f:selectItems value="#{outfitManagementManagedBean.allProducts}" var="product" itemValue="#{product.productId}" itemLabel="#{product.productName}"/>
+                                <p:selectManyMenu id="products" value="#{outfitManagementManagedBean.updatedProductIds}" showCheckbox="true" style="width: 200px">
+                                    <f:selectItems value="#{outfitManagementManagedBean.allProducts}" var="product" itemValue="#{product.productId}" itemLabel="#{product.productName} - #{product.colourEnum}"/>
                                 </p:selectManyMenu>
                                                   
                             </p:column>
                             <p:column>
                                 <p:message for="products" />
+                            </p:column>
+                        </p:row>
+                        <p:row>
+                            <p:column>
+                                <p:outputLabel for="picturePath" value="Enter Image Name: " style="font-weight: bold;"/>
+                            </p:column>
+                            <p:column>
+                                <p:inputText id="picturePath" placeholder="#{outfitManagementManagedBean.selectedOutfitToUpdate.picturePath}" value="#{outfitManagementManagedBean.selectedOutfitToUpdate.picturePath}" required="true" requiredMessage="Outfit Name is required" />
+                            </p:column>
+                            <p:column>
+                                <p:message for="picturePath" />
                             </p:column>
                         </p:row>
                         <p:row>

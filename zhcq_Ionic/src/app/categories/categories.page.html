@@ -1,9 +1,19 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>categories</ion-title>
-  </ion-toolbar>
-</ion-header>
+<app-header></app-header>
 
 <ion-content>
+    <h1 style="text-align: center"><b>S &nbsp;&nbsp;H&nbsp;&nbsp;O&nbsp;&nbsp;P</b></h1>
 
+  <ion-card [routerLink]="['/browse-products']" style="background-color: rgb(240, 237, 237)">
+    <ion-card-content style="height: 100px">
+        <h1 style="padding-top: 5%"><b>ALL</b></h1>
+    </ion-card-content>
+  </ion-card>
+  
+  <ion-card *ngFor=" let cat of categories" style="background-color: rgb(240, 237, 237)" [routerLink]="['/browse-products',cat.categoryId]">
+    <ion-card-content style="height: 100px">
+      <h1 style="padding-top: 5%"><b>{{ cat.categoryName }}</b></h1>
+    </ion-card-content>
+  </ion-card>
 </ion-content>
+
+<app-footer></app-footer>

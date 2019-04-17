@@ -1,12 +1,21 @@
 <app-header></app-header>
 
-<ion-content padding class="background" >
-  
-      
+<ion-content padding class="background" style="height: 100%; flex-direction: column">
   <div *ngIf=isLogin  >
 
+      <br/>
+      <br/>
+      <br/>
+      <br/>
+      <br/>
+      <br/>
+      <br/>
+      <br/>
+      <br/>
+      
     <ion-card>
       <ion-card-content>
+        
           <ion-card-title>{{ member.firstName }} {{ member.lastName }}</ion-card-title>
           <ion-card-subtitle>
             <br/>
@@ -55,23 +64,32 @@
       </ion-grid>
   </div>
   
-
-
-  <div *ngIf=!isLogin  >
-    <h3 style="margin-top: 100px; margin-bottom: 50px"><i>Hi there.</i>&nbsp;<ion-icon ios="ios-cafe" md="md-cafe"></ion-icon></h3>
-
+  
+  <div *ngIf=!isLogin style="text-align: center" >
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <h3><i><b>hi there.</b></i></h3>
+    <br/>
     <h5>Welcome back!</h5>
-      <ion-button color="dark" [routerLink]="['/login']">
-        Log In
+      <ion-button color="light" [routerLink]="['/login']">
+        &nbsp; Log In &nbsp; 
       </ion-button>
     <h5>If you're new, join us here <ion-icon ios="ios-arrow-round-down" md="md-arrow-round-down"></ion-icon></h5>
-      <ion-button color="dark" [routerLink]="['/register']">
+      <ion-button color="light" [routerLink]="['/register']">
         Sign Up
       </ion-button>
     
   </div>
-
 </ion-content>
+
+
 
 
 

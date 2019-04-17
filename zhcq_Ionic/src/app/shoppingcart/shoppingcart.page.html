@@ -4,6 +4,12 @@
   <br/>
   <h2 text-center style="font-weight: bold">S&nbsp;&nbsp;H&nbsp;&nbsp;O&nbsp;&nbsp;P&nbsp;&nbsp;P&nbsp;&nbsp;I&nbsp;&nbsp;N&nbsp;&nbsp;G &nbsp;&nbsp;&nbsp;&nbsp;B&nbsp;&nbsp;A&nbsp;&nbsp;G</h2>
   <br/>
+  <ion-card *ngIf="products.length==0">
+      <ion-card-content>
+        <ion-card-title style="text-align: center" >oops</ion-card-title>
+        <ion-card-header style="text-align: center"> Your Shopping Bag is Empty! :(</ion-card-header>
+      </ion-card-content>
+    </ion-card>
   <ion-grid> 
     <ion-row *ngFor="let product of products" class="activated">
       <ion-col size="5">

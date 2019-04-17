@@ -2,7 +2,7 @@
 
 <ion-content>
   <br/>
-  <h2 text-center style="font-weight: bold">W &nbsp;&nbsp;I&nbsp;&nbsp;S&nbsp;&nbsp;H&nbsp;&nbsp; L&nbsp;&nbsp;I&nbsp;&nbsp;S&nbsp;&nbsp;T</h2>
+  <h2 text-center style="font-weight: bold">W&nbsp;&nbsp;I&nbsp;&nbsp;S&nbsp;&nbsp;H&nbsp;&nbsp; L&nbsp;&nbsp;I&nbsp;&nbsp;S&nbsp;&nbsp;T</h2>
   <br/>
   <ion-grid *ngIf=exists> 
     <ion-row *ngFor="let product of products"  [routerLink]="['/product-details',product.productId]" class="activated" >
@@ -22,8 +22,8 @@
 
   <ion-card *ngIf=!exists>
     <ion-card-content>
-      <ion-card-title style="text-align: center" >O&nbsp;P&nbsp;P&nbsp;S</ion-card-title>
-      <ion-card-header style="text-align: center"> Your WishList is Empty! </ion-card-header>
+      <ion-card-title style="text-align: center" >oops</ion-card-title>
+      <ion-card-header style="text-align: center"> Your WishList is Empty! :(</ion-card-header>
     </ion-card-content>
   </ion-card>
 </ion-content>

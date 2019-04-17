@@ -15,7 +15,7 @@ const httpOptions = {
 
 export class CategoryService {
 
-    baseUrl: string = "http://localhost:8000/ZhcqRetailSystem-war/Resources/Category";
+    baseUrl: string = "http://localhost:8080/ZhcqRetailSystem-war/Resources/Category";
 
 
     constructor(private httpClient: HttpClient)

@@ -26,7 +26,7 @@ export class BrowseProductsPage implements OnInit {
   constructor(private productService: ProductService, 
     private activatedRoute: ActivatedRoute, private alertController: AlertController, private categoryService: CategoryService) {
     this.searchControl = new FormControl();
-    
+
     // this.images = this.navParams.get('images'); //get product image URIs
     // this.grid = Array(Math.ceil(this.images.length/2)); 
   }

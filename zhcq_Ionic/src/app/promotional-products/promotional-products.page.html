@@ -4,10 +4,16 @@
   <div *ngIf='errorMessage' class="errorText">
         {{errorMessage}}
   </div>
-  <div  *ngIf='!errorMessage'>
-      <ion-img src="assets/sale-header.jpg"></ion-img>
+  <div *ngIf='!errorMessage'>
+    <ion-img src="assets/sale-header.jpg"></ion-img>
+
     <ion-grid *ngFor="let promo of promotions">
-      <h4 style="text-align: center" >{{promo.promotionName}}</h4>
+      <ion-row>
+        <ion-col>
+            <h4 style="text-align: center" class="promotionName"><b>{{ promo.promotionName }}</b></h4>
+        </ion-col>
+      </ion-row>
+        
       <ion-slides [options]="sliderOpts" >
           <ion-slide *ngFor="let pdt of promo.promotionalProducts" [routerLink]="['/product-details', pdt.productId]" >
               <img src="assets/{{pdt.picturePath}}" class="thumb-img"/>

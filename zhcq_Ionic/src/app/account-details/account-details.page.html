@@ -78,9 +78,11 @@
     <h3><i><b>hi there.</b></i></h3>
     <br/>
     <h5>Welcome back!</h5>
-      <ion-button color="light" [routerLink]="['/login']">
-        &nbsp; Log In &nbsp; 
-      </ion-button>
+    <!-- <div class=buttons> -->
+        <ion-button color="light" [routerLink]="['/login']" expand="full">
+          Log In
+        </ion-button>
+    <!-- </div> <br> -->
     <h5>If you're new, join us here <ion-icon ios="ios-arrow-round-down" md="md-arrow-round-down"></ion-icon></h5>
       <ion-button color="light" [routerLink]="['/register']">
         Sign Up

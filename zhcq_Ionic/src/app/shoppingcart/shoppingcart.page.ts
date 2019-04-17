@@ -26,6 +26,7 @@ export class ShoppingcartPage implements OnInit {
   subtotal: number[];
   isLogin: boolean;
   transaction: SaleTransaction;
+  latestPdtId: number;
 
   constructor(private storage: Storage, private alertController: AlertController, private shoppingCartService: ShoppingCartService,
     private router: Router) {
@@ -61,6 +62,8 @@ export class ShoppingcartPage implements OnInit {
             console.log('initialized quantity ' + this.quantity[i]);
             console.log('initialized subtotal ' + this.subtotal[i]);
           }
+          this.latestPdtId = this.products[this.products.length - 1].productId;
+          console.log("Latest Product ID = " + this.latestPdtId)
         },
         error => {
           this.presentAlert(error);
@@ -155,6 +158,7 @@ export class ShoppingcartPage implements OnInit {
                   this.subtotal.splice(index, 1);
                   console.log('successfully removed product!');
                 }
+                this.router.navigate(['/product-details', product.productId]);
                 this.presentAlert('Item removed from bag');
               }, error => {
                 this.presentAlert(error);

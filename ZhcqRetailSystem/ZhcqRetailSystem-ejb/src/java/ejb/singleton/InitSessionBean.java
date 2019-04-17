@@ -390,7 +390,7 @@ public class InitSessionBean {
             productControllerLocal.createNewProduct(new ProductEntity("Emily Top", "This is a deep v neck top with a center front tie, lace detailing on the upper chest, sleeve and hem. ", BigDecimal.valueOf(50.00), 20, SizeEnum.XXL, ColourEnum.BLACK,"images/emily_top_black.jpg"), tops.getCategoryId() ,tagIds);
             productControllerLocal.createNewProduct(new ProductEntity("Emily Top", "This is a deep v neck top with a center front tie, lace detailing on the upper chest, sleeve and hem. ", BigDecimal.valueOf(50.00), 20, SizeEnum.XXL, ColourEnum.CREAM,"images/emily_top_cream.jpg"), tops.getCategoryId() ,tagIds);
             
-            Promotion promotion = new Promotion("Promotion1", new BigDecimal(0.25), new Date(), new Date(119,11, 5));
+            Promotion promotion = new Promotion("1 1 . 1 1 . 1 1 . S A L E", new BigDecimal(0.25), new Date(), new Date(119,11, 5));
             List<Long> productIds = new ArrayList<>();
             productIds.add(product1.getProductId());
             productIds.add(product2.getProductId());
@@ -399,7 +399,7 @@ public class InitSessionBean {
             productIds.add(product5.getProductId());
             promotionControllerLocal.createNewPromotion(promotion, productIds);
             
-            promotion = new Promotion("Promotion 2", new BigDecimal(0.25), new Date(), new Date(119,4,17));
+            promotion = new Promotion("B L A C K  F R I D A Y", new BigDecimal(0.25), new Date(), new Date(119,4,17));
             productIds = new ArrayList<>();
             productIds.add(product6.getProductId());
             productIds.add(product7.getProductId());
@@ -408,7 +408,7 @@ public class InitSessionBean {
             productIds.add(product10.getProductId());
             promotionControllerLocal.createNewPromotion(promotion, productIds);
             
-            promotion = new Promotion("Promotion 3", new BigDecimal(0.5), new Date(), new Date(119,5,1));
+            promotion = new Promotion("C Y B E R  M O N D AY", new BigDecimal(0.5), new Date(), new Date(119,5,1));
             productIds = new ArrayList<>();
             productIds.add(product11.getProductId());
             productIds.add(product12.getProductId());

@@ -9,6 +9,7 @@ import { Storage } from '@ionic/storage';
 import { AlertController } from '@ionic/angular';
 import { CoordinatedOutfit } from './entities/outfit';
 import { OutfitService } from './services/outfit.service';
+import { Member } from './entities/member';
 
 @Component({
   selector: 'app-root',
@@ -47,6 +48,7 @@ export class AppComponent {
   public outfits: CoordinatedOutfit[];
   public errorMessage: string;
   public isLogin: boolean;
+  public member: Member;
 
   constructor(
     private platform: Platform,
@@ -70,6 +72,9 @@ export class AppComponent {
     storage.get('isLogin').then((data) => {
       this.isLogin = data;
     });
+    storage.get('currentCustomer').then((data) => {
+      this.member = data;
+    });
 
     this.outfitService.retrieveAllOutfits().subscribe(
       response => {
@@ -87,6 +92,15 @@ export class AppComponent {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
+    });
+  }
+
+  ionViewWillEnter() {
+    this.storage.get('isLogin').then((data) => {
+      this.isLogin = data;
+    });
+    this.storage.get('currentCustomer').then((data) => {
+      this.member = data;
     });
   }
 

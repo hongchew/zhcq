@@ -298,7 +298,7 @@
                             </p:column>
                             <p:column>
                                 <p:selectManyMenu id="products" value="#{promotionManagedBean.updateProductIds}" showCheckbox="true">
-                                    <f:selectItems value="#{promotionManagedBean.productEntities}" var="product" itemValue="#{product.productId}" itemLabel="#{product.productName}" />
+                                    <f:selectItems value="#{promotionManagedBean.productEntities}" var="product" itemValue="#{product.productId}" itemLabel="#{product.productName} - #{product.colourEnum}" />
                                 </p:selectManyMenu>
                             </p:column>
                             <p:column>

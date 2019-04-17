@@ -24,9 +24,6 @@ export class AccountDetailsPage implements OnInit {
     private router: Router) { }
 
   ngOnInit() {
-  }
-
-  ionViewWillEnter() {
     this.storage.get('currentCustomer').then((data) => {
       this.member = data;
       console.log('lOGGED IN CUSTOMER: ' + this.member);
@@ -35,6 +32,21 @@ export class AccountDetailsPage implements OnInit {
       this.isLogin = data;
       this.retrieveSalesTransactions();
     });
+  }
+
+  foo(){
+  }
+
+
+  ionViewWillEnter() {
+    // this.storage.get('currentCustomer').then((data) => {
+    //   this.member = data;
+    //   console.log('lOGGED IN CUSTOMER: ' + this.member);
+    // });
+    // this.storage.get('isLogin').then((data) => {
+    //   this.isLogin = data;
+    //   this.retrieveSalesTransactions();
+    // });
   }
 
   retrieveSalesTransactions() {

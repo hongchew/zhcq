@@ -7,6 +7,22 @@
         </ion-toolbar>
       </ion-header>
       <ion-content>
+        <ion-card *ngIf="isLogin">
+          <ion-card-content>
+            <ion-card-title >  
+              {{ member.firstName}} {{ member.lastName}}
+            </ion-card-title>
+            <ion-card-subtitle>
+                <br/>
+                Username: {{ member.username}}<br/>
+                Points: {{ member.loyaltyPoints }}<br/>
+                Email: {{ member.email }}<br/>
+               </ion-card-subtitle>
+          </ion-card-content>
+        </ion-card>
+
+
+
         <ion-list>
           <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages">
             <ion-item [routerDirection]="'root'" [routerLink]="[p.url]">
@@ -15,17 +31,7 @@
                 {{p.title}} 
               </ion-label>
             </ion-item>
-          </ion-menu-toggle>
-          
-          <h4 style="padding-left: 10%">Shop By Category</h4>
-          <ion-menu-toggle auto-hide="false" *ngFor="let cat of categories">
-            <ion-item [routerDirection]="'root'" [routerLink]="['/browse-products/', cat.categoryId]">
-              <ion-icon slot="start" ></ion-icon>
-              <ion-label>
-                {{cat.categoryName}} 
-              </ion-label>
-            </ion-item>
-          </ion-menu-toggle>
+          </ion-menu-toggle> 
         </ion-list>
       </ion-content>
 

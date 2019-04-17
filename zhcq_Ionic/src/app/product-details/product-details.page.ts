@@ -10,6 +10,7 @@ import { ShoppingCart } from '../entities/cart';
 import { ShoppingCartService } from '../services/shoppingcart.service';
 import { WishListService } from '../services/wishlist.service';
 import { SizeguidePage } from '../sizeguide/sizeguide.page';
+import { ignoreElements } from 'rxjs/operators';
 
 
 @Component({
@@ -68,13 +69,26 @@ export class ProductDetailsPage implements OnInit {
     private wishListService: WishListService) {
       storage.get('currentCustomer').then((data) => {
         this.member = data;
+        if (this.member != null && this.member !== undefined) {
+          this.shoppingCartService.retrieveShoppingCart(this.member.memberId).subscribe(
+            response => {
+              this.cart = response.userShoppingCart;
+              if (this.cart !== null) {
+                this.cartId = this.cart.cartId;
+                console.log('cartId = ' + this.cartId);
+              }
+          });
+        }
       });
       storage.get('isLogin').then((data) => {
         this.isLogin = data;
+        console.log('lOGIN Status: ' + this.isLogin );
+        console.log('Member: ' + this.member);
+        if (this.isLogin) {
+          this.cartId = this.member.shoppingCart.cartId;
+          console.log("cartID = " + this.cartId);
+        }
       });
-      console.log('lOGIN Status: ' + this.isLogin );
-      console.log('Member: ' + this.member);
-
       this.quantity = 0;
 
      }
@@ -158,18 +172,13 @@ export class ProductDetailsPage implements OnInit {
   }
 
   async addToWishList() {
-    this.storage.get('isLogin').then((data) => {
-      this.isLogin = data;
-    });
-
-    console.log('lOGIN Status: ' + this.isLogin );
-    console.log('Member: ' + this.member);
 
     const listSuccess = await this.alertController.create({
       header: 'added to wish list!'
     });
     if (this.isLogin) {
       console.log('Entered into add to wishlist method');
+      
       this.wishListService.addToWishList(this.member.memberId, this.id).subscribe(
         response => {
           console.log('response = ' + response);
@@ -186,11 +195,6 @@ export class ProductDetailsPage implements OnInit {
   }
 
   async addToCart() {
-    // console.log('cartID = ' + this.cartId)
-    // console.log('Product Id = ' + this.id)
-    this.storage.get('isLogin').then((data) => {
-      this.isLogin = data;
-    });
 
     const cartAlert = await this.alertController.create({
       header: 'Added to Bag!'
@@ -201,7 +205,8 @@ export class ProductDetailsPage implements OnInit {
         if (this.quantity === 0) {
           this.presentAlert('Please Enter A Quantity!');
         } else {
-          this.shoppingCartService.addToCart(this.member.shoppingCart.cartId, this.id, this.quantity).subscribe(response => {
+          
+          this.shoppingCartService.addToCart(this.cartId, this.id, this.quantity).subscribe(response => {
             console.log('response = ' + response);
             cartAlert.present();
             },

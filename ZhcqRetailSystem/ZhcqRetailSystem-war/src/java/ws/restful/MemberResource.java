@@ -97,12 +97,12 @@ public class MemberResource {
                 Member member = memberControllerLocal.memberLogin(username, password);
                 
 //                member.setWishList(null);
-//                member.setShoppingCart(null);
+                member.setShoppingCart(null);
                 
 //                ShoppingCart cart = member.getShoppingCart();
 //                cart.setMember(null);
                 
-                member.setShoppingCart(null);
+//                
                 WishList wishlist = member.getWishList();
                 wishlist.setMember(null);
                 member.setPassword(null);

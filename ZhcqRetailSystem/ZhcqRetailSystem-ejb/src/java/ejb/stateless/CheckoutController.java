@@ -255,7 +255,7 @@ public class CheckoutController implements CheckoutControllerLocal {
         Member member = memberController.retrieveMemberById(shoppingCart.getMember().getMemberId());
         BigDecimal points = BigDecimal.valueOf(member.getLoyaltyPoints()).divide(BigDecimal.TEN);
         if(points.compareTo(transaction.getTotalPrice()) >= 0){ //points can pay more than total
-            member.setLoyaltyPoints(member.getLoyaltyPoints() - transaction.getTotalPrice().intValue());
+            member.setLoyaltyPoints(member.getLoyaltyPoints() - transaction.getTotalPrice().multiply(BigDecimal.TEN).intValue());
             transaction.setTotalPrice(BigDecimal.ZERO);
         }else{
             transaction.setTotalPrice(transaction.getTotalPrice().subtract(points));

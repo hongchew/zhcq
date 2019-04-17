@@ -128,6 +128,23 @@ export class ShoppingcartPage implements OnInit {
 
   }
 
+  checkoutWithPoints() {
+    this.shoppingCartService.checkoutWithPoints(this.cart.cartId).subscribe(
+      response => {
+        this.transaction = response.txn;
+        console.log('transaction ID =' + this.transaction.saleTransactionId);
+
+        this.presentAlert('Successfully checked out! Sale transaction Id: ' + this.transaction.saleTransactionId);
+        this.router.navigate(['/home']);
+      },
+      error => {
+        this.errorMessage = error;
+        this.presentAlert(this.errorMessage.substring(37));
+      }
+    );
+
+  }
+
   // removeProduct(product: ProductEntity) {
   //   console.log("start");
   //   this.presentAlertConfirm(product);

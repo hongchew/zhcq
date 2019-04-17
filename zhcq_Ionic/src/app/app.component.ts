@@ -4,6 +4,7 @@ import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { CategoryService } from './services/category.service';
+import { MemberService } from './services/member.service';
 import { Category } from './entities/category';
 import { Storage } from '@ionic/storage';
 import { AlertController } from '@ionic/angular';
@@ -55,6 +56,7 @@ export class AppComponent {
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
     private categoryService: CategoryService,
+    private memberService: MemberService,
     private storage: Storage,
     private alertController: AlertController,
     private outfitService: OutfitService
@@ -91,6 +93,10 @@ export class AppComponent {
   foo() {
   }
 
+  ngOnInit(){
+    this.getMember();
+  }
+
   initializeApp() {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
@@ -104,7 +110,9 @@ export class AppComponent {
     });
     this.storage.get('currentCustomer').then((data) => {
       this.member = data;
+      this.getMember();
     });
+    
   }
 
   async logout() {
@@ -127,5 +135,21 @@ export class AppComponent {
       buttons: ['OK']
     });
     await alert.present();
+  }
+
+  getMember(){
+    if (this.isLogin) {
+      this.memberService.retrieveMember(this.member.memberId).subscribe(
+        response=>{
+          this.member = response.member;
+          console.log("Current member id = " + this.member.memberId);
+        },
+
+        error => {
+          this.errorMessage = error;
+          this.presentAlert(this.errorMessage.substring(37) + " cannot get member");
+        }
+      )
+    }
   }
 }

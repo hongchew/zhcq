@@ -57,6 +57,14 @@ export class ShoppingCartService {
         );
     } 
 
+    checkoutWithPoints(cartId: number): Observable<any>
+    {
+        return this.httpClient.post<any>(this.baseUrl + '/checkoutWithPoints?cartId=' + cartId, null, httpOptions).pipe
+        (
+            catchError(this.handleError)
+        );
+    } 
+
 
     
     private handleError(error: HttpErrorResponse)

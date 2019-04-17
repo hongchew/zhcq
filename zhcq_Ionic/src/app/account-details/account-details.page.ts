@@ -26,11 +26,13 @@ export class AccountDetailsPage implements OnInit {
   ngOnInit() {
     this.storage.get('currentCustomer').then((data) => {
       this.member = data;
-      console.log('lOGGED IN CUSTOMER: ' + this.member);
+      this.memberId = this.member.memberId;
+      console.log('lOGGED IN CUSTOMER: ' + this.memberId);
     });
     this.storage.get('isLogin').then((data) => {
       this.isLogin = data;
       this.retrieveSalesTransactions();
+      this.getMember();
     });
   }
 
@@ -39,14 +41,7 @@ export class AccountDetailsPage implements OnInit {
 
 
   ionViewWillEnter() {
-    // this.storage.get('currentCustomer').then((data) => {
-    //   this.member = data;
-    //   console.log('lOGGED IN CUSTOMER: ' + this.member);
-    // });
-    // this.storage.get('isLogin').then((data) => {
-    //   this.isLogin = data;
-    //   this.retrieveSalesTransactions();
-    // });
+
   }
 
   retrieveSalesTransactions() {
@@ -64,6 +59,22 @@ export class AccountDetailsPage implements OnInit {
           this.presentAlert(this.errorMessage.substring(37));
         }
       );
+    }
+  }
+
+  getMember(){
+    if (this.isLogin) {
+      this.memberService.retrieveMember(this.member.memberId).subscribe(
+        response=>{
+          this.member = response.member;
+          console.log("Current member id = " + this.member.memberId);
+        },
+
+        error => {
+          this.errorMessage = error;
+          this.presentAlert(this.errorMessage.substring(37) + " cannot get member");
+        }
+      )
     }
   }
 

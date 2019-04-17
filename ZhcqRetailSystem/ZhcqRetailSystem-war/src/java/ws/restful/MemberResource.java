@@ -178,12 +178,11 @@ public class MemberResource {
     public Response retrieveMember(@PathParam("id") Long id) {
         try {
             Member member = memberControllerLocal.retrieveMemberById(id);
-            member.getWishList().setMember(null);
-            member.getShoppingCart().setMember(null);
-            List<SaleTransaction> listST = member.getSaleTransactions();
-            for (SaleTransaction saleTransaction : listST) {
-                saleTransaction.setMember(null);
-            }
+            member.setWishList(null);
+            member.setShoppingCart(null);
+            member.setSaleTransactions(null);
+            member.setSalt(null);
+            member.setPassword(null);
             RetrieveMemberRsp retrieveMemberRsp = new RetrieveMemberRsp(member);
             return Response.status(Response.Status.OK).entity(retrieveMemberRsp).build();
         } catch (MemberNotFoundException ex) {

@@ -89,7 +89,7 @@ export class ProductDetailsPage implements OnInit {
           console.log("cartID = " + this.cartId);
         }
       });
-      this.quantity = 0;
+      this.quantity = 1;
 
      }
 

@@ -14,6 +14,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
+import javax.validation.constraints.NotNull;
 
 
 @Entity
@@ -25,7 +26,7 @@ public class ShoppingCart implements Serializable {
     @GeneratedValue(strategy = GenerationType.TABLE)
     private Long cartId;
         
-//    @NotNull
+    @NotNull
     @OneToOne(mappedBy ="shoppingCart")
     private Member member; 
     

@@ -16,7 +16,7 @@
         
       <ion-slides [options]="sliderOpts" >
           <ion-slide *ngFor="let pdt of promo.promotionalProducts" [routerLink]="['/product-details', pdt.productId]" >
-              <img src="assets/{{pdt.picturePath}}" class="thumb-img"/>
+              <img src="http://localhost:8080/ZhcqRetailSystem-war/{{pdt.picturePath}}" class="thumb-img"/>
         </ion-slide>
       </ion-slides>
     </ion-grid>

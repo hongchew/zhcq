@@ -17,7 +17,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.Serializable;
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -76,6 +75,8 @@ public class ProductManagementManagedBean implements Serializable {
     private List<String> tagIdsStringUpdate;
     private ColourEnum colourEnumUpdate;
     private SizeEnum sizeEnumUpdate;
+    
+    private String newFilePath;
     /**
      * Creates a new instance of ProductManagementManagedBean
      */
@@ -97,40 +98,40 @@ public class ProductManagementManagedBean implements Serializable {
     
     public void createNewProduct(ActionEvent event)
     {
-        System.err.println("********* Real path JSF: " + FacesContext.getCurrentInstance().getExternalContext().getRealPath("/systemAdministration/images"));
-    
-        String picturePath = "" ;
-        
-        if(productPhotoNew == null){
-                System.err.println("NULLNULLNULL");
-            }else{
-                System.err.println("File Name: " + productPhotoNew.getFileName());
-        }
-        
-        try{
-            InputStream initialStream = productPhotoNew.getInputstream();
-                
-            byte[] buffer = new byte[initialStream.available()];
-            initialStream.read(buffer);
-            
-            picturePath = FacesContext.getCurrentInstance().getExternalContext().getRealPath("/systemAdministration/images/");
-            //picturePath = FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath() + "\\web\\systemAdministration\\images\\" + productPhotoNew.getFileName();
-            System.err.println("images/" + productPhotoNew.getFileName() );
-            File targetFile = new File(picturePath);
-            System.err.println(targetFile.getAbsolutePath());
-            OutputStream outStream = new FileOutputStream(targetFile);
-            outStream.write(buffer);
-//            InputStream input = productPhotoNew.getInputstream();
-//            //System.err.println(new File("images/", productPhotoNew.getFileName()).toPath());
-//            Path path = Paths.get("images", productPhotoNew.getFileName());
-//            Files.copy(input, path, StandardCopyOption.REPLACE_EXISTING);
-        }
-        catch (IOException e) {
-            System.err.println(e.getMessage());
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "File Upload Error: " + e.getMessage(), null));
-
-        }
-        
+//        System.err.println("********* Real path JSF: " + FacesContext.getCurrentInstance().getExternalContext().getRealPath("/systemAdministration/images"));
+//    
+//        String picturePath = "" ;
+//        
+//        if(productPhotoNew == null){
+//                System.err.println("NULLNULLNULL");
+//            }else{
+//                System.err.println("File Name: " + productPhotoNew.getFileName());
+//        }
+//        
+//        try{
+//            InputStream initialStream = productPhotoNew.getInputstream();
+//                
+//            byte[] buffer = new byte[initialStream.available()];
+//            initialStream.read(buffer);
+//            
+//            picturePath = FacesContext.getCurrentInstance().getExternalContext().getRealPath("/systemAdministration/images/");
+//            //picturePath = FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath() + "\\web\\systemAdministration\\images\\" + productPhotoNew.getFileName();
+//            System.err.println("images/" + productPhotoNew.getFileName() );
+//            File targetFile = new File(picturePath);
+//            System.err.println(targetFile.getAbsolutePath());
+//            OutputStream outStream = new FileOutputStream(targetFile);
+//            outStream.write(buffer);
+////            InputStream input = productPhotoNew.getInputstream();
+////            //System.err.println(new File("images/", productPhotoNew.getFileName()).toPath());
+////            Path path = Paths.get("images", productPhotoNew.getFileName());
+////            Files.copy(input, path, StandardCopyOption.REPLACE_EXISTING);
+//        }
+//        catch (IOException e) {
+//            System.err.println(e.getMessage());
+//            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "File Upload Error: " + e.getMessage(), null));
+//
+//        }
+//        
         List<Long> tagIdsNew = null;
         
         if(getCategoryIdNew() == 0)
@@ -150,7 +151,7 @@ public class ProductManagementManagedBean implements Serializable {
         
         try
         {
-            newProductEntity.setPicturePath(picturePath);
+            newProductEntity.setPicturePath(newFilePath);
             ProductEntity pe = productController.createNewProduct(getNewProductEntity(), getCategoryIdNew(), tagIdsNew);
             getProductEntities().add(pe);
             
@@ -167,11 +168,56 @@ public class ProductManagementManagedBean implements Serializable {
         }
     }
     
-    public void fileUploadListener(FileUploadEvent event){
-        productPhotoNew = event.getFile();
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Photo Uploaded", null));
+    public void handleFileUpload(FileUploadEvent event)
+    {
+        try
+        {   
+            this.newFilePath = FacesContext.getCurrentInstance().getExternalContext().getInitParameter("alternatedocroot_1") + System.getProperty("file.separator") + "\\uploadedFiles\\" + event.getFile().getFileName();
 
+            
+            System.err.println("********** Create Product File Upload: File name: " + event.getFile().getFileName());
+            System.err.println("********** Create Product File Upload: newFilePath: " + newFilePath);
+
+            File file = new File(newFilePath);
+            FileOutputStream fileOutputStream = new FileOutputStream(file);
+
+            int a;
+            int BUFFER_SIZE = 8192;
+            byte[] buffer = new byte[BUFFER_SIZE];
+
+            InputStream inputStream = event.getFile().getInputstream();
+
+            while (true)
+            {
+                a = inputStream.read(buffer);
+
+                if (a < 0)
+                {
+                    break;
+                }
+
+                fileOutputStream.write(buffer, 0, a);
+                fileOutputStream.flush();
+            }
+
+            fileOutputStream.close();
+            inputStream.close();
+            newFilePath = "/images/uploadedFiles/" + event.getFile().getFileName();
+            System.err.println("********** Create Product File Upload: saved File Path: " + newFilePath);
+            
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,  "File uploaded successfully", ""));
+        }
+        catch(IOException ex)
+        {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,  "File upload error: " + ex.getMessage(), ""));
+        }
     }
+    
+//    public void fileUploadListener(FileUploadEvent event){
+//        productPhotoNew = event.getFile();
+//        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Photo Uploaded", null));
+//
+//    }
 //    public void updateProduct(ActionEvent event){
 //        try {
 //            ProductEntity productToUpdate = productController.retrieveProductById(selectedProductEntityToUpdate.getProductId());
@@ -514,6 +560,14 @@ public class ProductManagementManagedBean implements Serializable {
      */
     public void setProductPhotoNew(UploadedFile productPhotoNew) {
         this.productPhotoNew = productPhotoNew;
+    }
+
+    public String getNewFilePath() {
+        return newFilePath;
+    }
+
+    public void setNewFilePath(String newFilePath) {
+        this.newFilePath = newFilePath;
     }
 
   

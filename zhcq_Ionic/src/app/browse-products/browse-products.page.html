@@ -20,8 +20,8 @@
     <ion-grid> 
       <ion-row>
         <ion-col size="6" *ngFor="let product of products"  class="activated" >
-          <img src="assets/{{product.picturePath}}" class="img-responsive" [routerLink]="['/product-details',product.productId]"/>
-              <h6>{{product.productName}} &nbsp; <img src="assets/images/{{product.colourEnum}}.jpg" class="colorImg"></h6>
+          <img src="http://localhost:8080/ZhcqRetailSystem-war/{{product.picturePath}}" class="img-responsive" [routerLink]="['/product-details',product.productId]"/>
+              <h6>{{product.productName}} &nbsp; <img src="http://localhost:8080/ZhcqRetailSystem-war/images/{{product.colourEnum}}.jpg" class="colorImg"></h6>
               
         </ion-col>
       </ion-row>

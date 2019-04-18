@@ -21,7 +21,7 @@
 
   <!-- SELECTED PRODUCT -->
   <div *ngIf="!errorMessage">
-    <img src="assets/{{selectedProduct.picturePath}}" class="img-responsive"/>
+    <img src="http://localhost:8080/ZhcqRetailSystem-war/{{selectedProduct.picturePath}}" class="img-responsive"/>
 
     <ion-list lines="none" style="margin-bottom: 0">
       <ion-item>
@@ -58,7 +58,7 @@
       <ion-row>
         &nbsp;&nbsp;
         <ion-col size="1.5" *ngFor="let product of diffColours" [routerLink]="['/product-details',product.productId]" class="activated">
-          <img src="assets/images/{{product.colourEnum}}.jpg" width="30" height="30"/>
+          <img src="http://localhost:8080/ZhcqRetailSystem-war/{{product.colourEnum}}.jpg" width="30" height="30"/>
         </ion-col>
       </ion-row>
     </ion-grid>
@@ -134,7 +134,7 @@
     <ion-card>
       <ion-slides [options]="sliderOpts">
           <ion-slide *ngFor="let pdt of suggestedProducts" [routerLink]="['/product-details',pdt.productId]" >
-              <img src="assets/{{pdt.picturePath}}" class="thumb-img"/>
+              <img src="http://localhost:8080/ZhcqRetailSystem-war/{{pdt.picturePath}}" class="thumb-img"/>
           </ion-slide>
         </ion-slides>
     </ion-card>

@@ -6,11 +6,9 @@
 package util.enumeration;
 
 public enum SizeEnum {
-    XXS,
     XS,
     S,
     M,
     L,
     XL,
-    XXL
 }

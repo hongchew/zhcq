@@ -94,4 +94,8 @@
         <local>ejb.stateless.SalesTransactionSessionBeanLocal</local>
         <ejb-link>ZhcqRetailSystem-ejb.jar#SalesTransactionSessionBean</ejb-link>
     </ejb-local-ref>
+    <context-param>
+        <param-name>alternatedocroot_1</param-name>
+        <param-value>/Users/zhimingkoh/zhcq-co/alternateDocRoot/images</param-value>
+    </context-param>
 </web-app>

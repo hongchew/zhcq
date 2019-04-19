@@ -146,13 +146,13 @@ export class ShoppingcartPage implements OnInit {
   }
 
   async checkout() {
-    console.log('Current member points = ' + this.member.loyaltyPoints);
     const alert = await this.alertController.create({
       header: 'C H E C K ' + ' O U T',
-      message: 'You have ' + this.member.loyaltyPoints + ' points!',
+      subHeader: 'You have ' + this.member.loyaltyPoints + ' points!' ,
+      message: 'You can redeem $' + (this.member.loyaltyPoints / 10) + ' for your purchase.' ,
       buttons: [
         {
-          text: 'Checkout',
+          text: 'Dont Redeem',
           cssClass: 'secondary',
           handler: () => {
             this.shoppingCartService.checkout(this.cart.cartId).subscribe(
@@ -169,7 +169,7 @@ export class ShoppingcartPage implements OnInit {
             );
           }
         } , {
-          text: 'Checkout With Points!',
+          text: 'Redeem!',
           handler: () => {
             this.checkoutWithPoints();
           }

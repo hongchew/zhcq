@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import {AlertController, ModalController} from '@ionic/angular';
 import { ProductService } from '../services/product.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ProductEntity } from '../entities/product';
 import { Storage } from '@ionic/storage';
 import { Member } from '../entities/member';
@@ -66,7 +66,8 @@ export class ProductDetailsPage implements OnInit {
     private alertController: AlertController,
     private storage: Storage,
     private shoppingCartService: ShoppingCartService,
-    private wishListService: WishListService) {
+    private wishListService: WishListService,
+    private router: Router) {
 
       this.onPromotion = false;
       console.log("Promotion Status: " + this.onPromotion);
@@ -175,8 +176,9 @@ export class ProductDetailsPage implements OnInit {
       );
     } else {
       console.log('Entered method 3');
-      this.errorMessage = 'No Product ID was provided';
+      this.errorMessage = 'Product Not Found';
       this.presentAlert(this.errorMessage);
+      this.router.navigate(['categories']);
     }
   }
 
@@ -206,7 +208,22 @@ export class ProductDetailsPage implements OnInit {
   async addToCart() {
 
     const cartAlert = await this.alertController.create({
-      header: 'Added to Bag!'
+      header: 'Added to Bag!',
+      buttons: [
+        {
+          text: 'View Cart',
+          cssClass: 'secondary',
+          handler: () => {
+            this.router.navigate(['shoppingcart']);
+          }
+        }, {
+          text: 'Continue Shopping',
+          cssClass: 'secondary',
+          handler: () => {
+          }
+        }
+
+      ]
     });
 
     if (this.isLogin) {

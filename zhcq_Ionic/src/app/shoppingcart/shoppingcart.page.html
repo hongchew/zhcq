@@ -2,7 +2,8 @@
     <title> zhcq & co.</title>
     <ion-toolbar>
     <ion-buttons slot="start">
-        <ion-back-button defaultHref = "product-details/{{ latestPdtId }}"></ion-back-button>
+        <ion-back-button *ngIf='latestPdtId' defaultHref = "product-details/{{ latestPdtId }}"></ion-back-button>
+        <ion-back-button *ngIf='!latestPdtId' defaultHref = "categories"></ion-back-button>
     </ion-buttons>
     <ion-buttons slot="primary">
       <ion-button href="/browse-products">
@@ -68,8 +69,9 @@
     </ion-row>
   </ion-grid>
   <ion-button color="dark" expand="full" (click)="updateCart()" >Update Bag</ion-button>
-  <br/>
-  <ion-button color="dark" expand="full" (click)="checkoutInitial()">c h e c k &nbsp; o u t</ion-button>
+  
+  <ion-button color="dark" expand="full" (click)="checkoutInitial()">C h e c k &nbsp; O u t</ion-button>
+  <!-- <ion-button color="dark" expand="full" (click)="checkout()">c h e c k &nbsp; o u t</ion-button> -->
   <!-- <ion-button color="dark" expand="full" (click)="checkoutWithPoints()">c h e c k &nbsp; o u t &nbsp; w i t h &nbsp; P o i n t s</ion-button> -->
 </ion-content>
     

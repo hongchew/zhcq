@@ -351,7 +351,7 @@ public class ProductController implements ProductControllerLocal {
 
             
 
-            if(tags != null)
+            if(tags != null && !tags.isEmpty())
             {
                 Random rand = new Random();
                 Query query = em.createQuery("SELECT DISTINCT pe FROM ProductEntity pe WHERE pe.productTags = :tag ");
@@ -369,8 +369,7 @@ public class ProductController implements ProductControllerLocal {
             }
             else 
             {
-                List<ProductEntity> suggestedProducts = new ArrayList<>();
-                return suggestedProducts;
+                return null;
             }
         } else {
             throw new ProductNotFoundException("Error Occured! Product does not exist in the database");

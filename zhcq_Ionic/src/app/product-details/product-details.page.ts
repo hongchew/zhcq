@@ -187,7 +187,7 @@ export class ProductDetailsPage implements OnInit {
     });
     if (this.isLogin) {
       console.log('Entered into add to wishlist method');
-      
+
       this.wishListService.addToWishList(this.member.memberId, this.id).subscribe(
         response => {
           console.log('response = ' + response);
@@ -214,7 +214,6 @@ export class ProductDetailsPage implements OnInit {
         if (this.quantity === 0) {
           this.presentAlert('Please Enter A Quantity!');
         } else {
-          
           this.shoppingCartService.addToCart(this.cartId, this.id, this.quantity).subscribe(response => {
             console.log('response = ' + response);
             cartAlert.present();

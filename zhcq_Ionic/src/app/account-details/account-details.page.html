@@ -41,11 +41,41 @@
             <ion-card *ngFor="let txn of transactions">
               <ion-card-content>
                 <ion-card-title>Transaction ID: {{ txn.saleTransactionId }} </ion-card-title>
-                <h2>Total = SGD {{ txn.totalPrice }}</h2><br>
-                  <ion-card-subtitle *ngFor="let item of txn.saleTransactionLineItems">
-                    {{ item.productEntity.productName}} - {{item.productEntity.colourEnum}} <b> X </b> 
-                    {{ item.quantity}} <b> = SGD</b>
-                    {{ item.subTotal}} 
+                <h2>Total : SGD {{ txn.totalPrice }}</h2><br>
+                <ion-card-subtitle>
+                  <ion-grid>
+                    <ion-row>
+                      <ion-col size="8">
+                        <div>
+                          <b>Item</b>
+                        </div>
+                      </ion-col>
+                      <ion-col>
+                        <div>
+                          <b>Subtotal</b>
+                        </div>
+                      </ion-col>
+                    </ion-row>
+                    <div *ngFor="let item of txn.saleTransactionLineItems">
+                      <ion-row>
+                        <ion-col size="8">
+                          <div>
+                            {{ item.quantity}} {{ item.productEntity.productName}} ({{item.productEntity.colourEnum}})
+                          </div>
+                        </ion-col>
+                        <ion-col style="text-align: center">
+                          <div *ngIf="(item.subTotal/item.quantity)<item.productEntity.unitPrice; else nopromo">
+                            <s>${{ item.productEntity.unitPrice*item.quantity}}</s>&nbsp;<ion-icon name="pricetags"></ion-icon> ${{item.subTotal}} 
+                          </div>
+                          <div>
+                            <ng-template #nopromo>${{item.subTotal}} </ng-template>
+                          </div>
+                        
+                        </ion-col>
+                      </ion-row>
+                    </div>
+                    </ion-grid>
+                    
                   </ion-card-subtitle>
               </ion-card-content>
             </ion-card>

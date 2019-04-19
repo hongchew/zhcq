@@ -5,7 +5,10 @@ import ejb.stateless.CoordinatedOutfitControllerLocal;
 import ejb.stateless.ProductControllerLocal;
 import entity.CoordinatedOutfit;
 import entity.ProductEntity;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -18,6 +21,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
+import org.primefaces.event.FileUploadEvent;
 import util.exception.CreateNewOutfitException;
 import util.exception.InputDataValidationException;
 import util.exception.OutfitNotFoundException;
@@ -50,6 +54,7 @@ public class OutfitManagementManagedBean implements Serializable {
     
     private List<String> updatedProductIds;
     
+    private String newFilePath;
     
     public OutfitManagementManagedBean() 
     {
@@ -85,6 +90,8 @@ public class OutfitManagementManagedBean implements Serializable {
         }
         
         try{
+            newCoordinatedOutfit.setPicturePath(newFilePath);
+            System.out.println("********** newCoordinatedOutfit.getPicturePath() = " + newCoordinatedOutfit.getPicturePath());
             CoordinatedOutfit outfit = coordinatedOutfitControllerLocal.createNewOutfit(newCoordinatedOutfit, productIdsNew, new Date());
             outfits.add(outfit);
             newCoordinatedOutfit = new CoordinatedOutfit();
@@ -167,7 +174,52 @@ public class OutfitManagementManagedBean implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "An error has occurred when deleting Outfit", null));
         }
     }
+    
+    public void handleFileUpload(FileUploadEvent event)
+    {
+        try
+        {   
+            this.newFilePath = FacesContext.getCurrentInstance().getExternalContext().getInitParameter("alternatedocroot_1") + System.getProperty("file.separator") + "uploadedFiles//"  +  event.getFile().getFileName();
 
+            
+            System.err.println("********** Create Outfit File Upload: File name: " + event.getFile().getFileName());
+            System.err.println("********** Create Outfit File Upload: newFilePath: " + newFilePath);
+
+            File file = new File(newFilePath);
+            FileOutputStream fileOutputStream = new FileOutputStream(file);
+
+            int a;
+            int BUFFER_SIZE = 8192;
+            byte[] buffer = new byte[BUFFER_SIZE];
+
+            InputStream inputStream = event.getFile().getInputstream();
+
+            while (true)
+            {
+                a = inputStream.read(buffer);
+
+                if (a < 0)
+                {
+                    break;
+                }
+
+                fileOutputStream.write(buffer, 0, a);
+                fileOutputStream.flush();
+            }
+
+            fileOutputStream.close();
+            inputStream.close();
+            newFilePath = "/images/uploadedFiles/" + event.getFile().getFileName();
+            System.err.println("********** Create Outfit File Upload: saved File Path: " + newFilePath);
+            
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,  "File uploaded successfully", ""));
+        }
+        catch(IOException ex)
+        {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,  "File upload error: " + ex.getMessage(), ""));
+        }
+    }
+    
     /**
      * @return the productControllerLocal
      */

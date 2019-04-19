@@ -36,7 +36,7 @@ export class AccountDetailsPage implements OnInit {
     });
   }
 
-  foo(){
+  foo() {
   }
 
 
@@ -47,12 +47,12 @@ export class AccountDetailsPage implements OnInit {
   retrieveSalesTransactions() {
     if (this.isLogin) {
       this.memberId = this.member.memberId;
-      console.log("member name = " + this.member.firstName);
+      console.log('member name = ' + this.member.firstName);
       // this.viewAccountDetails();
       this.saleTransactionService.retrieveSalesTransactionByUserId(this.member.memberId).subscribe(
         response => {
           this.transactions = response.salesTransactions;
-          console.log("transaction Length= " + this.transactions.length);
+          console.log('transaction Length= ' + this.transactions.length);
           console.log(this.transactions);
         },
         error => {

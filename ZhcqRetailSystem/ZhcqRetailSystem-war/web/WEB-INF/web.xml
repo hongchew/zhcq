@@ -18,7 +18,7 @@
     </context-param>
     <context-param>
         <param-name>alternatedocroot_1</param-name>
-        <param-value>/Users/chengyang/Desktop/IS3106/zhcq-co/alternateDocRoot/images</param-value>
+        <param-value>/Users/qianyi/zhcq-co/alternateDocRoot/images</param-value>
     </context-param>
     <filter>
         <filter-name>PrimeFaces FileUpload Filter</filter-name>

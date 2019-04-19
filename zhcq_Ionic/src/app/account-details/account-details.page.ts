@@ -53,6 +53,7 @@ export class AccountDetailsPage implements OnInit {
         response => {
           this.transactions = response.salesTransactions;
           console.log("transaction Length= " + this.transactions.length);
+          console.log(this.transactions);
         },
         error => {
           this.errorMessage = error;

@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { Component, OnInit, Input } from '@angular/core';
+import { ModalController, NavParams } from '@ionic/angular';
 import { SalestransactionService } from '../services/salestransaction.service';
 import { Member } from '../entities/member';
 import { SaleTransaction } from '../entities/saletransaction';
 import { Storage } from '@ionic/storage';
+import { ProductEntity } from '../entities/product';
+import { Category } from '../entities/category';
 
 
 @Component({
@@ -16,9 +18,15 @@ export class SizeguidePage implements OnInit {
   member: Member;
   memberId: number;
   transactions: SaleTransaction[];
+  products: Array<ProductEntity> = [];
   isLogin: boolean;
+  product: ProductEntity;
+  // "value" passed in componentProps
+  @Input() value: string;
 
-  constructor(private modalController: ModalController, private saleTransactionService: SalestransactionService, private storage: Storage) {
+  constructor(private modalController: ModalController, private saleTransactionService: SalestransactionService, 
+              private storage: Storage, private navparams: NavParams) {
+
 
   }
 
@@ -35,6 +43,19 @@ export class SizeguidePage implements OnInit {
           this.transactions = response.salesTransactions;
           console.log('transaction Length= ' + this.transactions.length);
           console.log(this.transactions);
+
+          for (let txn of this.transactions) {
+            for (let item of txn.saleTransactionLineItems) {
+              console.log('categoryName = ' + this.value);
+              console.log('Product Category Name = ' + item.productEntity.productCategory.categoryName);
+
+              if (item.productEntity.productCategory.categoryName === this.value ) {
+                this.product = item.productEntity;
+                console.log('product = ' + this.product);
+                this.products.push(this.product);
+              }
+            }
+          }
         },
         error => {
           console.log(error);

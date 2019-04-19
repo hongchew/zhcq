@@ -11,6 +11,7 @@ import { ShoppingCartService } from '../services/shoppingcart.service';
 import { WishListService } from '../services/wishlist.service';
 import { SizeguidePage } from '../sizeguide/sizeguide.page';
 import { ignoreElements } from 'rxjs/operators';
+import { Category } from '../entities/category';
 
 
 @Component({
@@ -29,6 +30,9 @@ export class ProductDetailsPage implements OnInit {
   onPromotion: boolean;
   promotionalPrice: any;
   isLogin: boolean;
+
+  // Info Passed into modal
+  selectedCategoryName: string;
 
   sizeXS: boolean;
   sizeS: boolean;
@@ -109,6 +113,7 @@ export class ProductDetailsPage implements OnInit {
           console.log('Entered method 2');
           console.log('response = ' + response);
           this.selectedProduct = response.selectedProduct;
+          this.selectedCategoryName = this.selectedProduct.productCategory.categoryName;
           this.diffColours = response.diffColours;
           this.diffSizes = response.diffSizes;
           this.suggestedProducts = response.suggestedProducts;
@@ -277,7 +282,9 @@ export class ProductDetailsPage implements OnInit {
 
   async openSizeGuide() {
     const modal = await this.modalController.create({
-      component: SizeguidePage
+      component: SizeguidePage,
+      componentProps: { value: this.selectedCategoryName }
+
     });
     modal.present();
   }

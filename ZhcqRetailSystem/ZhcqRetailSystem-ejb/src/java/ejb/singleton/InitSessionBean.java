@@ -93,10 +93,10 @@ public class InitSessionBean {
             staffControllerLocal.createNewStaff(new Staff("Admin", "Staff", "staff", "password"));
             memberControllerLocal.createNewMember(new Member("Member", "Default", "member", "password", 0, "0@email.com"));
             
-            Category dresses = categoryControllerLocal.createNewCategoryEntity(new Category("DRESSES","DRESSES"));
-            Category tops = categoryControllerLocal.createNewCategoryEntity(new Category("TOPS","TOPS"));
-            Category skirts = categoryControllerLocal.createNewCategoryEntity(new Category("SKIRTS","SKIRTS"));
-            Category bottoms = categoryControllerLocal.createNewCategoryEntity(new Category("BOTTOMS","BOTTOMS"));
+            Category dresses = categoryControllerLocal.createNewCategoryEntity(new Category("DRESSES","DRESSES","/images/DRESSES.jpg"));
+            Category tops = categoryControllerLocal.createNewCategoryEntity(new Category("TOPS","TOPS", "/images/TOPS.jpg"));
+            Category skirts = categoryControllerLocal.createNewCategoryEntity(new Category("SKIRTS","SKIRTS", "/images/SKIRTS.jpg"));
+            Category bottoms = categoryControllerLocal.createNewCategoryEntity(new Category("BOTTOMS","BOTTOMS", "/images/BOTTOMS.jpg"));
             
             ProductTag tagBasic = productTagControllerLocal.createNewProductTag(new ProductTag("BASIC"));
             ProductTag tagPopular = productTagControllerLocal.createNewProductTag(new ProductTag("POPULAR"));

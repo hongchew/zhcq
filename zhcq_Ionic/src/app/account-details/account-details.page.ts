@@ -63,10 +63,10 @@ export class AccountDetailsPage implements OnInit {
     }
   }
 
-  getMember(){
+  getMember() {
     if (this.isLogin) {
       this.memberService.retrieveMember(this.member.memberId).subscribe(
-        response=>{
+        response => {
           this.member = response.member;
           console.log("Current member id = " + this.member.memberId);
         },
@@ -75,7 +75,7 @@ export class AccountDetailsPage implements OnInit {
           this.errorMessage = error;
           this.presentAlert(this.errorMessage.substring(37) + " cannot get member");
         }
-      )
+      );
     }
   }
 

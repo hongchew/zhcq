@@ -11,6 +11,7 @@ import { queueComponentIndexForCheck } from '@angular/core/src/render3/instructi
 import { log } from 'util';
 import { SaleTransaction } from '../entities/saletransaction';
 import { Router } from '@angular/router';
+import { MemberService } from '../services/member.service';
 
 @Component({
   selector: 'app-shoppingcart',
@@ -29,7 +30,7 @@ export class ShoppingcartPage implements OnInit {
   latestPdtId: number;
 
   constructor(private storage: Storage, private alertController: AlertController, private shoppingCartService: ShoppingCartService,
-    private router: Router) {
+    private router: Router, private memberService: MemberService) {
   }
 
   ngOnInit() {
@@ -111,21 +112,71 @@ export class ShoppingcartPage implements OnInit {
     }
   }
 
-  checkout() {
-    this.shoppingCartService.checkout(this.cart.cartId).subscribe(
-      response => {
-        this.transaction = response.txn;
-        console.log('transaction ID =' + this.transaction.saleTransactionId);
+  // checkout() {
+  //   this.shoppingCartService.checkout(this.cart.cartId).subscribe(
+  //     response => {
+  //       this.transaction = response.txn;
+  //       console.log('transaction ID =' + this.transaction.saleTransactionId);
 
-        this.presentAlert('Successfully checked out! Sale transaction Id: ' + this.transaction.saleTransactionId);
-        this.router.navigate(['/home']);
+  //       this.presentAlert('Successfully checked out! Sale transaction Id: ' + this.transaction.saleTransactionId);
+  //       this.router.navigate(['/home']);
+  //     },
+  //     error => {
+  //       this.errorMessage = error;
+  //       this.presentAlert(this.errorMessage.substring(37));
+  //     }
+  //   );
+
+  // }
+
+  checkoutInitial() {
+    this.memberService.retrieveMember(this.member.memberId).subscribe(
+      response => {
+        this.member = response.member;
+        console.log('Current member id = ' + this.member.memberId);
+        console.log('Current member points = ' + this.member.loyaltyPoints);
+        this.checkout();
       },
       error => {
         this.errorMessage = error;
-        this.presentAlert(this.errorMessage.substring(37));
+        this.presentAlert(this.errorMessage.substring(37) + ' cannot get member');
       }
     );
 
+  }
+
+  async checkout() {
+    console.log('Current member points = ' + this.member.loyaltyPoints);
+    const alert = await this.alertController.create({
+      header: 'C H E C K ' + ' O U T',
+      message: 'You have ' + this.member.loyaltyPoints + ' points!',
+      buttons: [
+        {
+          text: 'Checkout',
+          cssClass: 'secondary',
+          handler: () => {
+            this.shoppingCartService.checkout(this.cart.cartId).subscribe(
+              response => {
+                this.transaction = response.txn;
+                console.log('transaction ID =' + this.transaction.saleTransactionId);
+                this.presentAlert('Successfully checked out! Sale transaction Id: ' + this.transaction.saleTransactionId);
+                this.router.navigate(['/home']);
+              },
+              error => {
+                this.errorMessage = error;
+                this.presentAlert(this.errorMessage.substring(37));
+              }
+            );
+          }
+        } , {
+          text: 'Checkout With Points!',
+          handler: () => {
+            this.checkoutWithPoints();
+          }
+        }
+      ]
+    });
+    await alert.present();
   }
 
   checkoutWithPoints() {

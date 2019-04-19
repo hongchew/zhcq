@@ -208,18 +208,23 @@ public class ShoppingCartResource {
     public Response checkoutWithPoints(@QueryParam("cartId") Long cartId) {
         try {
             SaleTransaction txn = checkoutController.checkOutWithPoints(cartId);
+            System.out.println("Transaction ID returned: " + txn.getSaleTransactionId());
+            
             for (SaleTransactionLineItem lineItem : txn.getSaleTransactionLineItems()) {
                 lineItem.setSaleTransaction(null);
-                lineItem.getProductEntity().getProductCategory().setProductEntities(null);
-
-                lineItem.getProductEntity().setCoordinatedOutfit(null);
-                lineItem.getProductEntity().setShoppingcarts(null);
-                lineItem.getProductEntity().setWishLists(null);
-                lineItem.getProductEntity().setPromotion(null);
-                lineItem.getPromotionApplied().setPromotionalProducts(null);
-                for (ProductTag tag : lineItem.getProductEntity().getProductTags()) {
-                    tag.getProductEntities().clear();
-                }
+//                lineItem.getProductEntity().getProductCategory().setProductEntities(null);
+//
+//                lineItem.getProductEntity().setCoordinatedOutfit(null);
+//                lineItem.getProductEntity().setShoppingcarts(null);
+//                lineItem.getProductEntity().setWishLists(null);
+//                lineItem.getProductEntity().setPromotion(null);
+//                lineItem.getPromotionApplied().setPromotionalProducts(null);
+                lineItem.setProductEntity(null);
+                lineItem.setPromotionApplied(null);
+                
+//                for (ProductTag tag : lineItem.getProductEntity().getProductTags()) {
+//                    tag.getProductEntities().clear();
+//                }
             }
             txn.getMember().setWishList(null);
             txn.getMember().setShoppingCart(null);

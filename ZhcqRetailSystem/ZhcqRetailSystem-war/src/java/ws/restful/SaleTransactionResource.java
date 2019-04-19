@@ -6,6 +6,7 @@
 package ws.restful;
 
 import ejb.stateless.SalesTransactionSessionBeanLocal;
+import entity.Category;
 import entity.SaleTransaction;
 import entity.SaleTransactionLineItem;
 import java.util.List;
@@ -46,9 +47,13 @@ public class SaleTransactionResource {
       
             for(SaleTransactionLineItem line : txn.getSaleTransactionLineItems()){
                 System.out.println("TWO");
+                
+                Category category = line.getProductEntity().getProductCategory();
+                category.getProductEntities().clear();
+                
                 line.getProductEntity().setWishLists(null);
                 line.getProductEntity().setShoppingcarts(null);
-                line.getProductEntity().setProductCategory(null);
+//                line.getProductEntity().setProductCategory(null);
                 line.getProductEntity().setPromotion(null);
                 line.getProductEntity().setCoordinatedOutfit(null);
                 line.getProductEntity().setProductTags(null);

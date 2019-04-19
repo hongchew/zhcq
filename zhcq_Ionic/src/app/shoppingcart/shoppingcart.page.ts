@@ -146,13 +146,14 @@ export class ShoppingcartPage implements OnInit {
   }
 
   async checkout() {
-    const alert = await this.alertController.create({
+    if (this.member.loyaltyPoints>0) {
+      const alert = await this.alertController.create({
       header: 'C H E C K ' + ' O U T',
       subHeader: 'You have ' + this.member.loyaltyPoints + ' points!' ,
       message: 'You can redeem $' + (this.member.loyaltyPoints / 10) + ' for your purchase.' ,
       buttons: [
         {
-          text: 'Dont Redeem',
+          text: 'Don\'t Redeem',
           cssClass: 'secondary',
           handler: () => {
             this.shoppingCartService.checkout(this.cart.cartId).subscribe(
@@ -176,7 +177,35 @@ export class ShoppingcartPage implements OnInit {
         }
       ]
     });
-    await alert.present();
+     await alert.present();
+    } else {
+      
+      const alert = await this.alertController.create({
+        header: 'Confirm purchase?',
+        buttons: [
+          {
+            text: 'Yes',
+            cssClass: 'secondary',
+            handler: () => {
+              this.shoppingCartService.checkout(this.cart.cartId).subscribe(
+                response => {
+                  this.transaction = response.txn;
+                  console.log('transaction ID =' + this.transaction.saleTransactionId);
+                  this.presentAlert('Successfully checked out! Sale transaction Id: ' + this.transaction.saleTransactionId);
+                  this.router.navigate(['/account-details']);
+                },
+                error => {
+                  this.errorMessage = error;
+                  this.presentAlert(this.errorMessage.substring(37));
+                }
+              );
+            }
+          } , 'Nope'
+        ]
+      });
+      await alert.present();
+    }
+    
   }
 
   checkoutWithPoints() {

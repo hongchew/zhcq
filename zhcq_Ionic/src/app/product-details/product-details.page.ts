@@ -251,7 +251,7 @@ export class ProductDetailsPage implements OnInit {
 
   increment() {
     if (this.quantity === this.selectedProduct.quantityOnHand) {
-      this.presentAlert('No Available Piece Left!');
+      this.presentAlert('Oops! No Available Pieces Left, that\'s the last one!');
     } else {
       this.quantity++;
     }

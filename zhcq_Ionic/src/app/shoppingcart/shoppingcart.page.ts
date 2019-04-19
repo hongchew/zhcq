@@ -160,7 +160,7 @@ export class ShoppingcartPage implements OnInit {
                 this.transaction = response.txn;
                 console.log('transaction ID =' + this.transaction.saleTransactionId);
                 this.presentAlert('Successfully checked out! Sale transaction Id: ' + this.transaction.saleTransactionId);
-                this.router.navigate(['/home']);
+                this.router.navigate(['/account-details']);
               },
               error => {
                 this.errorMessage = error;
@@ -186,7 +186,7 @@ export class ShoppingcartPage implements OnInit {
         console.log('transaction ID =' + this.transaction.saleTransactionId);
 
         this.presentAlert('Successfully checked out! Sale transaction Id: ' + this.transaction.saleTransactionId);
-        this.router.navigate(['/home']);
+        this.router.navigate(['/account-details']);
       },
       error => {
         this.errorMessage = error;

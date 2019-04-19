@@ -67,6 +67,10 @@ export class ProductDetailsPage implements OnInit {
     private storage: Storage,
     private shoppingCartService: ShoppingCartService,
     private wishListService: WishListService) {
+
+      this.onPromotion = false;
+      console.log("Promotion Status: " + this.onPromotion);
+
       storage.get('currentCustomer').then((data) => {
         this.member = data;
         if (this.member != null && this.member !== undefined) {
@@ -98,9 +102,11 @@ export class ProductDetailsPage implements OnInit {
     console.log('Selected productid = ' + this.id);
 
     if (!isNaN(this.id)) {
+      console.log('Entered method 1');
       this.productService.retrieveProductById(this.id).subscribe(
         response => {
-          console.log('response = '+response);
+          console.log('Entered method 2');
+          console.log('response = ' + response);
           this.selectedProduct = response.selectedProduct;
           this.diffColours = response.diffColours;
           this.diffSizes = response.diffSizes;
@@ -134,6 +140,8 @@ export class ProductDetailsPage implements OnInit {
             console.log('Product Price is: ' + this.selectedProduct.unitPrice);
             console.log('Promotional rate is: ' + this.selectedProduct.promotion.discountRate);
             console.log('Calculated Promotional Price is: ' + this.promotionalPrice);
+          } else {
+            this.onPromotion = false;
           }
 
           if (this.diffSizes.length !== 0) {
@@ -166,6 +174,7 @@ export class ProductDetailsPage implements OnInit {
         }
       );
     } else {
+      console.log('Entered method 3');
       this.errorMessage = 'No Product ID was provided';
       this.presentAlert(this.errorMessage);
     }

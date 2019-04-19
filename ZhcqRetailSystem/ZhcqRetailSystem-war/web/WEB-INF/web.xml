@@ -18,7 +18,7 @@
     </context-param>
     <context-param>
         <param-name>alternatedocroot_1</param-name>
-        <param-value>/Users/chengyang/Desktop/IS3106/zhcq-co/alternateDocRoot/images</param-value>
+        <param-value>/Users/zhimingkoh/zhcq-co/alternateDocRoot/images</param-value>
     </context-param>
     <filter>
         <filter-name>PrimeFaces FileUpload Filter</filter-name>
@@ -94,8 +94,4 @@
         <local>ejb.stateless.SalesTransactionSessionBeanLocal</local>
         <ejb-link>ZhcqRetailSystem-ejb.jar#SalesTransactionSessionBean</ejb-link>
     </ejb-local-ref>
-    <context-param>
-        <param-name>alternatedocroot_1</param-name>
-        <param-value>/Users/zhimingkoh/zhcq-co/alternateDocRoot/images</param-value>
-    </context-param>
 </web-app>

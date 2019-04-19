@@ -37,9 +37,10 @@ export class BrowseProductsPage implements OnInit {
       this.categoryService.retrieveCategoryById(this.catId).subscribe(
         response => {
           this.category = response.category;
-          console.log("category retrieved = " + this.category.categoryName);
+          console.log('category retrieved = ' + this.category.categoryName);
         },
         error => {
+          console.log('Entered Error Message');
           this.errorMessage = error;
           this.presentAlert(this.errorMessage.substring(37));
         }

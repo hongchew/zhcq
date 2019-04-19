@@ -12,14 +12,10 @@
 
         <div>
             <h3>Category Management</h3>
-
+            
             <h:form>
                 <p:menubar>
-                    <p:submenu label="File" icon="pi pi-file">
-                        <p:submenu label="New" icon="pi pi-briefcase">
-                            <p:menuitem value="Category" onclick="PF('dialogCreateNewCategory').show()" icon="fa fa-plus" />
-                        </p:submenu>
-                    </p:submenu>
+                    <p:menuitem value="Category" onclick="PF('dialogCreateNewCategory').show()" icon="fa fa-plus" />                                     
                 </p:menubar>
             </h:form>
 
@@ -94,6 +90,18 @@
                             </p:column>
                             <p:column>
                                 <p:message for="description" />
+                            </p:column>
+                        </p:row>
+                        
+                        <p:row>
+                            <p:column>
+                                <p:outputLabel value="Upload a Picture" />
+                            </p:column>
+                            <p:column>
+                                <p:fileUpload id="picture" fileUploadListener="#{categoryManagedBean.handleFileUpload}" required="true" requiredMessage="Please upload a picture representative of the category"/>
+                            </p:column>
+                            <p:column>
+                                <p:message for="picture" />
                             </p:column>
                         </p:row>
                         

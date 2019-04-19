@@ -101,23 +101,12 @@ and open the template in the editor.
                                 <p:message for="productEntities"/>
                             </p:column>
                         </p:row>
-<!--                        <p:row>
-                            <p:column>
-                                <p:outputLabel for="picturePath" value="Enter Image Name: " style="font-weight: bold;"/>
-                            </p:column>
-                            <p:column>
-                                <p:inputText id="picturePath" placeholder="[filename].jpg" value="#{outfitManagementManagedBean.newCoordinatedOutfit.picturePath}" required="true" requiredMessage="Outfit Name is required" />
-                            </p:column>
-                            <p:column>
-                                <p:message for="picturePath" />
-                            </p:column>
-                        </p:row>-->
                         <p:row>
                             <p:column>
                                 <p:outputLabel for="picturePath" value="Upload Image: " style="font-weight: bold;"/>
                             </p:column>
                             <p:column>
-                                <p:fileUpload id="picturePath" fileUploadListener="#{outfitManagementManagedBean.handleFileUpload}"/>
+                                <p:fileUpload id="picturePath" fileUploadListener="#{outfitManagementManagedBean.handleFileUpload}" required="true" requiredMessage="Upload a picture of the outfit"/>
                             </p:column>
                             <p:column>
                                 <p:message for="picturePath" />

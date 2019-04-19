@@ -41,6 +41,8 @@ public class Category implements Serializable {
     @NotNull
     @Size(max = 128)
     private String description;
+    
+    private String picturePath;
 
     @OneToMany(mappedBy ="productCategory")
     private List<ProductEntity> productEntities;
@@ -53,6 +55,13 @@ public class Category implements Serializable {
         this();
         this.categoryName = categoryName;
         this.description = description;
+    }
+    
+    public Category(String categoryName, String description, String picturePath) {
+        this();
+        this.categoryName = categoryName;
+        this.description = description;
+        this.picturePath = picturePath;
     }
     
     public void addProduct(ProductEntity product)
@@ -138,6 +147,20 @@ public class Category implements Serializable {
      */
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    /**
+     * @return the picturePath
+     */
+    public String getPicturePath() {
+        return picturePath;
+    }
+
+    /**
+     * @param picturePath the picturePath to set
+     */
+    public void setPicturePath(String picturePath) {
+        this.picturePath = picturePath;
     }
     
 }

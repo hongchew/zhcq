@@ -58,7 +58,7 @@
       <ion-row>
         &nbsp;&nbsp;
         <ion-col size="1.5" *ngFor="let product of diffColours" [routerLink]="['/product-details',product.productId]" class="activated">
-          <img src="http://localhost:8080/ZhcqRetailSystem-war/{{product.colourEnum}}.jpg" width="30" height="30"/>
+          <img src="http://localhost:8080/ZhcqRetailSystem-war/images/{{product.colourEnum}}.jpg" width="30" height="30"/>
         </ion-col>
       </ion-row>
     </ion-grid>

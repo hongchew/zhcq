@@ -22,10 +22,8 @@ and open the template in the editor.
             
             <h:form>
                 <p:menubar>
-                    <p:submenu label="File" icon="ui-icon-document">
-                        <p:menuitem value="Create New Outfit" onclick="PF('dialogCreateNewOutfit').show()" 
-                                    icon="fa fa-plus" />
-                    </p:submenu>
+                    <p:menuitem value="Create New Outfit" onclick="PF('dialogCreateNewOutfit').show()" 
+                                    icon="fa fa-plus" />                                    
                 </p:menubar>
             </h:form>
             
@@ -103,12 +101,23 @@ and open the template in the editor.
                                 <p:message for="productEntities"/>
                             </p:column>
                         </p:row>
-                        <p:row>
+<!--                        <p:row>
                             <p:column>
                                 <p:outputLabel for="picturePath" value="Enter Image Name: " style="font-weight: bold;"/>
                             </p:column>
                             <p:column>
                                 <p:inputText id="picturePath" placeholder="[filename].jpg" value="#{outfitManagementManagedBean.newCoordinatedOutfit.picturePath}" required="true" requiredMessage="Outfit Name is required" />
+                            </p:column>
+                            <p:column>
+                                <p:message for="picturePath" />
+                            </p:column>
+                        </p:row>-->
+                        <p:row>
+                            <p:column>
+                                <p:outputLabel for="picturePath" value="Upload Image: " style="font-weight: bold;"/>
+                            </p:column>
+                            <p:column>
+                                <p:fileUpload id="picturePath" fileUploadListener="#{outfitManagementManagedBean.handleFileUpload}"/>
                             </p:column>
                             <p:column>
                                 <p:message for="picturePath" />
@@ -219,7 +228,7 @@ and open the template in the editor.
                                 <p:message for="products" />
                             </p:column>
                         </p:row>
-                        <p:row>
+<!--                        <p:row>
                             <p:column>
                                 <p:outputLabel for="picturePath" value="Enter Image Name: " style="font-weight: bold;"/>
                             </p:column>
@@ -229,7 +238,7 @@ and open the template in the editor.
                             <p:column>
                                 <p:message for="picturePath" />
                             </p:column>
-                        </p:row>
+                        </p:row>-->
                         <p:row>
                             <p:column colspan="3">
                                 <p:commandButton value="Update Outfit" update="@form formAllOutfits:dataTableAllOutfits" actionListener="#{outfitManagementManagedBean.UpdateOutfit}" oncomplete="PF('dialogUpdateOutfit').show();" />

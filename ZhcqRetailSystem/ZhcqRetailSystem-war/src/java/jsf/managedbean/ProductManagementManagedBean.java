@@ -171,7 +171,7 @@ public class ProductManagementManagedBean implements Serializable {
     {
         try
         {   
-            this.newFilePath = FacesContext.getCurrentInstance().getExternalContext().getInitParameter("alternatedocroot_1") + System.getProperty("file.separator") + event.getFile().getFileName();
+            this.newFilePath = FacesContext.getCurrentInstance().getExternalContext().getInitParameter("alternatedocroot_1") + System.getProperty("file.separator") + "uploadedFiles//" + event.getFile().getFileName();
 
             
             System.err.println("********** Create Product File Upload: File name: " + event.getFile().getFileName());
@@ -201,8 +201,8 @@ public class ProductManagementManagedBean implements Serializable {
 
             fileOutputStream.close();
             inputStream.close();
-            newFilePath = "/images/" + event.getFile().getFileName();
-            System.err.println("********** Create Product File Upload: saved File Path: " + newFilePath);
+            newFilePath = "/images/uploadedFiles/" + event.getFile().getFileName();
+            System.err.println("********** Create Outfit File Upload: saved File Path: " + newFilePath);
             
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,  "File uploaded successfully", ""));
         }

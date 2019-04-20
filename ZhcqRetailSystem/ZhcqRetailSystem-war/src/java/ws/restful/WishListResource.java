@@ -112,18 +112,18 @@ public class WishListResource {
             
             RetrieveWishListRsp rsp = new RetrieveWishListRsp(wishList);
             System.out.println("CHECK 3");
-            return Response.status(Response.Status.OK).entity(rsp).build();
+            return Response.status(Response.Status.OK).entity(rsp).header("Access-Control-Allow-Origin", "*").build();
 
             
         } catch (WishListNotFoundException | MemberNotFoundException ex) {
             System.err.println("***Error: " + ex.getMessage() );
             ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
-            return Response.status(Response.Status.BAD_REQUEST).entity(errorRsp).build();
+            return Response.status(Response.Status.BAD_REQUEST).entity(errorRsp).header("Access-Control-Allow-Origin", "*").build();
         } catch (Exception ex){
             System.err.println("***Error: " + ex.getMessage() );
             ex.printStackTrace();
             ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(errorRsp).build();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(errorRsp).header("Access-Control-Allow-Origin", "*").build();
         }       
     }
     
@@ -134,16 +134,16 @@ public class WishListResource {
             System.out.println("Entered add to wishlist method");
             wishListController.addProductToWishlist(userId, productId);            
             System.out.println("Product added to wishlist");
-            return Response.status(Response.Status.OK).build();
+            return Response.status(Response.Status.OK).header("Access-Control-Allow-Origin", "*").build();
             
         } catch (MemberNotFoundException | ProductNotFoundException ex) {
             System.err.println("***Error: " + ex.getMessage() );
             ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
-            return Response.status(Response.Status.BAD_REQUEST).entity(errorRsp).build();
+            return Response.status(Response.Status.BAD_REQUEST).entity(errorRsp).header("Access-Control-Allow-Origin", "*").build();
         }catch (Exception ex){
             System.err.println("***Error: " + ex.getMessage() );
             ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(errorRsp).build();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(errorRsp).header("Access-Control-Allow-Origin", "*").build();
         }  
     } 
     
@@ -151,15 +151,15 @@ public class WishListResource {
     public Response deleteFromWishlist(@QueryParam("userId") Long userId, @QueryParam("productId") Long ProductId){
         try{
             wishListController.removeProductFromWishlist(userId, ProductId);
-            return Response.status(Response.Status.OK).build();
+            return Response.status(Response.Status.OK).header("Access-Control-Allow-Origin", "*").build();
         } catch (MemberNotFoundException | ProductNotFoundException ex) {
             System.err.println("***Error: " + ex.getMessage() );
             ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
-            return Response.status(Response.Status.BAD_REQUEST).entity(errorRsp).build();
+            return Response.status(Response.Status.BAD_REQUEST).entity(errorRsp).header("Access-Control-Allow-Origin", "*").build();
         }catch (Exception ex){
             System.err.println("***Error: " + ex.getMessage() );
             ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(errorRsp).build();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(errorRsp).header("Access-Control-Allow-Origin", "*").build();
         }  
     }
     

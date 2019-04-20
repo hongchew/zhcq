@@ -80,10 +80,10 @@ public class MemberResource {
                 }
             }
             RetrieveAllMembersRsp retrieveAllMembersRsp = new RetrieveAllMembersRsp(list);
-            return Response.status(Response.Status.OK).entity(retrieveAllMembersRsp).build();
+            return Response.status(Response.Status.OK).entity(retrieveAllMembersRsp).header("Access-Control-Allow-Origin", "*").build();
         } catch (Exception ex) {
             ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(errorRsp).build();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(errorRsp).header("Access-Control-Allow-Origin", "*").build();
         }
     }
 
@@ -117,24 +117,24 @@ public class MemberResource {
                 
                 LoginRsp loginRsp = new LoginRsp(member);
                 System.out.println("CHECK2");
-                return Response.status(Response.Status.OK).entity(loginRsp).build();
+                return Response.status(Response.Status.OK).entity(loginRsp).header("Access-Control-Allow-Origin", "*").build();
             } catch (InvalidLoginCredentialException ex) {
                 System.out.println("*** INVALID LOGIN CREDS");
                 ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
                 System.out.println(ex.getMessage());
-                return Response.status(Response.Status.BAD_REQUEST).entity(errorRsp).build();
+                return Response.status(Response.Status.BAD_REQUEST).entity(errorRsp).header("Access-Control-Allow-Origin", "*").build();
                 
             }catch (Exception ex){
                 System.out.println("*** SOME OTHER ERROR");
                 ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
                 System.out.println(ex.getMessage());
-                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(errorRsp).build();
+                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(errorRsp).header("Access-Control-Allow-Origin", "*").build();
                 
             }
         } else {
             ErrorRsp errorRsp = new ErrorRsp("Invalid login request");
             System.out.println("error");
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(errorRsp).build();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(errorRsp).header("Access-Control-Allow-Origin", "*").build();
         }
     }
 
@@ -158,17 +158,17 @@ public class MemberResource {
                     saleTransaction.setMember(null);
                 }
                 CreateMemberRsp createMemberRsp = new CreateMemberRsp(newMember);
-                return Response.status(Response.Status.OK).entity(createMemberRsp).build();
+                return Response.status(Response.Status.OK).entity(createMemberRsp).header("Access-Control-Allow-Origin", "*").build();
             } catch (InputDataValidationException ex) {
                 ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
-                return Response.status(Response.Status.BAD_REQUEST).entity(errorRsp).build();
+                return Response.status(Response.Status.BAD_REQUEST).entity(errorRsp).header("Access-Control-Allow-Origin", "*").build();
             } catch (Exception ex) {
                 ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
-                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(errorRsp).build();
+                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(errorRsp).header("Access-Control-Allow-Origin", "*").build();
             }
         } else {
             ErrorRsp errorRsp = new ErrorRsp("Invalid create member request");
-            return Response.status(Response.Status.BAD_REQUEST).entity(errorRsp).build();
+            return Response.status(Response.Status.BAD_REQUEST).entity(errorRsp).header("Access-Control-Allow-Origin", "*").build();
         }
     }
 
@@ -184,10 +184,10 @@ public class MemberResource {
             member.setSalt(null);
             member.setPassword(null);
             RetrieveMemberRsp retrieveMemberRsp = new RetrieveMemberRsp(member);
-            return Response.status(Response.Status.OK).entity(retrieveMemberRsp).build();
+            return Response.status(Response.Status.OK).entity(retrieveMemberRsp).header("Access-Control-Allow-Origin", "*").build();
         } catch (MemberNotFoundException ex) {
             ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
-            return Response.status(Response.Status.BAD_REQUEST).entity(errorRsp).build();
+            return Response.status(Response.Status.BAD_REQUEST).entity(errorRsp).header("Access-Control-Allow-Origin", "*").build();
         }
     }
 
@@ -196,10 +196,10 @@ public class MemberResource {
     public Response deleteMember(@PathParam("id") Long id) {
         try {
             memberControllerLocal.deleteMember(id);
-            return Response.status(Response.Status.OK).build();
+            return Response.status(Response.Status.OK).header("Access-Control-Allow-Origin", "*").build();
         } catch (DeleteMemberException | MemberNotFoundException ex) {
             ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
-            return Response.status(Response.Status.BAD_REQUEST).entity(errorRsp).build();
+            return Response.status(Response.Status.BAD_REQUEST).entity(errorRsp).header("Access-Control-Allow-Origin", "*").build();
         }
     }
 
@@ -211,14 +211,14 @@ public class MemberResource {
         if (member != null) {
             try {
                 memberControllerLocal.updateMember(member);
-                return Response.status(Response.Status.OK).build();
+                return Response.status(Response.Status.OK).header("Access-Control-Allow-Origin", "*").build();
             } catch (InputDataValidationException | MemberNotFoundException | UpdateMemberException ex) {
                 ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
-                return Response.status(Response.Status.BAD_REQUEST).entity(errorRsp).build();
+                return Response.status(Response.Status.BAD_REQUEST).entity(errorRsp).header("Access-Control-Allow-Origin", "*").build();
             } 
         } else {
             ErrorRsp errorRsp = new ErrorRsp("Invalid update member request");
-            return Response.status(Response.Status.BAD_REQUEST).entity(errorRsp).build();
+            return Response.status(Response.Status.BAD_REQUEST).entity(errorRsp).header("Access-Control-Allow-Origin", "*").build();
         }
     }
 

@@ -66,7 +66,7 @@ public class SaleTransactionResource {
             }
         }
         RetrieveSalesTransactionByUserIdRsp rsp = new RetrieveSalesTransactionByUserIdRsp(txns);
-        return Response.status(Response.Status.OK).entity(rsp).build();
+        return Response.status(Response.Status.OK).entity(rsp).header("Access-Control-Allow-Origin", "*").build();
         
     }
     

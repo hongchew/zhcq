@@ -94,17 +94,17 @@ public class ShoppingCartResource {
             }
 
             RetrieveShoppingCartRsp cartRsp = new RetrieveShoppingCartRsp(cart);
-            return Response.status(Response.Status.OK).entity(cartRsp).build();
+            return Response.status(Response.Status.OK).entity(cartRsp).header("Access-Control-Allow-Origin", "*").build();
 
         } catch (ShoppingCartNotFoundException ex) {
             System.err.println(ex.getMessage());
             ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
-            return Response.status(Response.Status.BAD_REQUEST).entity(errorRsp).build();
+            return Response.status(Response.Status.BAD_REQUEST).entity(errorRsp).header("Access-Control-Allow-Origin", "*").build();
         } catch (Exception ex) {
             System.err.println(ex.getMessage());
             ex.printStackTrace();
             ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(errorRsp).build();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(errorRsp).header("Access-Control-Allow-Origin", "*").build();
         }
     }
 
@@ -114,15 +114,15 @@ public class ShoppingCartResource {
 
         try {
             checkoutController.addToCart(cartId, pdtId, quantity);
-            return Response.status(Response.Status.OK).build();
+            return Response.status(Response.Status.OK).header("Access-Control-Allow-Origin", "*").build();
         } catch (ShoppingCartNotFoundException | ProductNotFoundException ex) {
             System.err.println("***Error: " + ex.getMessage());
             ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
-            return Response.status(Response.Status.BAD_REQUEST).entity(errorRsp).build();
+            return Response.status(Response.Status.BAD_REQUEST).entity(errorRsp).header("Access-Control-Allow-Origin", "*").build();
         } catch (Exception ex) {
             System.err.println("***Error: " + ex.getMessage());
             ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(errorRsp).build();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(errorRsp).header("Access-Control-Allow-Origin", "*").build();
         }
 
     }
@@ -132,14 +132,14 @@ public class ShoppingCartResource {
 
         try {
             checkoutController.removeFromCart(cartId, pdtId);
-            return Response.status(Response.Status.OK).build();
+            return Response.status(Response.Status.OK).header("Access-Control-Allow-Origin", "*").build();
         } catch (ShoppingCartNotFoundException | ProductNotFoundException ex) {
             ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
-            return Response.status(Response.Status.BAD_REQUEST).entity(errorRsp).build();
+            return Response.status(Response.Status.BAD_REQUEST).entity(errorRsp).header("Access-Control-Allow-Origin", "*").build();
         } catch (Exception ex) {
             System.err.println("***Error: " + ex.getMessage());
             ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(errorRsp).build();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(errorRsp).header("Access-Control-Allow-Origin", "*").build();
         }
     }
 
@@ -150,14 +150,14 @@ public class ShoppingCartResource {
 
         try {
             checkoutController.updateCart(cartId, productId, quantity);
-            return Response.status(Response.Status.OK).build();
+            return Response.status(Response.Status.OK).header("Access-Control-Allow-Origin", "*").build();
         } catch (ShoppingCartNotFoundException | ProductNotFoundException ex) {
             ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
-            return Response.status(Response.Status.BAD_REQUEST).entity(errorRsp).build();
+            return Response.status(Response.Status.BAD_REQUEST).entity(errorRsp).header("Access-Control-Allow-Origin", "*").build();
         } catch (Exception ex) {
             System.err.println("***Error: " + ex.getMessage());
             ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(errorRsp).build();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(errorRsp).header("Access-Control-Allow-Origin", "*").build();
         }
     }
 
@@ -189,15 +189,15 @@ public class ShoppingCartResource {
 
             CheckoutRsp checkoutRsp = new CheckoutRsp(txn);
 
-            return Response.status(Response.Status.OK).entity(checkoutRsp).build();
+            return Response.status(Response.Status.OK).entity(checkoutRsp).header("Access-Control-Allow-Origin", "*").build();
 
         } catch (ShoppingCartNotFoundException ex) {
             ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
-            return Response.status(Response.Status.BAD_REQUEST).entity(errorRsp).build();
+            return Response.status(Response.Status.BAD_REQUEST).entity(errorRsp).header("Access-Control-Allow-Origin", "*").build();
         } catch (Exception ex) {
             System.err.println("***Error: " + ex.getMessage());
             ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(errorRsp).build();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(errorRsp).header("Access-Control-Allow-Origin", "*").build();
         }
 
     }
@@ -234,15 +234,15 @@ public class ShoppingCartResource {
 
             CheckoutRsp checkoutRsp = new CheckoutRsp(txn);
 
-            return Response.status(Response.Status.OK).entity(checkoutRsp).build();
+            return Response.status(Response.Status.OK).entity(checkoutRsp).header("Access-Control-Allow-Origin", "*").build();
 
         } catch (ShoppingCartNotFoundException ex) {
             ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
-            return Response.status(Response.Status.BAD_REQUEST).entity(errorRsp).build();
+            return Response.status(Response.Status.BAD_REQUEST).entity(errorRsp).header("Access-Control-Allow-Origin", "*").build();
         } catch (Exception ex) {
             System.err.println("***Error: " + ex.getMessage());
             ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(errorRsp).build();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(errorRsp).header("Access-Control-Allow-Origin", "*").build();
         }
 
     }

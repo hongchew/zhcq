@@ -91,13 +91,13 @@ public class PromotionResource {
             RetrieveAllPromotionRsp rsp = new RetrieveAllPromotionRsp(promotions);
             
             System.out.println("Retrieve All Promotion Rsp created !");
-            return Response.status(Status.OK).entity(rsp).build();
+            return Response.status(Status.OK).entity(rsp).header("Access-Control-Allow-Origin", "*").build();
             
         } catch (Exception ex){
             
             ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
             
-            return Response.status(Status.INTERNAL_SERVER_ERROR).entity(errorRsp).build();
+            return Response.status(Status.INTERNAL_SERVER_ERROR).entity(errorRsp).header("Access-Control-Allow-Origin", "*").build();
         }
         
         
@@ -123,10 +123,10 @@ public class PromotionResource {
             }
             
             RetrievePromotionByIdRsp rsp = new RetrievePromotionByIdRsp(promo) ;
-            return Response.status(Response.Status.OK).entity(rsp).build();
+            return Response.status(Response.Status.OK).entity(rsp).header("Access-Control-Allow-Origin", "*").build();
             
         } catch (PromotionNotFoundException ex) {
-            return Response.status(Response.Status.BAD_REQUEST).build();
+            return Response.status(Response.Status.BAD_REQUEST).header("Access-Control-Allow-Origin", "*").build();
         }
         
     }

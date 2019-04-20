@@ -102,13 +102,13 @@ public class ProductResource {
             
             RetrieveAllProductsRsp retrieveAllProductsRsp  = new RetrieveAllProductsRsp(distinctProducts);
         
-            return Response.status(Status.OK).entity(retrieveAllProductsRsp).build();
+            return Response.status(Status.OK).entity(retrieveAllProductsRsp).header("Access-Control-Allow-Origin", "*").build();
         }
         catch(Exception ex)
         {
             ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
             
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(errorRsp).build();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(errorRsp).header("Access-Control-Allow-Origin", "*").build();
         }
         
     }
@@ -150,13 +150,13 @@ public class ProductResource {
             
             RetrieveAllUniqueProductsRsp retrieveAllUniqueProductsRsp  = new RetrieveAllUniqueProductsRsp(allUniqueProducts);
         
-            return Response.status(Status.OK).entity(retrieveAllUniqueProductsRsp).build();
+            return Response.status(Status.OK).entity(retrieveAllUniqueProductsRsp).header("Access-Control-Allow-Origin", "*").build();
         }
         catch(Exception ex)
         {
             ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
             
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(errorRsp).build();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(errorRsp).header("Access-Control-Allow-Origin", "*").build();
         }
         
     }
@@ -276,11 +276,11 @@ public class ProductResource {
             RetrieveProductByIdRsp retrieveProductByIdRsp = new RetrieveProductByIdRsp(product, diffColours, diffSizes, productSuggestions); 
             System.out.println("New Object created!");
             
-            return Response.status(Status.OK).entity(retrieveProductByIdRsp).build();
+            return Response.status(Status.OK).entity(retrieveProductByIdRsp).header("Access-Control-Allow-Origin", "*").build();
             
         } catch (ProductNotFoundException ex){
             ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
-            return Response.status(Status.BAD_REQUEST).entity(errorRsp).build();
+            return Response.status(Status.BAD_REQUEST).entity(errorRsp).header("Access-Control-Allow-Origin", "*").build();
         }
     }
     
@@ -338,12 +338,12 @@ public class ProductResource {
             
             RetrieveProductsByCatRsp retrieveProductByCatRsp = new RetrieveProductsByCatRsp(filteredCatproducts);
             
-            return Response.status(Status.OK).entity(retrieveProductByCatRsp).build();
+            return Response.status(Status.OK).entity(retrieveProductByCatRsp).header("Access-Control-Allow-Origin", "*").build();
             
         } catch (CategoryNotFoundException ex){
             System.out.println("ERROR CAUGHT !!!!!!");
             ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
-            return Response.status(Status.INTERNAL_SERVER_ERROR).entity(errorRsp).build();
+            return Response.status(Status.INTERNAL_SERVER_ERROR).entity(errorRsp).header("Access-Control-Allow-Origin", "*").build();
         }
     }
     

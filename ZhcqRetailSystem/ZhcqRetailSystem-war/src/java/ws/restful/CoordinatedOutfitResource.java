@@ -82,13 +82,13 @@ public class CoordinatedOutfitResource {
             
             
             RetrieveAllOutfitsRsp retrieveAllOutfitsRsp = new RetrieveAllOutfitsRsp(outfits);
-            return Response.status(Status.OK).entity(retrieveAllOutfitsRsp).build();
+            return Response.status(Status.OK).entity(retrieveAllOutfitsRsp).header("Access-Control-Allow-Origin", "*").build();
             
         } catch (Exception ex){
             
             ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
             
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(errorRsp).build();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(errorRsp).header("Access-Control-Allow-Origin", "*").build();
         }
         
     }
@@ -125,11 +125,11 @@ public class CoordinatedOutfitResource {
             
             
             RetrieveOutfitByIdRsp retrieveOutfitByIdRsp = new RetrieveOutfitByIdRsp(outfit);
-            return Response.status(Status.OK).entity(retrieveOutfitByIdRsp).build();
+            return Response.status(Status.OK).entity(retrieveOutfitByIdRsp).header("Access-Control-Allow-Origin", "*").build();
             
         } catch (Exception ex){
             ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
-            return Response.status(Status.BAD_REQUEST).entity(errorRsp).build();
+            return Response.status(Status.BAD_REQUEST).entity(errorRsp).header("Access-Control-Allow-Origin", "*").build();
         }
     }
     

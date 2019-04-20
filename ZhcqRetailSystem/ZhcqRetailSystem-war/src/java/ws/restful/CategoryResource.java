@@ -67,7 +67,7 @@ public class CategoryResource
                 System.out.println(cat.getCategoryName());
             }
            
-            return Response.status(Status.OK).entity(retrieveAllCategoriesRsp).build();
+            return Response.status(Status.OK).entity(retrieveAllCategoriesRsp).header("Access-Control-Allow-Origin", "*").build();
             
         }
         catch(Exception ex)
@@ -75,7 +75,7 @@ public class CategoryResource
             System.out.println("Entered Error");
             ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
             
-            return Response.status(Status.INTERNAL_SERVER_ERROR).entity(errorRsp).build();
+            return Response.status(Status.INTERNAL_SERVER_ERROR).entity(errorRsp).header("Access-Control-Allow-Origin", "*").build();
         }
     }
     
@@ -112,10 +112,10 @@ public class CategoryResource
                 }
             }
             RetrieveCategoyByIdRsp retrieveCategoyByIdRsp = new RetrieveCategoyByIdRsp(category);
-            return Response.status(Status.OK).entity(retrieveCategoyByIdRsp).build();
+            return Response.status(Status.OK).entity(retrieveCategoyByIdRsp).header("Access-Control-Allow-Origin", "*").build();
         } catch (Exception ex){
             ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
-            return Response.status(Status.BAD_REQUEST).entity(errorRsp).build();
+            return Response.status(Status.BAD_REQUEST).entity(errorRsp).header("Access-Control-Allow-Origin", "*").build();
         }
         
     }

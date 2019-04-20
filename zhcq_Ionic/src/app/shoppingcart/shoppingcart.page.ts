@@ -21,7 +21,7 @@ import { MemberService } from '../services/member.service';
 export class ShoppingcartPage implements OnInit {
   errorMessage: string;
   member: Member;
-  products: ProductEntity[];
+  products = new Array<ProductEntity>();
   cart: ShoppingCart;
   quantity: number[];
   subtotal: number[];

@@ -17,7 +17,7 @@ export class AccountDetailsPage implements OnInit {
   member: Member;
   memberId: number;
   isLogin: boolean;
-  transactions: SaleTransaction[];
+  transactions = new Array<SaleTransaction>();
 
   constructor(private memberService: MemberService, private storage: Storage,
     private alertController: AlertController, private saleTransactionService: SalestransactionService,

@@ -54,7 +54,7 @@ export class ProductDetailsPage implements OnInit {
 
   // For adding into cart
   member: Member;
-  cart: ShoppingCart;
+  cart = new ShoppingCart();
   cartId: number ;
   quantity: number;
 
@@ -75,6 +75,7 @@ export class ProductDetailsPage implements OnInit {
 
       this.onPromotion = false;
       console.log("Promotion Status: " + this.onPromotion);
+      this.selectedProduct = new ProductEntity();
 
       storage.get('currentCustomer').then((data) => {
         this.member = data;
@@ -93,14 +94,15 @@ export class ProductDetailsPage implements OnInit {
         this.isLogin = data;
         console.log('lOGIN Status: ' + this.isLogin );
         console.log('Member: ' + this.member);
-        if (this.isLogin) {
-          this.cartId = this.member.shoppingCart.cartId;
-          console.log("cartID = " + this.cartId);
-        }
+        // if (this.isLogin) {
+        //   this.cartId = this.member.shoppingCart.cartId;
+        //   console.log("cartID = " + this.cartId);
+        // }
       });
       this.quantity = 1;
 
      }
+
 
   ngOnInit() {
     this.id = parseInt(this.activatedRoute.snapshot.paramMap.get('id'));

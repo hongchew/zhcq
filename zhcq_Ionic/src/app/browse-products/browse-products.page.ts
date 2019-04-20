@@ -18,8 +18,8 @@ export class BrowseProductsPage implements OnInit {
   public searchControl: FormControl;
 
   errorMessage = '';
-  retrievedProducts: ProductEntity[];
-  products: ProductEntity[];
+  retrievedProducts: Array<ProductEntity> = [];
+  products:  Array<ProductEntity> = [];
   catId: number;
   category = new Category();
 
@@ -36,6 +36,7 @@ export class BrowseProductsPage implements OnInit {
     this.catId = parseInt(this.activatedRoute.snapshot.paramMap.get('catId'));
     console.log('CATEGORY ID IS: ' + this.catId);
     if (!isNaN(this.catId)) { // Localhost:8100/browse-products/id
+
       this.categoryService.retrieveCategoryById(this.catId).subscribe(
         response => {
           this.category = response.category;
@@ -47,10 +48,12 @@ export class BrowseProductsPage implements OnInit {
           this.presentAlert(this.errorMessage.substring(37));
         }
       );
+
       this.productService.retrieveProductByCat(this.catId).subscribe(
         response => {
 
           this.retrievedProducts = response.products ;
+          console.log('retrieved Product length: ' + this.retrievedProducts.length);
           this.products = this.retrievedProducts;
 
           this.searchControl.valueChanges.pipe(debounceTime(700)).subscribe(search => {
@@ -60,13 +63,15 @@ export class BrowseProductsPage implements OnInit {
         },
         error => {
           this.errorMessage = error;
+          this.presentAlert(this.errorMessage.substring(37));
+
         }
       );
     } else { // Localhost:8100/browse-products
       this.productService.retrieveAllUniqueProducts().subscribe(
         response => {
-
           this.retrievedProducts = response.products ;
+          console.log('retrieved Product length: ' + this.retrievedProducts.length);
           this.products = this.retrievedProducts;
 
           this.searchControl.valueChanges.pipe(debounceTime(700)).subscribe(search => {
@@ -84,8 +89,9 @@ export class BrowseProductsPage implements OnInit {
   }
 
   setFilteredItems(searchTerm: string) {
-
-    this.products = this.filterItems(searchTerm);
+    if (searchTerm != null) {
+      this.products = this.filterItems(searchTerm);
+    }
   }
 
   filterItems(searchTerm: string) {

@@ -18,70 +18,85 @@ export class ShoppingCartService {
   constructor(private httpClient: HttpClient) { }
 
 
-  retrieveShoppingCart(userId : number): Observable<any>
+  retrieveShoppingCart(userId: number): Observable<any>
 	{
 		return this.httpClient.get<any>(this.baseUrl + '/retrieveShoppingCart?userId=' + userId).pipe
 		(
 			catchError(this.handleError)
 		)
   }
-  
-  addToCart(cartId: number, productId : number, quantity: number): Observable<any>
+
+  addToCart(cartId: number, productId: number, quantity: number): Observable<any>
     {
-        return this.httpClient.post<any>(this.baseUrl + '/addToCart?cartId=' + cartId + '&productId=' + productId + "&quantity=" +quantity, null, httpOptions).pipe
+        
+        return this.httpClient.post<any>(this.baseUrl + '/addToCart?cartId=' + cartId + '&productId=' + productId + "&quantity=" +quantity, null).pipe
         (
             catchError(this.handleError)
         );
     }
 
     updateCart(cartId: number, productId : number, quantity: number): Observable<any> {
-        return this.httpClient.post<any>(this.baseUrl + '/updateCart?cartId=' + cartId + '&productId=' + productId + "&quantity=" +quantity, null, httpOptions).pipe
+        // var headers = new HttpHeaders();
+        // headers.append('Access-Control-Allow-Origin', '*');
+
+        return this.httpClient.post<any>(this.baseUrl + '/updateCart?cartId=' + cartId + '&productId=' + productId + "&quantity=" +quantity, null).pipe
         (
             catchError(this.handleError)
         );
     }
 
-    removeFromCart(cartId:number, productId:number): Observable<any>
+    removeFromCart(cartId: number, productId: number): Observable<any>
     {
-        return this.httpClient.delete<any>(this.baseUrl + '?cartId=' + cartId + '&productId='+ productId).pipe
+        // const headers = new HttpHeaders();
+        // headers.append('Access-Control-Allow-Origin', '*');
+        // headers.append('Access-Control-Allow-Methods',  'GET, HEAD, POST, PUT, DELETE, CONNECT, OPTIONS, TRACE, PATCH');
+        // headers.append('Access-Control-Allow-Headers', 'origin, x-requested-with, content-type' );
+
+        return this.httpClient.delete<any>(this.baseUrl + '?cartId=' + cartId + '&productId=' + productId).pipe
         (
             catchError(this.handleError)
         );
-    } 
+        // return this.httpClient.delete<any>(this.baseUrl + '?cartId=' + cartId + '&productId=' + productId).pipe
+        // (
+        //     catchError(this.handleError)
+        // );
+    }
 
     checkout(cartId: number): Observable<any>
     {
-        return this.httpClient.post<any>(this.baseUrl + '/checkout?cartId=' + cartId, null, httpOptions).pipe
+        // var headers = new HttpHeaders();
+        // headers.append('Access-Control-Allow-Origin', '*');
+
+        return this.httpClient.post<any>(this.baseUrl + '/checkout?cartId=' + cartId, null).pipe
         (
             catchError(this.handleError)
         );
-    } 
+    }
 
     checkoutWithPoints(cartId: number): Observable<any>
     {
-        return this.httpClient.post<any>(this.baseUrl + '/checkoutWithPoints?cartId=' + cartId, null, httpOptions).pipe
+        // var headers = new HttpHeaders();
+        // headers.append('Access-Control-Allow-Origin', '*');
+
+        return this.httpClient.post<any>(this.baseUrl + '/checkoutWithPoints?cartId=' + cartId, null).pipe
         (
             catchError(this.handleError)
         );
-    } 
+    }
 
 
-    
-    private handleError(error: HttpErrorResponse)
-	{
-		let errorMessage: string = "";
-		
-		if (error.error instanceof ErrorEvent) 
-		{		
-			errorMessage = "An unknown error has occurred: " + error.error.message;
-		} 
-		else 
-		{		
-			errorMessage = "A HTTP error has occurred: " + `HTTP ${error.status}: ${error.error.message}`;
-		}
-		
-		console.error(errorMessage);
-		
-		return throwError(errorMessage);		
-	}
+    private handleError(error: HttpErrorResponse) {
+        if (error.error !== null) {
+            let errorMessage: string = '';
+
+            if (error.error instanceof ErrorEvent)
+            {
+                errorMessage = 'An unknown error has occurred: ' + error.error.message;
+            } else {
+                errorMessage = 'A HTTP error has occurred: ' + `HTTP ${error.status}: ${error.error.message}`;
+            }
+            console.error(errorMessage);
+            return throwError(errorMessage);
+        }
+    }
 }

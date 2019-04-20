@@ -32,19 +32,17 @@ export class PromotionService
 
 
     private handleError(error: HttpErrorResponse)
-	{
-		let errorMessage: string = "";
-		
-		if (error.error instanceof ErrorEvent) {		
-			errorMessage = 'An unknown error has occurred: ' + error.error.message;
-		} 
-		else 
-		{		
-			errorMessage = 'A HTTP error has occurred: ' + `HTTP ${error.status}: ${error.error.message}`;
-		}
-		
-		console.error(errorMessage);
-		
-		return throwError(errorMessage);
-	}
+    {
+        if (error.error !== null) {
+            let errorMessage: string = '';
+
+            if (error.error instanceof ErrorEvent) {
+                errorMessage = 'An unknown error has occurred: ' + error.error.message;
+            } else {
+                errorMessage = 'A HTTP error has occurred: ' + `HTTP ${error.status}: ${error.error.message}`;
+            }
+            console.error(errorMessage);
+            return throwError(errorMessage);
+        }
+    }
 }

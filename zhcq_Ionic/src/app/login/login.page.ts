@@ -34,7 +34,7 @@ export class LoginPage implements OnInit {
         console.log("TEST FOR LOGGED IN ");
         console.log("Member = " + this.member);
       },
-      error=> {
+      error => {
         this.presentAlert(error);
       }
     );
@@ -42,7 +42,7 @@ export class LoginPage implements OnInit {
 
   async presentAlert(message: string) {
     const alert = await this.alertController.create({
-      header: "ERROR: " + message.substring(37),
+      header: "ERROR: " + message,
       buttons: ['OK']
     });
     await alert.present();

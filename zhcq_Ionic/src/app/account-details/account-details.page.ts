@@ -13,7 +13,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./account-details.page.scss'],
 })
 export class AccountDetailsPage implements OnInit {
-  errorMessage: string;
+  errorMessage = '';
   member: Member;
   memberId: number;
   isLogin: boolean;

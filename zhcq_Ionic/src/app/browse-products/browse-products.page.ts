@@ -17,11 +17,11 @@ import { Category } from '../entities/category';
 export class BrowseProductsPage implements OnInit {
   public searchControl: FormControl;
 
-  errorMessage: string;
+  errorMessage = '';
   retrievedProducts: ProductEntity[];
   products: ProductEntity[];
   catId: number;
-  category: Category;
+  category = new Category();
 
   constructor(private productService: ProductService, 
     private activatedRoute: ActivatedRoute, private alertController: AlertController, private categoryService: CategoryService) {

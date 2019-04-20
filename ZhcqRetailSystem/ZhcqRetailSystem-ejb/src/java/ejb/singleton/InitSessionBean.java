@@ -416,6 +416,7 @@ public class InitSessionBean {
             productIds.add(product3.getProductId());    
             productIds.add(product4.getProductId());
             productIds.add(product5.getProductId());
+            productIds.add(product12.getProductId());
             promotionControllerLocal.createNewPromotion(promotion, productIds);
             
             promotion = new Promotion("B L A C K  F R I D A Y", new BigDecimal(0.25), new Date(), new Date(119,4,17));

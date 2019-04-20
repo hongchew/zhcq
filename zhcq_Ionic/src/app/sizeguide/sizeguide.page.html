@@ -3,11 +3,11 @@
     <ion-button color="light" size="small" float-right (click)="closeModal()"><ion-icon ios="ios-close" md="md-close"></ion-icon></ion-button>
     <ion-img src="/assets/size-guide.png"></ion-img>
 
-    <div *ngIf="products.length==0" style="text-align: center">
-        <h4>Make Your First Purchase to get Sizing Suggestions!</h4>
+    <div *ngIf="products.length==0" style="text-align: center" >
+        <h6>Make Your First {{ category }} Purchase to get Future Sizing Suggestions!</h6>
     </div>
     <div *ngIf="products.length!=0">
-        <h5><b>Similar Products Purchased Before!</b></h5>
+        <h5><b>{{ category }} You Purchased Before<ion-icon ios="ios-arrow-round-down" md="md-arrow-round-down"></ion-icon></b></h5>
         <!-- <ion-row *ngFor="let txn of transactions" class="activated"> -->
             <!-- <ion-col> -->
             

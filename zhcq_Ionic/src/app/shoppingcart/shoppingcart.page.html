@@ -63,7 +63,7 @@
          SGD <s>{{ subtotal[products.indexOf(product)] }}</s>&nbsp;<strong style="color: crimson">{{ subtotal[products.indexOf(product)]*(1-product.promotion.discountRate) }}</strong><ion-icon name="pricetags" style="color: crimson"></ion-icon>
         </label> 
         <br><br>
-        <ion-button (click)="removeProduct(product)"  fill="outline" color="dark"  size="small" >Remove Item
+        <ion-button (click)="removeProduct(product)" color="light"  size="small"> <ion-icon name="trash"></ion-icon> Remove
         </ion-button>
       </ion-col>
     </ion-row>

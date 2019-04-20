@@ -11,7 +11,7 @@ import { AlertController } from '@ionic/angular';
 })
 export class PromotionalProductsPage implements OnInit {
 
-  errorMessage: string;
+  errorMessage = '';
   public promotions: Promotion[];
   promotionId: number;
 

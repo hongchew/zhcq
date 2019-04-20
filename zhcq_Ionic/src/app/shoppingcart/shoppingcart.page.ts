@@ -19,7 +19,7 @@ import { MemberService } from '../services/member.service';
   styleUrls: ['./shoppingcart.page.scss'],
 })
 export class ShoppingcartPage implements OnInit {
-  errorMessage: string;
+  errorMessage = '';
   member: Member;
   products = new Array<ProductEntity>();
   cart: ShoppingCart;

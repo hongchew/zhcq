@@ -14,7 +14,7 @@ import { Category } from '../entities/category';
   styleUrls: ['./sizeguide.page.scss'],
 })
 export class SizeguidePage implements OnInit {
-  errorMessage: string;
+  errorMessage = '';
   member: Member;
   memberId: number;
   transactions: SaleTransaction[];

@@ -21,7 +21,7 @@ import { Category } from '../entities/category';
 })
 export class ProductDetailsPage implements OnInit {
 
-  errorMessage: string;
+  errorMessage = '';
   id: number;
   selectedProduct: ProductEntity;
   diffColours: ProductEntity[];

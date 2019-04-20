@@ -47,7 +47,7 @@ export class AppComponent {
 
   public categories: Category[];
   public outfits: CoordinatedOutfit[];
-  public errorMessage: string;
+  errorMessage = '';
   public isLogin: boolean;
   public member: Member;
 

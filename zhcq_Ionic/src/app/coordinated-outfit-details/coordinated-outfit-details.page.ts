@@ -12,7 +12,7 @@ import { CoordinatedOutfit } from '../entities/outfit';
 
 export class CoordinatedOutfitDetailsPage implements OnInit {
 
-  errorMessage: string;
+  errorMessage = '';
   outfitId: number;
   selectedOutfit = new CoordinatedOutfit();
 

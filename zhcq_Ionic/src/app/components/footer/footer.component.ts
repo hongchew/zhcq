@@ -18,9 +18,10 @@ export class FooterComponent implements OnInit {
   loggedIn: boolean;
   member: Member;
   cart: ShoppingCart;
-  wishList: WishList
+  wishList: WishList;
 
-  constructor(private cartService: ShoppingCartService, wishListService: WishListService, private alertController: AlertController, private storage: Storage) {
+  constructor(private cartService: ShoppingCartService, wishListService: WishListService, 
+    private alertController: AlertController, private storage: Storage) {
     storage.get('currentCustomer').then((data) => {
       this.member = data;
     });

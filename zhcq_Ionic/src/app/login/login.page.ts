@@ -18,7 +18,7 @@ export class LoginPage implements OnInit {
   member: Member;
 
   constructor(private memberService: MemberService, private alertController: AlertController,
-    private router : Router, private storage: Storage) {
+    private router: Router, private storage: Storage) {
   }
 
   ngOnInit() {

@@ -11,7 +11,7 @@ import { AlertController } from '@ionic/angular';
 })
 export class CoordinatedOutfitsPage implements OnInit {
 
-  errorMessage: string;
+  errorMessage = '';
   outfits: CoordinatedOutfit[];
 
   constructor(private outfitService: OutfitService, private activatedRoute: ActivatedRoute, private alertController: AlertController) { }

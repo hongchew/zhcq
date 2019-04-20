@@ -14,7 +14,7 @@ import { Router } from '@angular/router';
 })
 export class AccountDetailsPage implements OnInit {
   errorMessage = '';
-  member: Member;
+  member = new Member();
   memberId: number;
   isLogin: boolean;
   transactions = new Array<SaleTransaction>();
@@ -34,9 +34,6 @@ export class AccountDetailsPage implements OnInit {
       this.retrieveSalesTransactions();
       this.getMember();
     });
-  }
-
-  foo() {
   }
 
 

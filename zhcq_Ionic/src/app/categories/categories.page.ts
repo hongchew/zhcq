@@ -12,7 +12,7 @@ import { Category } from '../entities/category';
 })
 export class CategoriesPage implements OnInit {
   public searchControl: FormControl;
-  errorMessage: string;
+  errorMessage = '';
   categories: Category[];
 
   constructor(private categoryService: CategoryService, private activatedRoute: ActivatedRoute, private alertController: AlertController ) {

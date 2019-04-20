@@ -14,8 +14,7 @@ export class CoordinatedOutfitDetailsPage implements OnInit {
 
   errorMessage: string;
   outfitId: number;
-  selectedOutfit: CoordinatedOutfit;
-
+  selectedOutfit = new CoordinatedOutfit();
 
   constructor(private outfitService: OutfitService, private activatedRoute: ActivatedRoute, private alertController: AlertController) { }
 

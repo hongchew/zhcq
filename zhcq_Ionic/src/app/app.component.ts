@@ -61,7 +61,13 @@ export class AppComponent {
     private alertController: AlertController,
     private outfitService: OutfitService
   ) {
-    this.initializeApp();
+    storage.get('currentCustomer').then((data) => {
+      this.member = data;
+      this.initializeApp();
+    });
+    storage.get('isLogin').then((data) => {
+      this.isLogin = data;
+    });
 
     this.categoryService.retrieveAllCategories().subscribe(
       response => {
@@ -71,13 +77,6 @@ export class AppComponent {
         this.errorMessage = error;
       }
     );
-    storage.get('isLogin').then((data) => {
-      this.isLogin = data;
-    });
-    storage.get('currentCustomer').then((data) => {
-      this.member = data;
-    });
-
     this.outfitService.retrieveAllOutfits().subscribe(
       response => {
         console.log(response);
@@ -90,12 +89,10 @@ export class AppComponent {
     );
   }
 
-  foo() {
-  }
 
-  ngOnInit(){
-    this.getMember();
-  }
+  // ngOnInit() {
+  //   this.getMember();
+  // }
 
   initializeApp() {
     this.platform.ready().then(() => {

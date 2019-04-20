@@ -26,10 +26,12 @@ export class BrowseProductsPage implements OnInit {
   constructor(private productService: ProductService, 
     private activatedRoute: ActivatedRoute, private alertController: AlertController, private categoryService: CategoryService) {
     this.searchControl = new FormControl();
+    this.errorMessage = '';
 
     // this.images = this.navParams.get('images'); //get product image URIs
     // this.grid = Array(Math.ceil(this.images.length/2)); 
   }
+
   ngOnInit() {
     this.catId = parseInt(this.activatedRoute.snapshot.paramMap.get('catId'));
     console.log('CATEGORY ID IS: ' + this.catId);

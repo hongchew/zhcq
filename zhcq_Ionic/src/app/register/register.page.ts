@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Member } from '../entities/member';
 import { MemberService } from '../services/member.service';
 import { AlertController } from '@ionic/angular';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -21,7 +22,7 @@ export class RegisterPage implements OnInit {
 
   newMember: Member;
 
-  constructor(private memberService: MemberService, public alertController: AlertController) { }
+  constructor(private memberService: MemberService, public alertController: AlertController, private router: Router) { }
 
   ngOnInit() {
   }
@@ -38,7 +39,7 @@ export class RegisterPage implements OnInit {
       this.memberService.createMember(this.firstName, this.lastName, this.username, this.password, this.email).subscribe(
         response => {
           this.newMember = response.member;
-          this.presentAlert("Your account has been created, " + this.firstName + " " + this.lastName + "!");
+          this.presentAlertOK("Your account has been created, " + this.firstName + " " + this.lastName + "!");
         },
         error => {
           this.presentAlert(error.substring(37));
@@ -53,6 +54,15 @@ export class RegisterPage implements OnInit {
       buttons: ['OK']
     });
     await alert.present();
+  }
+
+  async presentAlertOK(message: string) {
+    const alert = await this.alertController.create({
+      header: message,
+      buttons: ['OK']
+    });
+    await alert.present();
+    this.router.navigate(['/home']);
   }
 
 

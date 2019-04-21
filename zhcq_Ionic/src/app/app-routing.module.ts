@@ -26,7 +26,8 @@ const routes: Routes = [
   { path: 'wishlist', loadChildren: './wishlist/wishlist.module#WishlistPageModule' },
   { path: 'account-details', loadChildren: './account-details/account-details.module#AccountDetailsPageModule' },
   { path: 'categories', loadChildren: './categories/categories.module#CategoriesPageModule' },
-  { path: 'promotion-page', loadChildren: './promotion-page/promotion-page.module#PromotionPagePageModule' }
+  { path: 'promotion-page/:id', loadChildren: './promotion-page/promotion-page.module#PromotionPagePageModule' }
+
 ];
 
 @NgModule({

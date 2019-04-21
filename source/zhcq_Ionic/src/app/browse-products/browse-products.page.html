@@ -2,10 +2,10 @@
 <app-header></app-header>
 
 <ion-content>
-  <div *ngIf='errorMessage' class="errorText">
+  <div *ngIf='errorMessage.length != 0' class="errorText">
     {{errorMessage}}
   </div>
-  <div *ngIf='!errorMessage'>
+  <div *ngIf='errorMessage.length == 0'>
     <ion-searchbar animated [formControl]="searchControl"></ion-searchbar>
 
     <h2 *ngIf='!catId' text-center style="font-weight: bold">S &nbsp;&nbsp;H &nbsp;&nbsp;O &nbsp;&nbsp;P &nbsp;&nbsp;&nbsp; A&nbsp;&nbsp;L&nbsp;&nbsp;L</h2>

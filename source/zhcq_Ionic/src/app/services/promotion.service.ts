@@ -29,9 +29,9 @@ export class PromotionService
         )
     }
 
-    retrievePromotionByPromotionId(id: number): Observable<any>
+    retrievePromotionById(id: number): Observable<any>
     {
-        return this.httpClient.get<any>(this.baseUrl + '/retrievePromotionByPromotionId/' + id).pipe
+        return this.httpClient.get<any>(this.baseUrl + '/retrievePromotionById/' + id).pipe
         (
             catchError(this.handleError)
         )

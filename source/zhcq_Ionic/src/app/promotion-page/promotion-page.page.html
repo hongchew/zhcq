@@ -4,7 +4,8 @@
   <div *ngIf='errorMessage' class="errorText">
     {{errorMessage}}
   </div>
-  
+  <div *ngIf='errorMessage.length == 0'>
+    <ion-searchbar animated [formControl]="searchControl"></ion-searchbar>
     
     <ion-grid> 
       <ion-row style="height: 5em">
@@ -16,7 +17,7 @@
         <ion-col style="text-align: center" class="promotionDetails">
             <b>{{promotion.discountRate*100}}% off selected items!</b>
             <br/>
-              Ends {{ promotion.endDate.substring(0,10) }} {{ promotion.endDate.substring(11,16) }}
+              Ends {{ endDate.substring(0,10) }} {{ endDate.substring(11,16) }}
         </ion-col>
       </ion-row>
       <ion-row>
@@ -30,7 +31,7 @@
    <!-- <ion-infinite-scroll (ionInfinite)="loadMoreProducts($event)">
       <ion-infinite-scroll-content></ion-infinite-scroll-content>
     </ion-infinite-scroll>  -->
-  
+  </div>
 </ion-content>
 <app-footer></app-footer>
 

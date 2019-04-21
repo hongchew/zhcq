@@ -256,7 +256,7 @@ export class ShoppingcartPage implements OnInit {
                   console.log('successfully removed product!');
                 }
                 this.router.navigate(['/product-details', product.productId]);
-                this.presentAlert('Item removed from bag');
+                this.presentAlert('Item removed from Bag!');
               }, error => {
                 this.presentAlert(error);
               }

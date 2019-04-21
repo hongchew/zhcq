@@ -1,0 +1,60 @@
+<app-header></app-header>
+
+<ion-content color = "floralwhite">
+
+<div *ngIf="infoMessage" class="infoText">
+{{infoMessage}}
+</div>
+
+<div *ngIf="errorMessage" class="errorText">
+	{{errorMessage}}
+</div>
+
+
+    <ion-grid>
+      <ion-row justify-content-center>
+        <ion-col align-self-center size-md="6" size-lg="5" size-xs="12">
+          <div text-center>
+            <h6>Hi, seems like you're new here!</h6>
+            <h6>Create an account below <ion-icon ios="ios-arrow-round-down" md="md-arrow-round-down"></ion-icon></h6>
+          </div>
+          <div padding>
+            <ion-item>
+              <ion-label>First Name</ion-label>
+                <ion-input [(ngModel)]="firstName"  placeholder="First Name"  required></ion-input>
+            </ion-item> 
+            <br/>
+            <ion-item>
+              <ion-label>Last Name</ion-label>
+                <ion-input [(ngModel)]="lastName"  placeholder="Last Name" required></ion-input>
+            </ion-item>
+            <br/>
+            <ion-item>
+              <ion-label>Username</ion-label>
+                <ion-input [(ngModel)]="username" placeholder="Username" required></ion-input>
+            </ion-item>
+            <br/>
+            <ion-item>
+              <ion-label>Email</ion-label>
+                <ion-input [(ngModel)]="email" placeholder="zhcqmember@email.com" required></ion-input>
+            </ion-item>
+            <br/>
+            <ion-item>
+              <ion-label>Password</ion-label>
+                <ion-input [(ngModel)]="password" type="password" placeholder="Password" required></ion-input>
+            </ion-item>
+            <br/>
+            <ion-item>
+              <ion-label>Re-enter password</ion-label>
+                <ion-input [(ngModel)]="confirmPassword" type="password" placeholder="Re enter password" required></ion-input>
+            </ion-item>
+          </div>
+          <div padding>
+            <ion-button color="light" (click)="registerMember()" size="small" expand="block">Register</ion-button>
+          </div>
+          </ion-col>
+      </ion-row>
+    </ion-grid>
+
+</ion-content>
+<app-footer></app-footer>

@@ -1,0 +1,34 @@
+<ion-content padding>
+
+    <ion-button color="light" size="small" float-right (click)="closeModal()"><ion-icon ios="ios-close" md="md-close"></ion-icon></ion-button>
+    <ion-img src="/assets/size-guide.png"></ion-img>
+
+    <div *ngIf="products.length==0" style="text-align: center" >
+        <h6>Make Your First {{ category }} Purchase to get Future Sizing Suggestions!</h6>
+    </div>
+    <div *ngIf="products.length!=0">
+        <h5><b>{{ category }} You Purchased Before<ion-icon ios="ios-arrow-round-down" md="md-arrow-round-down"></ion-icon></b></h5>
+        <!-- <ion-row *ngFor="let txn of transactions" class="activated"> -->
+            <!-- <ion-col> -->
+            
+        <ion-card *ngFor="let pdt of products" class="card">
+            
+            <ion-grid>
+                <ion-row>
+                    <ion-col size="8">
+                        <ion-card-content style="height: 20%">
+                            <h2 style="padding-top: 13%"><b>{{ pdt.productName }}</b></h2>
+                            <ion-card-subtitle>Size: &nbsp; {{ pdt.sizeEnum }}</ion-card-subtitle>
+                        </ion-card-content>
+                    </ion-col>
+                    <ion-col size="4">
+                    <img class="images" src="http://localhost:8080/ZhcqRetailSystem-war/{{ pdt.picturePath}}"/>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+            
+        </ion-card>
+    </div>
+    
+
+</ion-content>

@@ -1,0 +1,79 @@
+<ion-header>
+    <title> zhcq & co.</title>
+    <ion-toolbar>
+    <ion-buttons slot="start">
+        <ion-back-button *ngIf='latestPdtId' defaultHref = "product-details/{{ latestPdtId }}"></ion-back-button>
+        <ion-back-button *ngIf='!latestPdtId' defaultHref = "categories"></ion-back-button>
+    </ion-buttons>
+    <ion-buttons slot="primary">
+      <ion-button href="/browse-products">
+        <ion-icon slot="icon-only" name="search"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  
+    <ion-title style="text-align:center" >zhcq & co. </ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+<ion-content>
+  <br/>
+  <h2 text-center style="font-weight: bold">S&nbsp;&nbsp;H&nbsp;&nbsp;O&nbsp;&nbsp;P&nbsp;&nbsp;P&nbsp;&nbsp;I&nbsp;&nbsp;N&nbsp;&nbsp;G &nbsp;&nbsp;&nbsp;&nbsp;B&nbsp;&nbsp;A&nbsp;&nbsp;G</h2>
+  <br/>
+  <ion-card *ngIf="products.length==0">
+      <ion-card-content>
+        <ion-card-title style="text-align: center" >oops</ion-card-title>
+        <ion-card-header style="text-align: center"> Your Shopping Bag is Empty! :(</ion-card-header>
+      </ion-card-content>
+    </ion-card>
+  <ion-grid> 
+    <ion-row *ngFor="let product of products" class="activated">
+      <ion-col size="5">
+        <img src="http://localhost:8080/ZhcqRetailSystem-war/{{product.picturePath}}" class="img-responsive"/>
+      </ion-col>
+      <ion-col size="7">
+        <h5><b> {{ product.productName }} </b></h5>
+        <label>Size: {{ product.sizeEnum }}</label> <br>
+        <!-- <label>Quantity: </label> 
+        
+        <ion-icon name="remove" (click)=decrement(product)></ion-icon> 
+     {{quantity[products.indexOf(product)]}}
+        <ion-icon name="add" (click) = increment(product)></ion-icon> -->
+
+          <ion-button fill="clear" color="dark" strong >
+              <strong> Qty: </strong>
+          </ion-button>
+          <ion-button fill="clear" (click)=decrement(product) color="dark" size="small">
+            <ion-icon name="remove" ></ion-icon>
+          </ion-button>
+          <ion-button fill="outline" color="dark" size="small" strong>
+              <strong>{{ quantity[products.indexOf(product)] }}</strong>
+          </ion-button>
+          <ion-button fill="clear" (click) = increment(product) color="dark" size="small">
+            <ion-icon name="add" ></ion-icon>
+          </ion-button>
+         
+        <!--<ion-input style="border: 1px;" [(ngModel)]="quantity[products.indexOf(product)]" required></ion-input> -->
+        <br/>
+        <label *ngIf="product.promotion == undefined"><b>Subtotal: </b> SGD {{subtotal[products.indexOf(product)]}}</label> 
+        <!-- <label *ngIf="product.promotion != undefined">
+        <s>Subtotal: SGD {{subtotal[products.indexOf(product)]}}</s>
+        </label>  -->
+        
+        <label *ngIf="product.promotion != undefined"><b>Subtotal: </b>
+         SGD <s>{{ subtotal[products.indexOf(product)] }}</s>&nbsp;<strong style="color: crimson">{{ subtotal[products.indexOf(product)]*(1-product.promotion.discountRate) }}</strong><ion-icon name="pricetags" style="color: crimson"></ion-icon>
+        </label> 
+        <br><br>
+        <ion-button (click)="removeProduct(product)" color="light"  size="small"> <ion-icon name="trash"></ion-icon> Remove
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-button color="dark" expand="full" (click)="updateCart()" >Update Bag</ion-button>
+  
+  <ion-button color="dark" expand="full" (click)="checkoutInitial()">Check Out</ion-button>
+  <!-- <ion-button color="dark" expand="full" (click)="checkout()">c h e c k &nbsp; o u t</ion-button> -->
+  <!-- <ion-button color="dark" expand="full" (click)="checkoutWithPoints()">c h e c k &nbsp; o u t &nbsp; w i t h &nbsp; P o i n t s</ion-button> -->
+</ion-content>
+    
+
+<app-footer></app-footer>

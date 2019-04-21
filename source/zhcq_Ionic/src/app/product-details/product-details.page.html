@@ -1,0 +1,150 @@
+<ion-header>
+  <title> zhcq & co.</title>
+  <ion-toolbar>
+  <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+  </ion-buttons>
+  <ion-buttons slot="primary">
+    <ion-button href="/browse-products">
+      <ion-icon slot="icon-only" name="search"></ion-icon>
+    </ion-button>
+  </ion-buttons>
+
+  <ion-item href="/home" detail="false" lines="none">
+    <ion-title style="text-align:center"><b>   zhcq & co. </b></ion-title>
+  </ion-item>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div *ngIf="errorMessage">
+    {{errorMessage}}
+  </div>
+
+  <!-- SELECTED PRODUCT -->
+  <div *ngIf="!errorMessage">
+    <img src="http://localhost:8080/ZhcqRetailSystem-war/{{selectedProduct.picturePath}}" class="img-responsive"/>
+
+    <ion-list lines="none" style="margin-bottom: 0">
+      <ion-item>
+          <h4 slot="start" style="margin-inline-end: 0%">{{selectedProduct.productName}}</h4> 
+          <ion-button type="submit" size="small" fill="transparent" size="default" (click)="addToWishList()">
+              <ion-icon name="heart"></ion-icon>
+          </ion-button>
+          <h4 *ngIf="!onPromotion" slot="end">${{selectedProduct.unitPrice}}</h4> 
+          <h4 *ngIf="onPromotion" slot="end"><s>${{selectedProduct.unitPrice}}</s></h4> <br/>
+      </ion-item>
+     <ion-item *ngIf="onPromotion" >
+        <h4 slot="end" style="color: darkred; margin-top: 0%; margin-bottom: 0%"><ion-icon ios="ios-pricetag" md="md-pricetag"></ion-icon>&nbsp; ${{promotionalPrice}}</h4>
+     </ion-item>
+     <h4 *ngIf="selectedProduct.quantityOnHand > 10" class="inStock" style="margin-top: 0px"> 
+        &nbsp;&nbsp;&nbsp;&nbsp;<i>In stock </i></h4>
+     <h4 *ngIf="selectedProduct.quantityOnHand <=10 && selectedProduct.quantityOnHand > 0" style="color:rgba(233, 103, 27, 0.938); margin-top: 0px">
+        &nbsp;&nbsp;&nbsp;&nbsp;<i>Running out</i> </h4>
+     <h4 *ngIf="selectedProduct.quantityOnHand == 0" style="color: rgb(216, 15, 15); margin-top: 0px"> 
+        &nbsp;&nbsp;&nbsp;&nbsp;<i>Out of stock</i> </h4>
+
+     <ion-item>
+        <div style="line-height:25px">
+          {{selectedProduct.description}}
+        </div>
+        
+     </ion-item>
+     <ion-item>
+        <h6>Size: {{selectedProduct.sizeEnum}}</h6>  
+      </ion-item>
+    </ion-list>
+  <!-- DIFF COLORS -->
+    
+    <ion-grid> 
+      <ion-row>
+        &nbsp;&nbsp;
+        <ion-col size="1.5" *ngFor="let product of diffColours" [routerLink]="['/product-details',product.productId]" class="activated">
+          <img src="http://localhost:8080/ZhcqRetailSystem-war/images/{{product.colourEnum}}.jpg" width="30" height="30"/>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <!-- DIFF SIZES -->
+    <ion-row>
+      <br/>
+        &nbsp;&nbsp;&nbsp;<h6>Select size</h6>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <!-- SIZE GUIDE DONT LAUGH AT THIS ^ PLS LOL SLOT=END NOT WORKING IDEK WHY-->
+        <ion-col >
+            &nbsp;
+          <ion-button color="light" size="small" (click)="openSizeGuide()"> <ion-icon ios="ios-shirt" md="md-shirt"></ion-icon>&nbsp; Size Guide</ion-button>
+        </ion-col>
+        <br/>
+      
+      <!-- <div *ngIf="diffSizes.length == 0">
+        &nbsp;&nbsp;&nbsp;<h6>No Other Available Sizes!</h6>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+       
+        <ion-col >
+            &nbsp;
+          <ion-button color="light" size="small" (click)="openSizeGuide()"> <ion-icon ios="ios-shirt" md="md-shirt"></ion-icon>&nbsp; Size Guide</ion-button>
+        </ion-col>
+        <br>
+      </div> -->
+        
+    </ion-row>
+    <ion-row>
+      <div style="align-content: center">
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <ion-button color="dark" fill="outline" *ngIf="sizeXS" [routerLink]="['/product-details',sizeXSId]"> XS </ion-button> 
+        <ion-button color="dark" fill="outline" *ngIf="!sizeXS && !currentSizeXS" disabled><s>XS</s></ion-button>
+        <ion-button color="dark" fill="solid" *ngIf="currentSizeXS">XS</ion-button> &nbsp; 
+        <ion-button color="dark" fill="outline" *ngIf="sizeS" [routerLink]="['/product-details',sizeSId]"> S </ion-button> 
+        <ion-button color="dark" fill="outline" *ngIf="!sizeS && !currentSizeS" disabled><s>S</s></ion-button> 
+        <ion-button color="dark" fill="solid" *ngIf="currentSizeS">S</ion-button> &nbsp;
+        <ion-button color="dark" fill="outline" *ngIf="sizeM" [routerLink]="['/product-details',sizeMId]"> M </ion-button>
+        <ion-button color="dark" fill="outline" *ngIf="!sizeM && !currentSizeM" disabled><s>M</s></ion-button>
+        <ion-button color="dark" fill="solid" *ngIf="currentSizeM">M</ion-button> &nbsp;
+        <ion-button color="dark" fill="outline" *ngIf="sizeL" [routerLink]="['/product-details',sizeLId]"> L </ion-button>
+        <ion-button color="dark" fill="outline" *ngIf="!sizeL && !currentSizeL"disabled><s>L</s></ion-button> 
+        <ion-button color="dark" fill="solid" *ngIf="currentSizeL">L</ion-button>&nbsp;
+        <ion-button color="dark" fill="outline" *ngIf="sizeXL" [routerLink]="['/product-details',sizeXLId]"> XL </ion-button> 
+        <ion-button color="dark" fill="outline" *ngIf="!sizeXL && !currentSizeXL" disabled><s>XL</s></ion-button> 
+        <ion-button color="dark" fill="solid" *ngIf="currentSizeXL">XL</ion-button>
+      </div>
+        &nbsp;&nbsp;&nbsp;
+      <!-- <div *ngFor="let pdt of diffSizes" [routerLink]="['/product-details',pdt.productId]" class="activated">
+          <ion-button color="dark" > {{pdt.sizeEnum}} </ion-button> &nbsp;&nbsp;
+      </div> -->
+    </ion-row>
+    <ion-card>
+      <ion-button fill="clear" disabled color="dark" strong>
+          <strong>Select Quantity: </strong>
+      </ion-button>
+      <ion-button fill="clear" (click)=decrement() color="dark">
+        <ion-icon name="remove" ></ion-icon>
+      </ion-button>
+      <ion-button fill="outline" disabled color="dark"> 
+          <strong>{{ quantity }}</strong>
+     </ion-button> 
+      <ion-button fill="clear" (click) = increment() color="dark">
+        <ion-icon name="add" ></ion-icon>
+      </ion-button>
+    </ion-card>
+    
+    <ion-button type="submit" color="dark" expand="full" (click)="addToCart()">
+        <ion-icon name="ios-cart"></ion-icon> &nbsp;&nbsp; add to bag
+    </ion-button>
+    
+    
+    
+    <h6 text-center>you might also love <ion-icon ios="ios-arrow-round-down" md="md-arrow-round-down"></ion-icon></h6>
+    <ion-card>
+      <ion-slides [options]="sliderOpts">
+          <ion-slide *ngFor="let pdt of suggestedProducts" [routerLink]="['/product-details',pdt.productId]" >
+              <img src="http://localhost:8080/ZhcqRetailSystem-war/{{pdt.picturePath}}" class="thumb-img"/>
+          </ion-slide>
+        </ion-slides>
+    </ion-card>
+    
+      
+  </div>
+  
+  
+
+</ion-content>
+<app-footer></app-footer>

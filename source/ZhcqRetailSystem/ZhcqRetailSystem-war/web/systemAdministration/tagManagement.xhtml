@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                template="/template/defaultTemplate.xhtml"
+                xmlns:ez="http://xmlns.jcp.org/jsf/composite/ezcomp"
+                xmlns:p="http://primefaces.org/ui">
+                    
+  <ui:define name="content" >
+
+        <ez:Breadcrumb pageName ="tagManagement" />
+
+        <div>
+            <h3>Tag Management</h3>
+
+            <h:form>
+                <p:menubar>
+                    <p:menuitem value="Create New Tag" onclick="PF('dialogCreateNewProductTag').show()" icon="fa fa-plus" />                                     
+                </p:menubar>
+            </h:form>
+
+            <h:form id="formAllProductTags">
+                <p:messages id="messages" redisplay="false" closable="true" />
+
+                <p:dataTable id="dataTableAllProductTags" widgetVar="dataTableAllProductTags" value="#{tagManagedBean.productTags}" var="productTag" filteredValue="#{tagManagedBean.filteredProductTags}" rowKey="#{productTag.productTagId}" 
+                             rowIndexVar="row" rows="10" paginator="true" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
+                <f:facet name="header">
+                    <p:outputPanel style="text-align: right;">
+                        <h:outputText value="Search: " />
+                        <p:inputText id="globalFilter" onkeyup="PF('dataTableAllProductTags').filter()" style ="width:300px;" placeholder="Enter keyword" />
+                    </p:outputPanel>
+                </f:facet>
+
+                    <p:column headerText="Product Tag Id" sortBy="#{productTag.productTagId}" filterBy="#{productTag.productTagId}" filterMatchMode="contains" >
+                        <h:outputText value="#{productTag.productTagId}" />
+                    </p:column>
+
+                    <p:column headerText="Product Tag Name" sortBy="#{category.categoryName}" filterBy="#{category.categoryName}" filterMatchMode="contains" >
+                        <h:outputText value="#{productTag.productTagName}" />
+                    </p:column>
+
+                   
+                    <p:column headerText="Action">
+                        <p:commandButton icon="ui-icon-document" title="View" oncomplete="PF('dialogViewProductTag').show()" update="formViewProductTag">
+                            <f:setPropertyActionListener value="#{productTag}" target="#{tagManagedBean.productTagToView}" />
+                        </p:commandButton>
+                        <p:commandButton icon="ui-icon-pencil" title="Update" oncomplete="PF('dialogUpdateProductTag').show()" update="formUpdateProductTag" actionListener="#{tagManagedBean.doUpdateProductTag}">
+                            <f:attribute value="#{productTag}" name="productTagToUpdate" />
+                        </p:commandButton>
+                        <p:commandButton icon="ui-icon-trash" title="Delete" actionListener="#{tagManagedBean.deleteProductTag}" update="formAllProductTags:dataTableAllProductTags formAllProductTags:messages">
+                            <f:attribute value="#{productTag}" name="productTagToDelete" />
+                            <p:confirm header="Confirmation" message="Are you sure you want to delete ProductTag #{productTag.productTagName}?" icon="ui-icon-alert" />
+                        </p:commandButton>
+                    </p:column>
+
+                </p:dataTable>
+
+                <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                    <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                    <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-no" />
+                </p:confirmDialog>
+            </h:form>
+
+            <h:form id="formCreateNewProductTag">
+                <p:dialog id="dialogCreateNewProductTag" widgetVar="dialogCreateNewProductTag" header="Create New Product Tag" closable="true">
+                    <p:messages id="messagesCreateNewProductTag" redisplay="false" />
+
+                    <p:panelGrid>
+                        <p:row>
+                            <p:column>
+                                <p:outputLabel for="productTagName" value="Product Tag Name" />
+                            </p:column>
+                            <p:column>
+                                <p:inputText id="productTagName" value="#{tagManagedBean.newProductTag.productTagName}" required="true" requiredMessage="Product Tag Name required" />
+                            </p:column>
+                            <p:column>
+                                <p:message for="productTagName" />
+                            </p:column>
+                        </p:row>
+ 
+                        <p:row>
+                            <p:column colspan="3">
+                                <p:commandButton type="reset" value="Clear" />
+                                <p:commandButton type="submit" value="Create New Product Tag" update="@form formAllProductTags:dataTableAllProductTags" actionListener="#{tagManagedBean.createNewProductTag}" oncomplete="PF('dialogCreateNewProductTag').show();"/>
+                            </p:column>
+                        </p:row>
+                    </p:panelGrid>
+                </p:dialog>
+            </h:form>
+
+            <h:form id="formViewProductTag">
+                <p:dialog id="dialogViewProductTag" widgetVar="dialogViewProductTag" header="View Product Tag" closable="true">
+                    <p:panelGrid>
+                        <p:row>
+                            <p:column>
+                                <h:outputText value="Product Tag Id" />
+                            </p:column>
+                            <p:column>
+                                <h:outputText value="#{tagManagedBean.productTagToView.productTagId}" />
+                            </p:column>
+                        </p:row>
+
+                        <p:row>
+                            <p:column>
+                                <h:outputText value="Product Tag Name" />
+                            </p:column>
+                            <p:column>
+                                <h:outputText value="#{tagManagedBean.productTagToView.productTagName}" />
+                            </p:column>
+                        </p:row>
+
+                        
+                    </p:panelGrid>
+                </p:dialog>
+            </h:form>
+
+            <h:form id="formUpdateProductTag">
+                <p:dialog id="dialogUpdateProductTag" widgetVar="dialogUpdateProductTag" header="Update Product Tag" closable="true">
+                    <p:messages id="messagesUpdateProductTag" />
+
+                    <p:panelGrid>
+
+                        <p:row>
+                            <p:column>
+                                <h:outputText value="Product Tag Id: " />
+                            </p:column>
+                            <p:column>
+                                <h:outputText value="#{tagManagedBean.productTagToUpdate.productTagId}" />
+                            </p:column>
+                            <p:column>
+                                &nbsp;
+                            </p:column>
+                        </p:row>
+
+                        <p:row>
+                            <p:column>
+                                <p:outputLabel for="productTagName" value="Product Tag Name: "/>
+                            </p:column>
+                            <p:column>
+                                <p:inputText id="productTagName" value="#{tagManagedBean.productTagToUpdate.productTagName}" required="true" requiredMessage="Product Tag Name required"/>
+                            </p:column>
+                            <p:column>
+                                <p:message for="productTagName" />
+                            </p:column>
+                        </p:row>
+
+                        
+                        
+                        <p:row>
+                            <p:column colspan="3">
+                                <p:commandButton actionListener="#{tagManagedBean.updateProductTag}" value="Update Product Tag" update="@form formAllProductTags:dataTableAllProductTags" oncomplete="PF('dialogCreateNewProductTag').show();"/> 
+                            </p:column>
+                        </p:row>
+                    </p:panelGrid>
+                </p:dialog>
+            </h:form>
+        </div>
+
+    </ui:define>
+</ui:composition>
+

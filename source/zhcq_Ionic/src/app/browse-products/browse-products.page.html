@@ -1,0 +1,35 @@
+
+<app-header></app-header>
+
+<ion-content>
+  <div *ngIf='errorMessage' class="errorText">
+    {{errorMessage}}
+  </div>
+  <div *ngIf='!errorMessage'>
+    <ion-searchbar animated [formControl]="searchControl"></ion-searchbar>
+
+    <h2 *ngIf='!catId' text-center style="font-weight: bold">S &nbsp;&nbsp;H &nbsp;&nbsp;O &nbsp;&nbsp;P &nbsp;&nbsp;&nbsp; A&nbsp;&nbsp;L&nbsp;&nbsp;L</h2>
+    <div *ngIf='catId'>
+      <!-- <div *ngFor= "let letter of category.categoryName.substring()"> -->
+          <h2 text-center style="font-weight: bold"> {{ category.categoryName }}</h2>
+      <!-- </div> -->
+      <!-- <h2 text-center style="font-weight: bold" > C&nbsp;&nbsp;A&nbsp;&nbsp;T&nbsp;&nbsp;E&nbsp;&nbsp;G&nbsp;&nbsp;O&nbsp;&nbsp;R&nbsp;&nbsp;Y </h2> -->
+
+    </div>
+    
+    <ion-grid> 
+      <ion-row>
+        <ion-col size="6" *ngFor="let product of products"  class="activated" >
+          <img src="http://localhost:8080/ZhcqRetailSystem-war/{{product.picturePath}}" class="img-responsive" [routerLink]="['/product-details',product.productId]"/>
+              <h6>{{product.productName}} &nbsp; <img src="http://localhost:8080/ZhcqRetailSystem-war/images/{{product.colourEnum}}.jpg" class="colorImg"></h6>
+              
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+   <!-- <ion-infinite-scroll (ionInfinite)="loadMoreProducts($event)">
+      <ion-infinite-scroll-content></ion-infinite-scroll-content>
+    </ion-infinite-scroll>  -->
+  </div>
+</ion-content>
+<app-footer></app-footer>
+

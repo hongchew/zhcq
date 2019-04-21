@@ -1,0 +1,295 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                template="/template/defaultTemplate.xhtml"
+                xmlns:ez="http://xmlns.jcp.org/jsf/composite/ezcomp"
+                xmlns:p="http://primefaces.org/ui">
+    
+    <ui:define name="content">
+        
+        <ez:Breadcrumb pageName="productManagement" />
+        <div>
+            <h3>Product Management</h3>
+            <h:form>
+                <p:menubar>
+                    <p:menuitem value="Create New Product" onclick="PF('createProductBox').show()" icon="fa fa-plus" />                                     
+                </p:menubar>
+            </h:form>
+            <br/>
+            <h:form id="createProductForm" enctype="multipart/form-data" prependId="false">
+                <p:dialog id="createProductBox" widgetVar="createProductBox" header="Create New Product" closable="true">
+                    <p:messages id="messagesCreateNewProduct" redisplay="false" />
+                    <p:panelGrid columns="2">
+                        
+                        <p:outputLabel value="Name" style="font-weight: bold;"/>
+                        <p:inputText value="#{productManagementManagedBean.newProductEntity.productName}" />
+                        
+                        <p:outputLabel value="Description" style="font-weight: bold;"/>
+                        <p:inputText value="#{productManagementManagedBean.newProductEntity.description}" />
+                        
+                        <p:outputLabel value="Quantity on Hand" style="font-weight: bold;"/>
+                        <p:inputText value="#{productManagementManagedBean.newProductEntity.quantityOnHand}" />
+                        
+                        <p:outputLabel value="Unit Price" style="font-weight: bold;"/>
+                        <p:inputText value="#{productManagementManagedBean.newProductEntity.unitPrice}" />
+                        
+                        <p:outputLabel value="Colour" style="font-weight: bold;"/>
+                        <p:selectOneMenu value="#{productManagementManagedBean.newProductEntity.colourEnum}">
+                            <f:selectItems value="#{productManagementManagedBean.colours}"/>
+                        </p:selectOneMenu>
+        
+                        <p:outputLabel value="Size" style="font-weight: bold;"/>
+                        <p:selectOneMenu value="#{productManagementManagedBean.newProductEntity.sizeEnum}">
+                            <f:selectItems value="#{productManagementManagedBean.sizes}"/>
+                        </p:selectOneMenu>
+                        
+                        <p:outputLabel value="Category" style="font-weight: bold;"/>
+                        <p:selectOneMenu value="#{productManagementManagedBean.categoryIdNew}">
+                            <f:selectItems value="#{productManagementManagedBean.categoryEntities}" var="cat" itemValue="#{cat.categoryId}" itemLabel="#{cat.categoryName}"  />
+                        </p:selectOneMenu>
+                        
+                        <p:outputLabel value="Tags" style="font-weight: bold;"/>
+                        <p:selectManyCheckbox value="#{productManagementManagedBean.tagIdsStringNew}"  layout="grid" columns="5">
+                            <f:selectItems value="#{productManagementManagedBean.tagEntities}" var="tag" itemValue="#{tag.productTagId}" itemLabel="#{tag.productTagName}"  />
+                        </p:selectManyCheckbox>
+                        
+                        <p:outputLabel value="Upload a Picture" style="font-weight: bold;"/>
+                        <p:fileUpload fileUploadListener="#{productManagementManagedBean.handleFileUpload}" required="true" requiredMessage="Please upload a product picture"/>
+                            
+                        
+                        <p:commandButton type="reset" value="Clear" />&nbsp;
+                        <p:commandButton  value="Create New Product" update="@form viewAllProductsForm:dataTableAllProducts" actionListener="#{productManagementManagedBean.createNewProduct}" oncomplete="PF('createProductBox').show();" /> 
+                        
+                    </p:panelGrid> 
+                </p:dialog>
+            </h:form>
+            
+            <h:form id="viewAllProductsForm">
+                <p:messages id="messages" redisplay="false" closable="true" />
+                <p:dataTable id="dataTableAllProducts" widgetVar="dataTableAllProducts" value="#{productManagementManagedBean.productEntities}" var="productEntity" rowKey="#{productEntity.productId}" rowIndexVar="row"
+                             filteredValue="#{productManagementManagedBean.filteredProductEntities}"
+                             rows="20" paginator="true" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                             rowsPerPageTemplate="10,20,50,100"> 
+                    
+                    <f:facet name="header">
+                        <p:outputPanel style="text-align: right;">
+                            <h:outputText value="Search all fields:" />
+                            <p:inputText id="globalFilter" onkeyup="PF('dataTableAllProducts').filter()" style="width:300px" placeholder="Enter keyword"/>
+                        </p:outputPanel>
+                    </f:facet>
+                    
+                    <p:column headerText="Product ID" sortBy="#{productEntity.productId}" filterBy="#{productEntity.productId}" filterMatchMode="contains">
+                        <h:outputText value="#{productEntity.productId}" />
+                    </p:column>
+                    
+                    <p:column headerText="Product Name" sortBy="#{productEntity.productName}" filterBy="#{productEntity.productName}" filterMatchMode="contains">
+                        <h:outputText value="#{productEntity.productName}" />
+                    </p:column>
+                    
+                    <p:column headerText="Description" sortBy="#{productEntity.description}" filterBy="#{productEntity.description}" filterMatchMode="contains">
+                        <h:outputText value="#{productEntity.description}" />
+                    </p:column>
+                    
+                    <p:column headerText="Quantity on Hand" sortBy="#{productEntity.quantityOnHand}" filterBy="#{productEntity.quantityOnHand}" filterMatchMode="equals">
+                        <h:outputText value="#{productEntity.quantityOnHand}" />
+                    </p:column>
+                    
+                    <p:column headerText="Picture" sortBy="#{productEntity.picture}" filterBy="#{productEntity.picture}" filterMatchMode="equals">
+                        <h:graphicImage value="#{productEntity.picturePath}" width="100" height="85"/>
+                    </p:column>
+                    
+                    <p:column headerText="Unit Price" sortBy="#{productEntity.unitPrice}" filterBy="#{productEntity.unitPrice}" filterMatchMode="lte">
+                        <h:outputText value="#{productEntity.unitPrice}">
+                            <f:convertNumber minFractionDigits="2" maxFractionDigits="2" type="currency" currencyCode="SGD" />
+                        </h:outputText>
+                    </p:column>
+                    
+                    <p:column headerText="Categories" sortBy="#{productEntity.productCategory.categoryName}" filterBy="#{productEntity.productCategory}" filterMatchMode="in">
+                        <f:facet name="filter">
+                            <p:selectCheckboxMenu onchange="PF('dataTableAllProducts').filter()" scrollHeight="150" styleClass="custom-filter" label="Select Some">
+                                <f:selectItems value="#{productManagementManagedBean.categoryEntities}" var="category" itemLabel="#{category.categoryName}" />
+                            </p:selectCheckboxMenu>
+                        </f:facet>
+                        <h:outputText value="#{productEntity.productCategory.categoryName}" />
+                    </p:column>
+                    
+                    <p:column headerText="Colour" sortBy="#{productEntity.colourEnum}" filterBy="#{productEntity.colourEnum}" filterMatchMode="in">
+                        <f:facet name="filter">
+                            <p:selectCheckboxMenu onchange="PF('dataTableAllProducts').filter()" scrollHeight="150" styleClass="custom-filter" label="Select Some">
+                                <f:selectItems value="#{productManagementManagedBean.colours}" />
+                            </p:selectCheckboxMenu>
+                        </f:facet>
+                        <h:outputText value="#{productEntity.colourEnum}" />
+                    </p:column>
+
+                    <p:column headerText="Size" sortBy="#{productEntity.sizeEnum}" filterBy="#{productEntity.sizeEnum}" filterMatchMode="in">
+                        <f:facet name="filter">
+                            <p:selectCheckboxMenu onchange="PF('dataTableAllProducts').filter()" scrollHeight="150" styleClass="custom-filter" label="Select Some">
+                                <f:selectItems value="#{productManagementManagedBean.sizes}" />
+                            </p:selectCheckboxMenu>
+                        </f:facet>
+                        <h:outputText value="#{productEntity.sizeEnum}" />
+                    </p:column>
+                    
+                    <p:column headerText="Actions" >
+                        <p:commandButton update="viewProductForm" oncomplete="PF('dialogViewProduct').show()" icon="ui-icon-document" title="View">
+                            <f:setPropertyActionListener value="#{productEntity}" target="#{productManagementManagedBean.selectedProductEntityToView}" />
+                        </p:commandButton>
+                        
+                        <p:commandButton actionListener="#{productManagementManagedBean.doUpdateProduct}" update="updateProductForm" oncomplete="PF('dialogUpdateProduct').show()" icon="ui-icon-pencil" title="Update">
+                            <!--<f:setPropertyActionListener value="#{productEntity}" target="#{productManagementManagedBean.selectedProductEntityToUpdate}" />-->
+                            <f:attribute name="productEntityToUpdate" value="#{productEntity}" />
+                        </p:commandButton>
+                        
+                        <p:commandButton icon="ui-icon-trash"  actionListener="#{productManagementManagedBean.deleteProduct}" update="viewAllProductsForm">
+                            <!--<f:setPropertyActionListener value="#{productEntity}" target="#{productManagementManagedBean.selectedProductEntityToDelete}" />-->
+                            <f:attribute name="productEntityToDelete" value="#{productEntity}" />
+                            <p:confirm header="Confirmation" message="Are you sure you want to delete #{productEntity.productName} (Product ID: #{productEntity.productId})?" icon="ui-icon-alert" />
+                        </p:commandButton>            
+                    </p:column>                
+                </p:dataTable>
+                
+                <p:confirmDialog global="true">
+                    <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                    <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                </p:confirmDialog>
+            </h:form>
+        
+            <h:form id="viewProductForm">
+                <p:dialog id="dialogViewProduct" widgetVar="dialogViewProduct" header="View Product" closable="true">
+                    <p:panelGrid columns="2">
+                        
+                        <h:outputLabel value="Product ID"/>
+                        <h:outputText value="#{productManagementManagedBean.selectedProductEntityToView.productId}"/>
+                        
+                        <h:outputLabel value="Product Name"/>
+                        <h:outputText value="#{productManagementManagedBean.selectedProductEntityToView.productName}"/>
+                        
+                        <h:outputLabel value="Description"/>
+                        <h:outputText value="#{productManagementManagedBean.selectedProductEntityToView.description}"/>
+                        
+                        <h:outputLabel value="Unit Price"/>
+                        <h:outputText value="#{productManagementManagedBean.selectedProductEntityToView.unitPrice}"/>
+                        
+                        <h:outputLabel value="Quantity on Hand"/>
+                        <h:outputText value="#{productManagementManagedBean.selectedProductEntityToView.quantityOnHand}"/>
+                        
+                        <h:outputLabel value="Category"/>
+                        <h:outputText value="#{productManagementManagedBean.selectedProductEntityToView.productCategory.categoryName}"/>
+                        
+                        <h:outputLabel value="Colour"/>
+                        <h:outputText value="#{productManagementManagedBean.selectedProductEntityToView.colourEnum}"/>
+                        
+                        <h:outputLabel value="Size"/>
+                        <h:outputText value="#{productManagementManagedBean.selectedProductEntityToView.sizeEnum}"/>
+                        
+                        <h:outputLabel value="Tags"/>
+                        <p:dataList value="#{productManagementManagedBean.selectedProductEntityToView.productTags}" var="tag" type="unordered">
+                            #{tag.productTagName}
+                        </p:dataList>                       
+                    </p:panelGrid>
+                </p:dialog>   
+            </h:form>
+            
+            <h:form id="updateProductForm">
+                <p:dialog id="dialogUpdateProduct" widgetVar="dialogUpdateProduct" header="Update Product" closable="true">
+
+                <p:messages id="messagesUpdateProduct" redisplay="false" />
+                
+                <p:panelGrid columns="3">
+                    <p:row>
+                        <p:column><h:outputLabel value="Product ID" /></p:column>
+                        <p:column><h:outputText value="#{productManagementManagedBean.selectedProductEntityToUpdate.productId}" /></p:column>
+                        <p:column>&nbsp;</p:column>
+                    </p:row>
+                    
+                    <p:row>
+                        <p:column><p:outputLabel for="pdtNameUpdate" value="Product Name" /></p:column>
+                        <p:column><p:inputText id="pdtNameUpdate" value="#{productManagementManagedBean.selectedProductEntityToUpdate.productName}" required="true" requiredMessage="Name is required" /></p:column>
+                        <p:column><p:message for="pdtNameUpdate" /></p:column>
+                    </p:row>
+                    
+                    <p:row>
+                        <p:column><p:outputLabel for="pdtDescUpdate" value="Description" /></p:column>
+                        <p:column><p:inputText id="pdtDescUpdate" value="#{productManagementManagedBean.selectedProductEntityToUpdate.description}" required="true" requiredMessage="Description is required" /></p:column>
+                        <p:column><p:message for="pdtDescUpdate" /></p:column>
+                    </p:row>
+                    
+                    <p:row>
+                        <p:column><p:outputLabel for="pdtPriceUpdate" value="Price $" /></p:column>
+                        <p:column><p:inputText id="pdtPriceUpdate" value="#{productManagementManagedBean.selectedProductEntityToUpdate.unitPrice}" required="true" requiredMessage="Unit price is required" /></p:column>
+                        <p:column><p:message for="pdtPriceUpdate" /></p:column>
+                    </p:row>
+                    
+                    <p:row>
+                        <p:column><p:outputLabel for="pdtQtyUpdate" value="Quantity on Hand" /></p:column>
+                        <p:column><p:inputText id="pdtQtyUpdate" value="#{productManagementManagedBean.selectedProductEntityToUpdate.quantityOnHand}" required="true" requiredMessage="Quantity on hand is required" /></p:column>
+                        <p:column><p:message for="pdtQtyUpdate" /></p:column>
+                    </p:row>
+                    
+                    <p:row>
+                        <p:column><p:outputLabel for="selCategory" value="Category " style="font-weight: bold;" /></p:column>
+                        <p:column>
+                            <p:selectOneMenu id="selCategory" value="#{productManagementManagedBean.categoryIdUpdate}">
+                                <f:selectItems value="#{productManagementManagedBean.categoryEntities}" var="categoryEntity" itemValue="#{categoryEntity.categoryId}" itemLabel="#{categoryEntity.categoryName}" />
+                            </p:selectOneMenu>
+                        </p:column>
+                        <p:column><p:message for="selCategory" /></p:column>
+                    </p:row>
+                    
+                    <p:row>
+                        <p:column><p:outputLabel for="size" value="Size" style="font-weight: bold;"/></p:column>
+                        <p:column>
+                            <p:selectOneMenu id="size" value="#{productManagementManagedBean.sizeEnumUpdate}">
+                                <f:selectItems value="#{productManagementManagedBean.sizes}" var="size" itemValue="#{size}" itemLabel="#{size}" />
+                            </p:selectOneMenu>
+                        </p:column>
+                        <p:column><p:message for="size" /></p:column>
+                    </p:row>
+                    
+                    <p:row>
+                        <p:column><p:outputLabel for="colour" value="Colour" style="font-weight: bold;"/></p:column>
+                        <p:column>
+                            <p:selectOneMenu id="colour" value="#{productManagementManagedBean.colourEnumUpdate}">
+                                <f:selectItems value="#{productManagementManagedBean.colours}" />
+                            </p:selectOneMenu>
+                        </p:column>
+                        <p:column><p:message for="colour" /></p:column>
+                    </p:row>
+                    
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel for="selTags" value="Tag(s) " style="font-weight: bold;" />
+                        </p:column>
+                        <p:column>
+                            <p:selectManyMenu id="selTags" value="#{productManagementManagedBean.tagIdsStringUpdate}" showCheckbox="true">
+                                <f:selectItems value="#{productManagementManagedBean.tagEntities}" var="tagEntity" itemValue="#{tagEntity.productTagId}" itemLabel="#{tagEntity.productTagName}" />
+                            </p:selectManyMenu>
+                        </p:column>
+                        <p:column>
+                            <p:message for="selTags" />
+                        </p:column>
+                    </p:row>
+                    
+                    <p:row>
+                        <p:column colspan="3">
+                            <p:commandButton value="Update Product" update="@form viewAllProductsForm:dataTableAllProducts" actionListener="#{productManagementManagedBean.updateProduct}" oncomplete="PF('dialogUpdateProduct').show();" />
+                        </p:column>
+                    </p:row>
+                    
+                </p:panelGrid>
+                </p:dialog>
+            </h:form>
+            
+
+        </div>
+        
+    </ui:define>
+</ui:composition>

@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                template="/template/defaultTemplate.xhtml"
+                xmlns:ez="http://xmlns.jcp.org/jsf/composite/ezcomp"
+                xmlns:p="http://primefaces.org/ui">
+                    
+    <ui:define name="content">
+        
+        <ez:Breadcrumb pageName="outfitManagement" />
+        
+        <div>
+            
+            <h3>Outfit Management!</h3>
+            
+            <h:form>
+                <p:menubar>
+                    <p:menuitem value="Create New Outfit" onclick="PF('dialogCreateNewOutfit').show()" 
+                                    icon="fa fa-plus" />                                    
+                </p:menubar>
+            </h:form>
+            
+            <h:form id="formAllOutfits">
+                
+                <p:messages id="messages" redisplay="false" closable="true" />
+                
+                <p:dataTable id="dataTableAllOutfits" widgetVar="dataTableAllOutfits" value="#{outfitManagementManagedBean.outfits}"
+                             var="outfitEntity" rowKey="#{outfitEntity.coordinatedOutfitId}" rowIndexVar="row" filteredValue="#{outfitManagementManagedBean.filteredOutfits}"
+                             rows="10" paginator="true" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowsPerPageTemplate="10,20,50">
+                    <f:facet name="header">
+                        <p:outputPanel style="text-align: right;">
+                            <h:outputText value="Search All Fields: " />
+                            <p:inputText id="globalFilter" onkeyup="PF('dataTableAllOutfits').filter()" style="width:300px" placeholder="Enter Keyword"/>
+                        </p:outputPanel>
+                    </f:facet>
+                    
+                    <p:column headerText="Outfit Name" sortBy="#{outfitEntity.outfitName}" filterBy="#{outfitEntity.outfitName}" filterMatchMode="contains">
+                        <h:outputText value="#{outfitEntity.outfitName}"/>
+                    </p:column>
+                    
+                    <p:column headerText="Date Created" sortBy="#{outfitEntity.dateCreated}" filterBy="#{outfitEntity.dateCreated}" filterMatchMode="contains">
+                        <h:outputText value="#{outfitEntity.dateCreated}"/>
+                    </p:column>
+                    
+                    <p:column headerText="Action">
+                        <p:commandButton update="formViewOutfit" oncomplete="PF('dialogViewOutfit').show()" icon="ui-icon-document" title="View">
+                            <f:setPropertyActionListener value="#{outfitEntity}" target="#{outfitManagementManagedBean.selectedOutfitToView}"/>
+                        </p:commandButton>
+                        <p:commandButton actionListener="#{outfitManagementManagedBean.doUpdateOutfit}" update="formUpdateOutfit" oncomplete="PF('dialogUpdateOutfit').show()" icon="ui-icon-pencil" title="Update">
+                            <f:attribute name="outfitToUpdate" value="#{outfitEntity}" />
+                        </p:commandButton>
+                        <p:commandButton icon="ui-icon-trash" actionListener="#{outfitManagementManagedBean.deleteOutfit}" update="formAllOutfits:dataTableAllOutfits formAllOutfits:messages">
+                            <f:attribute name="outfitToDelete" value="#{outfitEntity}"/>
+                            <p:confirm header="Confirmation" message="Are you sure you want to delete #{outfitEntity.outfitName} ?" icon="ui-icon-alert" />
+                        </p:commandButton>
+                    </p:column>
+                </p:dataTable>
+                
+                <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                    <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                    <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                </p:confirmDialog>  
+            </h:form>
+            <h:form id="formCreateNewOutfit">
+                
+                <p:dialog id="dialogCreateNewOutfit" widgetVar="dialogCreateNewOutfit" header="Create New Outfit" closable="true">
+                    
+                    <p:messages id="messagesCreateNewOutfit" redisplay="false" />
+                
+                    <p:panelGrid>
+                        
+                        <p:row>
+                            <p:column>
+                                <p:outputLabel for="outfitName" value="Outfit Name: " style="font-weight: bold;"/>
+                            </p:column>
+                            <p:column>
+                                <p:inputText style="width: 200px" id="outfitName" value="#{outfitManagementManagedBean.newCoordinatedOutfit.outfitName}" required="true" requiredMessage="Outfit Name is required" />
+                            </p:column>
+                            <p:column>
+                                <p:message for="outfitName" />
+                            </p:column>
+                        </p:row>
+                        
+                        <p:row>
+                            <p:column>
+                                <p:outputLabel for="productEntities" value="Choose Products" style="font-weight: bold;" />
+                            </p:column>
+                            <p:column  style="width: 200px">
+                                <p:selectManyMenu id="productEntities" value="#{outfitManagementManagedBean.newProductIds}" showCheckbox="true" style="width: 200px">
+                                    <f:selectItems value="#{outfitManagementManagedBean.availableProducts}" var="productEntity" itemValue="#{productEntity.productId}" itemLabel="#{productEntity.productName} - #{productEntity.colourEnum}" />
+                                </p:selectManyMenu>
+                            </p:column>
+                            <p:column>
+                                <p:message for="productEntities"/>
+                            </p:column>
+                        </p:row>
+                        <p:row>
+                            <p:column>
+                                <p:outputLabel for="picturePath" value="Upload Image: " style="font-weight: bold;"/>
+                            </p:column>
+                            <p:column>
+                                <p:fileUpload id="picturePath" fileUploadListener="#{outfitManagementManagedBean.handleFileUpload}" required="true" requiredMessage="Upload a picture of the outfit"/>
+                            </p:column>
+                            <p:column>
+                                <p:message for="picturePath" />
+                            </p:column>
+                        </p:row>
+                        <p:row>
+                            <p:column colspan="3">
+                                <p:commandButton type="reset" value="Clear" />&nbsp;
+                                <p:commandButton  value="Create New Outfit" update="@form formAllOutfits:dataTableAllOutfits" actionListener="#{outfitManagementManagedBean.createNewOutfit}" oncomplete="PF('dialogCreateNewOutfit').show();" />
+                            </p:column>
+                        </p:row>
+                    </p:panelGrid>
+                    
+                </p:dialog>
+                
+            </h:form>
+            
+            <h:form id="formViewOutfit">
+                <p:dialog id="dialogViewOutfit" widgetVar="dialogViewOutfit" header="View Outfit" closable="true">
+                    <p:panelGrid>
+                        
+                        <p:row>
+                            <p:column>
+                                <h:outputLabel value="Outfit ID: " />
+                            </p:column>
+                            <p:column>
+                                <h:outputText value="#{outfitManagementManagedBean.selectedOutfitToView.coordinatedOutfitId}" />
+                            </p:column>
+                        </p:row>
+                        <p:row>
+                            <p:column>
+                                <h:outputLabel value="Outfit Name: " />
+                            </p:column>
+                            <p:column>
+                                <h:outputText value="#{outfitManagementManagedBean.selectedOutfitToView.outfitName}" />
+                            </p:column>
+                        </p:row>
+                        <p:row>
+                            <p:column>
+                                <h:outputLabel value="Date Created: " />
+                            </p:column>
+                            <p:column>
+                                <h:outputText value="#{outfitManagementManagedBean.selectedOutfitToView.dateCreated}" />
+                            </p:column>
+                        </p:row>
+                        <p:row>
+                            <p:column>
+                                <h:outputLabel value="Products Attached: " />
+                            </p:column>
+                            <p:column>
+                                <p:dataList value="#{outfitManagementManagedBean.selectedOutfitToView.productEntities}" var="product" type="unordered">
+                                    #{product.productName} - #{product.colourEnum}
+                                </p:dataList>
+                            </p:column>
+                        </p:row>  
+                        <p:row>
+                            <p:column>
+                                <h:outputLabel value="Outfit Image File: " />
+                            </p:column>
+                            <p:column>
+                                <h:outputText value="#{outfitManagementManagedBean.selectedOutfitToView.picturePath}" />
+                            </p:column>
+                        </p:row>
+                    </p:panelGrid>
+                </p:dialog>
+            </h:form>
+            
+            <h:form id="formUpdateOutfit">
+                <p:dialog id="dialogUpdateOutfit" widgetVar="dialogUpdateOutfit" header="Update Outfit" closable="true">
+                    
+                    <p:messages id="messagesUpdateOutfit" redisplay="false" />
+                    
+                    <p:panelGrid>
+                        
+                        <p:row>
+                            <p:column>
+                                <h:outputLabel value="Outfit ID: "/>
+                            </p:column>
+                            <p:column>
+                                <h:outputText value="#{outfitManagementManagedBean.selectedOutfitToUpdate.coordinatedOutfitId}"/>
+                            </p:column>
+                            <p:column>
+                                &nbsp;
+                            </p:column>
+                        </p:row> 
+                        <p:row>
+                            <p:column>
+                                <p:outputLabel for="name" value="Outfit Name: "/>
+                            </p:column>
+                            <p:column>
+                                <h:outputText id="name" value="#{outfitManagementManagedBean.selectedOutfitToUpdate.outfitName}"/>
+                            </p:column>
+                            <p:column>
+                                <p:message for="name" />
+                            </p:column>
+                        </p:row> 
+                        <p:row>
+                            <p:column>
+                                <p:outputLabel for="products" value="Products: " style="font-weight: bold;" />
+                            </p:column>
+                            <p:column>
+                                <p:selectManyMenu id="products" value="#{outfitManagementManagedBean.updatedProductIds}" showCheckbox="true" style="width: 200px">
+                                    <f:selectItems value="#{outfitManagementManagedBean.allProducts}" var="product" itemValue="#{product.productId}" itemLabel="#{product.productName} - #{product.colourEnum}"/>
+                                </p:selectManyMenu>
+                                                  
+                            </p:column>
+                            <p:column>
+                                <p:message for="products" />
+                            </p:column>
+                        </p:row>
+<!--                        <p:row>
+                            <p:column>
+                                <p:outputLabel for="picturePath" value="Enter Image Name: " style="font-weight: bold;"/>
+                            </p:column>
+                            <p:column>
+                                <p:inputText id="picturePath" placeholder="#{outfitManagementManagedBean.selectedOutfitToUpdate.picturePath}" value="#{outfitManagementManagedBean.selectedOutfitToUpdate.picturePath}" required="true" requiredMessage="Outfit Name is required" />
+                            </p:column>
+                            <p:column>
+                                <p:message for="picturePath" />
+                            </p:column>
+                        </p:row>-->
+                        <p:row>
+                            <p:column colspan="3">
+                                <p:commandButton value="Update Outfit" update="@form formAllOutfits:dataTableAllOutfits" actionListener="#{outfitManagementManagedBean.UpdateOutfit}" oncomplete="PF('dialogUpdateOutfit').show();" />
+                            </p:column>
+                        </p:row>
+                    </p:panelGrid>
+                    
+                </p:dialog>
+                
+            </h:form>
+            
+        </div>            
+    </ui:define>
+    
+    
+</ui:composition>

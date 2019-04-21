@@ -1,0 +1,7 @@
+{
+  "name": "zhcq_Ionic",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular"
+}

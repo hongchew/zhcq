@@ -58,7 +58,7 @@ and open the template in the editor.
                         </p:commandButton>
                         <p:commandButton icon="ui-icon-trash" actionListener="#{outfitManagementManagedBean.deleteOutfit}" update="formAllOutfits:dataTableAllOutfits formAllOutfits:messages">
                             <f:attribute name="outfitToDelete" value="#{outfitEntity}"/>
-                            <p:confirm header="Confirmation" message="Are yous ure you want to delete #{outfitEntity.outfitName} ?" icon="ui-icon-alert" />
+                            <p:confirm header="Confirmation" message="Are you sure you want to delete #{outfitEntity.outfitName} ?" icon="ui-icon-alert" />
                         </p:commandButton>
                     </p:column>
                 </p:dataTable>

@@ -49,7 +49,7 @@ export class RegisterPage implements OnInit {
 
   async presentAlert(message: string) {
     const alert = await this.alertController.create({
-      header: "ERROR: " + message,
+      header: message,
       buttons: ['OK']
     });
     await alert.present();

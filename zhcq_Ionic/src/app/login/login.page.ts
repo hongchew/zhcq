@@ -11,7 +11,7 @@ import { Storage } from '@ionic/storage';
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements OnInit {
-
+  errorMessage = '';
   username: string;
   password: string;
 
@@ -35,14 +35,15 @@ export class LoginPage implements OnInit {
         console.log("Member = " + this.member);
       },
       error => {
-        this.presentAlert(error);
+        this.errorMessage =  error;
+        this.presentAlert(this.errorMessage.substring(37));
       }
     );
   }
 
   async presentAlert(message: string) {
     const alert = await this.alertController.create({
-      header: "ERROR: " + message,
+      header: message,
       buttons: ['OK']
     });
     await alert.present();

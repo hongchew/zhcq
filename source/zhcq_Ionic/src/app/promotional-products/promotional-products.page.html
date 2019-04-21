@@ -8,12 +8,19 @@
     <ion-img src="assets/sale-header.jpg"></ion-img>
 
     <ion-grid *ngFor="let promo of promotions">
-      <ion-row>
-        <ion-col>
+      <ion-row style="height: 5em">
+        <ion-col [routerLink]="['/promotion-page',promo.promotionId]">
             <h4 style="text-align: center" class="promotionName"><b>{{ promo.promotionName }}</b></h4>
         </ion-col>
       </ion-row>
-        
+      <ion-row>
+          <ion-col style="text-align: center" class="promotionDetails">
+              <b>{{promo.discountRate*100}}% off selected items!</b>
+              <br/>
+                Ends {{ promo.endDate.substring(0,10) }} {{ promo.endDate.substring(11,16) }}
+          </ion-col>
+        </ion-row>
+        <br/>
       <ion-slides [options]="sliderOpts" >
           <ion-slide *ngFor="let pdt of promo.promotionalProducts" [routerLink]="['/product-details', pdt.productId]" >
               <img src="http://localhost:8080/ZhcqRetailSystem-war/{{pdt.picturePath}}" class="thumb-img"/>

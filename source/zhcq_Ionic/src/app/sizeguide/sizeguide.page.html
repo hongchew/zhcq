@@ -6,8 +6,8 @@
     <div *ngIf="products.length==0" style="text-align: center" >
         <h6>Make Your First {{ category }} Purchase to get Future Sizing Suggestions!</h6>
     </div>
-    <div *ngIf="products.length!=0">
-        <h5><b>{{ category }} You Purchased Before<ion-icon ios="ios-arrow-round-down" md="md-arrow-round-down"></ion-icon></b></h5>
+    <div *ngIf="products.length!=0" style="text-align: center">
+        <h6>{{ category }} You Purchased Before<ion-icon ios="ios-arrow-round-down" md="md-arrow-round-down"></ion-icon></h6>
         <!-- <ion-row *ngFor="let txn of transactions" class="activated"> -->
             <!-- <ion-col> -->
             

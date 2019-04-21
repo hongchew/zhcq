@@ -28,6 +28,7 @@ export class ShoppingcartPage implements OnInit {
   isLogin: boolean;
   transaction: SaleTransaction;
   latestPdtId: number;
+  total: number;
 
   constructor(private storage: Storage, private alertController: AlertController, private shoppingCartService: ShoppingCartService,
     private router: Router, private memberService: MemberService) {
@@ -35,6 +36,7 @@ export class ShoppingcartPage implements OnInit {
 
   ngOnInit() {
     this.subtotal = [];
+    this.total = 0;
   }
 
   ionViewWillEnter() {
@@ -59,6 +61,11 @@ export class ShoppingcartPage implements OnInit {
           this.quantity = this.cart.quantity;
           for (var i = 0; i < this.products.length; i++) {
             this.subtotal.push(this.products[i].unitPrice * this.quantity[i]);
+            if (this.products[i].promotion==undefined) {
+              this.total += this.products[i].unitPrice * this.quantity[i];           
+            } else {
+              this.total += this.products[i].unitPrice * (1-this.products[i].promotion.discountRate) *this.quantity[i]; 
+            }
             console.log('initialized product ' + this.products[i].productName);
             console.log('initialized quantity ' + this.quantity[i]);
             console.log('initialized subtotal ' + this.subtotal[i]);
@@ -81,6 +88,11 @@ export class ShoppingcartPage implements OnInit {
     var idx = this.products.indexOf(product);
     this.quantity[idx]++;
     this.subtotal[idx] = this.quantity[idx]*this.products[idx].unitPrice;
+    if (this.products[idx].promotion==undefined) {
+      this.total += this.products[idx].unitPrice;
+    } else {
+      this.total += this.products[idx].unitPrice * (1-this.products[idx].promotion.discountRate);
+    }
   }
 
   decrement(product: ProductEntity) {
@@ -90,6 +102,11 @@ export class ShoppingcartPage implements OnInit {
     } else {
       this.quantity[idx]--;
       this.subtotal[idx] = this.quantity[idx]*this.products[idx].unitPrice;
+      if (this.products[idx].promotion==undefined) {
+        this.total -= this.products[idx].unitPrice;
+      } else {
+        this.total -= this.products[idx].unitPrice * (1-this.products[idx].promotion.discountRate);
+      }
     }
   }
 
@@ -102,7 +119,7 @@ export class ShoppingcartPage implements OnInit {
       this.shoppingCartService.updateCart(this.cart.cartId, this.products[i].productId, this.quantity[i]).subscribe(
         response => {
           console.log('Successfully updated cart!');
-          this.presentAlert('Successfully updated cart!');
+          this.presentAlert('Successfully updated Bag!');
         },
         error => {
           this.errorMessage = error;

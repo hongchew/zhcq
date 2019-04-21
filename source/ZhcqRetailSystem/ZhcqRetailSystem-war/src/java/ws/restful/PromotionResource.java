@@ -104,22 +104,27 @@ public class PromotionResource {
         
     }
     
-    @Path("retrievePromotionById")
+    @Path("retrievePromotionById/{promotionId}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response retrievePromotionById(@QueryParam("promotionId") Long promotionId ){
+    public Response retrievePromotionById(@PathParam("promotionId") Long promotionId ){
         
         try {
             Promotion promo = promotionController.retrievePromotionByPromotionId(promotionId);
             
-            for(ProductEntity pdt : promo.getPromotionalProducts()){
-                pdt.setShoppingcarts(null);
-                pdt.setWishLists(null);
-                pdt.setPromotion(null);
-                pdt.getProductCategory().setProductEntities(null);
-                for(ProductTag tag : pdt.getProductTags()){
-                    tag.setProductEntities(null);
-                }
+            for(ProductEntity product : promo.getPromotionalProducts()){
+                Category category = product.getProductCategory();
+                category.getProductEntities().clear();
+
+                product.getProductTags().clear();
+
+                product.getWishLists().clear();
+
+                product.getShoppingcarts().clear();
+
+                product.setCoordinatedOutfit(null);
+
+                product.setPromotion(null);
             }
             
             RetrievePromotionByIdRsp rsp = new RetrievePromotionByIdRsp(promo) ;

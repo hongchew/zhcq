@@ -31,15 +31,19 @@
                 </p:column>
                 
                 <p:column headerText="Discount Rate">
-                    <h:outputText value="#{promotion.discountRate * 100}%"/>
+                    <h:outputText value="#{promotion.discountRate}">
+                        <f:convertNumber type="percent"/>
+                    </h:outputText>
                 </p:column>
                 
                 <p:column headerText="Start Date">
-                    <h:outputText value="#{utilManagedBean.formatDate(promotion.startDate)}"/>
+                    <h:outputText value="#{utilManagedBean.formatDate(promotion.startDate)}">
+                    </h:outputText>
                 </p:column>
                 
                 <p:column headerText="End Date">
-                    <h:outputText value="#{utilManagedBean.formatDate(promotion.endDate)}"/>
+                    <h:outputText value="#{utilManagedBean.formatDate(promotion.endDate)}">
+                    </h:outputText>
                 </p:column>
             </p:dataTable>
         </p:panel>

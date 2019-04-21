@@ -1,0 +1,36 @@
+<app-header></app-header>
+
+<ion-content>
+  <div *ngIf='errorMessage' class="errorText">
+    {{errorMessage}}
+  </div>
+  
+    
+    <ion-grid> 
+      <ion-row style="height: 5em">
+        <ion-col >
+            <h4 style="text-align: center" class="promotionName"><b>{{ promotion.promotionName }}</b></h4>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col style="text-align: center" class="promotionDetails">
+            <b>{{promotion.discountRate*100}}% off selected items!</b>
+            <br/>
+              Ends {{ promotion.endDate.substring(0,10) }} {{ promotion.endDate.substring(11,16) }}
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="6" *ngFor="let product of products"  class="activated" >
+          <img src="http://localhost:8080/ZhcqRetailSystem-war/{{product.picturePath}}" class="img-responsive" [routerLink]="['/product-details',product.productId]"/>
+              <h6>{{product.productName}} &nbsp; <img src="http://localhost:8080/ZhcqRetailSystem-war/images/{{product.colourEnum}}.jpg" class="colorImg"></h6>
+              
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+   <!-- <ion-infinite-scroll (ionInfinite)="loadMoreProducts($event)">
+      <ion-infinite-scroll-content></ion-infinite-scroll-content>
+    </ion-infinite-scroll>  -->
+  
+</ion-content>
+<app-footer></app-footer>
+

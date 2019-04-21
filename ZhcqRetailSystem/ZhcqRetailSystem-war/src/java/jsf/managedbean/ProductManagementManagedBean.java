@@ -60,7 +60,6 @@ public class ProductManagementManagedBean implements Serializable {
     private ProductEntity newProductEntity;
     private Long categoryIdNew;
     private List<String> tagIdsStringNew;
-    private UploadedFile productPhotoNew;
     private List<Category> categoryEntities;
     private List<ProductTag> tagEntities;
 
@@ -546,21 +545,7 @@ public class ProductManagementManagedBean implements Serializable {
     public void setSizeEnumUpdate(SizeEnum sizeEnumUpdate) {
         this.sizeEnumUpdate = sizeEnumUpdate;
     }
-
-    /**
-     * @return the productPhotoNew
-     */
-    public UploadedFile getProductPhotoNew() {
-        return productPhotoNew;
-    }
-
-    /**
-     * @param productPhotoNew the productPhotoNew to set
-     */
-    public void setProductPhotoNew(UploadedFile productPhotoNew) {
-        this.productPhotoNew = productPhotoNew;
-    }
-
+    
     public String getNewFilePath() {
         return newFilePath;
     }

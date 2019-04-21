@@ -8,14 +8,15 @@ import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.enterprise.context.RequestScoped;
+import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
 
 @Named(value = "utilManagedBean")
-@RequestScoped
-public class UtilManagedBean{
+@ViewScoped
+public class UtilManagedBean implements Serializable{
 
     @EJB(name = "PromotionControllerLocal")
     private PromotionControllerLocal promotionControllerLocal;
@@ -26,8 +27,16 @@ public class UtilManagedBean{
     public UtilManagedBean() {
     }
     
+    public void wake(){
+        
+    }
+    
+    @PostConstruct
     public void postConstruct() {
         promotions = promotionControllerLocal.retrieveAllPromotions();
+        for(Promotion promo : promotions){
+            System.out.println(promo.getPromotionName());
+        }
     }
 
     public List<Promotion> getPromotions() {

@@ -1,10 +1,11 @@
 # zhcq-co
+A fashion ecommerce platform
 
 ## IS3106 Group Project (Group 11)
-Koh Zhi Ming (A017235M)
-Lim Cheng Yang (A0173678M)
-Lim Qian Yi (A0172622L)
-Toh Hong Chew (A0167436X)
+- Koh Zhi Ming (A017235M)
+- Lim Cheng Yang (A0173678M)
+- Lim Qian Yi (A0172622L)
+- Toh Hong Chew (A0167436X)
 
 
 

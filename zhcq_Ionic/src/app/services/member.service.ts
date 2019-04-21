@@ -4,13 +4,14 @@ import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
 import { Member } from '../entities/member';
+import { CoordinatedOutfitsPageModule } from '../coordinated-outfits/coordinated-outfits.module';
 
 
 
 
-const httpOptions = {
-	headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-};
+// const httpOptions = {
+// 	headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+// };
 
 
 
@@ -20,10 +21,12 @@ const httpOptions = {
 
 export class MemberService 
 {
+// tslint:disable: indent
 	baseUrl: string = "http://localhost:8080/ZhcqRetailSystem-war/Resources/Member";
+
+	// headers = new HttpHeaders();
 	
-	
-	
+
 	constructor(private httpClient: HttpClient)
 	{
 	}
@@ -47,31 +50,33 @@ export class MemberService
 
 	login(username: string, password: string): Observable<any>
 	{
-		return this.httpClient.post<any>(this.baseUrl+ "/login?username=" +username + "&password=" + password, null, httpOptions).pipe 
+		// var headers = new HttpHeaders();
+		// headers = headers.append('Content-Type', 'application/json');
+		// headers = headers.append('Access-Control-Allow-Origin', '*');
+
+		return this.httpClient.post<any>(this.baseUrl + '/login?username=' + username + "&password=" + password, null).pipe
+		(
+			catchError(this.handleError)
+		);
+
+	}
+
+	createMember(firstName: string, lastName: string, username : string, password : string, email : string): Observable<any> {
+		let createMemberReq = {'firstName' : firstName, 'lastName' : lastName, 'username': username, 'password': password, 'email' : email };
+
+		return this.httpClient.put<any>(this.baseUrl, createMemberReq).pipe
 		(
 			catchError(this.handleError)
 		);
 	}
-	
-	
-	
-	createMember(firstName: string, lastName: string, username : string, password : string, email : string): Observable<any>
-	{
-		let createMemberReq = {"firstName" : firstName, "lastName" : lastName, "username": username, "password": password, "email" : email };		
-		
-		return this.httpClient.put<any>(this.baseUrl, createMemberReq, httpOptions).pipe
-		(
-			catchError(this.handleError)
-		);
-	}
-	
-	
-	
+
 	updateMember(member: Member): Observable<any>
 	{
-		let updateMemberReq = {"member": member};		
-		
-		return this.httpClient.post<any>(this.baseUrl, updateMemberReq, httpOptions).pipe
+		let updateMemberReq = {"member": member};
+		var headers = new HttpHeaders();
+		headers.append('Content-Type', 'application/json');
+		headers.append('Access-Control-Allow-Origin', '*');
+		return this.httpClient.post<any>(this.baseUrl, updateMemberReq, { headers }).pipe
 		(
 			catchError(this.handleError)
 		);
@@ -81,7 +86,9 @@ export class MemberService
 	
 	deleteMember(id: number): Observable<any> 
 	{
-		return this.httpClient.delete<any>(this.baseUrl + "/" + id).pipe
+		var headers = new HttpHeaders();
+		headers.append('Access-Control-Allow-Origin', '*');
+		return this.httpClient.delete<any>(this.baseUrl + "/" + id,{ headers }).pipe
 		(			
 			catchError(this.handleError)
 		);
@@ -91,19 +98,22 @@ export class MemberService
 	
 	private handleError(error: HttpErrorResponse)
 	{
-		let errorMessage: string = "";
+		if (error.error !== null) {
+			let errorMessage: string = '';
 		
-		if (error.error instanceof ErrorEvent) 
-		{		
-			errorMessage = "An unknown error has occurred: " + error.error.message;
-		} 
-		else 
-		{		
-			errorMessage = "A HTTP error has occurred: " + `HTTP ${error.status}: ${error.error.message}`;
+			if (error.error instanceof ErrorEvent) 
+			{
+				errorMessage = 'An unknown error has occurred: ' + error.error.message;
+			} 
+			else 
+			{		
+				errorMessage = 'A HTTP error has occurred: ' + `HTTP ${error.status}: ${error.error.message}`;
+			}
+			
+			console.error(errorMessage);
+			
+			return throwError(errorMessage);
+
 		}
-		
-		console.error(errorMessage);
-		
-		return throwError(errorMessage);		
 	}
 }

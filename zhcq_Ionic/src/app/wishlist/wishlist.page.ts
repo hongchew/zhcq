@@ -82,7 +82,7 @@ export class WishlistPage implements OnInit {
                   this.products.splice(index,1);
                   console.log("successfully removed product!");
                 }
-                this.presentAlert("Successfully removed product!");
+                this.presentAlert("Item removed from Wish List!");
               },
               error => {
                 this.presentAlert(error);

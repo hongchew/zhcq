@@ -18,6 +18,7 @@ import javax.naming.NamingException;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.OPTIONS;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -159,6 +160,9 @@ public class MemberResource {
                 }
                 CreateMemberRsp createMemberRsp = new CreateMemberRsp(newMember);
                 return Response.status(Response.Status.OK).entity(createMemberRsp).header("Access-Control-Allow-Origin", "*").build();
+                
+//                .header("Access-Control-Allow-Methods", "POST, GET, PUT, UPDATE, OPTIONS")
+//                        .header("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With")
             } catch (InputDataValidationException ex) {
                 ErrorRsp errorRsp = new ErrorRsp(ex.getMessage());
                 return Response.status(Response.Status.BAD_REQUEST).entity(errorRsp).header("Access-Control-Allow-Origin", "*").build();
@@ -203,6 +207,7 @@ public class MemberResource {
         }
     }
 
+    @Path("updateMember")
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
@@ -220,6 +225,11 @@ public class MemberResource {
             ErrorRsp errorRsp = new ErrorRsp("Invalid update member request");
             return Response.status(Response.Status.BAD_REQUEST).entity(errorRsp).header("Access-Control-Allow-Origin", "*").build();
         }
+    }
+    
+    @OPTIONS
+    public Response nonSimpleRequests(){
+        return Response.status(Response.Status.OK).header("Access-Control-Allow-Origin", "*").header("Access-Control-Allow-Methods", "POST, GET, PUT, UPDATE, OPTIONS, DELETE").header("Access-Control-Allow-Headers", "Content-Type").build();
     }
 
 }

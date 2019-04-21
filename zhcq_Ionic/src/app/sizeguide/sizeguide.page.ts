@@ -21,6 +21,7 @@ export class SizeguidePage implements OnInit {
   products: Array<ProductEntity> = [];
   isLogin: boolean;
   product: ProductEntity;
+  category: string;
   // "value" passed in componentProps
   @Input() value: string;
 
@@ -41,6 +42,7 @@ export class SizeguidePage implements OnInit {
       this.saleTransactionService.retrieveSalesTransactionByUserId(this.memberId).subscribe(
         response => {
           this.transactions = response.salesTransactions;
+          this.category = this.value;
           console.log('transaction Length= ' + this.transactions.length);
           console.log(this.transactions);
 

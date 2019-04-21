@@ -8,7 +8,7 @@
                 xmlns:p="http://primefaces.org/ui">
     
      <ui:define name="content">
-         
+         #{utilManagedBean.wake()}
         <ez:Breadcrumb pageName="index" />
         
         <h:panelGroup rendered="#{sessionScope.isLogin == false}" >
@@ -20,36 +20,29 @@
             </article>
         </h:panelGroup>
         
-        <h:panelGroup rendered="#{sessionScope.isLogin == true}">
-            <article>
-                <h2 style="text-align: center"> zhcq &amp; co. <i class="fa fa-fw fa-fire"></i></h2>
+        <p:panel rendered="#{sessionScope.isLogin == true}">
+            
+            <h2 style="text-align: center"> zhcq &amp; co. <i class="fa fa-fw fa-fire"></i></h2>
                 <br/>
-                <h3 style="text-align: center">Promotion Of the Week</h3>                    
-                <p>                    
-                    <ui:repeat value="#{utilManagedBean.promotions}" var="promotion">
-                        
-                        <tr>
-                            <th>Discount Rate</th>
-                            <th>Start Date</th>
-                            <th>End Date</th>
-                        </tr>
-                        
-                        <tr>
-                            <td>#{promotion.discountRate}</td>
-                        </tr>
-                        
-                        <tr>
-                            <td>#{utilManagedBean.formatDate(promotion.startDate)}</td>
-                        </tr>
-                        
-                        <tr>
-                            <td>#{utilManagedBean.formatDate(promotion.endDate)}</td>
-                        </tr>
-
-                    </ui:repeat>                                                              
-                </p>
-            </article>
-        </h:panelGroup>
+            <h3 style="text-align: center">Ongoing Promotions</h3>  
+            <p:dataTable value="#{utilManagedBean.promotions}" var="promotion">
+                <p:column headerText="Promotion Name">
+                    <h:outputText value="#{promotion.promotionName}"/>
+                </p:column>
+                
+                <p:column headerText="Discount Rate">
+                    <h:outputText value="#{promotion.discountRate * 100}%"/>
+                </p:column>
+                
+                <p:column headerText="Start Date">
+                    <h:outputText value="#{utilManagedBean.formatDate(promotion.startDate)}"/>
+                </p:column>
+                
+                <p:column headerText="End Date">
+                    <h:outputText value="#{utilManagedBean.formatDate(promotion.endDate)}"/>
+                </p:column>
+            </p:dataTable>
+        </p:panel>
         
          
     </ui:define>

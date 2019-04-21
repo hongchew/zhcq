@@ -15,7 +15,7 @@ const httpOptions = {
 
 export class CategoryService {
 
-    baseUrl: string = "http://localhost:8080/ZhcqRetailSystem-war/Resources/Category";
+    baseUrl: string = 'http://localhost:8080/ZhcqRetailSystem-war/Resources/Category';
 
 
     constructor(private httpClient: HttpClient)
@@ -38,15 +38,17 @@ export class CategoryService {
 
 
     private handleError(error: HttpErrorResponse) {
-        let errorMessage: string = '';
+        if (error.error !== null) {
+            let errorMessage: string = '';
 
-        if (error.error instanceof ErrorEvent) {
-            errorMessage = 'An unknown error has occurred: ' + error.error.message;
-        } else {
-            errorMessage = 'A HTTP error has occurred: ' + `HTTP ${error.status}: ${error.error.message}`;
+            if (error.error instanceof ErrorEvent) {
+                errorMessage = 'An unknown error has occurred: ' + error.error.message;
+            } else {
+                errorMessage = 'A HTTP error has occurred: ' + `HTTP ${error.status}: ${error.error.message}`;
+            }
+
+            console.error(errorMessage);
+            return throwError(errorMessage);
         }
-
-        console.error(errorMessage);
-        return throwError(errorMessage);
     }
 }

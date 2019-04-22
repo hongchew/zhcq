@@ -24,6 +24,7 @@ import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
+import util.enumeration.ColourEnum;
 import util.exception.CategoryNotFoundException;
 import util.exception.CreateNewProductException;
 import util.exception.InputDataValidationException;
@@ -66,16 +67,34 @@ public class ProductController implements ProductControllerLocal {
     
     @Override
     public List<ProductEntity> retrieveAllUniqueProducts(){
-        
-        Query p = em.createQuery("SELECT p FROM ProductEntity p WHERE p.productId = 1");
-        ProductEntity product = (ProductEntity) p.getResultList().get(0);
-
-        Query q = em.createQuery("SELECT DISTINCT p FROM ProductEntity p WHERE p.sizeEnum = :size");
-        q.setParameter("size", product.getSizeEnum());
-
-        List<ProductEntity> allUniqueProducts = q.getResultList();
-  
-        return allUniqueProducts;
+//        
+//        Query p = em.createQuery("SELECT p FROM ProductEntity p WHERE p.productId = 1");
+//        ProductEntity product = (ProductEntity) p.getResultList().get(0);
+//
+//        Query q = em.createQuery("SELECT DISTINCT p FROM ProductEntity p WHERE p.sizeEnum = :size ");
+//        q.setParameter("size", product.getSizeEnum());
+//
+//        List<ProductEntity> allUniqueProducts = q.getResultList();
+//  
+//        return allUniqueProducts;
+            List<ProductEntity> products = retrieveAllProducts();
+            List<ProductEntity> unique = new ArrayList<ProductEntity>();
+            for(ProductEntity p : products) {
+                String productName = p.getProductName();
+                ColourEnum colour = p.getColourEnum();
+                boolean exists = false;
+                for(ProductEntity pe : unique) {
+                    if(pe.getColourEnum() == colour && pe.getProductName().equals(productName)) {
+                        exists = true;
+                        break;
+                    }
+                }
+                if(!exists) {
+                    unique.add(p);
+                }
+            }
+            
+            return unique;
         
     }
     

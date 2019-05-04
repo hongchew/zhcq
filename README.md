@@ -1,5 +1,5 @@
 # zhcq-co
-A fashion ecommerce platform
+A fashion ecommerce platform created for National University of Singapore's IS3106 Enterprise Systems Interface Design and Development.
 
 ## IS3106 Group Project (Group 11)
 - Koh Zhi Ming (A0171235M)
